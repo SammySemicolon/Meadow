@@ -7,6 +7,9 @@ import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.javafmlmod.*;
 import org.apache.logging.log4j.*;
 
+import static com.smellysleepy.meadow.registry.common.BlockRegistry.BLOCKS;
+import static com.smellysleepy.meadow.registry.common.ItemRegistry.ITEMS;
+
 @SuppressWarnings("unused")
 @Mod(MeadowMod.MEADOW)
 public class MeadowMod {
@@ -16,10 +19,12 @@ public class MeadowMod {
 
     public MeadowMod() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        BLOCKS.register(modBus);
+        ITEMS.register(modBus);
 
     }
 
-    public static ResourceLocation malumPath(String path) {
+    public static ResourceLocation meadowModPath(String path) {
         return new ResourceLocation(MEADOW, path);
     }
 
