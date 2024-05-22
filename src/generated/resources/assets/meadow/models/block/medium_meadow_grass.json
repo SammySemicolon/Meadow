@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "meadow:block/medium_meadow_grass"
+  }
+}
