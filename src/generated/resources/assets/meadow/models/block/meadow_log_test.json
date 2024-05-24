@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "meadow:block/meadow_log_test_top",
+    "side": "meadow:block/meadow_log_test"
+  }
+}

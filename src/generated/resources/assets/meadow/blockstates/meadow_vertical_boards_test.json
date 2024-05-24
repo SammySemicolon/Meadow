@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "meadow:block/meadow_vertical_boards_test"
+    }
+  }
+}

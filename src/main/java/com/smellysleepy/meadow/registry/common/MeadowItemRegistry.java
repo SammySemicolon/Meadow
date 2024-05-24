@@ -22,6 +22,11 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> MEDIUM_MEADOW_GRASS = register("medium_meadow_grass", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEDIUM_MEADOW_GRASS.get(), p));
     public static final RegistryObject<Item> SHORT_MEADOW_GRASS = register("short_meadow_grass", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), p));
 
+    public static final RegistryObject<Item> MEADOW_LEAVES = register("meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LEAVES.get(), p));
+    public static final RegistryObject<Item> MEADOW_LOG_TEST = register("meadow_log_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LOG_TEST.get(), p));
+    public static final RegistryObject<Item> MEADOW_BOARDS_TEST = register("meadow_boards_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_BOARDS_TEST.get(), p));
+    public static final RegistryObject<Item> MEADOW_VERTICAL_BOARDS_TEST = register("meadow_vertical_boards_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_VERTICAL_BOARDS_TEST.get(), p));
+
     public static final RegistryObject<Item> CRIMSON_SUN = register("crimson_sun", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CRIMSON_SUN.get(), p));
     public static final RegistryObject<Item> LAZURITE_ROSE = register("lazurite_rose", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.LAZURITE_ROSE.get(), p));
     public static final RegistryObject<Item> BERYL_ALSTRO = register("beryl_alstro", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.BERYL_ALSTRO.get(), p));

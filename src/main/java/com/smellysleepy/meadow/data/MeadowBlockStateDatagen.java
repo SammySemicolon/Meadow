@@ -24,11 +24,15 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 
         BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::varyingRotationBlock, this::grassBlockModel, MeadowBlockRegistry.MEADOW_GRASS_BLOCK);
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS);
-        BlockStateSmithTypes.TALL_GRASS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
+        BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
+
+        BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LOG_TEST);
+        BlockStateSmithTypes.LEAVES_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LEAVES);
+        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.MEADOW_BOARDS_TEST, MeadowBlockRegistry.MEADOW_VERTICAL_BOARDS_TEST);
 
         setTexturePath("strange_flora/mineral/");
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.LAZURITE_ROSE, MeadowBlockRegistry.CRIMSON_SUN);
-        BlockStateSmithTypes.TALL_GRASS_MODEL_BLOCK.act(data, MeadowBlockRegistry.BERYL_ALSTRO, MeadowBlockRegistry.TRANQUIL_LILY);
+        BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.BERYL_ALSTRO, MeadowBlockRegistry.TRANQUIL_LILY);
         setTexturePath("");
 
     }
