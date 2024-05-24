@@ -26,5 +26,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new MeadowBlockStateDatagen(output, helper, itemModelsProvider));
         generator.addProvider(event.includeClient(), itemModelsProvider);
 
+        generator.addProvider(event.includeClient(), new MeadowBlockTagDatagen(output, provider, helper));
+
     }
 }

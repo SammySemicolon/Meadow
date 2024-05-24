@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "meadow:block/tranquil_lily_bottom"
+    },
+    "half=upper": {
+      "model": "meadow:block/tranquil_lily_top"
+    }
+  }
+}

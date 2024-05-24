@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "meadow:block/beryl_alstro_bottom"
+    },
+    "half=upper": {
+      "model": "meadow:block/beryl_alstro_top"
+    }
+  }
+}

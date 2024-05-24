@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block;
+package com.smellysleepy.meadow.common.block.meadow;
 
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.core.*;
@@ -12,10 +12,7 @@ public class MeadowGrassBlock extends TallGrassBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
-        if (pLevel.getBlockState(pPos.below()).getBlock().equals(MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get())) {
-            return true;
-        }
-        return super.canSurvive(pState, pLevel, pPos);
+    protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
+        return pState.is(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND);
     }
 }
