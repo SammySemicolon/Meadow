@@ -12,8 +12,8 @@ import java.awt.*;
 
 public class MeadowLeavesBlock extends LodestoneLeavesBlock {
 
-    public static final Color MEADOW_YELLOW = new Color(251, 193, 76);
-    public static final Color MEADOW_ORANGE = new Color(217, 110, 23);
+    public static final Color MEADOW_YELLOW = new Color(255, 178, 38);
+    public static final Color MEADOW_ORANGE = new Color(229, 94, 53);
 
     public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 4);
 
