@@ -33,7 +33,6 @@ public class MeadowBlockRegistry {
     public static final RegistryObject<Block> MEADOW_BOARDS_TEST = BLOCKS.register("meadow_boards_test", () -> new Block(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
     public static final RegistryObject<Block> MEADOW_VERTICAL_BOARDS_TEST = BLOCKS.register("meadow_vertical_boards_test", () -> new Block(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
 
-
     public static final RegistryObject<Block> CRIMSON_SUN = BLOCKS.register("crimson_sun", () -> new CrimsonSunFlower(MeadowBlockProperties.STRANGE_FLORA_PROPERTIES()));
     public static final RegistryObject<Block> LAZURITE_ROSE = BLOCKS.register("lazurite_rose", () -> new LazuriteRoseFlower(MeadowBlockProperties.STRANGE_FLORA_PROPERTIES()));
     public static final RegistryObject<Block> BERYL_ALSTRO = BLOCKS.register("beryl_alstro", () -> new BerylAlstroFlower(MeadowBlockProperties.STRANGE_FLORA_PROPERTIES()));

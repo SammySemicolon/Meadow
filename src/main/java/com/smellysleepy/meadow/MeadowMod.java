@@ -14,6 +14,7 @@ import java.util.*;
 
 import static com.smellysleepy.meadow.registry.common.MeadowBlockRegistry.BLOCKS;
 import static com.smellysleepy.meadow.registry.common.MeadowItemRegistry.*;
+import static com.smellysleepy.meadow.registry.common.MeadowParticleRegistry.PARTICLES;
 
 @SuppressWarnings("unused")
 @Mod(MeadowMod.MEADOW)
@@ -26,6 +27,7 @@ public class MeadowMod {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
+        PARTICLES.register(modBus);
     }
 
     public static ResourceLocation meadowModPath(String path) {
