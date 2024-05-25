@@ -45,7 +45,6 @@ public class MeadowBlockRegistry {
         @SubscribeEvent
         public static void setBlockColors(RegisterColorHandlersEvent.Block event) {
             BlockColors blockColors = event.getBlockColors();
-            MeadowLeavesBlock.registerSimpleGradientColors(blockColors, MEADOW_LEAVES.get());
         }
     }
 }

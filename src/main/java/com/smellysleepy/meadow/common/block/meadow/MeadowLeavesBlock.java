@@ -10,27 +10,9 @@ import team.lodestar.lodestone.systems.block.*;
 
 import java.awt.*;
 
-public class MeadowLeavesBlock extends LodestoneLeavesBlock {
-
-    public static final Color MEADOW_YELLOW = new Color(255, 178, 38);
-    public static final Color MEADOW_ORANGE = new Color(229, 94, 53);
-
-    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 4);
+public class MeadowLeavesBlock extends LeavesBlock {
 
     public MeadowLeavesBlock(Properties properties) {
-        super(properties, MEADOW_ORANGE, MEADOW_YELLOW);
-    }
-
-    @Override
-    public IntegerProperty getColorProperty() {
-        return COLOR;
-    }
-
-    @Override
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-        final BlockState state = super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
-        final int value = state.getValue(DISTANCE);
-        return state.setValue(COLOR, Mth.clamp(4 - pCurrentPos.getY()%5, 0, 4));
-
+        super(properties);
     }
 }
