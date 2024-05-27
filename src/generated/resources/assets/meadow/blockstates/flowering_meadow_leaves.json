@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "meadow:block/flowering_meadow_leaves_0"
+      },
+      {
+        "model": "meadow:block/flowering_meadow_leaves_1"
+      },
+      {
+        "model": "meadow:block/flowering_meadow_leaves_2"
+      }
+    ]
+  }
+}

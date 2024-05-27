@@ -33,6 +33,23 @@ public class MeadowBlockStateSmithTypes {
         builder.addModel();
     });
 
+    public static BlockStateSmith<LeavesBlock> FLOWERING_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_0"), (block, provider) -> {
+        String name = provider.getBlockName(block);
+        Function<Integer, ModelFile> modelProvider = (i) ->
+                provider.models().withExistingParent(name+"_"+i, new ResourceLocation("block/leaves")).texture("all", provider.getBlockTexture(name + "_" + i));
+
+        ConfiguredModel.Builder<VariantBlockStateBuilder> builder = provider.getVariantBuilder(block).partialState().modelForState();
+
+        for (int i = 0; i < 3; i++) {
+            final ModelFile model = modelProvider.apply(i);
+            builder = builder.modelFile(model);
+            if (i != 2) {
+                builder = builder.nextModel();
+            }
+        }
+        builder.addModel();
+    });
+
 
     public static BlockStateSmith<MeadowTallHangingLeavesBlock> TALL_HANGING_LEAVES = new BlockStateSmith<>(MeadowTallHangingLeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_bottom"), (block, provider) -> {
         String name = provider.getBlockName(block);
@@ -49,16 +66,13 @@ public class MeadowBlockStateSmithTypes {
 
     public static BlockStateSmith<MeadowWallFungusBlock> WALL_MUSHROOM = new BlockStateSmith<>(MeadowWallFungusBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_0"), (block, provider) -> {
         String name = provider.getBlockName(block);
-        Function<Integer, ModelFile> modelProvider = (i) ->
-                provider.models().withExistingParent(name + "_" + i, MeadowMod.meadowModPath("block/templates/template_wall_mushroom"))
-                        .texture("mushroom", provider.getBlockTexture(name + "_" + i));
-
         provider.getVariantBuilder(block).forAllStates(s -> {
-            final int rotation = ((int) s.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360;
+            int rotation = ((int) s.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360;
+            int age = s.getValue(MeadowWallFungusBlock.AGE);
+            final BlockModelBuilder model = provider.models().withExistingParent(name + "_" + age, MeadowMod.meadowModPath("block/templates/template_wall_mushroom"))
+                    .texture("mushroom", provider.getBlockTexture(name + "_" + age));
             return ConfiguredModel.builder()
-                    .modelFile(modelProvider.apply(0)).rotationY(rotation)
-                    .nextModel().modelFile(modelProvider.apply(1)).rotationY(rotation)
-                    .nextModel().modelFile(modelProvider.apply(2)).rotationY(rotation)
+                    .modelFile(model).rotationY(rotation)
                     .build();
         });
     });

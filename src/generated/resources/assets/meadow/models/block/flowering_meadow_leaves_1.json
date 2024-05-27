@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "meadow:block/flowering_meadow_leaves_1"
+  }
+}

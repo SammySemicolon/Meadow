@@ -1,57 +1,64 @@
 {
   "variants": {
-    "facing=east": [
-      {
-        "model": "meadow:block/meadow_mushroom_0",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_mushroom_1",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_mushroom_2",
-        "y": 90
-      }
-    ],
-    "facing=north": [
-      {
-        "model": "meadow:block/meadow_mushroom_0"
-      },
-      {
-        "model": "meadow:block/meadow_mushroom_1"
-      },
-      {
-        "model": "meadow:block/meadow_mushroom_2"
-      }
-    ],
-    "facing=south": [
-      {
-        "model": "meadow:block/meadow_mushroom_0",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_mushroom_1",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_mushroom_2",
-        "y": 180
-      }
-    ],
-    "facing=west": [
-      {
-        "model": "meadow:block/meadow_mushroom_0",
-        "y": 270
-      },
-      {
-        "model": "meadow:block/meadow_mushroom_1",
-        "y": 270
-      },
-      {
-        "model": "meadow:block/meadow_mushroom_2",
-        "y": 270
-      }
-    ]
+    "age=0,facing=east": {
+      "model": "meadow:block/meadow_mushroom_0",
+      "y": 90
+    },
+    "age=0,facing=north": {
+      "model": "meadow:block/meadow_mushroom_0"
+    },
+    "age=0,facing=south": {
+      "model": "meadow:block/meadow_mushroom_0",
+      "y": 180
+    },
+    "age=0,facing=west": {
+      "model": "meadow:block/meadow_mushroom_0",
+      "y": 270
+    },
+    "age=1,facing=east": {
+      "model": "meadow:block/meadow_mushroom_1",
+      "y": 90
+    },
+    "age=1,facing=north": {
+      "model": "meadow:block/meadow_mushroom_1"
+    },
+    "age=1,facing=south": {
+      "model": "meadow:block/meadow_mushroom_1",
+      "y": 180
+    },
+    "age=1,facing=west": {
+      "model": "meadow:block/meadow_mushroom_1",
+      "y": 270
+    },
+    "age=2,facing=east": {
+      "model": "meadow:block/meadow_mushroom_2",
+      "y": 90
+    },
+    "age=2,facing=north": {
+      "model": "meadow:block/meadow_mushroom_2"
+    },
+    "age=2,facing=south": {
+      "model": "meadow:block/meadow_mushroom_2",
+      "y": 180
+    },
+    "age=2,facing=west": {
+      "model": "meadow:block/meadow_mushroom_2",
+      "y": 270
+    },
+    "age=3,facing=east": {
+      "model": "meadow:block/meadow_mushroom_3",
+      "y": 90
+    },
+    "age=3,facing=north": {
+      "model": "meadow:block/meadow_mushroom_3"
+    },
+    "age=3,facing=south": {
+      "model": "meadow:block/meadow_mushroom_3",
+      "y": 180
+    },
+    "age=3,facing=west": {
+      "model": "meadow:block/meadow_mushroom_3",
+      "y": 270
+    }
   }
 }
