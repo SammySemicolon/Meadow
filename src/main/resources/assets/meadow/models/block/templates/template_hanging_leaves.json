@@ -3,6 +3,7 @@
 	"parent": "block/block",
 	"ambientocclusion": false,
 	"textures": {
+		"particle" : "#hanging_leaves"
 	},
 	"elements": [
 		{

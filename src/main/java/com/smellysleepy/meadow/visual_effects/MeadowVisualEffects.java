@@ -22,13 +22,10 @@ public class MeadowVisualEffects {
         var rand = level.getRandom();
 
         float scale = RandomHelper.randomBetween(rand, 0.075F, 0.1F);
-        float brightness = RandomHelper.randomBetween(rand, 0.9f, 1f);
-        float endingBrightness = brightness - 0.1f;
         int lifetime = RandomHelper.randomBetween(rand, 200, 300);
 
-        var spinData = SpinParticleData.createRandomDirection(rand, nextFloat(rand, 0.025f, 0.05f), nextFloat(rand, 0.1f, 0.125f))
+        var spinData = SpinParticleData.createRandomDirection(rand, nextFloat(rand, 0.01f, 0.025f), nextFloat(rand, 0.1f, 0.125f))
                 .randomSpinOffset(rand).build();
-        var colorData = ColorParticleData.create(brightness, brightness, brightness, endingBrightness, endingBrightness, endingBrightness).build();
         var scaleData = GenericParticleData.create(scale, scale * 0.75f).build();
         var transparencyData = GenericParticleData.create(0f, 1f, 0.2f).setEasing(Easing.QUARTIC_OUT, Easing.SINE_IN_OUT).build();
         final Consumer<LodestoneWorldParticleActor> fall = p -> {
@@ -39,10 +36,10 @@ public class MeadowVisualEffects {
                 .setTransparencyData(transparencyData)
                 .setSpinData(spinData)
                 .setScaleData(scaleData)
-                .setColorData(colorData)
                 .setLifetime(lifetime)
                 .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)
                 .setDiscardFunction(SimpleParticleOptions.ParticleDiscardFunctionType.ENDING_CURVE_INVISIBLE)
+                .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.RANDOM_SPRITE)
                 .addTickActor(fall);
 
         return new ParticleEffectSpawner<>(level, pos, worldParticleBuilder);
