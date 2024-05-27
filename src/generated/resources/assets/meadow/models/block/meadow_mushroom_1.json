@@ -1,0 +1,6 @@
+{
+  "parent": "meadow:block/templates/template_wall_mushroom",
+  "textures": {
+    "mushroom": "meadow:block/meadow_mushroom_1"
+  }
+}

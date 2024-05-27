@@ -32,8 +32,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.LEAVES_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LEAVES);
         MeadowBlockStateSmithTypes.HANGING_LEAVES.act(data, MeadowBlockRegistry.HANGING_MEADOW_LEAVES);
         MeadowBlockStateSmithTypes.TALL_HANGING_LEAVES.act(data, MeadowBlockRegistry.TALL_HANGING_MEADOW_LEAVES);
-
-        BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::horizontalBlock, this::wallFungusModel, MeadowBlockRegistry.MEADOW_MUSHROOM);
+        MeadowBlockStateSmithTypes.WALL_MUSHROOM.act(data, MeadowBlockRegistry.MEADOW_MUSHROOM);
 
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.MEADOW_BOARDS_TEST, MeadowBlockRegistry.MEADOW_VERTICAL_BOARDS_TEST);
 

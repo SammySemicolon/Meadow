@@ -1,7 +1,6 @@
 {
   "parent": "meadow:block/templates/template_hanging_leaves",
   "textures": {
-    "hanging_leaves": "meadow:block/hanging_meadow_leaves_3",
-    "particle": "meadow:block/hanging_meadow_leaves_3"
+    "hanging_leaves": "meadow:block/hanging_meadow_leaves_3"
   }
 }
