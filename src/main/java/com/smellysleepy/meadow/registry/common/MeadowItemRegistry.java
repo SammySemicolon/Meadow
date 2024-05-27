@@ -1,7 +1,6 @@
 package com.smellysleepy.meadow.registry.common;
 
 import com.smellysleepy.meadow.*;
-import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.*;
 import team.lodestar.lodestone.systems.item.*;
@@ -23,7 +22,9 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> SHORT_MEADOW_GRASS = register("short_meadow_grass", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), p));
 
     public static final RegistryObject<Item> MEADOW_LEAVES = register("meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LEAVES.get(), p));
-    public static final RegistryObject<Item> MEADOW_LOG_TEST = register("meadow_log_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LOG_TEST.get(), p));
+    public static final RegistryObject<Item> HANGING_MEADOW_LEAVES = register("hanging_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HANGING_MEADOW_LEAVES.get(), p));
+    public static final RegistryObject<Item> TALL_HANGING_MEADOW_LEAVES = register("tall_hanging_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_HANGING_MEADOW_LEAVES.get(), p));
+    public static final RegistryObject<Item> MEADOW_LOG = register("meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LOG.get(), p));
     public static final RegistryObject<Item> MEADOW_BOARDS_TEST = register("meadow_boards_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_BOARDS_TEST.get(), p));
     public static final RegistryObject<Item> MEADOW_VERTICAL_BOARDS_TEST = register("meadow_vertical_boards_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_VERTICAL_BOARDS_TEST.get(), p));
 

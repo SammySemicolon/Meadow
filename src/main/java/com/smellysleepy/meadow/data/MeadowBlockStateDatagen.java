@@ -26,8 +26,10 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS);
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
 
-        BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LOG_TEST);
+        BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LOG);
         BlockStateSmithTypes.LEAVES_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LEAVES);
+        MeadowBlockStateSmithTypes.HANGING_LEAVES.act(data, MeadowBlockRegistry.HANGING_MEADOW_LEAVES);
+        MeadowBlockStateSmithTypes.TALL_HANGING_LEAVES.act(data, MeadowBlockRegistry.TALL_HANGING_MEADOW_LEAVES);
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.MEADOW_BOARDS_TEST, MeadowBlockRegistry.MEADOW_VERTICAL_BOARDS_TEST);
 
         setTexturePath("strange_flora/mineral/");

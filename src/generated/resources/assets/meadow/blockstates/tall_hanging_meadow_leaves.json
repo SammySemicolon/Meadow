@@ -1,0 +1,172 @@
+{
+  "variants": {
+    "distance=1,half=lower,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=1,half=lower,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=1,half=lower,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=1,half=lower,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=1,half=upper,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=1,half=upper,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=1,half=upper,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=1,half=upper,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=2,half=lower,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=2,half=lower,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=2,half=lower,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=2,half=lower,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=2,half=upper,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=2,half=upper,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=2,half=upper,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=2,half=upper,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=3,half=lower,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=3,half=lower,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=3,half=lower,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=3,half=lower,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=3,half=upper,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=3,half=upper,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=3,half=upper,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=3,half=upper,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=4,half=lower,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=4,half=lower,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=4,half=lower,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=4,half=lower,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=4,half=upper,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=4,half=upper,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=4,half=upper,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=4,half=upper,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=5,half=lower,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=5,half=lower,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=5,half=lower,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=5,half=lower,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=5,half=upper,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=5,half=upper,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=5,half=upper,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=5,half=upper,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=6,half=lower,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=6,half=lower,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=6,half=lower,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=6,half=lower,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=6,half=upper,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=6,half=upper,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=6,half=upper,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=6,half=upper,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=7,half=lower,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=7,half=lower,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=7,half=lower,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=7,half=lower,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_bottom"
+    },
+    "distance=7,half=upper,persistent=false,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=7,half=upper,persistent=false,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=7,half=upper,persistent=true,waterlogged=false": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    },
+    "distance=7,half=upper,persistent=true,waterlogged=true": {
+      "model": "meadow:block/tall_hanging_meadow_leaves_top"
+    }
+  }
+}

@@ -33,9 +33,16 @@ public class MeadowBlockProperties {
                 .strength(0.2F)
                 .randomTicks()
                 .noOcclusion()
+                .isValidSpawn(Blocks::ocelotOrParrot)
+                .isSuffocating(Blocks::never)
+                .isViewBlocking(Blocks::never)
                 .sound(SoundType.CHERRY_LEAVES)
                 .setCutoutRenderType()
                 .needsHoe();
+    }
+
+    public static LodestoneBlockProperties HANGING_MEADOW_LEAVES_PROPERTIES() {
+        return MEADOW_LEAVES_PROPERTIES().noCollission();
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {

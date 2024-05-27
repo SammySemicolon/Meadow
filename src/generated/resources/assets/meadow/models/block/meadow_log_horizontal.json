@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "meadow:block/meadow_log_top",
+    "side": "meadow:block/meadow_log"
+  }
+}

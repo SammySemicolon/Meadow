@@ -1,20 +1,15 @@
 package com.smellysleepy.meadow.registry.common;
 
-import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.meadow.*;
 import com.smellysleepy.meadow.common.block.strange_flora.mineral_flora.*;
 import net.minecraft.client.color.block.*;
 import net.minecraft.tags.*;
-import net.minecraft.util.*;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.*;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.common.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.registries.*;
-import team.lodestar.lodestone.systems.easing.*;
 
 import static com.smellysleepy.meadow.MeadowMod.MEADOW;
 
@@ -27,9 +22,11 @@ public class MeadowBlockRegistry {
     public static final RegistryObject<Block> MEDIUM_MEADOW_GRASS = BLOCKS.register("medium_meadow_grass", () -> new MeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
     public static final RegistryObject<Block> SHORT_MEADOW_GRASS = BLOCKS.register("short_meadow_grass", () -> new MeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
 
-    public static final RegistryObject<MeadowLeavesBlock> MEADOW_LEAVES = BLOCKS.register("meadow_leaves", () -> new MeadowLeavesBlock(MeadowBlockProperties.MEADOW_LEAVES_PROPERTIES()));
+    public static final RegistryObject<Block> MEADOW_LEAVES = BLOCKS.register("meadow_leaves", () -> new MeadowLeavesBlock(MeadowBlockProperties.MEADOW_LEAVES_PROPERTIES()));
+    public static final RegistryObject<Block> HANGING_MEADOW_LEAVES = BLOCKS.register("hanging_meadow_leaves", () -> new MeadowHangingLeavesBlock(MeadowBlockProperties.HANGING_MEADOW_LEAVES_PROPERTIES()));
+    public static final RegistryObject<Block> TALL_HANGING_MEADOW_LEAVES = BLOCKS.register("tall_hanging_meadow_leaves", () -> new MeadowTallHangingLeavesBlock(MeadowBlockProperties.HANGING_MEADOW_LEAVES_PROPERTIES()));
 
-    public static final RegistryObject<Block> MEADOW_LOG_TEST = BLOCKS.register("meadow_log_test", () -> new RotatedPillarBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
+    public static final RegistryObject<Block> MEADOW_LOG = BLOCKS.register("meadow_log", () -> new RotatedPillarBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
     public static final RegistryObject<Block> MEADOW_BOARDS_TEST = BLOCKS.register("meadow_boards_test", () -> new Block(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
     public static final RegistryObject<Block> MEADOW_VERTICAL_BOARDS_TEST = BLOCKS.register("meadow_vertical_boards_test", () -> new Block(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
 
