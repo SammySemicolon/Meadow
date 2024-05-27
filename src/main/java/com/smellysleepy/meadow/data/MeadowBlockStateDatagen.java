@@ -4,6 +4,7 @@ import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.data.*;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.*;
 import team.lodestar.lodestone.systems.datagen.*;
 import team.lodestar.lodestone.systems.datagen.providers.*;
@@ -27,9 +28,13 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
 
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LOG);
+        BlockStateSmithTypes.DIRECTIONAL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_MEADOW_LOG);
         BlockStateSmithTypes.LEAVES_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LEAVES);
         MeadowBlockStateSmithTypes.HANGING_LEAVES.act(data, MeadowBlockRegistry.HANGING_MEADOW_LEAVES);
         MeadowBlockStateSmithTypes.TALL_HANGING_LEAVES.act(data, MeadowBlockRegistry.TALL_HANGING_MEADOW_LEAVES);
+
+        BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::horizontalBlock, this::wallFungusModel, MeadowBlockRegistry.MEADOW_MUSHROOM);
+
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.MEADOW_BOARDS_TEST, MeadowBlockRegistry.MEADOW_VERTICAL_BOARDS_TEST);
 
         setTexturePath("strange_flora/mineral/");
@@ -37,5 +42,11 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.BERYL_ALSTRO, MeadowBlockRegistry.TRANQUIL_LILY);
         setTexturePath("");
 
+    }
+
+    public ModelFile wallFungusModel(Block block) {
+        String name = getBlockName(block);
+        return models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_wall_mushroom"))
+                .texture("mushroom", getBlockTexture(name));
     }
 }

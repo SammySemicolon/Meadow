@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "meadow:block/meadow_mushroom",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "meadow:block/meadow_mushroom"
+    },
+    "facing=south": {
+      "model": "meadow:block/meadow_mushroom",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "meadow:block/meadow_mushroom",
+      "y": 270
+    }
+  }
+}

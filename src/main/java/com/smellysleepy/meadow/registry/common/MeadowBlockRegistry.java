@@ -26,9 +26,12 @@ public class MeadowBlockRegistry {
     public static final RegistryObject<Block> HANGING_MEADOW_LEAVES = BLOCKS.register("hanging_meadow_leaves", () -> new MeadowHangingLeavesBlock(MeadowBlockProperties.HANGING_MEADOW_LEAVES_PROPERTIES()));
     public static final RegistryObject<Block> TALL_HANGING_MEADOW_LEAVES = BLOCKS.register("tall_hanging_meadow_leaves", () -> new MeadowTallHangingLeavesBlock(MeadowBlockProperties.HANGING_MEADOW_LEAVES_PROPERTIES()));
 
+    public static final RegistryObject<Block> CALCIFIED_MEADOW_LOG = BLOCKS.register("calcified_meadow_log", () -> new CalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
     public static final RegistryObject<Block> MEADOW_LOG = BLOCKS.register("meadow_log", () -> new RotatedPillarBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
     public static final RegistryObject<Block> MEADOW_BOARDS_TEST = BLOCKS.register("meadow_boards_test", () -> new Block(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
     public static final RegistryObject<Block> MEADOW_VERTICAL_BOARDS_TEST = BLOCKS.register("meadow_vertical_boards_test", () -> new Block(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
+
+    public static final RegistryObject<Block> MEADOW_MUSHROOM = BLOCKS.register("meadow_mushroom", () -> new MeadowWallFungusBlock(MeadowBlockProperties.WALL_FUNGUS_PROPERTIES()));
 
     public static final RegistryObject<Block> CRIMSON_SUN = BLOCKS.register("crimson_sun", () -> new CrimsonSunFlower(MeadowBlockProperties.STRANGE_FLORA_PROPERTIES()));
     public static final RegistryObject<Block> LAZURITE_ROSE = BLOCKS.register("lazurite_rose", () -> new LazuriteRoseFlower(MeadowBlockProperties.STRANGE_FLORA_PROPERTIES()));

@@ -9,6 +9,19 @@ import team.lodestar.lodestone.systems.block.*;
 
 public class MeadowBlockProperties {
 
+    public static LodestoneBlockProperties WALL_FUNGUS_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .randomTicks()
+                .strength(0.2F, 2.0F)
+                .noCollission()
+                .noOcclusion()
+                .isValidSpawn(Blocks::ocelotOrParrot)
+                .isSuffocating(Blocks::never)
+                .isViewBlocking(Blocks::never)
+                .setCutoutRenderType()
+                .needsHoe();
+    }
+
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .mapColor(MapColor.GRASS)

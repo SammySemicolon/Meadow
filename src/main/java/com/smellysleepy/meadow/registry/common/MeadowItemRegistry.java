@@ -24,9 +24,12 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> MEADOW_LEAVES = register("meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LEAVES.get(), p));
     public static final RegistryObject<Item> HANGING_MEADOW_LEAVES = register("hanging_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HANGING_MEADOW_LEAVES.get(), p));
     public static final RegistryObject<Item> TALL_HANGING_MEADOW_LEAVES = register("tall_hanging_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_HANGING_MEADOW_LEAVES.get(), p));
+    public static final RegistryObject<Item> CALCIFIED_MEADOW_LOG = register("calcified_meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_MEADOW_LOG.get(), p));
     public static final RegistryObject<Item> MEADOW_LOG = register("meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LOG.get(), p));
     public static final RegistryObject<Item> MEADOW_BOARDS_TEST = register("meadow_boards_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_BOARDS_TEST.get(), p));
     public static final RegistryObject<Item> MEADOW_VERTICAL_BOARDS_TEST = register("meadow_vertical_boards_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_VERTICAL_BOARDS_TEST.get(), p));
+
+    public static final RegistryObject<Item> MEADOW_MUSHROOM = register("meadow_mushroom", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_MUSHROOM.get(), p));
 
     public static final RegistryObject<Item> CRIMSON_SUN = register("crimson_sun", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CRIMSON_SUN.get(), p));
     public static final RegistryObject<Item> LAZURITE_ROSE = register("lazurite_rose", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.LAZURITE_ROSE.get(), p));
