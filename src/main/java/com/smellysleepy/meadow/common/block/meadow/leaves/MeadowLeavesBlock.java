@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.meadow;
+package com.smellysleepy.meadow.common.block.meadow.leaves;
 
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.visual_effects.*;

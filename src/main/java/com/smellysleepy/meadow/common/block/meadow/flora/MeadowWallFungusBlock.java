@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.meadow;
+package com.smellysleepy.meadow.common.block.meadow.flora;
 
 import net.minecraft.core.*;
 import net.minecraft.world.level.*;

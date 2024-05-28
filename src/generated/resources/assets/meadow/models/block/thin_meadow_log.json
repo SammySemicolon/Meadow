@@ -1,0 +1,7 @@
+{
+  "parent": "meadow:block/templates/template_thin_log",
+  "textures": {
+    "side": "meadow:block/meadow_log",
+    "top": "meadow:block/meadow_log_top"
+  }
+}

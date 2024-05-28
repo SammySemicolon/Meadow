@@ -1,6 +1,8 @@
 {
   "values": [
-    "meadow:calcified_meadow_log",
-    "meadow:meadow_log"
+    "meadow:partially_calcified_meadow_log",
+    "meadow:thin_meadow_log",
+    "meadow:meadow_log",
+    "meadow:fully_calcified_meadow_log"
   ]
 }

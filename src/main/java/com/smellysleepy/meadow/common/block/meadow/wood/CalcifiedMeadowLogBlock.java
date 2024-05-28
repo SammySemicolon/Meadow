@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.meadow;
+package com.smellysleepy.meadow.common.block.meadow.wood;
 
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.sounds.*;

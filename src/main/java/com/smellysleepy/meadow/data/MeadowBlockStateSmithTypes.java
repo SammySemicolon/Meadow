@@ -1,7 +1,9 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
-import com.smellysleepy.meadow.common.block.meadow.*;
+import com.smellysleepy.meadow.common.block.meadow.flora.*;
+import com.smellysleepy.meadow.common.block.meadow.leaves.*;
+import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.*;
@@ -64,7 +66,7 @@ public class MeadowBlockStateSmithTypes {
 
     });
 
-    public static BlockStateSmith<MeadowWallFungusBlock> WALL_MUSHROOM = new BlockStateSmith<>(MeadowWallFungusBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_0"), (block, provider) -> {
+    public static BlockStateSmith<MeadowWallFungusBlock> WALL_MUSHROOM = new BlockStateSmith<>(MeadowWallFungusBlock.class, ItemModelSmithTypes.GENERATED_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
         provider.getVariantBuilder(block).forAllStates(s -> {
             int rotation = ((int) s.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360;
@@ -76,5 +78,40 @@ public class MeadowBlockStateSmithTypes {
                     .build();
         });
     });
+
+    public static BlockStateSmith<ThinMeadowLogBlock> THIN_LOG_BLOCK = new BlockStateSmith<>(ThinMeadowLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+        String name = provider.getBlockName(block);
+        String logName = name.replace("thin_", "");
+        final ResourceLocation sideTexture = provider.getBlockTexture(logName);
+        final ResourceLocation topTexture = provider.getBlockTexture(logName + "_top");
+        final ResourceLocation smallLeavesTexture = provider.getBlockTexture(name + "_small_leaves");
+        final ResourceLocation largeLeavesTexture = provider.getBlockTexture(name + "_large_leaves");
+        ModelFile noLeaves = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_thin_log"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture);
+
+        ModelFile smallLeaves = provider.models().withExistingParent(name+"_small_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("leaves", smallLeavesTexture);
+
+        ModelFile largeLeaves = provider.models().withExistingParent(name+"_large_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("leaves", largeLeavesTexture);
+
+        provider.getVariantBuilder(block).forAllStates(s -> {
+            ModelFile modelFile = null;
+            switch (s.getValue(ThinMeadowLogBlock.LEAVES)) {
+                case NONE -> modelFile = noLeaves;
+                case SMALL -> modelFile = smallLeaves;
+                case LARGE -> modelFile = largeLeaves;
+            }
+
+            return ConfiguredModel.builder().modelFile(modelFile).build();
+        });
+
+    });
+
 
 }

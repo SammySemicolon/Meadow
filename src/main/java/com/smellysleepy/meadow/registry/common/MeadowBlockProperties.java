@@ -24,9 +24,9 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .mapColor(MapColor.GRASS)
                 .randomTicks()
                 .strength(0.6F)
+                .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
                 .addTag(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND)
                 .addTag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND);
@@ -34,24 +34,34 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MEADOW_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .strength(1.75F, 4.0F)
                 .mapColor(MapColor.WOOD)
                 .sound(SoundType.CHERRY_WOOD)
+                .instrument(NoteBlockInstrument.BASS);
+    }
+
+    public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(1.25F, 4.0F)
+                .mapColor(MapColor.WOOD)
+                .sound(SoundType.CHERRY_WOOD)
+                .pushReaction(PushReaction.DESTROY)
                 .instrument(NoteBlockInstrument.BASS)
-                .strength(1.75F, 4.0F);
+                .setCutoutRenderType();
     }
 
     public static LodestoneBlockProperties MEADOW_LEAVES_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTag(BlockTags.LEAVES)
                 .strength(0.2F)
                 .randomTicks()
                 .noOcclusion()
+                .setCutoutRenderType()
                 .isValidSpawn(Blocks::ocelotOrParrot)
                 .isSuffocating(Blocks::never)
                 .isViewBlocking(Blocks::never)
                 .sound(SoundType.CHERRY_LEAVES)
-                .setCutoutRenderType()
-                .needsHoe();
+                .needsHoe()
+                .addTag(BlockTags.LEAVES);
     }
 
     public static LodestoneBlockProperties HANGING_MEADOW_LEAVES_PROPERTIES() {
@@ -61,23 +71,23 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .mapColor(MapColor.GRASS)
+                .sound(SoundType.GRASS)
                 .instabreak()
                 .noCollission()
                 .noOcclusion()
-                .setCutoutRenderType()
-                .sound(SoundType.GRASS);
+                .setCutoutRenderType();
     }
 
     public static LodestoneBlockProperties STRANGE_FLORA_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .mapColor(MapColor.GRASS)
+                .sound(SoundType.GRASS)
+                .pushReaction(PushReaction.DESTROY)
                 .instabreak()
                 .noCollission()
                 .noOcclusion()
                 .setCutoutRenderType()
                 .offsetType(BlockBehaviour.OffsetType.XZ)
-                .ignitedByLava()
-                .pushReaction(PushReaction.DESTROY)
-                .sound(SoundType.GRASS);
+                .ignitedByLava();
     }
 }

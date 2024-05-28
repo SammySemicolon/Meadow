@@ -25,10 +25,11 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> FLOWERING_MEADOW_LEAVES = register("flowering_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.FLOWERING_MEADOW_LEAVES.get(), p));
     public static final RegistryObject<Item> HANGING_MEADOW_LEAVES = register("hanging_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HANGING_MEADOW_LEAVES.get(), p));
     public static final RegistryObject<Item> TALL_HANGING_MEADOW_LEAVES = register("tall_hanging_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_HANGING_MEADOW_LEAVES.get(), p));
-    public static final RegistryObject<Item> CALCIFIED_MEADOW_LOG = register("calcified_meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_MEADOW_LOG.get(), p));
+
+    public static final RegistryObject<Item> FULLY_CALCIFIED_MEADOW_LOG = register("fully_calcified_meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.FULLY_CALCIFIED_MEADOW_LOG.get(), p));
+    public static final RegistryObject<Item> PARTIALLY_CALCIFIED_MEADOW_LOG = register("partially_calcified_meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PARTIALLY_CALCIFIED_MEADOW_LOG.get(), p));
     public static final RegistryObject<Item> MEADOW_LOG = register("meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LOG.get(), p));
-    public static final RegistryObject<Item> MEADOW_BOARDS_TEST = register("meadow_boards_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_BOARDS_TEST.get(), p));
-    public static final RegistryObject<Item> MEADOW_VERTICAL_BOARDS_TEST = register("meadow_vertical_boards_test", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_VERTICAL_BOARDS_TEST.get(), p));
+    public static final RegistryObject<Item> THIN_MEADOW_LOG = register("thin_meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.THIN_MEADOW_LOG.get(), p));
 
     public static final RegistryObject<Item> MEADOW_MUSHROOM = register("meadow_mushroom", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_MUSHROOM.get(), p));
 
