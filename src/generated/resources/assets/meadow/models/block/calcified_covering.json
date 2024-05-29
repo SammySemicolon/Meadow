@@ -1,0 +1,6 @@
+{
+  "parent": "meadow:block/templates/template_covering",
+  "textures": {
+    "covering": "meadow:block/calcified_covering"
+  }
+}

@@ -73,9 +73,7 @@ public class MeadowBlockStateSmithTypes {
             int age = s.getValue(MeadowWallFungusBlock.AGE);
             final BlockModelBuilder model = provider.models().withExistingParent(name + "_" + age, MeadowMod.meadowModPath("block/templates/template_wall_mushroom"))
                     .texture("mushroom", provider.getBlockTexture(name + "_" + age));
-            return ConfiguredModel.builder()
-                    .modelFile(model).rotationY(rotation)
-                    .build();
+            return ConfiguredModel.builder().modelFile(model).rotationY(rotation).build();
         });
     });
 
@@ -113,5 +111,16 @@ public class MeadowBlockStateSmithTypes {
 
     });
 
+    public static BlockStateSmith<CalcifiedCoveringBlock> CALCIFIED_COVERING_BLOCK = new BlockStateSmith<>(CalcifiedCoveringBlock.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {
+        String name = provider.getBlockName(block);
+        provider.getVariantBuilder(block).forAllStates(s -> {
+            int rotation = ((int) s.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360;
+            boolean corner = s.getValue(CalcifiedCoveringBlock.CORNER);
+            String modelName = name + (corner ? "_corner" : "");
 
+            final BlockModelBuilder model = provider.models().withExistingParent(modelName, MeadowMod.meadowModPath("block/templates/template_covering"))
+                    .texture("covering", provider.getBlockTexture(modelName));
+            return ConfiguredModel.builder().modelFile(model).rotationY(rotation).build();
+        });
+    });
 }

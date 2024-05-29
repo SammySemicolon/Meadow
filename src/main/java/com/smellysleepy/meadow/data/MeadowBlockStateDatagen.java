@@ -28,10 +28,10 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS);
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
 
+
+        MeadowBlockStateSmithTypes.CALCIFIED_COVERING_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_COVERING);
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LOG, MeadowBlockRegistry.FULLY_CALCIFIED_MEADOW_LOG);
-
         MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_MEADOW_LOG);
-
         BlockStateSmithTypes.CUSTOM_MODEL.act(data, ItemModelSmithTypes.BLOCK_MODEL_ITEM, this::directionalBlock, this::calcifiedMeadowLogModel, MeadowBlockRegistry.PARTIALLY_CALCIFIED_MEADOW_LOG);
 
 

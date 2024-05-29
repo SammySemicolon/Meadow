@@ -26,6 +26,7 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> HANGING_MEADOW_LEAVES = register("hanging_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HANGING_MEADOW_LEAVES.get(), p));
     public static final RegistryObject<Item> TALL_HANGING_MEADOW_LEAVES = register("tall_hanging_meadow_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_HANGING_MEADOW_LEAVES.get(), p));
 
+    public static final RegistryObject<Item> CALCIFIED_COVERING = register("calcified_covering", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_COVERING.get(), p));
     public static final RegistryObject<Item> FULLY_CALCIFIED_MEADOW_LOG = register("fully_calcified_meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.FULLY_CALCIFIED_MEADOW_LOG.get(), p));
     public static final RegistryObject<Item> PARTIALLY_CALCIFIED_MEADOW_LOG = register("partially_calcified_meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PARTIALLY_CALCIFIED_MEADOW_LOG.get(), p));
     public static final RegistryObject<Item> MEADOW_LOG = register("meadow_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_LOG.get(), p));
