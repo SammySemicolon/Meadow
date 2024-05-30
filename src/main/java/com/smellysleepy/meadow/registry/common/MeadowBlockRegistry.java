@@ -26,7 +26,6 @@ public class MeadowBlockRegistry {
     public static final RegistryObject<Block> MEADOW_LOG = BLOCKS.register("meadow_log", () -> new MeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
 
     public static final RegistryObject<Block> THIN_MEADOW_LOG = BLOCKS.register("thin_meadow_log", () -> new ThinMeadowLogBlock(MeadowBlockProperties.THIN_MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
-
     //endregion
 
     public static final RegistryObject<Block> MEADOW_GRASS_BLOCK = BLOCKS.register("meadow_grass_block", () -> new Block(MeadowBlockProperties.MEADOW_GRASS_BLOCK_PROPERTIES()));

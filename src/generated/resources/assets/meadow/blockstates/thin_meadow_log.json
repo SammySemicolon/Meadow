@@ -1,31 +1,19 @@
 {
   "variants": {
-    "axis=x,leaves=large": {
+    "leaves=large": {
       "model": "meadow:block/thin_meadow_log_large_leaves"
     },
-    "axis=x,leaves=none": {
+    "leaves=medium": {
+      "model": "meadow:block/thin_meadow_log_medium_leaves"
+    },
+    "leaves=none": {
       "model": "meadow:block/thin_meadow_log"
     },
-    "axis=x,leaves=small": {
+    "leaves=small": {
       "model": "meadow:block/thin_meadow_log_small_leaves"
     },
-    "axis=y,leaves=large": {
-      "model": "meadow:block/thin_meadow_log_large_leaves"
-    },
-    "axis=y,leaves=none": {
-      "model": "meadow:block/thin_meadow_log"
-    },
-    "axis=y,leaves=small": {
-      "model": "meadow:block/thin_meadow_log_small_leaves"
-    },
-    "axis=z,leaves=large": {
-      "model": "meadow:block/thin_meadow_log_large_leaves"
-    },
-    "axis=z,leaves=none": {
-      "model": "meadow:block/thin_meadow_log"
-    },
-    "axis=z,leaves=small": {
-      "model": "meadow:block/thin_meadow_log_small_leaves"
+    "leaves=top": {
+      "model": "meadow:block/thin_meadow_log_top_leaves"
     }
   }
 }

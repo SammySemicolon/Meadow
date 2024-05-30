@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "meadow:block/strange_flora/mineral/crimson_sun_stone"
+  }
+}

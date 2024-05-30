@@ -42,7 +42,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         MeadowBlockStateSmithTypes.WALL_MUSHROOM.act(data, MeadowBlockRegistry.MEADOW_MUSHROOM);
 
         setTexturePath("strange_flora/mineral/");
-        BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.LAZURITE_ROSE, MeadowBlockRegistry.CRIMSON_SUN);
+        MeadowBlockStateSmithTypes.STRANGE_PLANT_BLOCK.act(data, MeadowBlockRegistry.LAZURITE_ROSE, MeadowBlockRegistry.CRIMSON_SUN);
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.BERYL_ALSTRO, MeadowBlockRegistry.TRANQUIL_LILY);
         setTexturePath("");
 

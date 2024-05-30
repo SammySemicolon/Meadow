@@ -4,6 +4,7 @@ import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
+import com.smellysleepy.meadow.common.block.strange_flora.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.*;
@@ -83,7 +84,10 @@ public class MeadowBlockStateSmithTypes {
         final ResourceLocation sideTexture = provider.getBlockTexture(logName);
         final ResourceLocation topTexture = provider.getBlockTexture(logName + "_top");
         final ResourceLocation smallLeavesTexture = provider.getBlockTexture(name + "_small_leaves");
+        final ResourceLocation mediumLeavesTexture = provider.getBlockTexture(name + "_medium_leaves");
         final ResourceLocation largeLeavesTexture = provider.getBlockTexture(name + "_large_leaves");
+        final ResourceLocation topLeavesTexture = provider.getBlockTexture("meadow_leaves");
+        final ResourceLocation hangingLeavesTexture = provider.getBlockTexture("hanging_meadow_leaves_3");
         ModelFile noLeaves = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture);
@@ -93,17 +97,31 @@ public class MeadowBlockStateSmithTypes {
                 .texture("top", topTexture)
                 .texture("leaves", smallLeavesTexture);
 
+        ModelFile mediumLeaves = provider.models().withExistingParent(name+"_medium_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("leaves", mediumLeavesTexture);
+
         ModelFile largeLeaves = provider.models().withExistingParent(name+"_large_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("leaves", largeLeavesTexture);
+
+        ModelFile topLeaves = provider.models().withExistingParent(name+"_top_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves_top"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("leaves", largeLeavesTexture)
+                .texture("leaves_block", topLeavesTexture)
+                .texture("hanging_leaves", hangingLeavesTexture);
 
         provider.getVariantBuilder(block).forAllStates(s -> {
             ModelFile modelFile = null;
             switch (s.getValue(ThinMeadowLogBlock.LEAVES)) {
                 case NONE -> modelFile = noLeaves;
                 case SMALL -> modelFile = smallLeaves;
+                case MEDIUM -> modelFile = mediumLeaves;
                 case LARGE -> modelFile = largeLeaves;
+                case TOP -> modelFile = topLeaves;
             }
 
             return ConfiguredModel.builder().modelFile(modelFile).build();
@@ -121,6 +139,18 @@ public class MeadowBlockStateSmithTypes {
             final BlockModelBuilder model = provider.models().withExistingParent(modelName, MeadowMod.meadowModPath("block/templates/template_covering"))
                     .texture("covering", provider.getBlockTexture(modelName));
             return ConfiguredModel.builder().modelFile(model).rotationY(rotation).build();
+        });
+    });
+
+    public static BlockStateSmith<AbstractStrangePlant> STRANGE_PLANT_BLOCK = new BlockStateSmith<>(AbstractStrangePlant.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {
+        String name = provider.getBlockName(block);
+        provider.getVariantBuilder(block).forAllStates(s -> {
+            boolean stone = s.getValue(AbstractStrangePlant.STONE);
+            String modelName = name + (stone ? "_stone" : "");
+
+            final BlockModelBuilder model = provider.models().cross(modelName, provider.getBlockTexture(modelName))
+                    .texture("cross", provider.getBlockTexture(modelName));
+            return ConfiguredModel.builder().modelFile(model).build();
         });
     });
 }

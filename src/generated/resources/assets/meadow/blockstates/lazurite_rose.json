@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "stone=false": {
       "model": "meadow:block/lazurite_rose"
+    },
+    "stone=true": {
+      "model": "meadow:block/lazurite_rose_stone"
     }
   }
 }

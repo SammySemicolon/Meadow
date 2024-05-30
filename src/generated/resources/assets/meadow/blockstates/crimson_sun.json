@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "stone=false": {
       "model": "meadow:block/crimson_sun"
+    },
+    "stone=true": {
+      "model": "meadow:block/crimson_sun_stone"
     }
   }
 }
