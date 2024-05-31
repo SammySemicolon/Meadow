@@ -5,10 +5,12 @@ import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.block.strange_flora.*;
+import net.minecraft.core.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraftforge.client.model.generators.*;
+import team.lodestar.lodestone.systems.block.*;
 import team.lodestar.lodestone.systems.datagen.*;
 import team.lodestar.lodestone.systems.datagen.statesmith.*;
 
@@ -129,17 +131,49 @@ public class MeadowBlockStateSmithTypes {
 
     });
 
-    public static BlockStateSmith<CalcifiedCoveringBlock> CALCIFIED_COVERING_BLOCK = new BlockStateSmith<>(CalcifiedCoveringBlock.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {
+    public static BlockStateSmith<LodestoneDirectionalBlock> DIRECTIONAL_LOG_BLOCK = new BlockStateSmith<>(LodestoneDirectionalBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
-        provider.getVariantBuilder(block).forAllStates(s -> {
-            int rotation = ((int) s.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360;
-            boolean corner = s.getValue(CalcifiedCoveringBlock.CORNER);
-            String modelName = name + (corner ? "_corner" : "");
+        ResourceLocation side = provider.getBlockTexture(name);
+        ResourceLocation sideFlipped = provider.getBlockTexture(name + "_flipped");
+        ResourceLocation bottom = provider.getBlockTexture("calcified_meadow_log_top");
+        ResourceLocation top = provider.getBlockTexture("meadow_log_top");
+        ModelFile model = provider.models().cubeBottomTop(name, side, bottom, top);
+        ModelFile flippedModel = provider.models().cubeBottomTop(name + "_flipped", sideFlipped, bottom, top);
 
-            final BlockModelBuilder model = provider.models().withExistingParent(modelName, MeadowMod.meadowModPath("block/templates/template_covering"))
-                    .texture("covering", provider.getBlockTexture(modelName));
-            return ConfiguredModel.builder().modelFile(model).rotationY(rotation).build();
-        });
+        provider.getVariantBuilder(block)
+                .forAllStates(state -> {
+                    Direction direction = state.getValue(BlockStateProperties.FACING);
+                    Direction.AxisDirection axisForFlipped = Direction.AxisDirection.NEGATIVE;
+                    if (direction.getAxis().equals(Direction.Axis.Z)) {
+                        axisForFlipped = axisForFlipped.opposite();
+                    }
+                    ModelFile logModel = direction.getAxisDirection().equals(axisForFlipped) ? flippedModel : model;
+                    final int rotationX = direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0;
+                    final int rotationY = direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot()) + 180) % 360;
+                    return ConfiguredModel.builder()
+                            .modelFile(logModel)
+                            .rotationX(rotationX)
+                            .rotationY(rotationY)
+                            .build();
+                });
+
+
+    });
+
+    public static BlockStateSmith<RootedMeadowBlock> ROOTED_MEADOW_BLOCK = new BlockStateSmith<>(RootedMeadowBlock.class, ItemModelSmithTypes.NO_MODEL, (block, provider) -> {
+        String name = provider.getBlockName(block);
+        ResourceLocation coveringTexture = provider.getBlockTexture("calcified_covering_overlay");
+        final BlockModelBuilder model = provider.models().cubeColumn(name, provider.getBlockTexture("calcified_meadow_log"), provider.getBlockTexture("calcified_meadow_log_top"));
+        MultiPartBlockStateBuilder multipartBuilder = provider.getMultipartBuilder(block).part().modelFile(model).addModel().end();
+        final BlockModelBuilder covering = provider.models().withExistingParent(name + "_covering", MeadowMod.meadowModPath("block/templates/template_covering"))
+                .texture("covering", coveringTexture);
+        for (int i = 0; i < 4; i++) {
+            Direction direction = Direction.from3DDataValue(i+2);
+
+            int rotation = ((int) direction.toYRot()+180) % 360;
+            multipartBuilder.part().modelFile(covering).rotationY(rotation).addModel()
+                    .condition(RootedMeadowBlock.MAP[i], true).end();
+        }
     });
 
     public static BlockStateSmith<AbstractStrangePlant> STRANGE_PLANT_BLOCK = new BlockStateSmith<>(AbstractStrangePlant.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {

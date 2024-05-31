@@ -1,7 +1,7 @@
 {
   "variants": {
     "facing=down": {
-      "model": "meadow:block/partially_calcified_meadow_log",
+      "model": "meadow:block/partially_calcified_meadow_log_flipped",
       "x": 180
     },
     "facing=east": {
@@ -14,7 +14,7 @@
       "x": 90
     },
     "facing=south": {
-      "model": "meadow:block/partially_calcified_meadow_log",
+      "model": "meadow:block/partially_calcified_meadow_log_flipped",
       "x": 90,
       "y": 180
     },
@@ -22,7 +22,7 @@
       "model": "meadow:block/partially_calcified_meadow_log"
     },
     "facing=west": {
-      "model": "meadow:block/partially_calcified_meadow_log",
+      "model": "meadow:block/partially_calcified_meadow_log_flipped",
       "x": 90,
       "y": 270
     }

@@ -1,27 +1,25 @@
 package com.smellysleepy.meadow.common.block.meadow.wood;
 
-import com.smellysleepy.meadow.registry.common.*;
-import net.minecraft.sounds.*;
+import net.minecraft.core.*;
 import net.minecraft.world.item.context.*;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.state.*;
-import net.minecraftforge.common.*;
 import team.lodestar.lodestone.systems.block.*;
 
-import javax.annotation.*;
+import static com.smellysleepy.meadow.common.block.meadow.wood.RootedMeadowBlock.*;
 
-import static net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS;
-
-public class CalcifiedMeadowLogBlock extends LodestoneDirectionalBlock {
+public class CalcifiedMeadowLogBlock extends LodestoneLogBlock {
     public CalcifiedMeadowLogBlock(Properties p_49795_) {
-        super(p_49795_);
+        super(p_49795_, null);
     }
 
     @Override
-    public @org.jetbrains.annotations.Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
-        if (toolAction.equals(ToolActions.AXE_STRIP)) {
-            return MeadowBlockRegistry.MEADOW_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(FACING).getAxis());
-        }
-        return super.getToolModifiedState(state, context, toolAction, simulate);
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return convertToRootedLog(context.getLevel(), super.getStateForPlacement(context), context.getClickedPos());
+    }
+
+    @Override
+    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
+        return convertToRootedLog(pLevel, pState, pPos);
     }
 }

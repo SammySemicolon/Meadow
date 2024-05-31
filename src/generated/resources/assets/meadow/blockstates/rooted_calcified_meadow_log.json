@@ -1,0 +1,44 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "meadow:block/rooted_calcified_meadow_log"
+      }
+    },
+    {
+      "apply": {
+        "model": "meadow:block/rooted_calcified_meadow_log_covering"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "meadow:block/rooted_calcified_meadow_log_covering",
+        "y": 180
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "meadow:block/rooted_calcified_meadow_log_covering",
+        "y": 270
+      },
+      "when": {
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "meadow:block/rooted_calcified_meadow_log_covering",
+        "y": 90
+      },
+      "when": {
+        "east": "true"
+      }
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
     "bottom": "meadow:block/calcified_meadow_log_top",
-    "side": "meadow:block/partially_calcified_meadow_log",
+    "side": "meadow:block/partially_calcified_meadow_log_flipped",
     "top": "meadow:block/meadow_log_top"
   }
 }

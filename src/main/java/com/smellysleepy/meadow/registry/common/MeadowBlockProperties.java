@@ -33,17 +33,6 @@ public class MeadowBlockProperties {
                 .addTag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND);
     }
 
-    public static LodestoneBlockProperties CALCIFIED_COVERING_PROPERTIES() {
-        return new LodestoneBlockProperties()
-                .strength(0.2F)
-                .mapColor(MapColor.COLOR_BLACK)
-                .setRenderType(() -> RenderType::translucent)
-                .forceSolidOn()
-                .noCollission()
-                .sound(SoundType.SCULK_VEIN)
-                .pushReaction(PushReaction.DESTROY);
-    }
-
     public static LodestoneBlockProperties MEADOW_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(1.75F, 4.0F)

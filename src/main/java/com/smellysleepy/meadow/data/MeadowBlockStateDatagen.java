@@ -28,12 +28,10 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS);
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
 
-
-        MeadowBlockStateSmithTypes.CALCIFIED_COVERING_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_COVERING);
-        BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LOG, MeadowBlockRegistry.FULLY_CALCIFIED_MEADOW_LOG);
+        MeadowBlockStateSmithTypes.ROOTED_MEADOW_BLOCK.act(data, MeadowBlockRegistry.ROOTED_CALCIFIED_MEADOW_LOG);
+        BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LOG, MeadowBlockRegistry.CALCIFIED_MEADOW_LOG);
         MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_MEADOW_LOG);
-        BlockStateSmithTypes.CUSTOM_MODEL.act(data, ItemModelSmithTypes.BLOCK_MODEL_ITEM, this::directionalBlock, this::calcifiedMeadowLogModel, MeadowBlockRegistry.PARTIALLY_CALCIFIED_MEADOW_LOG);
-
+        MeadowBlockStateSmithTypes.DIRECTIONAL_LOG_BLOCK.act(data, MeadowBlockRegistry.PARTIALLY_CALCIFIED_MEADOW_LOG);
 
         BlockStateSmithTypes.LEAVES_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LEAVES);
         MeadowBlockStateSmithTypes.FLOWERING_LEAVES.act(data, MeadowBlockRegistry.FLOWERING_MEADOW_LEAVES);
@@ -46,19 +44,5 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.BERYL_ALSTRO, MeadowBlockRegistry.TRANQUIL_LILY);
         setTexturePath("");
 
-    }
-
-    public ModelFile wallFungusModel(Block block) {
-        String name = getBlockName(block);
-        return models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_wall_mushroom"))
-                .texture("mushroom", getBlockTexture(name));
-    }
-
-    public ModelFile calcifiedMeadowLogModel(Block block) {
-        String name = getBlockName(block);
-        ResourceLocation side = getBlockTexture(name);
-        ResourceLocation bottom = getBlockTexture("fully_calcified_meadow_log_top");
-        ResourceLocation top = getBlockTexture("meadow_log_top");
-        return models().cubeBottomTop(name, side, bottom, top);
     }
 }

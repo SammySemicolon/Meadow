@@ -5,6 +5,7 @@ import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.block.strange_flora.mineral_flora.*;
 import net.minecraft.client.color.block.*;
+import net.minecraft.client.renderer.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.api.distmarker.*;
@@ -19,10 +20,10 @@ public class MeadowBlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MEADOW);
 
     //region meadow wood
-    public static final RegistryObject<Block> CALCIFIED_COVERING = BLOCKS.register("calcified_covering", () -> new CalcifiedCoveringBlock(MeadowBlockProperties.CALCIFIED_COVERING_PROPERTIES()));
+    public static final RegistryObject<Block> ROOTED_CALCIFIED_MEADOW_LOG = BLOCKS.register("rooted_calcified_meadow_log", () -> new RootedMeadowBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().setRenderType(()-> RenderType::translucent).addTag(BlockTags.LOGS)));
 
-    public static final RegistryObject<Block> FULLY_CALCIFIED_MEADOW_LOG = BLOCKS.register("fully_calcified_meadow_log", () -> new MeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
-    public static final RegistryObject<Block> PARTIALLY_CALCIFIED_MEADOW_LOG = BLOCKS.register("partially_calcified_meadow_log", () -> new CalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
+    public static final RegistryObject<Block> CALCIFIED_MEADOW_LOG = BLOCKS.register("calcified_meadow_log", () -> new CalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
+    public static final RegistryObject<Block> PARTIALLY_CALCIFIED_MEADOW_LOG = BLOCKS.register("partially_calcified_meadow_log", () -> new PartiallyCalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
     public static final RegistryObject<Block> MEADOW_LOG = BLOCKS.register("meadow_log", () -> new MeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
 
     public static final RegistryObject<Block> THIN_MEADOW_LOG = BLOCKS.register("thin_meadow_log", () -> new ThinMeadowLogBlock(MeadowBlockProperties.THIN_MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
