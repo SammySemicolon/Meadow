@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
+import com.smellysleepy.meadow.data.worldgen.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -27,6 +28,8 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), itemModelsProvider);
 
         generator.addProvider(event.includeClient(), new MeadowBlockTagDatagen(output, provider, helper));
+
+        generator.addProvider(event.includeServer(), new MeadowWorldgenRegistryDatagen(output, provider));
 
     }
 }

@@ -2,19 +2,15 @@ package com.smellysleepy.meadow;
 
 import net.minecraft.resources.*;
 import net.minecraft.util.*;
-import net.minecraft.world.item.*;
-import net.minecraftforge.event.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.javafmlmod.*;
-import net.minecraftforge.registries.*;
 import org.apache.logging.log4j.*;
-
-import java.util.*;
 
 import static com.smellysleepy.meadow.registry.common.MeadowBlockRegistry.BLOCKS;
 import static com.smellysleepy.meadow.registry.common.MeadowItemRegistry.*;
 import static com.smellysleepy.meadow.registry.common.MeadowParticleRegistry.PARTICLES;
+import static com.smellysleepy.meadow.registry.worldgen.MeadowFeatureRegistry.*;
 
 @SuppressWarnings("unused")
 @Mod(MeadowMod.MEADOW)
@@ -27,6 +23,7 @@ public class MeadowMod {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
+        FEATURE_TYPES.register(modBus);
         PARTICLES.register(modBus);
     }
 

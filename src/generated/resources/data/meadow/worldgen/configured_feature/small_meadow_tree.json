@@ -1,0 +1,10 @@
+{
+  "type": "meadow:small_meadow_tree",
+  "config": {
+    "fancyLeaves": "meadow:flowering_meadow_leaves",
+    "hangingLeaves": "meadow:hanging_meadow_leaves",
+    "leaves": "meadow:meadow_leaves",
+    "log": "meadow:thin_meadow_log",
+    "sapling": "meadow:meadow_tree_sapling"
+  }
+}

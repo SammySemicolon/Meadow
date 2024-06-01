@@ -25,10 +25,9 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         AbstractBlockStateSmith.StateSmithData data = new AbstractBlockStateSmith.StateSmithData(this, blocks::remove);
 
         BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::varyingRotationBlock, this::grassBlockModel, MeadowBlockRegistry.MEADOW_GRASS_BLOCK);
-        BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS);
+        BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS, MeadowBlockRegistry.MEADOW_TREE_SAPLING);
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
 
-        MeadowBlockStateSmithTypes.ROOTED_MEADOW_BLOCK.act(data, MeadowBlockRegistry.ROOTED_CALCIFIED_MEADOW_LOG);
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LOG, MeadowBlockRegistry.CALCIFIED_MEADOW_LOG);
         MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_MEADOW_LOG);
         MeadowBlockStateSmithTypes.DIRECTIONAL_LOG_BLOCK.act(data, MeadowBlockRegistry.PARTIALLY_CALCIFIED_MEADOW_LOG);
@@ -37,6 +36,8 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         MeadowBlockStateSmithTypes.FLOWERING_LEAVES.act(data, MeadowBlockRegistry.FLOWERING_MEADOW_LEAVES);
         MeadowBlockStateSmithTypes.HANGING_LEAVES.act(data, MeadowBlockRegistry.HANGING_MEADOW_LEAVES);
         MeadowBlockStateSmithTypes.TALL_HANGING_LEAVES.act(data, MeadowBlockRegistry.TALL_HANGING_MEADOW_LEAVES);
+        MeadowBlockStateSmithTypes.MEADOW_LEAF_PILE_BLOCK.act(data, MeadowBlockRegistry.MEADOW_LEAF_PILE);
+
         MeadowBlockStateSmithTypes.WALL_MUSHROOM.act(data, MeadowBlockRegistry.MEADOW_MUSHROOM);
 
         setTexturePath("strange_flora/mineral/");

@@ -1,11 +1,15 @@
 package com.smellysleepy.meadow.data;
 
+import com.mojang.datafixers.util.*;
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.block.strange_flora.*;
+import net.minecraft.*;
 import net.minecraft.core.*;
+import net.minecraft.data.models.blockstates.*;
+import net.minecraft.data.models.model.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.*;
@@ -15,6 +19,8 @@ import team.lodestar.lodestone.systems.datagen.*;
 import team.lodestar.lodestone.systems.datagen.statesmith.*;
 
 import java.util.function.*;
+
+import static net.minecraft.data.models.BlockModelGenerators.MULTIFACE_GENERATOR;
 
 public class MeadowBlockStateSmithTypes {
 
@@ -156,23 +162,30 @@ public class MeadowBlockStateSmithTypes {
                             .rotationY(rotationY)
                             .build();
                 });
-
-
     });
 
-    public static BlockStateSmith<RootedMeadowBlock> ROOTED_MEADOW_BLOCK = new BlockStateSmith<>(RootedMeadowBlock.class, ItemModelSmithTypes.NO_MODEL, (block, provider) -> {
+    public static BlockStateSmith<MeadowLeafPileBlock> MEADOW_LEAF_PILE_BLOCK = new BlockStateSmith<>(MeadowLeafPileBlock.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
-        ResourceLocation coveringTexture = provider.getBlockTexture("calcified_covering_overlay");
-        final BlockModelBuilder model = provider.models().cubeColumn(name, provider.getBlockTexture("calcified_meadow_log"), provider.getBlockTexture("calcified_meadow_log_top"));
-        MultiPartBlockStateBuilder multipartBuilder = provider.getMultipartBuilder(block).part().modelFile(model).addModel().end();
-        final BlockModelBuilder covering = provider.models().withExistingParent(name + "_covering", MeadowMod.meadowModPath("block/templates/template_covering"))
-                .texture("covering", coveringTexture);
-        for (int i = 0; i < 4; i++) {
-            Direction direction = Direction.from3DDataValue(i+2);
+        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_covering"))
+                .texture("covering", provider.getBlockTexture(name));
+        MultiPartBlockStateBuilder multipartBuilder = provider.getMultipartBuilder(block);
+        for (Direction direction : Direction.values()) {
+            BooleanProperty property = (BooleanProperty) block.defaultBlockState().getProperties().stream().filter(p -> p.getName().equals(direction.getName())).findFirst().orElseThrow();
+            int yRotation = ((int) direction.toYRot()+180) % 360;
+            int xRotation = 0;
+            if (direction.getAxis().isVertical()) {
+                xRotation = direction.equals(Direction.UP) ? 270 : 90;
+            }
+            multipartBuilder.part().modelFile(model).rotationY(yRotation).rotationX(xRotation).addModel()
+                    .condition(property, true).end();
 
-            int rotation = ((int) direction.toYRot()+180) % 360;
-            multipartBuilder.part().modelFile(covering).rotationY(rotation).addModel()
-                    .condition(RootedMeadowBlock.MAP[i], true).end();
+            //handles the situation where the block is all alone, not connected to anything
+            final MultiPartBlockStateBuilder.PartBuilder partBuilder = multipartBuilder.part().modelFile(model).rotationY(yRotation).rotationX(xRotation).addModel();
+            for (Direction again : Direction.values()) {
+                property = (BooleanProperty) block.defaultBlockState().getProperties().stream().filter(p -> p.getName().equals(again.getName())).findFirst().orElseThrow();
+                partBuilder.condition(property, false);
+            }
+            partBuilder.end();
         }
     });
 
