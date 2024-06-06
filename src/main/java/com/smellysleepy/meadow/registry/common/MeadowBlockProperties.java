@@ -51,7 +51,7 @@ public class MeadowBlockProperties {
                 .setCutoutRenderType();
     }
 
-    public static LodestoneBlockProperties MEADOW_LEAVES_PROPERTIES() {
+    public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(0.2F)
                 .randomTicks()
@@ -65,8 +65,8 @@ public class MeadowBlockProperties {
                 .addTag(BlockTags.LEAVES);
     }
 
-    public static LodestoneBlockProperties HANGING_MEADOW_LEAVES_PROPERTIES() {
-        return MEADOW_LEAVES_PROPERTIES().noCollission();
+    public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
+        return ASPEN_LEAVES_PROPERTIES().noCollission();
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {

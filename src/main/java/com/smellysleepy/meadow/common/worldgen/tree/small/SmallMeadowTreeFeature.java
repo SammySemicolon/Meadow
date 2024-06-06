@@ -2,6 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.tree.small;
 
 import com.mojang.serialization.*;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
+import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.ThinMeadowLogBlock.*;
 import net.minecraft.core.*;
@@ -56,7 +57,6 @@ public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfig
                 .addLayer(new LodestoneBlockFiller.LodestoneBlockFillerLayer(LEAVES, MergingStrategy.ADD));
 
         BlockPos.MutableBlockPos mutable = pos.mutable();
-
         int trunkHeight = getTrunkHeight(rand);
         boolean hasThinCrown = rand.nextFloat() < 0.3f;
         boolean hasDiamondShapedCrown = rand.nextFloat() < 0.4f;
@@ -72,7 +72,7 @@ public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfig
             final BlockPos logPos = mutable.immutable();
             if (canPlace(level, logPos)) {
                 BlockState state = logState.setValue(ThinMeadowLogBlock.LEAVES, MeadowLeaves.values()[leafStateIndex]);
-                filler.getLayer(LOGS).put(logPos, new BlockStateEntry(state));
+                filler.getLayer(LOGS).put(logPos, LodestoneBlockFiller.create(state));
             }
             else {
                 return false;
@@ -95,13 +95,16 @@ public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfig
                             continue;
                         }
                         if (y == 1) {
-                            filler.getLayer(LEAVES).putIfAbsent(mutable.offset(x, 0, z), new BlockStateEntry(hangingLeaves.defaultBlockState()));
+                            BlockState state = hangingLeaves.defaultBlockState();
+                            var entry = LodestoneBlockFiller.create(state).setCareful();
+                            filler.getLayer(LEAVES).putIfAbsent(mutable.offset(x, 0, z), entry);
                         }
                     }
 
                     Block block = y >= 0 ? rollForFancyLeaves(rand) ? fancyLeaves : leaves : hangingLeaves;
                     BlockState state = block.defaultBlockState();
-                    filler.getLayer(LEAVES).put(mutable.offset(x, y, z), new BlockStateEntry(state));
+                    var entry = LodestoneBlockFiller.create(state).setCareful();
+                    filler.getLayer(LEAVES).put(mutable.offset(x, y, z), entry);
                 }
             }
         }
@@ -116,6 +119,7 @@ public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfig
             return false;
         }
         BlockState state = level.getBlockState(pos);
-        return state.getBlock() instanceof MeadowSaplingBlock || level.isEmptyBlock(pos) || state.canBeReplaced();
+        final Block block = state.getBlock();
+        return block instanceof MeadowSaplingBlock || level.isEmptyBlock(pos) || state.canBeReplaced();
     }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "meadow:block/templates/template_hanging_leaves",
+  "textures": {
+    "hanging_leaves": "meadow:block/aspen_wood/tall_hanging_aspen_leaves_bottom"
+  }
+}

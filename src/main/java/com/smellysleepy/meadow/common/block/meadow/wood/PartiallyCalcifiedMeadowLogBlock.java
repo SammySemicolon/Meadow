@@ -19,7 +19,7 @@ public class PartiallyCalcifiedMeadowLogBlock extends LodestoneDirectionalBlock 
     @Override
     public @org.jetbrains.annotations.Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
         if (toolAction.equals(ToolActions.AXE_STRIP)) {
-            return MeadowBlockRegistry.MEADOW_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(FACING).getAxis());
+            return MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(FACING).getAxis());
         }
         return super.getToolModifiedState(state, context, toolAction, simulate);
     }

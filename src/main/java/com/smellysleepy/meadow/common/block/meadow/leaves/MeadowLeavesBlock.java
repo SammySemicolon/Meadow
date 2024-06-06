@@ -35,7 +35,7 @@ public class MeadowLeavesBlock extends LeavesBlock {
                 double posY = (double)pPos.getY() - 0.05D;
                 double posZ = (double)pPos.getZ() + pRandom.nextDouble();
 
-                var leaves = MeadowVisualEffects.meadowLeaves(pLevel, new Vec3(posX, posY, posZ), new WorldParticleOptions(MeadowParticleRegistry.MEADOW_LEAVES::get, new SparkParticleBehavior(
+                var leaves = MeadowVisualEffects.meadowLeaves(pLevel, new Vec3(posX, posY, posZ), new WorldParticleOptions(MeadowParticleRegistry.ASPEN_LEAVES.get(), new SparkParticleBehavior(
                         GenericParticleData.create(0.075f, 0.035f, 0f).build()
                 )));
                 leaves.spawnParticles();

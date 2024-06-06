@@ -10,9 +10,9 @@ import team.lodestar.lodestone.systems.particle.world.type.*;
 public class MeadowParticleRegistry {
     public static DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MeadowMod.MEADOW);
 
-    public static RegistryObject<LodestoneWorldParticleType> MEADOW_LEAVES = PARTICLES.register("meadow_leaves", LodestoneWorldParticleType::new);
+    public static RegistryObject<LodestoneWorldParticleType> ASPEN_LEAVES = PARTICLES.register("aspen_leaves", LodestoneWorldParticleType::new);
 
     public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
-        Minecraft.getInstance().particleEngine.register(MEADOW_LEAVES.get(), LodestoneWorldParticleType.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ASPEN_LEAVES.get(), LodestoneWorldParticleType.Factory::new);
     }
 }
