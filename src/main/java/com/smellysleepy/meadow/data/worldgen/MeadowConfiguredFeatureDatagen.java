@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.data.worldgen;
 
+import com.smellysleepy.meadow.common.worldgen.tree.*;
 import com.smellysleepy.meadow.common.worldgen.tree.small.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
@@ -12,10 +13,17 @@ import java.util.*;
 public class MeadowConfiguredFeatureDatagen {
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
-
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE, addTreeConfig(MeadowFeatureRegistry.SMALL_MEADOW_TREE.get(), new SmallMeadowTreeFeatureConfiguration(
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
                 MeadowBlockRegistry.THIN_ASPEN_LOG.get(),
+                MeadowBlockRegistry.ASPEN_LEAVES.get(),
+                MeadowBlockRegistry.FLOWERING_ASPEN_LEAVES.get(),
+                MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_TREE, addTreeConfig(MeadowFeatureRegistry.MEADOW_TREE.get(), new MeadowTreeFeatureConfiguration(
+                MeadowBlockRegistry.ASPEN_SAPLING.get(),
+                MeadowBlockRegistry.ASPEN_LOG.get(),
                 MeadowBlockRegistry.ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.FLOWERING_ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()

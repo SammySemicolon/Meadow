@@ -17,12 +17,13 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.*;
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.updateLeaves;
 
 public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfiguration> {
-    public SmallMeadowTreeFeature() {
-        super(SmallMeadowTreeFeatureConfiguration.CODEC);
-    }
 
     public static final LodestoneLayerToken LOGS = new LodestoneLayerToken();
     public static final LodestoneLayerToken LEAVES = new LodestoneLayerToken();
+
+    public SmallMeadowTreeFeature() {
+        super(SmallMeadowTreeFeatureConfiguration.CODEC);
+    }
 
     private int getTrunkHeight(RandomSource random) {
         return Mth.nextInt(random, 3, 5);

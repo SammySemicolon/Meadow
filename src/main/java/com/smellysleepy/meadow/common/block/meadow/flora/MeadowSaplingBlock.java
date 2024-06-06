@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.common.block.meadow.flora;
 
+import com.smellysleepy.meadow.common.worldgen.tree.*;
 import com.smellysleepy.meadow.common.worldgen.tree.small.*;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.core.*;
@@ -9,7 +10,7 @@ import net.minecraft.world.level.block.state.*;
 
 public class MeadowSaplingBlock extends SaplingBlock {
     public MeadowSaplingBlock(Properties pProperties) {
-        super(new SmallMeadowTreeGrower(), pProperties);
+        super(new MeadowTreeGrower(), pProperties);
     }
 
     @Override
