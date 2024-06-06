@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "meadow:block/flowering_aspen_leaves_0"
+      },
+      {
+        "model": "meadow:block/flowering_aspen_leaves_1"
+      },
+      {
+        "model": "meadow:block/flowering_aspen_leaves_2"
+      }
+    ]
+  }
+}

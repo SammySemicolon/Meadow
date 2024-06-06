@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "meadow:block/partially_calcified_aspen_log_flipped",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "meadow:block/partially_calcified_aspen_log",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "meadow:block/partially_calcified_aspen_log",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "meadow:block/partially_calcified_aspen_log_flipped",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "meadow:block/partially_calcified_aspen_log"
+    },
+    "facing=west": {
+      "model": "meadow:block/partially_calcified_aspen_log_flipped",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

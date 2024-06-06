@@ -1,9 +1,9 @@
 {
   "values": [
-    "meadow:meadow_leaf_pile",
-    "meadow:tall_hanging_meadow_leaves",
-    "meadow:flowering_meadow_leaves",
-    "meadow:meadow_leaves",
-    "meadow:hanging_meadow_leaves"
+    "meadow:aspen_leaf_pile",
+    "meadow:tall_hanging_aspen_leaves",
+    "meadow:flowering_aspen_leaves",
+    "meadow:hanging_aspen_leaves",
+    "meadow:aspen_leaves"
   ]
 }

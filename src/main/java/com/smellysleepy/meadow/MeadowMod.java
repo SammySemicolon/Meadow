@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow;
 
+import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.resources.*;
 import net.minecraft.util.*;
 import net.minecraftforge.eventbus.api.*;
@@ -21,6 +22,7 @@ public class MeadowMod {
 
     public MeadowMod() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        MeadowCreativeTabRegistry.CREATIVE_MODE_TABS.register(modBus);
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
         FEATURE_TYPES.register(modBus);

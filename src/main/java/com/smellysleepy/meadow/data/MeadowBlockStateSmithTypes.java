@@ -94,8 +94,8 @@ public class MeadowBlockStateSmithTypes {
         final ResourceLocation smallLeavesTexture = provider.getBlockTexture(name + "_small_leaves");
         final ResourceLocation mediumLeavesTexture = provider.getBlockTexture(name + "_medium_leaves");
         final ResourceLocation largeLeavesTexture = provider.getBlockTexture(name + "_large_leaves");
-        final ResourceLocation topLeavesTexture = provider.getBlockTexture("meadow_leaves");
-        final ResourceLocation hangingLeavesTexture = provider.getBlockTexture("hanging_meadow_leaves_3");
+        final ResourceLocation topLeavesTexture = provider.getBlockTexture("aspen_leaves");
+        final ResourceLocation hangingLeavesTexture = provider.getBlockTexture("hanging_aspen_leaves_3");
         ModelFile noLeaves = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture);
@@ -141,8 +141,8 @@ public class MeadowBlockStateSmithTypes {
         String name = provider.getBlockName(block);
         ResourceLocation side = provider.getBlockTexture(name);
         ResourceLocation sideFlipped = provider.getBlockTexture(name + "_flipped");
-        ResourceLocation bottom = provider.getBlockTexture("calcified_meadow_log_top");
-        ResourceLocation top = provider.getBlockTexture("meadow_log_top");
+        ResourceLocation bottom = provider.getBlockTexture("calcified_aspen_log_top");
+        ResourceLocation top = provider.getBlockTexture("aspen_log_top");
         ModelFile model = provider.models().cubeBottomTop(name, side, bottom, top);
         ModelFile flippedModel = provider.models().cubeBottomTop(name + "_flipped", sideFlipped, bottom, top);
 

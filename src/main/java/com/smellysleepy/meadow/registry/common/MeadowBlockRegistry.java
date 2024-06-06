@@ -20,14 +20,21 @@ public class MeadowBlockRegistry {
 
     //region meadow wood
 
-    public static final RegistryObject<Block> MEADOW_TREE_SAPLING = BLOCKS.register("meadow_tree_sapling", () -> new MeadowSaplingBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<Block> ASPEN_SAPLING = BLOCKS.register("aspen_sapling", () -> new MeadowSaplingBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+
+    public static final RegistryObject<Block> CALCIFIED_ASPEN_LOG = BLOCKS.register("calcified_aspen_log", () -> new CalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
+    public static final RegistryObject<Block> PARTIALLY_CALCIFIED_ASPEN_LOG = BLOCKS.register("partially_calcified_aspen_log", () -> new PartiallyCalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
+    public static final RegistryObject<Block> ASPEN_LOG = BLOCKS.register("aspen_log", () -> new MeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
+
+    public static final RegistryObject<Block> THIN_ASPEN_LOG = BLOCKS.register("thin_aspen_log", () -> new ThinMeadowLogBlock(MeadowBlockProperties.THIN_MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
 
 
-    public static final RegistryObject<Block> CALCIFIED_MEADOW_LOG = BLOCKS.register("calcified_meadow_log", () -> new CalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
-    public static final RegistryObject<Block> PARTIALLY_CALCIFIED_MEADOW_LOG = BLOCKS.register("partially_calcified_meadow_log", () -> new PartiallyCalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
-    public static final RegistryObject<Block> MEADOW_LOG = BLOCKS.register("meadow_log", () -> new MeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
-
-    public static final RegistryObject<Block> THIN_MEADOW_LOG = BLOCKS.register("thin_meadow_log", () -> new ThinMeadowLogBlock(MeadowBlockProperties.THIN_MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
+    public static final RegistryObject<Block> ASPEN_PLANKS = BLOCKS.register("aspen_planks", () -> new ThinMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
+    public static final RegistryObject<Block> ASPEN_BOARDS = BLOCKS.register("aspen_boards", () -> new ThinMeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
+    public static final RegistryObject<Block> ASPEN_DOOR = BLOCKS.register("aspen_door", () -> new DoorBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES(), MeadowBlockSetTypes.ASPEN));
+    public static final RegistryObject<Block> SOLID_ASPEN_DOOR = BLOCKS.register("solid_aspen_door", () -> new DoorBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES(), MeadowBlockSetTypes.ASPEN));
+    public static final RegistryObject<Block> ASPEN_TRAPDOOR = BLOCKS.register("aspen_trapdoor", () -> new TrapDoorBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES(), MeadowBlockSetTypes.ASPEN));
+    public static final RegistryObject<Block> SOLID_ASPEN_TRAPDOOR = BLOCKS.register("solid_aspen_trapdoor", () -> new TrapDoorBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES(), MeadowBlockSetTypes.ASPEN));
     //endregion
 
     public static final RegistryObject<Block> MEADOW_GRASS_BLOCK = BLOCKS.register("meadow_grass_block", () -> new Block(MeadowBlockProperties.MEADOW_GRASS_BLOCK_PROPERTIES()));
@@ -36,11 +43,11 @@ public class MeadowBlockRegistry {
     public static final RegistryObject<Block> MEDIUM_MEADOW_GRASS = BLOCKS.register("medium_meadow_grass", () -> new MeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
     public static final RegistryObject<Block> SHORT_MEADOW_GRASS = BLOCKS.register("short_meadow_grass", () -> new MeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
 
-    public static final RegistryObject<Block> MEADOW_LEAVES = BLOCKS.register("meadow_leaves", () -> new MeadowLeavesBlock(MeadowBlockProperties.MEADOW_LEAVES_PROPERTIES()));
-    public static final RegistryObject<Block> FLOWERING_MEADOW_LEAVES = BLOCKS.register("flowering_meadow_leaves", () -> new MeadowLeavesBlock(MeadowBlockProperties.MEADOW_LEAVES_PROPERTIES()));
-    public static final RegistryObject<Block> HANGING_MEADOW_LEAVES = BLOCKS.register("hanging_meadow_leaves", () -> new MeadowHangingLeavesBlock(MeadowBlockProperties.HANGING_MEADOW_LEAVES_PROPERTIES()));
-    public static final RegistryObject<Block> TALL_HANGING_MEADOW_LEAVES = BLOCKS.register("tall_hanging_meadow_leaves", () -> new MeadowTallHangingLeavesBlock(MeadowBlockProperties.HANGING_MEADOW_LEAVES_PROPERTIES()));
-    public static final RegistryObject<Block> MEADOW_LEAF_PILE = BLOCKS.register("meadow_leaf_pile", () -> new MeadowLeafPileBlock(MeadowBlockProperties.MEADOW_LEAVES_PROPERTIES()));
+    public static final RegistryObject<Block> ASPEN_LEAVES = BLOCKS.register("aspen_leaves", () -> new MeadowLeavesBlock(MeadowBlockProperties.ASPEN_LEAVES_PROPERTIES()));
+    public static final RegistryObject<Block> FLOWERING_ASPEN_LEAVES = BLOCKS.register("flowering_aspen_leaves", () -> new MeadowLeavesBlock(MeadowBlockProperties.ASPEN_LEAVES_PROPERTIES()));
+    public static final RegistryObject<Block> HANGING_ASPEN_LEAVES = BLOCKS.register("hanging_aspen_leaves", () -> new MeadowHangingLeavesBlock(MeadowBlockProperties.HANGING_ASPEN_LEAVES_PROPERTIES()));
+    public static final RegistryObject<Block> TALL_HANGING_ASPEN_LEAVES = BLOCKS.register("tall_hanging_aspen_leaves", () -> new MeadowTallHangingLeavesBlock(MeadowBlockProperties.HANGING_ASPEN_LEAVES_PROPERTIES()));
+    public static final RegistryObject<Block> ASPEN_LEAF_PILE = BLOCKS.register("aspen_leaf_pile", () -> new MeadowLeafPileBlock(MeadowBlockProperties.ASPEN_LEAVES_PROPERTIES()));
 
     public static final RegistryObject<Block> MEADOW_MUSHROOM = BLOCKS.register("meadow_mushroom", () -> new MeadowWallFungusBlock(MeadowBlockProperties.WALL_FUNGUS_PROPERTIES()));
 

@@ -1,8 +1,0 @@
-{
-  "parent": "meadow:block/templates/template_thin_log_with_leaves",
-  "textures": {
-    "leaves": "meadow:block/thin_meadow_log_medium_leaves",
-    "side": "meadow:block/meadow_log",
-    "top": "meadow:block/meadow_log_top"
-  }
-}

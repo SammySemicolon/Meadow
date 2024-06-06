@@ -14,11 +14,11 @@ public class MeadowConfiguredFeatureDatagen {
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE, addTreeConfig(MeadowFeatureRegistry.SMALL_MEADOW_TREE.get(), new SmallMeadowTreeFeatureConfiguration(
-                MeadowBlockRegistry.MEADOW_TREE_SAPLING.get(),
-                MeadowBlockRegistry.THIN_MEADOW_LOG.get(),
-                MeadowBlockRegistry.MEADOW_LEAVES.get(),
-                MeadowBlockRegistry.FLOWERING_MEADOW_LEAVES.get(),
-                MeadowBlockRegistry.HANGING_MEADOW_LEAVES.get()
+                MeadowBlockRegistry.ASPEN_SAPLING.get(),
+                MeadowBlockRegistry.THIN_ASPEN_LOG.get(),
+                MeadowBlockRegistry.ASPEN_LEAVES.get(),
+                MeadowBlockRegistry.FLOWERING_ASPEN_LEAVES.get(),
+                MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
         )));
     }
 

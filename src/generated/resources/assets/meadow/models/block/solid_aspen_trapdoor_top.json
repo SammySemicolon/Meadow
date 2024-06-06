@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_orientable_trapdoor_top",
+  "textures": {
+    "texture": "meadow:block/aspen_wood/solid_aspen_trapdoor"
+  }
+}

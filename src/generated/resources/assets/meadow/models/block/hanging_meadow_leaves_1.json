@@ -1,6 +1,0 @@
-{
-  "parent": "meadow:block/templates/template_hanging_leaves",
-  "textures": {
-    "hanging_leaves": "meadow:block/hanging_meadow_leaves_1"
-  }
-}

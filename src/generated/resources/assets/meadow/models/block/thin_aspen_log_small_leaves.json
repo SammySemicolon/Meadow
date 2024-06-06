@@ -1,0 +1,8 @@
+{
+  "parent": "meadow:block/templates/template_thin_log_with_leaves",
+  "textures": {
+    "leaves": "meadow:block/aspen_wood/thin_aspen_log_small_leaves",
+    "side": "meadow:block/aspen_wood/aspen_log",
+    "top": "meadow:block/aspen_wood/aspen_log_top"
+  }
+}
