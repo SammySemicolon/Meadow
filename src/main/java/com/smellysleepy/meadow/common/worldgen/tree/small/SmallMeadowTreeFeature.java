@@ -96,14 +96,14 @@ public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfig
                         }
                         if (y == 1) {
                             BlockState state = hangingLeaves.defaultBlockState();
-                            var entry = LodestoneBlockFiller.create(state).setCareful();
+                            var entry = LodestoneBlockFiller.create(state);
                             filler.getLayer(LEAVES).putIfAbsent(mutable.offset(x, 0, z), entry);
                         }
                     }
 
                     Block block = y >= 0 ? rollForFancyLeaves(rand) ? fancyLeaves : leaves : hangingLeaves;
                     BlockState state = block.defaultBlockState();
-                    var entry = LodestoneBlockFiller.create(state).setCareful();
+                    var entry = LodestoneBlockFiller.create(state);
                     filler.getLayer(LEAVES).put(mutable.offset(x, y, z), entry);
                 }
             }
