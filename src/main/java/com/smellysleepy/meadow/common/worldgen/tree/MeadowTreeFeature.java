@@ -1,6 +1,5 @@
 package com.smellysleepy.meadow.common.worldgen.tree;
 
-import com.mojang.serialization.*;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import net.minecraft.core.*;
@@ -9,10 +8,9 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.levelgen.feature.*;
-import team.lodestar.lodestone.helpers.*;
 import team.lodestar.lodestone.systems.worldgen.*;
+import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.*;
 
-import java.util.*;
 import java.util.function.*;
 
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.*;
@@ -29,7 +27,7 @@ public class MeadowTreeFeature extends Feature<MeadowTreeFeatureConfiguration> {
     }
 
     private int getTrunkHeight(RandomSource random) {
-        return Mth.nextInt(random, 7, 10);
+        return Mth.nextInt(random, 8, 10);
     }
 
     private int getSideTrunkHeight(RandomSource random) {
@@ -40,8 +38,8 @@ public class MeadowTreeFeature extends Feature<MeadowTreeFeatureConfiguration> {
         return Mth.nextInt(random, 2, 4);
     }
 
-    private int getBranchEndOffset(RandomSource random) {
-        return Mth.nextInt(random, 2, 3);
+    private int getBranchLength(RandomSource random) {
+        return Mth.nextInt(random, 4, 5);
     }
 
     private int getBranchHeight(RandomSource random) {
@@ -54,117 +52,119 @@ public class MeadowTreeFeature extends Feature<MeadowTreeFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<MeadowTreeFeatureConfiguration> context) {
-        WorldGenLevel level = context.level();
-        BlockPos pos = context.origin();
-        RandomSource rand = context.random();
-        final MeadowTreeFeatureConfiguration config = context.config();
-        Block sapling = config.sapling;
-
-        if (level.isEmptyBlock(pos.below()) || !sapling.defaultBlockState().canSurvive(level, pos)) {
+        var level = context.level();
+        var pos = context.origin();
+        var config = context.config();
+        if (level.isEmptyBlock(pos.below()) || !config.sapling.defaultBlockState().canSurvive(level, pos)) {
             return false;
         }
-        Block log = config.log;
-        BlockState logState = log.defaultBlockState();
-
-        LodestoneBlockFiller filler = new LodestoneBlockFiller()
-                .addLayer(new LodestoneBlockFiller.LodestoneBlockFillerLayer(LOGS, LodestoneBlockFiller.MergingStrategy.REPLACE))
-                .addLayer(new LodestoneBlockFiller.LodestoneBlockFillerLayer(LEAVES, LodestoneBlockFiller.MergingStrategy.ADD))
-                .addLayer(new LodestoneBlockFiller.LodestoneBlockFillerLayer(HANGING_LEAVES, LodestoneBlockFiller.MergingStrategy.ADD));
-
+        var rand = context.random();
+        var log = config.log;
+        var logState = log.defaultBlockState();
+        var filler = new LodestoneBlockFiller().addLayers(LOGS, LEAVES, HANGING_LEAVES);
         int trunkHeight = getTrunkHeight(rand);
-        BlockPos trunkTop = pos.above(trunkHeight);
+        var mutable = new BlockPos.MutableBlockPos().set(pos);
 
-        for (int i = 0; i <= trunkHeight; i++) {
-            BlockPos trunkPos = pos.above(i);
-            if (canPlace(level, trunkPos)) {
-                filler.getLayer(LOGS).put(trunkPos, create(logState).setForcePlace());
-            } else {
+        for (int i = 0; i <= trunkHeight; i++) { //Main Trunk
+            if (!canPlace(level, mutable)) {
                 return false;
             }
+            filler.getLayer(LOGS).put(mutable.immutable(), create(logState));
+            mutable.move(Direction.UP);
+        }
+        for (int i = 0; i < 4; i++) { //Side Trunk Stumps
+            Direction direction = Direction.from2DDataValue(i);
+            int sideTrunkHeight = getSideTrunkHeight(rand);
+            if (sideTrunkHeight == 0) {
+                continue;
+            }
+            mutable.set(pos).move(direction);
+            for (int j = 0; j < sideTrunkHeight; j++) {
+                if (!canPlace(level, mutable)) {
+                    return false;
+                }
+                filler.getLayer(LOGS).put(mutable.immutable(), create(logState));
+                mutable.move(Direction.UP);
+            }
+            addDownwardsTrunkConnections(logState, level, filler, mutable);
         }
 
-        for (Direction direction : DIRECTIONS) {
-            int sideTrunkHeight = getSideTrunkHeight(rand);
-            final BlockPos relative = pos.relative(direction);
-            for (int i = 0; i < sideTrunkHeight; i++) {
-                BlockPos sideTrunkPos = relative.above(i);
-                if (canPlace(level, sideTrunkPos)) {
-                    filler.getLayer(LOGS).put(sideTrunkPos, create(logState).setForcePlace());
-                } else {
-                    return false;
-                }
-            }
-            downwardsTrunk(logState, level, filler, relative);
+        int branches = Mth.nextInt(rand, 1, 4);
+        int directionOffset = rand.nextInt(4);
+        for (int i = 0; i < branches; i++) {
+            Direction direction = Direction.from2DDataValue((i+directionOffset)%4);
             int downwardsBranchOffset = getDownwardsBranchOffset(rand);
-            int branchEndOffset = getBranchEndOffset(rand);
-            BlockPos branchStartPos = trunkTop.below(downwardsBranchOffset).relative(direction, branchEndOffset);
-            for (int i = 0; i < branchEndOffset; i++) {
-                BlockPos branchConnectionPos = branchStartPos.relative(direction.getOpposite(), i);
-                if (canPlace(level, branchConnectionPos)) {
-                    filler.getLayer(LOGS).put(branchConnectionPos, create(logState.setValue(RotatedPillarBlock.AXIS, direction.getAxis())).setForcePlace());
-                } else {
-                    return false;
-                }
-            }
+            int branchLength = getBranchLength(rand);
             int branchHeight = getBranchHeight(rand);
-            for (int i = 0; i < branchHeight; i++) {
-                BlockPos branchPos = branchStartPos.above(i);
-                if (canPlace(level, branchPos)) {
-                    filler.getLayer(LOGS).put(branchPos, create(logState).setForcePlace());
-                } else {
+            boolean hanging = true;
+
+            mutable.set(pos);
+            mutable.move(Direction.UP, trunkHeight-downwardsBranchOffset);
+
+            for (int j = 0; j < branchLength; j++) {
+                mutable.move(direction);
+                if (!canPlace(level, mutable)) {
                     return false;
                 }
+                filler.getLayer(LOGS).put(mutable.immutable(), create(logState.setValue(RotatedPillarBlock.AXIS, direction.getAxis())));
+                if (hanging && j >= branchLength/2) {
+                    hanging = false;
+                    j--;
+                    mutable.move(Direction.DOWN);
+                    mutable.move(direction.getOpposite());
+                }
+
             }
-            makeLeafBlob(config, rand, filler, branchStartPos.above(1));
+            for (int j = 0; j < branchHeight; j++) {
+                if (!canPlace(level, mutable)) {
+                    return false;
+                }
+                filler.getLayer(LOGS).put(mutable.immutable(), create(logState));
+                mutable.move(Direction.UP);
+            }
+            makeLeafBlob(config, rand, filler, mutable.move(Direction.DOWN, branchHeight));
         }
-        makeLeafBlob(config, rand, filler, trunkTop);
+        makeLeafBlob(config, rand, filler, mutable.set(pos).move(Direction.UP, trunkHeight-2));
 
         filler.fill(level);
         updateLeaves(level, filler.getLayer(LOGS).keySet());
         return true;
     }
 
-    public void downwardsTrunk(BlockState logState, WorldGenLevel level, LodestoneBlockFiller filler, BlockPos pos) {
-        int i = 0;
-        do {
-            i++;
-            BlockPos trunkPos = pos.below(i);
-            if (canPlace(level, trunkPos)) {
-                filler.getLayer(LOGS).put(trunkPos, create(logState).setForcePlace());
-            } else {
+    public void addDownwardsTrunkConnections(BlockState logState, WorldGenLevel level, LodestoneBlockFiller filler, BlockPos pos) {
+        var mutable = pos.mutable();
+        while (true) {
+            mutable.move(Direction.DOWN);
+            if (!canPlace(level, mutable)) {
                 break;
             }
-            if (i > level.getMaxBuildHeight()) {
-                break;
-            }
+            filler.getLayer(LOGS).put(mutable.immutable(), create(logState));
         }
-        while (true);
     }
 
     public void makeLeafBlob(MeadowTreeFeatureConfiguration config, RandomSource rand, LodestoneBlockFiller filler, BlockPos pos) {
-        final BlockPos.MutableBlockPos mutable = pos.mutable();
-        int[] leafSizes = new int[]{1, 2, 2, 2, 1};
-        mutable.move(Direction.DOWN, 1);
-        for (int i = 0; i < 2; i++) {
-            int size = leafSizes[i];
-            var entry = create(config.hangingLeaves.defaultBlockState())
-                    .setDiscardPredicate((l, p, s) -> {
-                        final LodestoneBlockFiller.BlockStateEntry blockStateEntry = filler.getMainLayer().get(p.above());
-                        return blockStateEntry == null || blockStateEntry.getState().getBlock() instanceof MeadowHangingLeavesBlock;
-                    })
-                    .build();
-            makeLeafSlice(filler.getLayer(HANGING_LEAVES), mutable, size, ()->entry);
+        int[] leafSizes = new int[]{1, 2, 3, 3, 2, 1};
+        var mutable = pos.mutable();
+
+        Supplier<BlockStateEntry> leavesEntry = () -> create((rollForFancyLeaves(rand) ? config.fancyLeaves : config.leaves).defaultBlockState()).build();
+        BlockStateEntry hangingLeavesEntry = create(config.hangingLeaves.defaultBlockState())
+                .setDiscardPredicate((l, p, s) -> !filler.getLayer(LEAVES).containsKey(p.above()))
+                .build();
+        for (int i = 0; i < 6; i++) {
             mutable.move(Direction.UP);
+            makeLeafSlice(filler.getLayer(LEAVES), mutable, leafSizes[i], leavesEntry);
         }
-        mutable.move(Direction.DOWN, 1);
-        for (int i = 0; i < 5; i++) {
-            int size = leafSizes[i];
-            makeLeafSlice(filler.getLayer(LEAVES), mutable, size, ()->create((rollForFancyLeaves(rand) ? config.fancyLeaves : config.leaves).defaultBlockState()).build());
+        mutable.set(pos).move(Direction.DOWN);
+        for (int i = 0; i < 3; i++) {
             mutable.move(Direction.UP);
+            makeLeafSlice(filler.getLayer(HANGING_LEAVES), mutable, leafSizes[i], hangingLeavesEntry);
         }
     }
 
-    public void makeLeafSlice(LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, int leavesSize, Supplier<LodestoneBlockFiller.BlockStateEntry> entry) {
+    public void makeLeafSlice(LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, BlockStateEntry entry) {
+        makeLeafSlice(layer, pos, leavesSize, ()->entry);
+    }
+    public void makeLeafSlice(LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, Supplier<BlockStateEntry> entry) {
         for (int x = -leavesSize; x <= leavesSize; x++) {
             for (int z = -leavesSize; z <= leavesSize; z++) {
                 if (Math.abs(x) == leavesSize && Math.abs(z) == leavesSize) {

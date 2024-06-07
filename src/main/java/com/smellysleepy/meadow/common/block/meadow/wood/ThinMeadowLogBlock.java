@@ -36,6 +36,19 @@ public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
     }
 
     @Override
+    public VoxelShape getBlockSupportShape(BlockState pState, BlockGetter pReader, BlockPos pPos) {
+        return Shapes.empty();
+    }
+
+    @Override
+    public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
+        if (pState.getValue(LEAVES).equals(MeadowLeaves.TOP)) {
+            return Shapes.empty();
+        }
+        return SHAPE;
+    }
+
+    @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         if (pState.getValue(LEAVES).equals(MeadowLeaves.TOP)) {
             return super.getShape(pState, pLevel, pPos, pContext);

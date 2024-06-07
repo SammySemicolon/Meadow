@@ -53,9 +53,7 @@ public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfig
         Block fancyLeaves = context.config().fancyLeaves;
         Block hangingLeaves = context.config().hangingLeaves;
 
-        LodestoneBlockFiller filler = new LodestoneBlockFiller()
-                .addLayer(new LodestoneBlockFiller.LodestoneBlockFillerLayer(LOGS, MergingStrategy.REPLACE))
-                .addLayer(new LodestoneBlockFiller.LodestoneBlockFillerLayer(LEAVES, MergingStrategy.ADD));
+        LodestoneBlockFiller filler = new LodestoneBlockFiller().addLayers(LOGS, LEAVES);
 
         BlockPos.MutableBlockPos mutable = pos.mutable();
         int trunkHeight = getTrunkHeight(rand);
