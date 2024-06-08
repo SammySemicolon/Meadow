@@ -1,0 +1,10 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "foliage": "minecraft:barrier",
+    "ore": "minecraft:deepslate_lapis_ore",
+    "plant": "meadow:lazurite_rose",
+    "primaryDecorator": "meadow:meadow_grass_block",
+    "secondaryDecorator": "minecraft:tuff"
+  }
+}

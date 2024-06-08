@@ -1,0 +1,10 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "foliage": "minecraft:barrier",
+    "ore": "minecraft:redstone_ore",
+    "plant": "meadow:crimson_sun",
+    "primaryDecorator": "minecraft:tuff",
+    "secondaryDecorator": "minecraft:andesite"
+  }
+}

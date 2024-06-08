@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.registry.common;
 
 import com.smellysleepy.meadow.*;
+import com.smellysleepy.meadow.common.item.*;
 import net.minecraft.world.food.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.*;
@@ -15,6 +16,8 @@ import static team.lodestar.lodestone.systems.item.LodestoneItemProperties.TAB_S
 public class MeadowItemRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MEADOW);
+
+    public static final RegistryObject<Item> MAGIC_STICK = register("magic_stick", MeadowItemProperties.DEFAULT_PROPERTIES().stacksTo(1).rarity(Rarity.EPIC), MagicalDeveloperStickItem::new);
 
     public static final RegistryObject<Item> MEADOW_GRASS_BLOCK = register("meadow_grass_block", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get(), p));
     public static final RegistryObject<Item> ASPEN_SAPLING = register("aspen_sapling", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_SAPLING.get(), p.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.15f).build())));

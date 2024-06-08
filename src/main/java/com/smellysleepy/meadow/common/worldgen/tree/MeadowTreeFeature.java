@@ -16,7 +16,7 @@ import java.util.function.*;
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.*;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
-public class MeadowTreeFeature extends Feature<MeadowTreeFeatureConfiguration> {
+public class MeadowTreeFeature extends AbstractMeadowTreeFeature<MeadowTreeFeatureConfiguration> {
 
     public static final LodestoneBlockFiller.LodestoneLayerToken LOGS = new LodestoneBlockFiller.LodestoneLayerToken();
     public static final LodestoneBlockFiller.LodestoneLayerToken LEAVES = new LodestoneBlockFiller.LodestoneLayerToken();
@@ -173,14 +173,5 @@ public class MeadowTreeFeature extends Feature<MeadowTreeFeatureConfiguration> {
                 layer.put(pos.offset(x, 0, z), entry.get());
             }
         }
-    }
-
-    public static boolean canPlace(WorldGenLevel level, BlockPos pos) {
-        if (level.isOutsideBuildHeight(pos)) {
-            return false;
-        }
-        BlockState state = level.getBlockState(pos);
-        final Block block = state.getBlock();
-        return block instanceof MeadowSaplingBlock || level.isEmptyBlock(pos) || state.canBeReplaced();
     }
 }

@@ -1,10 +1,12 @@
 package com.smellysleepy.meadow.data.worldgen;
 
+import com.smellysleepy.meadow.common.worldgen.strange_plant.*;
 import com.smellysleepy.meadow.common.worldgen.tree.*;
 import com.smellysleepy.meadow.common.worldgen.tree.small.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.data.worldgen.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 
@@ -27,6 +29,22 @@ public class MeadowConfiguredFeatureDatagen {
                 MeadowBlockRegistry.ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.FLOWERING_ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CRIMSON_SUN, addTreeConfig(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MeadowBlockRegistry.CRIMSON_SUN.get(),
+                Blocks.REDSTONE_ORE,
+                Blocks.BARRIER,
+                Blocks.TUFF,
+                Blocks.ANDESITE
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.LAZURITE_ROSE, addTreeConfig(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MeadowBlockRegistry.LAZURITE_ROSE.get(),
+                Blocks.DEEPSLATE_LAPIS_ORE,
+                Blocks.BARRIER,
+                MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get(),
+                Blocks.TUFF
         )));
     }
 

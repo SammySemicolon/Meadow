@@ -5,6 +5,7 @@ import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.ThinMeadowLogBlock.*;
+import com.smellysleepy.meadow.common.worldgen.tree.*;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.*;
@@ -16,7 +17,7 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.*;
 
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.updateLeaves;
 
-public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfiguration> {
+public class SmallMeadowTreeFeature extends AbstractMeadowTreeFeature<SmallMeadowTreeFeatureConfiguration> {
 
     public static final LodestoneLayerToken LOGS = new LodestoneLayerToken();
     public static final LodestoneLayerToken LEAVES = new LodestoneLayerToken();
@@ -111,14 +112,5 @@ public class SmallMeadowTreeFeature extends Feature<SmallMeadowTreeFeatureConfig
         filler.fill(level);
         updateLeaves(level, filler.getLayer(LOGS).keySet());
         return true;
-    }
-
-    public static boolean canPlace(WorldGenLevel level, BlockPos pos) {
-        if (level.isOutsideBuildHeight(pos)) {
-            return false;
-        }
-        BlockState state = level.getBlockState(pos);
-        final Block block = state.getBlock();
-        return block instanceof MeadowSaplingBlock || level.isEmptyBlock(pos) || state.canBeReplaced();
     }
 }
