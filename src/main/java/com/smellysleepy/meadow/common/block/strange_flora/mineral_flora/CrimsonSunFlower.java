@@ -24,11 +24,11 @@ public class CrimsonSunFlower extends AbstractStrangePlant {
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         super.animateTick(pState, pLevel, pPos, pRandom);
-        if (pRandom.nextInt(2) == 0) {
+        if (pRandom.nextInt(3) == 0) {
             BlockPos blockpos = pPos.above();
             BlockState blockstate = pLevel.getBlockState(blockpos);
             if (!isFaceFull(blockstate.getCollisionShape(pLevel, blockpos), Direction.UP)) {
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 2; i++) {
                     double posX = (double) pPos.getX() + 0.15f + pRandom.nextDouble() * 0.7f;
                     double posY = (double) pPos.getY() + 0.15f + pRandom.nextDouble() * 0.7f;
                     double posZ = (double) pPos.getZ() + 0.15f + pRandom.nextDouble() * 0.7f;
