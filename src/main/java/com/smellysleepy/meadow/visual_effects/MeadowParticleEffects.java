@@ -1,7 +1,6 @@
 package com.smellysleepy.meadow.visual_effects;
 
 import com.smellysleepy.meadow.registry.common.*;
-import net.minecraft.core.particles.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.phys.*;
 import team.lodestar.lodestone.helpers.*;
@@ -12,17 +11,19 @@ import team.lodestar.lodestone.systems.particle.data.*;
 import team.lodestar.lodestone.systems.particle.data.spin.*;
 import team.lodestar.lodestone.systems.particle.render_types.*;
 import team.lodestar.lodestone.systems.particle.world.*;
-import team.lodestar.lodestone.systems.particle.world.behaviors.*;
+import team.lodestar.lodestone.systems.particle.world.behaviors.components.*;
 import team.lodestar.lodestone.systems.particle.world.options.*;
-import team.lodestar.lodestone.systems.particle.world.type.*;
 
 import java.util.function.*;
 
 import static net.minecraft.util.Mth.*;
 
-public class MeadowVisualEffects {
+public class MeadowParticleEffects {
 
-    public static<T extends WorldParticleOptions> ParticleEffectSpawner<T> meadowLeaves(Level level, Vec3 pos, T options) {
+    public static ParticleEffectSpawner meadowLeaves(Level level, Vec3 pos) {
+        return meadowLeaves(level, pos, new WorldParticleOptions(MeadowParticleRegistry.ASPEN_LEAVES).setBehavior(LodestoneBehaviorComponent.SPARK));
+    }
+    public static ParticleEffectSpawner meadowLeaves(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 
         float scale = RandomHelper.randomBetween(rand, 0.075F, 0.1F);
@@ -66,6 +67,6 @@ public class MeadowVisualEffects {
                 .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.RANDOM_SPRITE)
                 .addTickActor(fall);
 
-        return new ParticleEffectSpawner<>(level, pos, worldParticleBuilder);
+        return new ParticleEffectSpawner(level, pos, worldParticleBuilder);
     }
 }

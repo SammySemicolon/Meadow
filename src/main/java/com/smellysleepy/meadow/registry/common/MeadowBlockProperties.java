@@ -85,6 +85,7 @@ public class MeadowBlockProperties {
                 .sound(SoundType.GRASS)
                 .pushReaction(PushReaction.DESTROY)
                 .instabreak()
+                .randomTicks()
                 .noCollission()
                 .noOcclusion()
                 .setCutoutRenderType()

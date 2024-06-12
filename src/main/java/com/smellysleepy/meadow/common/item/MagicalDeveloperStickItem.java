@@ -21,7 +21,7 @@ public class MagicalDeveloperStickItem extends Item {
     public InteractionResult useOn(UseOnContext pContext) {
         if (pContext.getLevel() instanceof ServerLevel serverLevel) {
             final BlockPos clickedPos = pContext.getClickedPos();
-            ResourceKey<ConfiguredFeature<?, ?>> resourcekey = MeadowConfiguredFeatureRegistry.LAZURITE_ROSE;
+            ResourceKey<ConfiguredFeature<?, ?>> resourcekey = MeadowConfiguredFeatureRegistry.CRIMSON_SUN;
             Holder<ConfiguredFeature<?, ?>> holder = serverLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(resourcekey).orElse(null);
 
             holder.value().place(serverLevel, serverLevel.getChunkSource().getGenerator(), serverLevel.random, clickedPos);

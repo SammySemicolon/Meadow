@@ -1,7 +1,5 @@
 package com.smellysleepy.meadow.common.worldgen.tree;
 
-import com.smellysleepy.meadow.common.block.meadow.flora.*;
-import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.*;
@@ -79,6 +77,7 @@ public class MeadowTreeFeature extends AbstractMeadowTreeFeature<MeadowTreeFeatu
                 continue;
             }
             mutable.set(pos).move(direction);
+            addDownwardsTrunkConnections(logState, level, filler, mutable);
             for (int j = 0; j < sideTrunkHeight; j++) {
                 if (!canPlace(level, mutable)) {
                     return false;
@@ -86,12 +85,11 @@ public class MeadowTreeFeature extends AbstractMeadowTreeFeature<MeadowTreeFeatu
                 filler.getLayer(LOGS).put(mutable.immutable(), create(logState));
                 mutable.move(Direction.UP);
             }
-            addDownwardsTrunkConnections(logState, level, filler, mutable);
         }
 
         int branches = Mth.nextInt(rand, 1, 4);
         int directionOffset = rand.nextInt(4);
-        for (int i = 0; i < branches; i++) {
+        for (int i = 0; i < branches; i++) { //Branches
             Direction direction = Direction.from2DDataValue((i+directionOffset)%4);
             int downwardsBranchOffset = getDownwardsBranchOffset(rand);
             int branchLength = getBranchLength(rand);
