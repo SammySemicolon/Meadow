@@ -12,6 +12,8 @@ import static com.smellysleepy.meadow.registry.common.MeadowBlockRegistry.BLOCKS
 import static com.smellysleepy.meadow.registry.common.MeadowItemRegistry.*;
 import static com.smellysleepy.meadow.registry.common.MeadowParticleRegistry.PARTICLES;
 import static com.smellysleepy.meadow.registry.worldgen.MeadowFeatureRegistry.*;
+import static com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes.STRUCTURE_PIECE_TYPES;
+import static com.smellysleepy.meadow.registry.worldgen.MeadowStructureTypes.STRUCTURE_TYPES;
 
 @SuppressWarnings("unused")
 @Mod(MeadowMod.MEADOW)
@@ -26,6 +28,8 @@ public class MeadowMod {
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
         FEATURE_TYPES.register(modBus);
+        STRUCTURE_TYPES.register(modBus);
+        STRUCTURE_PIECE_TYPES.register(modBus);
         PARTICLES.register(modBus);
     }
 

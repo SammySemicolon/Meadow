@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.common.item;
 
+import com.smellysleepy.meadow.common.worldgen.biome.MeadowGroveStructure;
 import com.smellysleepy.meadow.common.worldgen.strange_plant.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.core.*;
@@ -11,6 +12,9 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.levelgen.feature.*;
+import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
+import net.minecraftforge.common.world.StructureSettingsBuilder;
 
 public class MagicalDeveloperStickItem extends Item {
     public MagicalDeveloperStickItem(Properties pProperties) {
@@ -21,6 +25,7 @@ public class MagicalDeveloperStickItem extends Item {
     public InteractionResult useOn(UseOnContext pContext) {
         if (pContext.getLevel() instanceof ServerLevel serverLevel) {
             final BlockPos clickedPos = pContext.getClickedPos();
+
             ResourceKey<ConfiguredFeature<?, ?>> resourcekey = MeadowConfiguredFeatureRegistry.CRIMSON_SUN;
             Holder<ConfiguredFeature<?, ?>> holder = serverLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(resourcekey).orElse(null);
 
