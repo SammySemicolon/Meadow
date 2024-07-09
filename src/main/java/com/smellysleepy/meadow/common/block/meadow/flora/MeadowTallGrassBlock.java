@@ -1,11 +1,10 @@
 package com.smellysleepy.meadow.common.block.meadow.flora;
 
-import com.smellysleepy.meadow.registry.common.*;
+import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
-import net.minecraft.world.level.block.state.properties.*;
 
 public class MeadowTallGrassBlock extends DoublePlantBlock {
     public MeadowTallGrassBlock(Properties pProperties) {

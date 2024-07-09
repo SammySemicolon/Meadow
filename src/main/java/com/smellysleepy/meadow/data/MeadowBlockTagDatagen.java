@@ -1,12 +1,11 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
-import com.smellysleepy.meadow.registry.common.*;
+import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
 import net.minecraft.data.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
-import net.minecraftforge.common.*;
 import net.minecraftforge.common.data.*;
 import net.minecraftforge.registries.*;
 import team.lodestar.lodestone.systems.datagen.providers.*;

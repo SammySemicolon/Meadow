@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.registry.common;
+package com.smellysleepy.meadow.registry.tags;
 
 import com.smellysleepy.meadow.*;
 import net.minecraft.resources.*;

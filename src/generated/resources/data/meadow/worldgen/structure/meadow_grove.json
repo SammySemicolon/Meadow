@@ -1,0 +1,18 @@
+{
+  "type": "meadow:meadow_grove",
+  "biomes": "#meadow:has_meadow_groves",
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:cat",
+          "maxCount": 10,
+          "minCount": 4,
+          "weight": 5
+        }
+      ]
+    }
+  },
+  "step": "raw_generation"
+}

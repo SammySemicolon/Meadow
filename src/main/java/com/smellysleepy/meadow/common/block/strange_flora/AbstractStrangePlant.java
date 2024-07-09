@@ -1,7 +1,6 @@
 package com.smellysleepy.meadow.common.block.strange_flora;
 
-import com.smellysleepy.meadow.common.block.meadow.wood.*;
-import com.smellysleepy.meadow.registry.common.*;
+import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.item.context.*;

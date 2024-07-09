@@ -1,12 +1,10 @@
 package com.smellysleepy.meadow.common.block.strange_flora;
 
-import com.smellysleepy.meadow.registry.common.*;
+import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
-import net.minecraft.world.level.block.state.properties.*;
-import net.minecraft.world.level.material.*;
 
 public abstract class AbstractTallStrangePlant extends TallFlowerBlock {
     public AbstractTallStrangePlant(Properties pProperties) {

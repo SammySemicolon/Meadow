@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.registry.common;
 
-import net.minecraft.client.renderer.*;
+import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
