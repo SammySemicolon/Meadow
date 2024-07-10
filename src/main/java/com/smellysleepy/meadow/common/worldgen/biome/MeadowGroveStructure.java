@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructureTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -20,7 +21,11 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import org.jetbrains.annotations.NotNull;
+import team.lodestar.lodestone.helpers.RandomHelper;
+import team.lodestar.lodestone.systems.easing.Easing;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 public class MeadowGroveStructure extends Structure {
@@ -49,11 +54,11 @@ public class MeadowGroveStructure extends Structure {
 
         int baseHeight = chunkGenerator.getBaseHeight(blockX, blockZ, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor, randomState);
 
-        int blockY = baseHeight - random.nextIntBetweenInclusive(64, 128);
+        int blockY = baseHeight + 64;
         var groveCenter = new BlockPos(blockX, blockY, blockZ);
 
-        int groveRadius = (int) (random.nextIntBetweenInclusive(128, 192) * (1+random.nextFloat()));
-        int groveHeight = random.nextIntBetweenInclusive(16, 20);
+        int groveRadius = (int) (random.nextIntBetweenInclusive(192, 256) * RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 1f, 2f));
+        int groveHeight = random.nextIntBetweenInclusive(20, 24);
         int groveDepth = random.nextIntBetweenInclusive(12, 16);
 
 
@@ -69,6 +74,9 @@ public class MeadowGroveStructure extends Structure {
     private static void createGrovePieces(GenerationContext context, StructurePiecesBuilder piecesBuilder, LevelHeightAccessor levelHeightAccessor, BlockPos groveCenter, int groveRadius, int groveHeight, int groveDepth) {
         var chunkPos = context.chunkPos();
         int radius = SectionPos.blockToSectionCoord(groveRadius) + 1;
+
+        Collection<MeadowGroveDecoratorPiece> decorators = new ArrayList<>();
+
         for (int chunkX = -radius; chunkX <= radius; chunkX++) {
             for (int chunkZ = -radius; chunkZ <= radius; chunkZ++) {
                 int x = SectionPos.sectionToBlockCoord(chunkPos.x + chunkX);
@@ -78,8 +86,14 @@ public class MeadowGroveStructure extends Structure {
                         chunkStartPos.getX(), levelHeightAccessor.getMinBuildHeight(), chunkStartPos.getZ(),
                         chunkStartPos.getX() + 15, levelHeightAccessor.getMaxBuildHeight(), chunkStartPos.getZ() + 15
                 );
-                piecesBuilder.addPiece(new MeadowGrovePiece(groveCenter, groveRadius, groveHeight, groveDepth, boundingBox));
+                MeadowGrovePiece meadowGrovePiece = new MeadowGrovePiece(groveCenter, groveRadius, groveHeight, groveDepth, boundingBox);
+                piecesBuilder.addPiece(meadowGrovePiece);
+
+                decorators.add(new MeadowGroveDecoratorPiece(meadowGrovePiece, boundingBox));
             }
+        }
+        for (MeadowGroveDecoratorPiece decorator : decorators) {
+            piecesBuilder.addPiece(decorator);
         }
     }
 

@@ -21,7 +21,7 @@ import static net.minecraft.util.Mth.*;
 public class MeadowParticleEffects {
 
     public static ParticleEffectSpawner meadowLeaves(Level level, Vec3 pos) {
-        return meadowLeaves(level, pos, new WorldParticleOptions(MeadowParticleRegistry.ASPEN_LEAVES).setBehavior(LodestoneBehaviorComponent.SPARK));
+        return meadowLeaves(level, pos, new WorldParticleOptions(MeadowParticleRegistry.ASPEN_LEAVES).setBehavior(new SparkBehaviorComponent()));
     }
     public static ParticleEffectSpawner meadowLeaves(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
@@ -29,8 +29,6 @@ public class MeadowParticleEffects {
         float scale = RandomHelper.randomBetween(rand, 0.075F, 0.1F);
         int lifetime = RandomHelper.randomBetween(rand, 250, 300);
 
-        var spinData = SpinParticleData.createRandomDirection(rand, nextFloat(rand, 0.01f, 0.025f), nextFloat(rand, 0.1f, 0.125f))
-                .randomSpinOffset(rand).build();
         var scaleData = GenericParticleData.create(scale, scale * 0.75f).build();
         var transparencyData = GenericParticleData.create(0f, 1f, 0.4f).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
 
@@ -59,7 +57,6 @@ public class MeadowParticleEffects {
         };
         var worldParticleBuilder = WorldParticleBuilder.create(options)
                 .setTransparencyData(transparencyData)
-                .setSpinData(spinData)
                 .setScaleData(scaleData)
                 .setLifetime(lifetime)
                 .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)

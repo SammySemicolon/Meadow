@@ -28,7 +28,7 @@ public class MeadowLeavesBlock extends LeavesBlock {
                 double posY = (double)pPos.getY() - 0.05D;
                 double posZ = (double)pPos.getZ() + pRandom.nextDouble();
 
-                var leaves = MeadowParticleEffects.meadowLeaves(pLevel, new Vec3(posX, posY, posZ), new WorldParticleOptions(MeadowParticleRegistry.ASPEN_LEAVES).setBehavior(LodestoneBehaviorComponent.SPARK));
+                var leaves = MeadowParticleEffects.meadowLeaves(pLevel, new Vec3(posX, posY, posZ));
                 leaves.spawnParticles();
             }
         }

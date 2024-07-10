@@ -1,12 +1,18 @@
 package com.smellysleepy.meadow.common.worldgen.biome;
 
+import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.UnsafeBoundingBox;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
+import com.smellysleepy.meadow.registry.worldgen.MeadowFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -18,9 +24,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.NoiseProvider;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -28,15 +35,11 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.Tags;
-import org.jetbrains.annotations.NotNull;
-import oshi.util.tuples.Pair;
 import team.lodestar.lodestone.systems.easing.Easing;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.Optional;
 
 public class MeadowGrovePiece extends StructurePiece {
 
@@ -45,7 +48,7 @@ public class MeadowGrovePiece extends StructurePiece {
     private final int groveHeight;
     private final int groveDepth;
 
-    public final List<Pair<BlockPos, PlacedFeature>> FEATURES = new ArrayList<>();
+    public List<Pair<BlockPos, ResourceLocation>> bufferedFeatures = new ArrayList<>();
 
     protected MeadowGrovePiece(BlockPos groveCenter, int groveRadius, int groveHeight, int groveDepth, BoundingBox boundingBox) {
         super(MeadowStructurePieceTypes.MEADOW_GROVE.get(), 0, boundingBox);
@@ -81,6 +84,17 @@ public class MeadowGrovePiece extends StructurePiece {
                 List.of(Blocks.GRAVEL.defaultBlockState(), Blocks.MUD.defaultBlockState(), Blocks.CLAY.defaultBlockState()));
 
         ChunkAccess chunk = worldGenLevel.getChunk(chunkPos.x, chunkPos.z);
+
+        int treeCounter = 6;
+
+        int[] treeX = new int[treeCounter];
+        int[] treeZ = new int[treeCounter];
+
+        for (int i = 0; i < treeCounter; i++) {
+            treeX[i] = random.nextInt(16);
+            treeZ[i] = random.nextInt(16);
+        }
+
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 int blockX = chunkPos.getBlockX(x);
@@ -95,16 +109,30 @@ public class MeadowGrovePiece extends StructurePiece {
                 double localHeight = (int) Mth.clampedLerp(groveHeight * 0.5, groveHeight, noise);
                 double localDepth = (int) Mth.clampedLerp(groveDepth * 0.6, groveDepth, depthNoise);
 
-                int blendWidth = 43;
+                int blendWidth = 48;
 
                 int rimSize = (int) (localRadius * 0.05);
 
                 BlockState[] topBlocks = getCeilingBlocks(mutableBlockPos, noiseSampler, blockX, blockZ, groveCenter.getY(), localHeight, chunk);
                 BlockState[] bottomBlocks = getSurfaceBlocks(mutableBlockPos, blockX, blockZ, groveCenter.getY(), chunk);
 
-                buildGrove(worldGenLevel, chunk, stateProvider, mutableBlockPos, random,
+                var features = buildGroveLayer(worldGenLevel, chunk, stateProvider, mutableBlockPos, random,
                         noiseSampler, unsafeBoundingBox, topBlocks, bottomBlocks,
                         localRadius, localHeight, localDepth, blendWidth, rimSize, blockX, blockZ);
+
+                if (treeCounter > 0) {
+                    if (features.isPresent()) {
+                        for (int i = 0; i < treeCounter; i++) {
+                            int xPos = treeX[i];
+                            int zPos = treeZ[i];
+                            if (x == xPos && z == zPos) {
+                                var pair = features.get();
+                                bufferedFeatures.add(pair.mapSecond(ResourceKey::location));
+                                treeCounter--;
+                            }
+                        }
+                    }
+                }
             }
         }
         if (unsafeBoundingBox.valid()) {
@@ -112,13 +140,14 @@ public class MeadowGrovePiece extends StructurePiece {
         }
     }
 
-    private void buildGrove(WorldGenLevel worldGenLevel, ChunkAccess chunk, BlockStateProvider stateProvider, BlockPos.MutableBlockPos pos,
-                            RandomSource random, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockState[] ceilingCovering, BlockState[] surfaceCovering,
-                            double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize, int blockX, int blockZ) {
+    private Optional<Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>>> buildGroveLayer(WorldGenLevel worldGenLevel, ChunkAccess chunk, BlockStateProvider stateProvider, BlockPos.MutableBlockPos pos,
+                                                                           RandomSource random, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockState[] ceilingCovering, BlockState[] surfaceCovering,
+                                                                           double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize, int blockX, int blockZ) {
 
         if (!pos.setY(groveCenter.getY()).closerThan(groveCenter, localRadius - blendWidth - rimSize)) {
-            return;
+            return Optional.empty();
         }
+        Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> featurePlacement = null;
 
         int centerY = groveCenter.getY();
         double offset = localRadius - blendWidth - rimSize;
@@ -127,55 +156,87 @@ public class MeadowGrovePiece extends StructurePiece {
         int height = getUpperDepth(noiseSampler, pos, localHeight, delta);
         int depth = getLowerDepth(noiseSampler, pos, localDepth, delta);
 
-        int ceilingBlocksLength = Math.min(ceilingCovering.length - 1, height < 3 ? 0 : Mth.floor(height/2f));
-        int surfaceBlocksLength = Math.min(surfaceCovering.length - 1, depth < 6 ? 0 : Mth.floor(depth/2f));
-
+        int ceilingCoverage = Math.min(ceilingCovering.length - 1, height < 2 ? 0 : Mth.floor((2+height)*2));
         int ceilingLimit = centerY + height;
-        for (int y = centerY; y < ceilingLimit+ceilingBlocksLength; y++) { // top half
-            pos.set(blockX, y, blockZ);
-            unsafeBoundingBox.encapsulate(pos);
-            if (y >= ceilingLimit) {
-                int index = Mth.clamp(y-ceilingLimit, 0, ceilingBlocksLength);
-                chunk.setBlockState(pos, ceilingCovering[index], true);
-                continue;
-            }
-
-            chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
-        }
-
+        
+        int surfaceCoverage = Math.min(surfaceCovering.length - 1, depth < 6 ? 0 : Mth.floor(depth/2f));
         int surfaceLimit = centerY - depth;
-        for (int y = centerY; y > surfaceLimit-surfaceBlocksLength; y--) { //bottom half
+
+        int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
+        int ceilingPlacementHeight = ceilingLimit + ceilingCoverage;
+
+        int ceilingShellLimit = ceilingPlacementHeight + 6 - Mth.floor(height * 0.4f);
+        int ceilingShellStart = centerY - 2 + Mth.floor(height * 0.2f);
+
+        int surfaceShellLimit = surfacePlacementDepth - 6 + Mth.floor(depth * 0.4f);
+        int surfaceShellStart = centerY + 2 - Mth.floor(depth * 0.2f);
+
+        int cutoffCounter = 0;
+        for (int y = ceilingShellStart; y < ceilingShellLimit; y++) { // top shell
             pos.set(blockX, y, blockZ);
             unsafeBoundingBox.encapsulate(pos);
 
-            if (y == surfaceLimit+1) {
-                float bias = (y-centerY)/(float)surfaceLimit;
-                int agh = groveCenter.getY() - y;
-
-                if (agh > groveDepth*0.2f && agh < groveDepth*0.4f) {
-                    chunk.setBlockState(pos, Blocks.GREEN_WOOL.defaultBlockState(), true);
-                    continue;
+            BlockState blockState = chunk.getBlockState(pos);
+            if (!blockState.isAir()) {
+                if (cutoffCounter++ >= 3) {
+                    break;
                 }
-
-                if (agh > groveDepth*0.4f && agh < groveDepth*0.6f) {
-                    chunk.setBlockState(pos, Blocks.RED_WOOL.defaultBlockState(), true);
-                    continue;
-                }
-
-                if (agh > groveDepth*0.6f) {
-                    chunk.setBlockState(pos, Blocks.YELLOW_WOOL.defaultBlockState(), true);
-                    continue;
-                }
-            }
-
-            if (y <= surfaceLimit) {
-                int index = Mth.clamp(surfaceLimit-y, 0, surfaceBlocksLength);
-                chunk.setBlockState(pos, surfaceCovering[index], true);
                 continue;
             }
-
-            chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
+            chunk.setBlockState(pos, Blocks.GREEN_WOOL.defaultBlockState(), true);
         }
+
+        cutoffCounter = 0;
+        for (int y = surfaceShellStart; y > surfaceShellLimit; y--) { // bottom shell
+            pos.set(blockX, y, blockZ);
+            unsafeBoundingBox.encapsulate(pos);
+            BlockState blockState = chunk.getBlockState(pos);
+            if (!blockState.isAir()) {
+                if (cutoffCounter++ >= 3) {
+                    break;
+                }
+                continue;
+            }
+            chunk.setBlockState(pos, Blocks.RED_WOOL.defaultBlockState(), true);
+        }
+        if (centerY < ceilingPlacementHeight) {
+            for (int y = centerY; y < ceilingPlacementHeight; y++) { // ceiling
+                pos.set(blockX, y, blockZ);
+                unsafeBoundingBox.encapsulate(pos);
+                if (y >= ceilingLimit) {
+                    int index = Mth.clamp(y-ceilingLimit, 0, ceilingCoverage);
+                    chunk.setBlockState(pos, ceilingCovering[index], true);
+                    continue;
+                }
+                chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
+            }
+        }
+        if (centerY > surfacePlacementDepth) {
+            for (int y = centerY; y > surfacePlacementDepth; y--) { //surface
+                pos.set(blockX, y, blockZ);
+                unsafeBoundingBox.encapsulate(pos);
+
+                if (y == surfaceLimit + 1) {
+                    int agh = groveCenter.getY() - y;
+                    if (agh > groveDepth * 0.2f && agh < groveDepth * 0.55f) {
+//                        featurePlacement = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_TREE);
+                    }
+
+                    if (agh > groveDepth * 0.55f) {
+//                        featurePlacement = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE);
+                    }
+                }
+
+                if (y <= surfaceLimit) {
+                    int index = Mth.clamp(surfaceLimit - y, 0, surfaceCoverage);
+                    chunk.setBlockState(pos, surfaceCovering[index], true);
+                    continue;
+                }
+
+                chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
+            }
+        }
+        return Optional.ofNullable(featurePlacement);
     }
 
     private int getUpperDepth(ImprovedNoise noiseSampler, BlockPos pos, double localHeight, double delta) {
@@ -215,8 +276,8 @@ public class MeadowGrovePiece extends StructurePiece {
         BlockState tuffState = Blocks.TUFF.defaultBlockState();
         BlockState[] blockStates = {
                 rockState,
-                tuffState, tuffState, tuffState, tuffState,
-                rockState, rockState, rockState, rockState
+                tuffState, tuffState, tuffState,
+                rockState, rockState, rockState, rockState, rockState
         };
         return getFillerBlocks(mutableBlockPos, blockStates, blockX, blockZ, startY, true, chunk);
     }

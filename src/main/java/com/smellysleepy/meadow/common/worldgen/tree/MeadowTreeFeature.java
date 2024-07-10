@@ -134,7 +134,7 @@ public class MeadowTreeFeature extends AbstractMeadowTreeFeature<MeadowTreeFeatu
         while (true) {
             mutable.move(Direction.DOWN);
             if (!canPlace(level, mutable)) {
-                break;
+                return;
             }
             filler.getLayer(LOGS).put(mutable.immutable(), create(logState));
         }
