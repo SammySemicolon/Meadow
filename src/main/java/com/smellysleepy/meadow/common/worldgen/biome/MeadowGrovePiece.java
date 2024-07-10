@@ -165,11 +165,13 @@ public class MeadowGrovePiece extends StructurePiece {
         int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
         int ceilingPlacementHeight = ceilingLimit + ceilingCoverage;
 
-        int ceilingShellLimit = ceilingPlacementHeight + 6 - Mth.floor(height * 0.4f);
-        int ceilingShellStart = centerY - 2 + Mth.floor(height * 0.2f);
+        int ceilingShellOffset = (height > 8 ? Mth.floor((height - 8) * 0.2f) : 0);
+        int ceilingShellLimit = ceilingPlacementHeight + 6 - ceilingShellOffset;
+        int ceilingShellStart = centerY + ceilingShellOffset;
 
-        int surfaceShellLimit = surfacePlacementDepth - 6 + Mth.floor(depth * 0.4f);
-        int surfaceShellStart = centerY + 2 - Mth.floor(depth * 0.2f);
+        int surfaceShellOffset = (depth > 6 ? Mth.floor((depth - 6) * 0.6f) : 0);
+        int surfaceShellLimit = surfacePlacementDepth - 6 + surfaceShellOffset;
+        int surfaceShellStart = centerY - surfaceShellOffset;
 
         int cutoffCounter = 0;
         for (int y = ceilingShellStart; y < ceilingShellLimit; y++) { // top shell
@@ -177,8 +179,8 @@ public class MeadowGrovePiece extends StructurePiece {
             unsafeBoundingBox.encapsulate(pos);
 
             BlockState blockState = chunk.getBlockState(pos);
-            if (!blockState.isAir()) {
-                if (cutoffCounter++ >= 3) {
+            if (blockState.isAir()) {
+                if (cutoffCounter++ >= 6) {
                     break;
                 }
                 continue;
@@ -191,8 +193,8 @@ public class MeadowGrovePiece extends StructurePiece {
             pos.set(blockX, y, blockZ);
             unsafeBoundingBox.encapsulate(pos);
             BlockState blockState = chunk.getBlockState(pos);
-            if (!blockState.isAir()) {
-                if (cutoffCounter++ >= 3) {
+            if (blockState.isAir()) {
+                if (cutoffCounter++ >= 4) {
                     break;
                 }
                 continue;

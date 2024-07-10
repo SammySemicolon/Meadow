@@ -54,21 +54,16 @@ public class MeadowGroveStructure extends Structure {
 
         int baseHeight = chunkGenerator.getBaseHeight(blockX, blockZ, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor, randomState);
 
-        int blockY = baseHeight + 64;
+        int blockY = baseHeight - random.nextIntBetweenInclusive(64, 96);
         var groveCenter = new BlockPos(blockX, blockY, blockZ);
 
-        int groveRadius = (int) (random.nextIntBetweenInclusive(192, 256) * RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 1f, 2f));
+        int groveRadius = (int) (random.nextIntBetweenInclusive(128, 192) * RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 1f, 2f));
         int groveHeight = random.nextIntBetweenInclusive(20, 24);
         int groveDepth = random.nextIntBetweenInclusive(12, 16);
 
 
         return onTopOfChunkCenter(context, Heightmap.Types.OCEAN_FLOOR_WG,
                 (b) -> createGrovePieces(context, b, levelHeightAccessor, groveCenter, groveRadius, groveHeight, groveDepth));
-    }
-
-    @Override
-    public void afterPlace(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pChunkGenerator, RandomSource pRandom, BoundingBox pBoundingBox, ChunkPos pChunkPos, PiecesContainer pPieces) {
-        super.afterPlace(pLevel, pStructureManager, pChunkGenerator, pRandom, pBoundingBox, pChunkPos, pPieces);
     }
 
     private static void createGrovePieces(GenerationContext context, StructurePiecesBuilder piecesBuilder, LevelHeightAccessor levelHeightAccessor, BlockPos groveCenter, int groveRadius, int groveHeight, int groveDepth) {
