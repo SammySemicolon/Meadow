@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Noises;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -81,7 +82,11 @@ public class MeadowGrovePiece extends StructurePiece {
         var stateProvider = new NoiseProvider(worldGenLevel.getSeed(),
                 worldGenLevel.registryAccess().lookup(Registries.NOISE).orElseThrow().getOrThrow(Noises.BADLANDS_SURFACE).value(),
                 0.5F,
-                List.of(Blocks.GRAVEL.defaultBlockState(), Blocks.MUD.defaultBlockState(), Blocks.CLAY.defaultBlockState()));
+                List.of(Blocks.STONE.defaultBlockState(), Blocks.TUFF.defaultBlockState()));
+        var deepslateStateProvider = new NoiseProvider(worldGenLevel.getSeed(),
+                worldGenLevel.registryAccess().lookup(Registries.NOISE).orElseThrow().getOrThrow(Noises.BADLANDS_SURFACE).value(),
+                0.5F,
+                List.of(Blocks.DEEPSLATE.defaultBlockState(), Blocks.STONE.defaultBlockState()));
 
         ChunkAccess chunk = worldGenLevel.getChunk(chunkPos.x, chunkPos.z);
 
@@ -113,8 +118,9 @@ public class MeadowGrovePiece extends StructurePiece {
 
                 int rimSize = (int) (localRadius * 0.05);
 
-                BlockState[] topBlocks = getCeilingBlocks(mutableBlockPos, noiseSampler, blockX, blockZ, groveCenter.getY(), localHeight, chunk);
-                BlockState[] bottomBlocks = getSurfaceBlocks(mutableBlockPos, blockX, blockZ, groveCenter.getY(), chunk);
+                int startY = groveCenter.getY();
+                BlockState[] topBlocks = getCeilingBlocks(chunk, noiseSampler, mutableBlockPos, blockX, blockZ, startY);
+                BlockState[] bottomBlocks = getSurfaceBlocks(chunk, mutableBlockPos, blockX, blockZ, startY);
 
                 var features = buildGroveLayer(worldGenLevel, chunk, stateProvider, mutableBlockPos, random,
                         noiseSampler, unsafeBoundingBox, topBlocks, bottomBlocks,
@@ -185,7 +191,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 }
                 continue;
             }
-            chunk.setBlockState(pos, Blocks.GREEN_WOOL.defaultBlockState(), true);
+            chunk.setBlockState(pos, stateProvider.getState(random, pos), true);
         }
 
         cutoffCounter = 0;
@@ -199,7 +205,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 }
                 continue;
             }
-            chunk.setBlockState(pos, Blocks.RED_WOOL.defaultBlockState(), true);
+            chunk.setBlockState(pos, stateProvider.getState(random, pos), true);
         }
         if (centerY < ceilingPlacementHeight) {
             for (int y = centerY; y < ceilingPlacementHeight; y++) { // ceiling
@@ -221,10 +227,12 @@ public class MeadowGrovePiece extends StructurePiece {
                 if (y == surfaceLimit + 1) {
                     int agh = groveCenter.getY() - y;
                     if (agh > groveDepth * 0.2f && agh < groveDepth * 0.55f) {
+                        chunk.setBlockState(pos, Blocks.CYAN_STAINED_GLASS.defaultBlockState(), true);
 //                        featurePlacement = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_TREE);
                     }
 
                     if (agh > groveDepth * 0.55f) {
+                        chunk.setBlockState(pos, Blocks.GREEN_STAINED_GLASS.defaultBlockState(), true);
 //                        featurePlacement = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE);
                     }
                 }
@@ -238,7 +246,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
-        return Optional.ofNullable(featurePlacement);
+        return Optional.empty();
     }
 
     private int getUpperDepth(ImprovedNoise noiseSampler, BlockPos pos, double localHeight, double delta) {
@@ -263,28 +271,27 @@ public class MeadowGrovePiece extends StructurePiece {
         return noiseSampler.noise((blockX+offset) * noiseFrequency, 0, (blockZ+offset) * noiseFrequency) + 1;
     }
 
-    private BlockState[] getCeilingBlocks(BlockPos.MutableBlockPos mutableBlockPos, ImprovedNoise noiseSampler, int blockX, int blockZ, int startY, double localHeight, ChunkAccess chunk) {
-        float yPosition = startY+Mth.floor(localHeight);
-        float bias = yPosition < 0 ? 1 : 1 - yPosition/8f;
-        Block rock;
-        if (bias != 1) {
-            double noise = getNoise(noiseSampler, blockX, blockZ, 0.02f) / 2;
-            rock = noise >= bias ? Blocks.DEEPSLATE : Blocks.STONE;
+    private BlockState[] getCeilingBlocks(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos mutableBlockPos, int blockX, int blockZ, int startY) {
+        float yScalar = (Mth.clamp(startY, -50, 50) + 50) / 100f;
+        BlockState rock = Blocks.STONE.defaultBlockState();
+        if (yScalar != 0 && yScalar != 1) {
+            double noise = getNoise(noiseSampler, blockX, blockZ, 0.1f) / 2;
+            if (noise > 1 - yScalar && noise < 1 + yScalar) {
+                rock = Blocks.DEEPSLATE.defaultBlockState();
+            }
         }
-        else {
-            rock = Blocks.DEEPSLATE;
-        }
-        BlockState rockState = rock.defaultBlockState();
-        BlockState tuffState = Blocks.TUFF.defaultBlockState();
+        BlockState tuff = Blocks.TUFF.defaultBlockState();
+
+
         BlockState[] blockStates = {
-                rockState,
-                tuffState, tuffState, tuffState,
-                rockState, rockState, rockState, rockState, rockState
+                rock,
+                tuff, tuff, tuff,
+                rock, rock, rock, rock, rock
         };
         return getFillerBlocks(mutableBlockPos, blockStates, blockX, blockZ, startY, true, chunk);
     }
 
-    private BlockState[] getSurfaceBlocks(BlockPos.MutableBlockPos mutableBlockPos, int blockX, int blockZ, int startY, ChunkAccess chunk) {
+    private BlockState[] getSurfaceBlocks(ChunkAccess chunk, BlockPos.MutableBlockPos mutableBlockPos, int blockX, int blockZ, int startY) {
         BlockState[] blockStates = {
                 MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get().defaultBlockState(),
                 Blocks.DIRT.defaultBlockState(),
@@ -297,7 +304,7 @@ public class MeadowGrovePiece extends StructurePiece {
     }
     private BlockState[] getFillerBlocks(BlockPos.MutableBlockPos mutableBlockPos, BlockState[] blockSet, int blockX, int blockZ, int startY, boolean isCeiling, ChunkAccess chunk) {
         for (int y = 0; y < blockSet.length; y++) {
-            mutableBlockPos.set(blockX, startY + (isCeiling ? 1 : -1), blockZ);
+            mutableBlockPos.set(blockX, startY + y * (isCeiling ? 1 : -1), blockZ);
             BlockState blockState = chunk.getBlockState(mutableBlockPos);
 
             if (blockState.isAir()) {

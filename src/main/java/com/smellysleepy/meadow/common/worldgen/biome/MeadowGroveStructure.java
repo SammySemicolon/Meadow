@@ -54,7 +54,7 @@ public class MeadowGroveStructure extends Structure {
 
         int baseHeight = chunkGenerator.getBaseHeight(blockX, blockZ, Heightmap.Types.WORLD_SURFACE_WG, levelHeightAccessor, randomState);
 
-        int blockY = baseHeight - random.nextIntBetweenInclusive(64, 96);
+        int blockY = -30;
         var groveCenter = new BlockPos(blockX, blockY, blockZ);
 
         int groveRadius = (int) (random.nextIntBetweenInclusive(128, 192) * RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 1f, 2f));
