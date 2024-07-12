@@ -142,6 +142,7 @@ public class MeadowGrovePiece extends StructurePiece {
 
         int centerY = groveCenter.getY();
         double delta = (pos.setY(centerY).distSqr(groveCenter) - Mth.square(offset)) / Mth.square(localRadius - offset);
+        double distance = Math.sqrt(pos.distSqr(groveCenter));
 
         int height = getGroveHeight(noiseSampler, pos, localHeight, delta);
         int depth = getGroveDepth(noiseSampler, pos, localDepth, delta);
@@ -203,7 +204,6 @@ public class MeadowGrovePiece extends StructurePiece {
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
-        double distance = Math.sqrt(pos.set(blockX, groveCenter.getY(), blockZ).distSqr(groveCenter));
         if (centerY > surfacePlacementDepth) {
             for (int y = centerY; y > surfacePlacementDepth; y--) { //surface
                 pos.set(blockX, y, blockZ);
@@ -241,32 +241,31 @@ public class MeadowGrovePiece extends StructurePiece {
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
-        if (centerY >= surfacePlacementDepth) {
-            createRamps(chunk, noiseSampler, pos, surfaceCovering, surfaceLimit, blockX, blockZ, localDepth, distance, offset);
+        if (centerY >= surfacePlacementDepth || distance > offset * 0.95f) {
+            createRamps(chunk, noiseSampler, pos, surfaceCovering, surfaceLimit, blockX, blockZ, depth, localDepth, distance, offset);
         }
         return Optional.empty();
     }
 
-    private void createRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, BlockState[] surfaceCovering, int surfaceLimit, int blockX, int blockZ, double localDepth, double distance, double offset) {
+    private void createRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, BlockState[] surfaceCovering, int surfaceLimit, int blockX, int blockZ, int depth, double localDepth, double distance, double offset) {
         if (distance > offset * 0.55f) {
             boolean isAtEdge = distance > offset * 0.95f;
             double noise = getBlurredNoise(noiseSampler, blockX, blockZ, 50000, 0.02f) / 2;
-            float noiseOffset = Easing.QUAD_OUT.clamped((distance - offset * 0.6f) / (offset * 0.4f), 0, 0.4f);
-            float topThreshold = 0.7f - noiseOffset;
-            float bottomThreshold = 0.7f - noiseOffset;
-            int rampHeight = Mth.ceil((groveDepth * 1.2f - localDepth / 2f));
+            double secondaryNoise = getBlurredNoise(noiseSampler, blockX, blockZ, 75000, 0.01f) / 2;
+            float noiseOffset = Easing.QUAD_OUT.clamped((distance - offset * 0.6f) / (offset * 0.4f), 0, 0.3f);
+            float topThreshold = 0.6f - noiseOffset;
+            float bottomThreshold = 0.55f - noiseOffset;
+            int rampHeight = Mth.ceil((groveDepth * Easing.SINE_IN_OUT.ease(secondaryNoise, 0.8f, 1.2) - localDepth / 2f));
 
             if (noise >= topThreshold) {
-                int topCutoff = isAtEdge ? 0 : Mth.floor(rampHeight * Easing.CIRC_OUT.ease(getRampCutIn(noise, topThreshold, topThreshold), 0, 1));
-
-                boolean GAY = false;
+                int topCutoff = isAtEdge ? 0 : Mth.floor(rampHeight * Easing.CIRC_OUT.ease(getRampCutIn(noise, topThreshold), 0, 1));
+                boolean gay = false;
                 //TODO: work on this next
-//                if (rampOffset < 0.5f && distance < offset * 0.6f) {
+                if (distance < offset * 0.6f) {
                     if (isFloatingRamp(noiseSampler, distance, offset, blockX, blockZ)) {
-//                        topCutoff = rampHeight;
-//                        GAY = true;
+                        gay = true;
                     }
-//                }
+                }
                 for (int i = 0; i < rampHeight; i++) {
                     if (!isAtEdge && i > topCutoff) {
                         break;
@@ -281,11 +280,12 @@ public class MeadowGrovePiece extends StructurePiece {
                         state = surfaceCovering[Mth.clamp(i, 0, surfaceCovering.length - 1)];
                     }
                     state = getPeripheralState(noiseSampler, state, blockX, blockZ, distance, offset);
-                    chunk.setBlockState(pos, GAY ? Blocks.BLUE_STAINED_GLASS.defaultBlockState() : state, true);
+                    chunk.setBlockState(pos, gay ? Blocks.BLUE_STAINED_GLASS.defaultBlockState() : state, true);
+                    gay = false;
                 }
             }
             if (isAtEdge || noise >= bottomThreshold) {
-                int bottomCutoff = isAtEdge ? 0 : Mth.floor(rampHeight * Easing.QUAD_IN_OUT.ease(getRampCutIn(noise, bottomThreshold, bottomThreshold), 0, 1));
+                int bottomCutoff = isAtEdge ? 0 : Mth.floor(rampHeight * Easing.QUAD_IN_OUT.ease(getRampCutIn(noise, bottomThreshold), 0, 1));
                 for (int i = 0; i < rampHeight; i++) {
                     if (!isAtEdge && i > bottomCutoff) {
                         break;
@@ -297,29 +297,31 @@ public class MeadowGrovePiece extends StructurePiece {
         }
     }
 
-    public double getRampCutIn(double noise, double distance, double offset) {
-        float noiseOffset = Easing.QUAD_OUT.clamped((distance - offset * 0.6f) / (offset * 0.4f), 0, 0.4f);
-        float threshold = 0.7f - noiseOffset;
-        return getRampCutIn(noise, threshold, noiseOffset);
-    }
-
-    public double getRampCutIn(double noise, float threshold, float noiseOffset) {
-        return (noise - threshold) / (1 - threshold);
-    }
-
     public boolean isFloatingRamp(ImprovedNoise noiseSampler, double distance, double offset, int blockX, int blockZ) {
-        int radius = 3;
+        int radius = 4;
         int counter = 0;
         for (int x = -radius; x < radius; x++) {
             for (int z = -radius; z < radius; z++) {
                 double noise = getNoise(noiseSampler, blockX+x, blockZ+z, 50000, 0.02f) / 2;
+                float noiseOffset = Easing.QUAD_OUT.clamped((distance - offset * 0.6f) / (offset * 0.4f), 0, 0.3f);
+                float threshold = 0.6f - noiseOffset;
                 double cutIn = getRampCutIn(noise, distance, offset);
-                if (cutIn > 0.95f) {
+                if (cutIn > 0.7f && noise > threshold) {
                     counter++;
                 }
             }
         }
-        return counter < Math.pow(1+radius*2, 2) * 0.5f;
+        return counter <= radius;
+    }
+
+    public double getRampCutIn(double noise, double distance, double offset) {
+        float noiseOffset = Easing.QUAD_OUT.clamped((distance - offset * 0.6f) / (offset * 0.4f), 0, 0.3f);
+        float threshold = 0.6f - noiseOffset;
+        return getRampCutIn(noise, threshold);
+    }
+
+    public double getRampCutIn(double noise, float threshold) {
+        return (noise - threshold) / (1 - threshold);
     }
 
     public BlockState getPeripheralState(ImprovedNoise noiseSampler, BlockState original, int blockX, int blockZ, double distance, double offset) {

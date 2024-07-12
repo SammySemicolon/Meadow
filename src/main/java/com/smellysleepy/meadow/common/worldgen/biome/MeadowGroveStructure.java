@@ -56,9 +56,9 @@ public class MeadowGroveStructure extends Structure {
         int blockY = Math.min(random.nextIntBetweenInclusive(-32, 32), baseHeight - random.nextIntBetweenInclusive(64, 96));
         var groveCenter = new BlockPos(blockX, blockY, blockZ);
 
-        int groveRadius = (int) (random.nextIntBetweenInclusive(128, 192) * RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 1f, 2f));
+        int groveRadius = (int) (random.nextIntBetweenInclusive(128, 192) * RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 1.25f, 2f));
         int groveHeight = random.nextIntBetweenInclusive(28, 32);
-        int groveDepth = random.nextIntBetweenInclusive(12, 16);
+        int groveDepth = random.nextIntBetweenInclusive(16, 20);
 
         return onTopOfChunkCenter(context, Heightmap.Types.OCEAN_FLOOR_WG,
                 (b) -> createGrovePieces(context, b, levelHeightAccessor, groveCenter, groveRadius, groveHeight, groveDepth));
