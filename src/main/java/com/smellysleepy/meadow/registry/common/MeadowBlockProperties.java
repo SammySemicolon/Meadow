@@ -66,7 +66,9 @@ public class MeadowBlockProperties {
     }
 
     public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
-        return ASPEN_LEAVES_PROPERTIES().noCollission();
+        return ASPEN_LEAVES_PROPERTIES()
+                .noCollission()
+                .lightLevel(s -> 4);
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {
@@ -76,7 +78,8 @@ public class MeadowBlockProperties {
                 .instabreak()
                 .noCollission()
                 .noOcclusion()
-                .setCutoutRenderType();
+                .setCutoutRenderType()
+                .lightLevel(s -> 2);
     }
 
     public static LodestoneBlockProperties STRANGE_FLORA_PROPERTIES() {

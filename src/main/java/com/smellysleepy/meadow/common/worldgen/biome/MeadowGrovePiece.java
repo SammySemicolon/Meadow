@@ -90,7 +90,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 int rimSize = (int) (localRadius * 0.05);
 
                 buildGroveLayer(
-                        chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos,
+                        chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
                         localRadius, localHeight, localDepth, blendWidth, rimSize, blockX, blockZ);
             }
         }
@@ -99,7 +99,7 @@ public class MeadowGrovePiece extends StructurePiece {
         }
     }
 
-    private Optional<Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>>> buildGroveLayer(ChunkAccess chunk, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockPos.MutableBlockPos pos,
+    private Optional<Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>>> buildGroveLayer(ChunkAccess chunk, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockPos.MutableBlockPos pos, RandomSource random,
                                                                                            double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize, int blockX, int blockZ) {
         double offset = localRadius - blendWidth - rimSize;
         if (!pos.setY(groveCenter.getY()).closerThan(groveCenter, offset)) {
@@ -162,9 +162,9 @@ public class MeadowGrovePiece extends StructurePiece {
                 unsafeBoundingBox.encapsulate(pos);
 
                 if (y == surfaceLimit + 1) {
-                    var feature = createSurfaceFeatures(y, pos);
+                    var feature = createSurfaceFeatures(random, y, pos);
                     if (feature != null) {
-//                        bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
+                        bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
                     }
                 }
 
@@ -178,7 +178,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
-        createRamps(chunk, noiseSampler, pos, rampBlockPattern, rampYLevel, blockX, blockZ, rampHeight, smoothedRampNoise, sqrtDistance, offset);
+        createRamps(chunk, noiseSampler, random, pos, rampBlockPattern, rampYLevel, blockX, blockZ, rampHeight, smoothedRampNoise, sqrtDistance, offset);
         return Optional.empty();
     }
 
@@ -212,7 +212,20 @@ public class MeadowGrovePiece extends StructurePiece {
             chunk.setBlockState(pos, Blocks.STONE.defaultBlockState(), true);
         }
     }
-    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createSurfaceFeatures(int y, BlockPos.MutableBlockPos pos) {
+    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos) {
+        ResourceKey<ConfiguredFeature<?, ?>> feature = null;
+        if (randomSource.nextFloat() < 0.02f) {
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_TREE;
+        }
+        else if (randomSource.nextFloat() < 0.04f) {
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE;
+        }
+        if (feature != null) {
+            return Pair.of(pos.immutable(), feature);
+        }
+        return null;
+    }
+    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createSurfaceFeatures(RandomSource randomSource, int y, BlockPos.MutableBlockPos pos) {
         int featureTypeOffset = groveCenter.getY() - y;
         float start = groveDepth * 0.3f;
         float midpoint = groveDepth * 0.5f;
@@ -220,10 +233,17 @@ public class MeadowGrovePiece extends StructurePiece {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
 
         if (featureTypeOffset > start && featureTypeOffset < midpoint) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_TREE;
+            if (randomSource.nextFloat() < 0.04f) {
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_TREE;
+            }
+            else if (randomSource.nextFloat() < 0.06f) {
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE;
+            }
         }
         if (featureTypeOffset >= midpoint && featureTypeOffset < end) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE;
+            if (randomSource.nextFloat() < 0.04f) {
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE;
+            }
         }
         if (featureTypeOffset >= end) {
 
@@ -234,7 +254,7 @@ public class MeadowGrovePiece extends StructurePiece {
         return null;
     }
 
-    private void createRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, List<BlockState> rampBlockPattern, int yLevel, int blockX, int blockZ, int rampHeight, double noise, double distance, double offset) {
+    private void createRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, RandomSource random, BlockPos.MutableBlockPos pos, List<BlockState> rampBlockPattern, int yLevel, int blockX, int blockZ, int rampHeight, double noise, double distance, double offset) {
         boolean isAtEdge = distance > offset * 0.95f;
         float noiseOffset = Easing.QUAD_OUT.clamped((distance - offset * 0.6f) / (offset * 0.4f), 0, 0.3f);
         if (distance < offset * 0.6f) {
@@ -245,14 +265,20 @@ public class MeadowGrovePiece extends StructurePiece {
 
         if (noise >= topThreshold) {
             int topCutoff = Mth.floor(rampHeight * Easing.CIRC_OUT.clamped(getRampCutIn(noise, topThreshold), 0, 1));
-            int rampYLevel = yLevel + rampHeight;
+            int rampTop = yLevel + rampHeight;
 
+            if (!isAtEdge) {
+                var feature = createRampFeatures(random, pos.set(blockX, rampTop+1, blockZ));
+                if (feature != null) {
+                    bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
+                }
+            }
             BlockState peripheralState = getPeripheralState(noiseSampler, blockX, blockZ, distance, offset);
             for (int i = 0; i < rampHeight; i++) {
                 if (i > topCutoff) {
                     break;
                 }
-                int y = rampYLevel - i;
+                int y = rampTop - i;
                 pos.set(blockX, y, blockZ);
                 if (chunk.getBlockState(pos).canBeReplaced()) {
                     BlockState state = Blocks.DIRT.defaultBlockState();
