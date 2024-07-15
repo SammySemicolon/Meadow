@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
-      "model": "meadow:block/lapis_flower"
+    "half=lower": {
+      "model": "meadow:block/lapis_flower_bottom"
+    },
+    "half=upper": {
+      "model": "meadow:block/lapis_flower_top"
     }
   }
 }

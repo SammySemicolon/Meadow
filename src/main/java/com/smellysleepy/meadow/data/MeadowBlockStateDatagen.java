@@ -46,12 +46,8 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 
         setTexturePath("mineral_flora/");
         for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA) {
-            if (bundle.flower.get() instanceof TallMineralPlant) {
-                BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, bundle.flower);
-            }
-            else {
-                BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.flower);
-            }
+            BlockStateSmithTypes.GRASS_BLOCK.act(data, bundle.grass);
+            BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, bundle.flower);
             BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.flora, bundle.sapling);
             BlockStateSmithTypes.LEAVES_BLOCK.act(data, bundle.leaves);
         }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/dirt",
+    "side": "meadow:block/mineral_flora/iron_grass_block",
+    "top": "meadow:block/mineral_flora/iron_grass_block_top"
+  }
+}

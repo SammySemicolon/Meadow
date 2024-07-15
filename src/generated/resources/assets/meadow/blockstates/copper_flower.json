@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
-      "model": "meadow:block/copper_flower"
+    "half=lower": {
+      "model": "meadow:block/copper_flower_bottom"
+    },
+    "half=upper": {
+      "model": "meadow:block/copper_flower_top"
     }
   }
 }

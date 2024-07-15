@@ -13,26 +13,26 @@ import static com.smellysleepy.meadow.registry.common.MeadowItemRegistry.registe
 
 public class MineralFloraRegistryBundle {
 
+    public final RegistryObject<Block> grass;
     public final RegistryObject<Block> flora;
     public final RegistryObject<Block> flower;
     public final RegistryObject<Block> sapling;
     public final RegistryObject<Block> leaves;
+
+    public final RegistryObject<Item> grassItem;
     public final RegistryObject<Item> floraItem;
     public final RegistryObject<Item> flowerItem;
     public final RegistryObject<Item> saplingItem;
     public final RegistryObject<Item> leavesItem;
 
     public MineralFloraRegistryBundle(String prefix, TagKey<Block> tag) {
-        this(prefix, tag, false);
-    }
-    public MineralFloraRegistryBundle(String prefix, TagKey<Block> tag, boolean doubleTallPlant) {
+        grass = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES()));
         flora = BLOCKS.register(prefix + "_flora", () -> new MineralPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
-        flower = doubleTallPlant ?
-                BLOCKS.register(prefix + "_flower", () -> new TallMineralPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag)) :
-                BLOCKS.register(prefix + "_flower", () -> new MineralPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
-        sapling = BLOCKS.register(prefix + "_sapling", () -> new MineralPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
+        flower = BLOCKS.register(prefix + "_flower", () -> new TallMineralPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
+        sapling = BLOCKS.register(prefix + "_sapling", () -> new MineralSapling(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
         leaves = BLOCKS.register(prefix + "_leaves", () -> new MineralLeaves(MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES()));
 
+        grassItem = register(prefix + "_grass_block", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(grass.get(), p));
         floraItem = register(prefix + "_flora", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(flora.get(), p));
         flowerItem = register(prefix + "_flower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(flower.get(), p));
         saplingItem = register(prefix + "_sapling", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(sapling.get(), p));

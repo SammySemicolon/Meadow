@@ -71,6 +71,7 @@ public class MeadowBlockProperties {
                 .lightLevel(s -> 4);
     }
 
+
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .mapColor(MapColor.GRASS)
@@ -80,6 +81,15 @@ public class MeadowBlockProperties {
                 .noOcclusion()
                 .setCutoutRenderType()
                 .lightLevel(s -> 2);
+    }
+
+    public static LodestoneBlockProperties MINERAL_GRASS_BLOCK_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .randomTicks()
+                .strength(0.6F)
+                .mapColor(MapColor.GRASS)
+                .sound(SoundType.GRASS)
+                .addTag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND);
     }
 
     public static LodestoneBlockProperties MINERAL_FLORA_PROPERTIES() {

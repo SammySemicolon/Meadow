@@ -6,6 +6,7 @@ import net.minecraft.core.*;
 import net.minecraft.data.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.*;
 import net.minecraftforge.registries.*;
 import team.lodestar.lodestone.systems.datagen.providers.*;
@@ -34,7 +35,7 @@ public class MeadowBlockTagDatagen extends LodestoneBlockTagsProvider {
         Set<RegistryObject<Block>> blocks = new HashSet<>(BLOCKS.getEntries());
 
         tag(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND).addTag(BlockTags.MOSS_REPLACEABLE);
-        tag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND).addTag(BlockTags.MOSS_REPLACEABLE);
+        tag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND).addTags(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND, Tags.Blocks.ORES);
 
         addTagsFromBlockProperties(blocks.stream().map(RegistryObject::get).collect(Collectors.toList()));
     }
