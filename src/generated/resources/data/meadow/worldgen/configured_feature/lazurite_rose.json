@@ -3,7 +3,7 @@
   "config": {
     "foliage": "minecraft:barrier",
     "ore": "minecraft:deepslate_lapis_ore",
-    "plant": "meadow:lazurite_rose",
+    "plant": "meadow:lapis_flower",
     "primaryDecorator": "meadow:meadow_grass_block",
     "secondaryDecorator": "minecraft:tuff"
   }

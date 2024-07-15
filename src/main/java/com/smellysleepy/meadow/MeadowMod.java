@@ -25,6 +25,9 @@ public class MeadowMod {
     public MeadowMod() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         MeadowCreativeTabRegistry.CREATIVE_MODE_TABS.register(modBus);
+
+        MineralFloraRegistry.init();
+
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
         FEATURE_TYPES.register(modBus);

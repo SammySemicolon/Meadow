@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "meadow:block/coal_flower_bottom"
+    },
+    "half=upper": {
+      "model": "meadow:block/coal_flower_top"
+    }
+  }
+}

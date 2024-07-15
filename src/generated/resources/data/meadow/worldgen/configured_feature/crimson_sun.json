@@ -3,7 +3,7 @@
   "config": {
     "foliage": "minecraft:barrier",
     "ore": "minecraft:redstone_ore",
-    "plant": "meadow:crimson_sun",
+    "plant": "meadow:redstone_flower",
     "primaryDecorator": "minecraft:tuff",
     "secondaryDecorator": "minecraft:andesite"
   }

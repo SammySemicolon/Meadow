@@ -1,15 +1,11 @@
 package com.smellysleepy.meadow.data;
 
-import com.mojang.datafixers.util.*;
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
-import com.smellysleepy.meadow.common.block.strange_flora.*;
-import net.minecraft.*;
+import com.smellysleepy.meadow.common.block.flora.*;
 import net.minecraft.core.*;
-import net.minecraft.data.models.blockstates.*;
-import net.minecraft.data.models.model.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.*;
@@ -19,8 +15,6 @@ import team.lodestar.lodestone.systems.datagen.*;
 import team.lodestar.lodestone.systems.datagen.statesmith.*;
 
 import java.util.function.*;
-
-import static net.minecraft.data.models.BlockModelGenerators.MULTIFACE_GENERATOR;
 
 public class MeadowBlockStateSmithTypes {
 
@@ -187,17 +181,5 @@ public class MeadowBlockStateSmithTypes {
             }
             partBuilder.end();
         }
-    });
-
-    public static BlockStateSmith<AbstractStrangePlant> STRANGE_PLANT_BLOCK = new BlockStateSmith<>(AbstractStrangePlant.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {
-        String name = provider.getBlockName(block);
-        provider.getVariantBuilder(block).forAllStates(s -> {
-            boolean stone = s.getValue(AbstractStrangePlant.STONE);
-            String modelName = name + (stone ? "_stone" : "");
-
-            final BlockModelBuilder model = provider.models().cross(modelName, provider.getBlockTexture(modelName))
-                    .texture("cross", provider.getBlockTexture(modelName));
-            return ConfiguredModel.builder().modelFile(model).build();
-        });
     });
 }

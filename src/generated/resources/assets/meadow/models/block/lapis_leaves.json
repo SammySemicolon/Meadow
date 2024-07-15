@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "meadow:block/mineral_flora/lapis_leaves"
+  }
+}

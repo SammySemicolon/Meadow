@@ -32,7 +32,7 @@ public class MeadowConfiguredFeatureDatagen {
         )));
 
         context.register(MeadowConfiguredFeatureRegistry.CRIMSON_SUN, addTreeConfig(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
-                MeadowBlockRegistry.CRIMSON_SUN.get(),
+                MineralFloraRegistry.REDSTONE_FLORA.flower.get(),
                 Blocks.REDSTONE_ORE,
                 Blocks.BARRIER,
                 Blocks.TUFF,
@@ -40,7 +40,7 @@ public class MeadowConfiguredFeatureDatagen {
         )));
 
         context.register(MeadowConfiguredFeatureRegistry.LAZURITE_ROSE, addTreeConfig(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
-                MeadowBlockRegistry.LAZURITE_ROSE.get(),
+                MineralFloraRegistry.LAPIS_FLORA.flower.get(),
                 Blocks.DEEPSLATE_LAPIS_ORE,
                 Blocks.BARRIER,
                 MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get(),

@@ -1,6 +1,8 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
+import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.block.flora.mineral_flora.TallMineralPlant;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.data.*;
 import net.minecraft.world.level.block.*;
@@ -42,12 +44,18 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         MeadowBlockStateSmithTypes.MEADOW_LEAF_PILE_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LEAF_PILE);
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_SAPLING, MeadowBlockRegistry.SMALL_ASPEN_SAPLING);
 
-        setTexturePath("strange_flora/mineral/");
-        MeadowBlockStateSmithTypes.STRANGE_PLANT_BLOCK.act(data, MeadowBlockRegistry.LAZURITE_ROSE, MeadowBlockRegistry.CRIMSON_SUN);
-        BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.BERYL_ALSTRO, MeadowBlockRegistry.TRANQUIL_LILY);
+        setTexturePath("mineral_flora/");
+        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA) {
+            if (bundle.flower.get() instanceof TallMineralPlant) {
+                BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, bundle.flower);
+            }
+            else {
+                BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.flower);
+            }
+            BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.flora, bundle.sapling);
+            BlockStateSmithTypes.LEAVES_BLOCK.act(data, bundle.leaves);
+        }
         setTexturePath("");
-
-        MeadowBlockStateSmithTypes.WALL_MUSHROOM.act(data, MeadowBlockRegistry.MEADOW_MUSHROOM);
 
     }
 }

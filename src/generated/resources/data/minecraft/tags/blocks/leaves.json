@@ -1,8 +1,18 @@
 {
   "values": [
-    "meadow:aspen_leaf_pile",
+    "meadow:netherite_leaves",
+    "meadow:amethyst_leaves",
+    "meadow:redstone_leaves",
     "meadow:tall_hanging_aspen_leaves",
+    "meadow:emerald_leaves",
+    "meadow:iron_leaves",
+    "meadow:diamond_leaves",
+    "meadow:lapis_leaves",
+    "meadow:aspen_leaf_pile",
+    "meadow:coal_leaves",
+    "meadow:gold_leaves",
     "meadow:flowering_aspen_leaves",
+    "meadow:copper_leaves",
     "meadow:hanging_aspen_leaves",
     "meadow:aspen_leaves"
   ]
