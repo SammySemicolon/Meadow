@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow;
 
 import com.smellysleepy.meadow.registry.common.*;
+import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.resources.*;
 import net.minecraft.util.*;
 import net.minecraftforge.eventbus.api.*;
@@ -26,6 +27,7 @@ public class MeadowMod {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         MeadowCreativeTabRegistry.CREATIVE_MODE_TABS.register(modBus);
 
+        MineralTreePartTypes.init();
         MineralFloraRegistry.init();
 
         BLOCKS.register(modBus);

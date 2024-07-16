@@ -30,7 +30,7 @@ public class StrangeFloraParticleEffects {
         var yawData = SpinParticleData.createRandomDirection(rand, nextFloat(rand, 0.01f, 0.02f), nextFloat(rand, 0.05f, 0.125f), 0f)
                 .randomSpinOffset(rand).build();
 
-        var options = new WorldParticleOptions(MeadowParticleRegistry.CRIMSON_SUN);
+        var options = new WorldParticleOptions(MeadowParticleRegistry.SHINY_GLIMMER);
         if (rand.nextBoolean()) {
             options.setBehavior(new BedrockDirectionalBehaviorComponent(pitchData, yawData));
         }
@@ -39,15 +39,15 @@ public class StrangeFloraParticleEffects {
     public static ParticleEffectSpawner mineralFlora(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 
-        float scale = RandomHelper.randomBetween(rand, 0.05F, 0.075F);
-        int lifetime = RandomHelper.randomBetween(rand, 40, 120);
+        float scale = RandomHelper.randomBetween(rand, 0.04F, 0.05F);
+        int lifetime = RandomHelper.randomBetween(rand, 100, 120);
         var spinData = SpinParticleData.createRandomDirection(rand, nextFloat(rand, 0.01f, 0.025f), nextFloat(rand, 0.1f, 0.125f), 0f)
                 .randomSpinOffset(rand).build();
         var scaleData = GenericParticleData.create(scale * 0.5f, scale * 1.25f, scale * 0.75f).build();
         var transparencyData = GenericParticleData.create(0f, 1f, 0.1f).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
 
         float colorScalar = 0.6F + rand.nextFloat() * 0.4F;
-        Color color = new Color(colorScalar, 0, 0);
+        Color color = new Color(colorScalar, colorScalar, colorScalar);
 
         var worldParticleBuilder = WorldParticleBuilder.create(options)
                 .setTransparencyData(transparencyData)

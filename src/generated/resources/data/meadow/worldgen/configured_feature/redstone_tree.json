@@ -1,0 +1,20 @@
+{
+  "type": "meadow:mineral_tree",
+  "config": {
+    "bundle": "meadow:redstone",
+    "parts": [
+      {
+        "type": "meadow:converging_trunk",
+        "maxHeight": 5,
+        "maxOffset": 5,
+        "minHeight": 2,
+        "minOffset": 3
+      },
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 6,
+        "minHeight": 3
+      }
+    ]
+  }
+}

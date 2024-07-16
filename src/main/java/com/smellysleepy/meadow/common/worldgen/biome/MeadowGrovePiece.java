@@ -215,10 +215,10 @@ public class MeadowGrovePiece extends StructurePiece {
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
         if (randomSource.nextFloat() < 0.02f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_TREE;
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
         }
         else if (randomSource.nextFloat() < 0.04f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE;
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
         }
         if (feature != null) {
             return Pair.of(pos.immutable(), feature);
@@ -234,15 +234,15 @@ public class MeadowGrovePiece extends StructurePiece {
 
         if (featureTypeOffset > start && featureTypeOffset < midpoint) {
             if (randomSource.nextFloat() < 0.04f) {
-                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_TREE;
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
             }
             else if (randomSource.nextFloat() < 0.06f) {
-                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE;
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
             }
         }
         if (featureTypeOffset >= midpoint && featureTypeOffset < end) {
             if (randomSource.nextFloat() < 0.04f) {
-                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_TREE;
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
             }
         }
         if (featureTypeOffset >= end) {

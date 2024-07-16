@@ -1,5 +1,6 @@
-package com.smellysleepy.meadow.common.worldgen.tree;
+package com.smellysleepy.meadow.common.worldgen.tree.meadow;
 
+import com.smellysleepy.meadow.common.worldgen.tree.AbstractTreeFeature;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.*;
@@ -14,7 +15,7 @@ import java.util.function.*;
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.*;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
-public class MeadowTreeFeature extends AbstractMeadowTreeFeature<MeadowTreeFeatureConfiguration> {
+public class MeadowTreeFeature extends AbstractTreeFeature<MeadowTreeFeatureConfiguration> {
 
     public static final LodestoneBlockFiller.LodestoneLayerToken LOGS = new LodestoneBlockFiller.LodestoneLayerToken();
     public static final LodestoneBlockFiller.LodestoneLayerToken LEAVES = new LodestoneBlockFiller.LodestoneLayerToken();

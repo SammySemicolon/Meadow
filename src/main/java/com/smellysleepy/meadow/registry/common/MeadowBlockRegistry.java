@@ -3,15 +3,13 @@ package com.smellysleepy.meadow.registry.common;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
-import com.smellysleepy.meadow.common.block.flora.mineral_flora.*;
-import com.smellysleepy.meadow.common.worldgen.tree.*;
-import com.smellysleepy.meadow.common.worldgen.tree.small.*;
+import com.smellysleepy.meadow.common.worldgen.tree.SimpleTreeGrower;
+import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import net.minecraft.client.color.block.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.registries.*;
@@ -22,8 +20,8 @@ public class MeadowBlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MEADOW);
 
     //region meadow wood
-    public static final RegistryObject<Block> ASPEN_SAPLING = BLOCKS.register("aspen_sapling", () -> new MeadowSaplingBlock(new MeadowTreeGrower(), MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
-    public static final RegistryObject<Block> SMALL_ASPEN_SAPLING = BLOCKS.register("small_aspen_sapling", () -> new MeadowSaplingBlock(new SmallMeadowTreeGrower(), MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<Block> ASPEN_SAPLING = BLOCKS.register("aspen_sapling", () -> new MeadowSaplingBlock(new SimpleTreeGrower(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE), MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<Block> SMALL_ASPEN_SAPLING = BLOCKS.register("small_aspen_sapling", () -> new MeadowSaplingBlock(new SimpleTreeGrower(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE), MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
 
     public static final RegistryObject<Block> ASPEN_LOG = BLOCKS.register("aspen_log", () -> new MeadowLogBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));
     public static final RegistryObject<Block> THIN_ASPEN_LOG = BLOCKS.register("thin_aspen_log", () -> new ThinMeadowLogBlock(MeadowBlockProperties.THIN_MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS)));

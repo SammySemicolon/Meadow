@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 
-public abstract class AbstractMeadowTreeFeature<FC extends FeatureConfiguration> extends Feature<FC> {
-    public AbstractMeadowTreeFeature(Codec<FC> pCodec) {
+public abstract class AbstractTreeFeature<FC extends FeatureConfiguration> extends Feature<FC> {
+    public AbstractTreeFeature(Codec<FC> pCodec) {
         super(pCodec);
     }
 

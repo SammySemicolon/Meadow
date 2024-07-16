@@ -1,10 +1,10 @@
 {
-  "type": "meadow:small_meadow_tree",
+  "type": "meadow:aspen_tree",
   "config": {
     "fancyLeaves": "meadow:flowering_aspen_leaves",
     "hangingLeaves": "meadow:hanging_aspen_leaves",
     "leaves": "meadow:aspen_leaves",
-    "log": "meadow:thin_aspen_log",
+    "log": "meadow:aspen_log",
     "sapling": "meadow:aspen_sapling"
   }
 }

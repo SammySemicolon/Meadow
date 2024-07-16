@@ -2,7 +2,6 @@ package com.smellysleepy.meadow.common.worldgen.strange_plant;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import com.smellysleepy.meadow.common.worldgen.tree.small.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.levelgen.feature.configurations.*;

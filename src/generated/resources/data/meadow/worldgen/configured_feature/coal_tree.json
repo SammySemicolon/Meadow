@@ -1,0 +1,26 @@
+{
+  "type": "meadow:mineral_tree",
+  "config": {
+    "bundle": "meadow:coal",
+    "parts": [
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 8,
+        "minHeight": 6
+      },
+      {
+        "type": "meadow:puffy_leaves",
+        "extraBlobs": 4,
+        "leafSizes": [
+          1,
+          2,
+          2,
+          2,
+          1
+        ],
+        "maxBlobOffset": 3,
+        "minBlobOffset": 1
+      }
+    ]
+  }
+}

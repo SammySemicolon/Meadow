@@ -45,7 +45,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_SAPLING, MeadowBlockRegistry.SMALL_ASPEN_SAPLING);
 
         setTexturePath("mineral_flora/");
-        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA) {
+        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA.values()) {
             BlockStateSmithTypes.GRASS_BLOCK.act(data, bundle.grass);
             BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, bundle.flower);
             BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.flora, bundle.sapling);

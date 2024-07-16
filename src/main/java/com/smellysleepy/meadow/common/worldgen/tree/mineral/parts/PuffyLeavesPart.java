@@ -1,0 +1,57 @@
+package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
+import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
+
+import java.util.List;
+
+public class PuffyLeavesPart extends MineralTreePart {
+
+    public static final Codec<PuffyLeavesPart> CODEC =
+            RecordCodecBuilder.create(inst -> inst.group(
+                            Codec.list(Codec.INT).fieldOf("leafSizes").forGetter(obj -> obj.leafSizes),
+                            Codec.INT.fieldOf("extraBlobs").forGetter(obj -> obj.extraBlobs),
+                            Codec.INT.fieldOf("minBlobOffset").forGetter(obj -> obj.minBlobOffset),
+                            Codec.INT.fieldOf("maxBlobOffset").forGetter(obj -> obj.maxBlobOffset))
+                    .apply(inst, PuffyLeavesPart::new)
+            );
+
+    private final List<Integer> leafSizes;
+    private final int extraBlobs;
+    private final int minBlobOffset;
+    private final int maxBlobOffset;
+
+    public PuffyLeavesPart(List<Integer> leafSizes, int extraBlobs, int minBlobOffset, int maxBlobOffset) {
+        super(MineralTreePartTypes.PUFFY_LEAVES);
+        this.leafSizes = leafSizes;
+        this.extraBlobs = extraBlobs;
+        this.minBlobOffset = minBlobOffset;
+        this.maxBlobOffset = maxBlobOffset;
+    }
+
+    @Override
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
+        RandomSource random = level.getRandom();
+        int downwardsOffset = Mth.ceil(leafSizes.size() / 2f);
+        BlockPos.MutableBlockPos offsetPos = partPos.mutable().move(Direction.DOWN, downwardsOffset);
+        feature.makeLeafBlob(bundle, filler, offsetPos, leafSizes);
+        for (int i = 0; i < extraBlobs; i++) {
+            int xOffset = random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset);
+            int yOffset = random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset)-1;
+            int zOffset = random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset);
+            var extraPos = offsetPos.mutable().move(xOffset, yOffset, zOffset);
+            feature.makeLeafBlob(bundle, filler, extraPos, leafSizes);
+        }
+        return new PartPlacementResult(true, partPos);
+    }
+}

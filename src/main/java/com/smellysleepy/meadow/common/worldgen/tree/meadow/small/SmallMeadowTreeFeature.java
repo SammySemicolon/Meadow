@@ -1,8 +1,5 @@
-package com.smellysleepy.meadow.common.worldgen.tree.small;
+package com.smellysleepy.meadow.common.worldgen.tree.meadow.small;
 
-import com.mojang.serialization.*;
-import com.smellysleepy.meadow.common.block.meadow.flora.*;
-import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.ThinMeadowLogBlock.*;
 import com.smellysleepy.meadow.common.worldgen.tree.*;
@@ -17,7 +14,7 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.*;
 
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.updateLeaves;
 
-public class SmallMeadowTreeFeature extends AbstractMeadowTreeFeature<SmallMeadowTreeFeatureConfiguration> {
+public class SmallMeadowTreeFeature extends AbstractTreeFeature<SmallMeadowTreeFeatureConfiguration> {
 
     public static final LodestoneLayerToken LOGS = new LodestoneLayerToken();
     public static final LodestoneLayerToken LEAVES = new LodestoneLayerToken();

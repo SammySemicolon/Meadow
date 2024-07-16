@@ -1,0 +1,40 @@
+package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
+import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
+
+public class StraightTrunkPart extends MineralTreePart {
+
+    public static final Codec<StraightTrunkPart> CODEC =
+            RecordCodecBuilder.create(inst -> inst.group(
+                            Codec.intRange(0, 64).fieldOf("minHeight").forGetter(obj -> obj.minHeight),
+                            Codec.intRange(0, 64).fieldOf("maxHeight").forGetter(obj -> obj.maxHeight)
+                    )
+                    .apply(inst, StraightTrunkPart::new));
+    
+    public final int minHeight;
+    public final int maxHeight;
+
+    public StraightTrunkPart(int minHeight, int maxHeight) {
+        super(MineralTreePartTypes.STRAIGHT_TRUNK);
+        this.minHeight = minHeight;
+        this.maxHeight = maxHeight;
+    }
+
+    @Override
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
+        RandomSource random = level.getRandom();
+        int trunkHeight = random.nextIntBetweenInclusive(minHeight, maxHeight);
+        BlockPos.MutableBlockPos mutable = partPos.mutable();
+        boolean success = feature.makeStraightTrunk(level, filler, mutable, trunkHeight);
+        return new PartPlacementResult(success, mutable.immutable());
+    }
+}
