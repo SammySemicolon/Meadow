@@ -35,27 +35,40 @@ public class MeadowConfiguredFeatureDatagen {
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COAL_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
                 new MineralTreeFeatureConfiguration(MineralFloraRegistry.COAL_FLORA, List.of(
-                        new StraightTrunkPart(6, 8),
-                        new PuffyLeavesPart(List.of(1, 2, 2, 2, 1), 4, 1, 3)
+                        new StraightTrunkPart(7, 9),
+                        new OffsetPart(0, -4, 0),
+                        new PuffyLeavesPart(List.of(1, 2, 2, 2, 1), 4, 0, 2)
                 ))
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LAPIS_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
                 new MineralTreeFeatureConfiguration(MineralFloraRegistry.LAPIS_FLORA, List.of(
                         new StraightTrunkPart(6, 8),
-                        new LeafBlobPart(List.of(1, 2, 3, 3, 3, 3, 2, 1)),
+                        new LeafBlobPart(List.of(1, 2, 2, 2, 2, 1)),
                         new OffsetPart(0, -5, 0),
-                        new SplitBranchesPart(2, 3, 2, 3),
-                        new LeafBlobPart(List.of(1, 2, 2, 1))
+                        new SplitBranchesPart(4, 5, 2, 3),
+                        new OffsetPart(0, -2, 0),
+                        new LeafBlobPart(List.of(1, 2, 2, 2, 2, 1))
                 ))
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_REDSTONE_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
                 new MineralTreeFeatureConfiguration(MineralFloraRegistry.REDSTONE_FLORA, List.of(
-                        new ConvergingTrunkPart(1, 3, 2, 4),
+                        new ConvergingTrunkPart(1, 2, 1, 4),
                         new StraightTrunkPart(3, 6)
                 ))
         ));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COPPER_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.COPPER_FLORA, List.of(
+                        new StraightTrunkPart(3, 4),
+                        new LeafBlobPart(List.of(3, 2)),
+                        new ReturnPart(),
+                        new SplitBranchesPart(2, 3, 2, 3),
+                        new LeafBlobPart(List.of(2, 1))
+                ))
+        ));
+
 
         context.register(MeadowConfiguredFeatureRegistry.CRIMSON_SUN, addTreeConfig(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
                 MineralFloraRegistry.REDSTONE_FLORA.flower.get(),

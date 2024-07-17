@@ -1,29 +1,22 @@
 {
   "type": "meadow:mineral_tree",
   "config": {
-    "bundle": "meadow:lapis",
+    "bundle": "meadow:copper",
     "parts": [
       {
         "type": "meadow:straight_trunk",
-        "maxHeight": 8,
-        "minHeight": 6
+        "maxHeight": 3,
+        "minHeight": 3
       },
       {
         "type": "meadow:leaf_blob",
         "leafSizes": [
-          1,
-          2,
-          2,
-          2,
-          2,
-          1
+          3,
+          2
         ]
       },
       {
-        "type": "meadow:offset",
-        "xOffset": 0,
-        "yOffset": -5,
-        "zOffset": 0
+        "type": "meadow:return"
       },
       {
         "type": "meadow:splitting_branches",
@@ -35,10 +28,6 @@
       {
         "type": "meadow:leaf_blob",
         "leafSizes": [
-          1,
-          2,
-          2,
-          2,
           2,
           1
         ]

@@ -5,10 +5,10 @@
     "parts": [
       {
         "type": "meadow:converging_trunk",
-        "maxHeight": 5,
-        "maxOffset": 5,
-        "minHeight": 2,
-        "minOffset": 3
+        "maxHeight": 2,
+        "maxOffset": 4,
+        "minHeight": 1,
+        "minOffset": 1
       },
       {
         "type": "meadow:straight_trunk",

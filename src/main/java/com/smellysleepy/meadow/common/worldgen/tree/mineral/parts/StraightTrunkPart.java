@@ -23,6 +23,9 @@ public class StraightTrunkPart extends MineralTreePart {
     public final int minHeight;
     public final int maxHeight;
 
+    public StraightTrunkPart(int height) {
+        this(height, height);
+    }
     public StraightTrunkPart(int minHeight, int maxHeight) {
         super(MineralTreePartTypes.STRAIGHT_TRUNK);
         this.minHeight = minHeight;

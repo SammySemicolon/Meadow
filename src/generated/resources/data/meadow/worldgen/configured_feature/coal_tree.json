@@ -5,8 +5,14 @@
     "parts": [
       {
         "type": "meadow:straight_trunk",
-        "maxHeight": 8,
-        "minHeight": 6
+        "maxHeight": 9,
+        "minHeight": 7
+      },
+      {
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -4,
+        "zOffset": 0
       },
       {
         "type": "meadow:puffy_leaves",
@@ -18,8 +24,8 @@
           2,
           1
         ],
-        "maxBlobOffset": 3,
-        "minBlobOffset": 1
+        "maxBlobOffset": 2,
+        "minBlobOffset": 0
       }
     ]
   }

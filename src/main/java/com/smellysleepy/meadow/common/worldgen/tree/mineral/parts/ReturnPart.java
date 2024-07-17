@@ -7,30 +7,19 @@ import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
-import java.util.List;
+public class ReturnPart extends MineralTreePart {
 
-public class LeafBlobPart extends MineralTreePart {
+    public static final Codec<ReturnPart> CODEC = Codec.unit(new ReturnPart());
 
-    public static final Codec<LeafBlobPart> CODEC =
-            RecordCodecBuilder.create(inst -> inst.group(
-                    Codec.list(Codec.INT).fieldOf("leafSizes").forGetter(obj -> obj.leafSizes))
-                    .apply(inst, LeafBlobPart::new)
-            );
-
-    private final List<Integer> leafSizes;
-    public LeafBlobPart(List<Integer> leafSizes) {
-        super(MineralTreePartTypes.LEAF_BLOB);
-        this.leafSizes = leafSizes;
+    public ReturnPart() {
+        super(MineralTreePartTypes.RETURN);
     }
 
     @Override
     public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
-        feature.makeLeafBlob(bundle, filler, partPos.mutable(), leafSizes);
-        return new PartPlacementResult(true, partPos);
+        return new PartPlacementResult(true, featurePos);
     }
 }

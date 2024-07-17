@@ -42,13 +42,12 @@ public class PuffyLeavesPart extends MineralTreePart {
     @Override
     public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
         RandomSource random = level.getRandom();
-        int downwardsOffset = Mth.ceil(leafSizes.size() / 2f);
-        BlockPos.MutableBlockPos offsetPos = partPos.mutable().move(Direction.DOWN, downwardsOffset);
+        BlockPos.MutableBlockPos offsetPos = partPos.mutable();
         feature.makeLeafBlob(bundle, filler, offsetPos, leafSizes);
         for (int i = 0; i < extraBlobs; i++) {
-            int xOffset = random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset);
-            int yOffset = random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset)-1;
-            int zOffset = random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset);
+            int xOffset = (random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset)) * (random.nextBoolean()? -1 : 1);
+            int yOffset = (random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset)-1) * (random.nextBoolean()? -1 : 1);
+            int zOffset = (random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset)) * (random.nextBoolean()? -1 : 1);
             var extraPos = offsetPos.mutable().move(xOffset, yOffset, zOffset);
             feature.makeLeafBlob(bundle, filler, extraPos, leafSizes);
         }

@@ -26,6 +26,7 @@ public class MineralTreePartTypes {
     public static final MineralTreePartType<SplitBranchesPart> SPLITTING_BRANCHES = register(MeadowMod.meadowModPath("splitting_branches"), SplitBranchesPart.CODEC);
 
     public static final MineralTreePartType<OffsetPart> OFFSET = register(MeadowMod.meadowModPath("offset"), OffsetPart.CODEC);
+    public static final MineralTreePartType<ReturnPart> RETURN = register(MeadowMod.meadowModPath("return"), ReturnPart.CODEC);
 
     public static void init() {
 
