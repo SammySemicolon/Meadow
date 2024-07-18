@@ -23,6 +23,10 @@ public class MineralTreePartTypes {
     public static final MineralTreePartType<PuffyLeavesPart> PUFFY_LEAVES = register(MeadowMod.meadowModPath("puffy_leaves"), PuffyLeavesPart.CODEC);
     public static final MineralTreePartType<StraightTrunkPart> STRAIGHT_TRUNK = register(MeadowMod.meadowModPath("straight_trunk"), StraightTrunkPart.CODEC);
     public static final MineralTreePartType<ConvergingTrunkPart> CONVERGING_TRUNK = register(MeadowMod.meadowModPath("converging_trunk"), ConvergingTrunkPart.CODEC);
+
+    public static final MineralTreePartType<ThickStumpPart> THICK_STUMP = register(MeadowMod.meadowModPath("thick_stump"), ThickStumpPart.CODEC);
+    public static final MineralTreePartType<StumpFoldsPart> STUMP_FOLDS = register(MeadowMod.meadowModPath("stump_folds"), StumpFoldsPart.CODEC);
+
     public static final MineralTreePartType<SplitBranchesPart> SPLITTING_BRANCHES = register(MeadowMod.meadowModPath("splitting_branches"), SplitBranchesPart.CODEC);
 
     public static final MineralTreePartType<OffsetPart> OFFSET = register(MeadowMod.meadowModPath("offset"), OffsetPart.CODEC);

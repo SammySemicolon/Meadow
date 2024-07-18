@@ -4,11 +4,21 @@
     "bundle": "meadow:redstone",
     "parts": [
       {
-        "type": "meadow:converging_trunk",
+        "type": "meadow:thick_stump",
         "maxHeight": 2,
-        "maxOffset": 4,
-        "minHeight": 1,
-        "minOffset": 1
+        "minHeight": 2,
+        "width": 2
+      },
+      {
+        "type": "meadow:stump_folds",
+        "maxCount": 2,
+        "maxDistance": 4,
+        "maxHeight": 2,
+        "maxWidth": 1,
+        "minCount": 1,
+        "minDistance": 3,
+        "minHeight": 2,
+        "minWidth": 1
       },
       {
         "type": "meadow:straight_trunk",

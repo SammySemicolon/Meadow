@@ -26,7 +26,9 @@ public class SplitBranchesPart extends MineralTreePart {
                             Codec.intRange(0, 8).fieldOf("minHeight").forGetter(obj -> obj.minHeight),
                             Codec.intRange(0, 8).fieldOf("maxHeight").forGetter(obj -> obj.maxHeight),
                             Codec.intRange(0, 8).fieldOf("minOffset").forGetter(obj -> obj.minOffset),
-                            Codec.intRange(0, 8).fieldOf("maxOffset").forGetter(obj -> obj.maxOffset)
+                            Codec.intRange(0, 8).fieldOf("maxOffset").forGetter(obj -> obj.maxOffset),
+                            Codec.intRange(0, 4).fieldOf("minCount").forGetter(obj -> obj.minCount),
+                            Codec.intRange(0, 4).fieldOf("maxCount").forGetter(obj -> obj.maxCount)
                     )
                     .apply(inst, SplitBranchesPart::new));
 
@@ -34,20 +36,25 @@ public class SplitBranchesPart extends MineralTreePart {
     public final int maxHeight;
     public final int minOffset;
     public final int maxOffset;
+    public final int minCount;
+    public final int maxCount;
 
-    public SplitBranchesPart(int minHeight, int maxHeight, int minOffset, int maxOffset) {
+    public SplitBranchesPart(int minHeight, int maxHeight, int minOffset, int maxOffset, int minCount, int maxCount) {
         super(MineralTreePartTypes.SPLITTING_BRANCHES);
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
         this.minOffset = minOffset;
         this.maxOffset = maxOffset;
+        this.minCount = minCount;
+        this.maxCount = maxCount;
     }
 
     @Override
     public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
         RandomSource random = level.getRandom();
         List<BlockPos> endPoints = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        int count = random.nextIntBetweenInclusive(minCount, maxCount);
+        for (int i = 0; i < count; i++) {
             int rootsOffset = random.nextIntBetweenInclusive(minOffset, maxOffset);
             Direction direction = Direction.from2DDataValue(i);
             int trunkHeight = random.nextIntBetweenInclusive(minHeight, maxHeight);

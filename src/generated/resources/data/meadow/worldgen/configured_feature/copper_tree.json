@@ -5,7 +5,7 @@
     "parts": [
       {
         "type": "meadow:straight_trunk",
-        "maxHeight": 3,
+        "maxHeight": 4,
         "minHeight": 3
       },
       {
@@ -20,8 +20,10 @@
       },
       {
         "type": "meadow:splitting_branches",
+        "maxCount": 4,
         "maxHeight": 3,
         "maxOffset": 3,
+        "minCount": 3,
         "minHeight": 2,
         "minOffset": 2
       },

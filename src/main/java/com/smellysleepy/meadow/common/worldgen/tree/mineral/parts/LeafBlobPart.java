@@ -7,12 +7,12 @@ import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.WorldGenLevel;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 import java.util.List;
+
+import static com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature.LEAVES;
 
 public class LeafBlobPart extends MineralTreePart {
 
@@ -30,7 +30,7 @@ public class LeafBlobPart extends MineralTreePart {
 
     @Override
     public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
-        feature.makeLeafBlob(bundle, filler, partPos.mutable(), leafSizes);
+        feature.makeBlob(level, bundle.leaves, filler.getLayer(LEAVES), partPos.mutable(), leafSizes);
         return new PartPlacementResult(true, partPos);
     }
 }

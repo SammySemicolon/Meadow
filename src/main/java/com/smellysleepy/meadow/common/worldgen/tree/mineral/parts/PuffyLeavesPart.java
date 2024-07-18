@@ -7,13 +7,13 @@ import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 import java.util.List;
+
+import static com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature.LEAVES;
 
 public class PuffyLeavesPart extends MineralTreePart {
 
@@ -43,13 +43,13 @@ public class PuffyLeavesPart extends MineralTreePart {
     public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
         RandomSource random = level.getRandom();
         BlockPos.MutableBlockPos offsetPos = partPos.mutable();
-        feature.makeLeafBlob(bundle, filler, offsetPos, leafSizes);
+        feature.makeBlob(level, bundle.leaves, filler.getLayer(LEAVES), offsetPos, leafSizes);
         for (int i = 0; i < extraBlobs; i++) {
             int xOffset = (random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset)) * (random.nextBoolean()? -1 : 1);
             int yOffset = (random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset)-1) * (random.nextBoolean()? -1 : 1);
             int zOffset = (random.nextIntBetweenInclusive(minBlobOffset, maxBlobOffset)) * (random.nextBoolean()? -1 : 1);
             var extraPos = offsetPos.mutable().move(xOffset, yOffset, zOffset);
-            feature.makeLeafBlob(bundle, filler, extraPos, leafSizes);
+            feature.makeBlob(level, bundle.leaves, filler.getLayer(LEAVES), extraPos, leafSizes);
         }
         return new PartPlacementResult(true, partPos);
     }

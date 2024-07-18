@@ -9,9 +9,16 @@
         "minHeight": 6
       },
       {
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -4,
+        "zOffset": 0
+      },
+      {
         "type": "meadow:leaf_blob",
         "leafSizes": [
           1,
+          2,
           2,
           2,
           2,
@@ -20,17 +27,19 @@
         ]
       },
       {
-        "type": "meadow:offset",
-        "xOffset": 0,
-        "yOffset": -5,
-        "zOffset": 0
+        "type": "meadow:splitting_branches",
+        "maxCount": 2,
+        "maxHeight": 4,
+        "maxOffset": 2,
+        "minCount": 2,
+        "minHeight": 3,
+        "minOffset": 2
       },
       {
-        "type": "meadow:splitting_branches",
-        "maxHeight": 3,
-        "maxOffset": 3,
-        "minHeight": 2,
-        "minOffset": 2
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -2,
+        "zOffset": 0
       },
       {
         "type": "meadow:leaf_blob",

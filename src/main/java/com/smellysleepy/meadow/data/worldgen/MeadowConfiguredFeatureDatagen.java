@@ -44,9 +44,9 @@ public class MeadowConfiguredFeatureDatagen {
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LAPIS_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
                 new MineralTreeFeatureConfiguration(MineralFloraRegistry.LAPIS_FLORA, List.of(
                         new StraightTrunkPart(6, 8),
-                        new LeafBlobPart(List.of(1, 2, 2, 2, 2, 1)),
-                        new OffsetPart(0, -5, 0),
-                        new SplitBranchesPart(4, 5, 2, 3),
+                        new OffsetPart(0, -4, 0),
+                        new LeafBlobPart(List.of(1, 2, 2, 2, 2, 2, 1)),
+                        new SplitBranchesPart(3, 4, 2, 2, 2, 2),
                         new OffsetPart(0, -2, 0),
                         new LeafBlobPart(List.of(1, 2, 2, 2, 2, 1))
                 ))
@@ -54,7 +54,8 @@ public class MeadowConfiguredFeatureDatagen {
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_REDSTONE_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
                 new MineralTreeFeatureConfiguration(MineralFloraRegistry.REDSTONE_FLORA, List.of(
-                        new ConvergingTrunkPart(1, 2, 1, 4),
+                        new ThickStumpPart(2, 2, 2),
+                        new StumpFoldsPart(2, 2, 1, 1, 3, 4, 1, 2),
                         new StraightTrunkPart(3, 6)
                 ))
         ));
@@ -64,7 +65,7 @@ public class MeadowConfiguredFeatureDatagen {
                         new StraightTrunkPart(3, 4),
                         new LeafBlobPart(List.of(3, 2)),
                         new ReturnPart(),
-                        new SplitBranchesPart(2, 3, 2, 3),
+                        new SplitBranchesPart(2, 3, 2, 3, 3, 4),
                         new LeafBlobPart(List.of(2, 1))
                 ))
         ));

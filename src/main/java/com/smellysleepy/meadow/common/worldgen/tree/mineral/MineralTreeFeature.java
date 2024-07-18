@@ -5,7 +5,10 @@ import com.smellysleepy.meadow.common.worldgen.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.BlockStateEntry;
@@ -52,8 +55,7 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
                     newEndPoints.addAll(result.partEndPoints);
                 }
                 endPoints = newEndPoints;
-            }
-            else {
+            } else {
                 MineralTreePart.PartPlacementResult result = part.place(level, this, bundle, filler, pos, pos);
                 if (!result.isSuccess) {
                     return false;
@@ -80,29 +82,82 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         return true;
     }
 
-    public void makeLeafBlob(MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos.MutableBlockPos pos, List<Integer> leafSizes) {
+    public boolean makeBlob(WorldGenLevel level, Supplier<Block> state, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
+        return makeBlob(level, state.get().defaultBlockState(), layer, pos, sizes);
+    }
+
+    public boolean makeBlob(WorldGenLevel level, BlockState state, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
         var mutable = pos.mutable();
-        var entry = create(bundle.leaves.get().defaultBlockState()).build();
+        var entry = create(state).build();
+        boolean success = true;
 
-        for (int leafSize : leafSizes) {
+        for (int size : sizes) {
             mutable.move(Direction.UP);
-            makeLeafSlice(filler.getLayer(LEAVES), mutable, leafSize, entry);
-        }
-    }
-
-    public void makeLeafSlice(LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, BlockStateEntry entry) {
-        makeLeafSlice(layer, pos, leavesSize, () -> entry);
-    }
-
-    public void makeLeafSlice(LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, Supplier<BlockStateEntry> entry) {
-        for (int x = -leavesSize; x <= leavesSize; x++) {
-            for (int z = -leavesSize; z <= leavesSize; z++) {
-                if (Math.abs(x) == leavesSize && Math.abs(z) == leavesSize) {
-                    continue;
-                }
-                layer.put(pos.offset(x, 0, z), entry.get());
+            boolean result = makeRoundShape(level, layer, mutable, size, entry);
+            if (!result) {
+                success = false;
             }
         }
+        return success;
     }
 
+    public boolean makeRoundShape(WorldGenLevel level, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int size, BlockStateEntry entry) {
+        return makeRoundShape(level, layer, pos, size, () -> entry);
+    }
+
+    public boolean makeRoundShape(WorldGenLevel level, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int size, Supplier<BlockStateEntry> entry) {
+        boolean success = true;
+        for (int x = -size; x <= size; x++) {
+            for (int z = -size; z <= size; z++) {
+                if (Math.abs(x) == size && Math.abs(z) == size) {
+                    continue;
+                }
+                BlockPos offset = pos.offset(x, 0, z);
+                if (!canPlace(level, offset)) {
+                    success = false;
+                }
+                layer.put(offset, entry.get());
+            }
+        }
+        return success;
+    }
+
+    public boolean makeDiamond(WorldGenLevel level, Supplier<Block> state, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
+        return makeDiamond(level, state.get().defaultBlockState(), layer, pos, sizes);
+    }
+
+    public boolean makeDiamond(WorldGenLevel level, BlockState state, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
+        var mutable = pos.mutable();
+        var entry = create(state).build();
+        boolean success = true;
+
+        for (int size : sizes) {
+            mutable.move(Direction.UP);
+            boolean result = makeDiamondShape(level, layer, mutable, size, entry);
+            if (!result) {
+                success = false;
+            }
+        }
+        return success;
+    }
+
+    public boolean makeDiamondShape(WorldGenLevel level, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int size, BlockStateEntry entry) {
+        return makeDiamondShape(level, layer, pos, size, () -> entry);
+    }
+    public boolean makeDiamondShape(WorldGenLevel level, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int size, Supplier<BlockStateEntry> entry) {
+        boolean success = true;
+        for (int x = -size; x <= size; x++) {
+            for (int z = -size; z <= size; z++) {
+                if (Math.abs(x) + Math.abs(z) > size) {
+                    continue;
+                }
+                BlockPos offset = pos.offset(x, 0, z);
+                if (!canPlace(level, offset)) {
+                    success = false;
+                }
+                layer.put(offset, entry.get());
+            }
+        }
+        return success;
+    }
 }
