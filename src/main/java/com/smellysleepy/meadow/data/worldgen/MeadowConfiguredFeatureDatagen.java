@@ -114,6 +114,40 @@ public class MeadowConfiguredFeatureDatagen {
                 ))
         ));
 
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_DIAMOND_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.DIAMOND_FLORA, List.of(
+                        new StraightTrunkPart(4, 7),
+                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
+                        new RandomOffsetsPart(5, 2, 7),
+                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15)),
+                        new ThickStumpPart(List.of(2, 2, 1)),
+                        new StumpFoldsPart(1, 5, 1, 1, 10, 15, 1, 2),
+                        new StraightTrunkPart(3, 5)
+                ))
+        ));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_NETHERITE_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.NETHERITE_FLORA, List.of(
+                        new StraightTrunkPart(4, 7),
+                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
+                        new RandomOffsetsPart(5, 2, 7),
+                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15)),
+                        new ThickStumpPart(List.of(2, 2, 1)),
+                        new StumpFoldsPart(1, 5, 1, 1, 10, 15, 1, 2),
+                        new StraightTrunkPart(3, 5),
+                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
+                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
+                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
+                        new RandomOffsetsPart(5, 2, 7),
+                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15)),
+                        new StraightTrunkPart(3, 5),
+                        new StumpFoldsPart(1, 5, 1, 1, 10, 15, 1, 2),
+                        new StraightTrunkPart(3, 5),
+                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15)),
+                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15))
+                ))
+        ));
+
         context.register(MeadowConfiguredFeatureRegistry.CRIMSON_SUN, addTreeConfig(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
                 MineralFloraRegistry.REDSTONE_FLORA.flower.get(),
                 Blocks.REDSTONE_ORE,
