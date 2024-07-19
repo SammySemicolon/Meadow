@@ -1,8 +1,8 @@
 package com.smellysleepy.meadow.data.worldgen;
 
-import com.smellysleepy.meadow.common.worldgen.strange_plant.*;
+import com.smellysleepy.meadow.common.worldgen.feature.StrangePlantFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.tree.meadow.MeadowTreeFeatureConfiguration;
-import com.smellysleepy.meadow.common.worldgen.tree.meadow.small.*;
+import com.smellysleepy.meadow.common.worldgen.tree.meadow.SmallMeadowTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.parts.*;
 import com.smellysleepy.meadow.registry.common.*;
@@ -117,40 +117,6 @@ public class MeadowConfiguredFeatureDatagen {
                         new SplitBranchesPart(2, 3, 3, 4, 3, 4),
                         new OffsetPart(0, -2, 0),
                         new LeafBlobPart(List.of(1, 2, 3, 3, 2, 1))
-                ))
-        ));
-
-        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_DIAMOND_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.DIAMOND_FLORA, List.of(
-                        new StraightTrunkPart(4, 7),
-                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
-                        new RandomOffsetsPart(5, 2, 7),
-                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15)),
-                        new ThickStumpPart(List.of(2, 2, 1)),
-                        new StumpFoldsPart(1, 5, 1, 1, 10, 15, 1, 2),
-                        new StraightTrunkPart(3, 5)
-                ))
-        ));
-
-        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_NETHERITE_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.NETHERITE_FLORA, List.of(
-                        new StraightTrunkPart(4, 7),
-                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
-                        new RandomOffsetsPart(5, 2, 7),
-                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15)),
-                        new ThickStumpPart(List.of(2, 2, 1)),
-                        new StumpFoldsPart(1, 5, 1, 1, 10, 15, 1, 2),
-                        new StraightTrunkPart(3, 5),
-                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
-                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
-                        new SplitBranchesPart(1, 4, 4, 5, 2, 4),
-                        new RandomOffsetsPart(5, 2, 7),
-                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15)),
-                        new StraightTrunkPart(3, 5),
-                        new StumpFoldsPart(1, 5, 1, 1, 10, 15, 1, 2),
-                        new StraightTrunkPart(3, 5),
-                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15)),
-                        new LeafBlobPart(List.of(5, 5, 5, 5, 5, 15))
                 ))
         ));
 

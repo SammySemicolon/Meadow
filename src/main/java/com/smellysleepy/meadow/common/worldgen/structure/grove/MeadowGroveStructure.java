@@ -1,9 +1,7 @@
-package com.smellysleepy.meadow.common.worldgen.biome;
+package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructureTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
@@ -31,7 +29,7 @@ import team.lodestar.lodestone.systems.easing.Easing;
 
 import java.util.*;
 
-import static com.smellysleepy.meadow.common.worldgen.biome.MeadowTreeDistribution.getRandomWeightedTree;
+import static com.smellysleepy.meadow.common.worldgen.MineralTreeDistribution.getRandomWeightedTree;
 
 public class MeadowGroveStructure extends Structure {
 

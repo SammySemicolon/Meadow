@@ -1,18 +1,13 @@
-package com.smellysleepy.meadow.common.worldgen.strange_plant;
+package com.smellysleepy.meadow.common.worldgen.feature;
 
 import com.google.common.collect.*;
-import com.mojang.serialization.*;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
-import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.synth.*;
-import net.minecraft.world.phys.*;
-import team.lodestar.lodestone.helpers.*;
 import team.lodestar.lodestone.systems.worldgen.*;
 
 import java.util.*;

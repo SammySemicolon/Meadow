@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.registry.worldgen;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.worldgen.biome.MeadowGroveStructure;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveStructure;
 import com.smellysleepy.meadow.registry.tags.MeadowBiomeTagRegistry;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.core.HolderSet;

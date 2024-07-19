@@ -1,7 +1,5 @@
 package com.smellysleepy.meadow.common.item;
 
-import com.smellysleepy.meadow.common.worldgen.biome.MeadowGroveStructure;
-import com.smellysleepy.meadow.common.worldgen.strange_plant.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
@@ -10,11 +8,7 @@ import net.minecraft.server.level.*;
 import net.minecraft.world.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.*;
-import net.minecraft.world.level.*;
 import net.minecraft.world.level.levelgen.feature.*;
-import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
-import net.minecraftforge.common.world.StructureSettingsBuilder;
 
 public class MagicalDeveloperStickItem extends Item {
     public MagicalDeveloperStickItem(Properties pProperties) {

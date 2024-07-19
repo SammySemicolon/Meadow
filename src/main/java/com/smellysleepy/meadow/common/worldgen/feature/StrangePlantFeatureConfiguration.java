@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.strange_plant;
+package com.smellysleepy.meadow.common.worldgen.feature;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;

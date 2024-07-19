@@ -1,8 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen.tree.mineral;
 
 import com.google.common.collect.ImmutableList;
-import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.worldgen.strange_plant.StrangePlantFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
@@ -17,7 +15,7 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
-import net.minecraft.world.phys.Vec2;
+import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.easing.Easing;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.BlockStateEntry;
@@ -84,7 +82,8 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
                 }
             }
         }
-        generateCovering(level, config, filler, pos, 4);
+        int coverageRadius = RandomHelper.randomBetween(level.getRandom(), 4, 8);
+        generateCovering(level, config, filler, pos, coverageRadius);
         filler.fill(level);
         updateLeaves(level, filler.getLayer(LOGS).keySet());
         return true;

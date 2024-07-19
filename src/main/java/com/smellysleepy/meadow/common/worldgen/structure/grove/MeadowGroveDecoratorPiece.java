@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.biome;
+package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;

@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.tree.meadow.small;
+package com.smellysleepy.meadow.common.worldgen.tree.meadow;
 
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.ThinMeadowLogBlock.*;

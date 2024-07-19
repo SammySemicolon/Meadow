@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.biome;
+package com.smellysleepy.meadow.common.worldgen;
 
 import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MeadowTreeDistribution {
+public class MineralTreeDistribution {
 
     public static final List<Pair<ResourceKey<ConfiguredFeature<?, ?>>, Integer>> WEIGHTED_TREE_LIST = new ArrayList<>(
             List.of(

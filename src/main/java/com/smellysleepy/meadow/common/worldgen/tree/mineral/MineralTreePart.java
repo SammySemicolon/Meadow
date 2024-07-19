@@ -25,7 +25,6 @@ public abstract class MineralTreePart {
 
     public abstract PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralTreeFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData);
 
-
     public PartPlacementResult failure() {
         return new PartPlacementResult(false, Collections.emptySet());
     }

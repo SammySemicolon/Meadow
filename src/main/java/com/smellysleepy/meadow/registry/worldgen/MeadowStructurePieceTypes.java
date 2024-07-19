@@ -1,8 +1,8 @@
 package com.smellysleepy.meadow.registry.worldgen;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.worldgen.biome.MeadowGroveDecoratorPiece;
-import com.smellysleepy.meadow.common.worldgen.biome.MeadowGrovePiece;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveDecoratorPiece;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGrovePiece;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraftforge.registries.DeferredRegister;

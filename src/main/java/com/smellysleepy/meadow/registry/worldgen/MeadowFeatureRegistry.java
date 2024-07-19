@@ -1,9 +1,9 @@
 package com.smellysleepy.meadow.registry.worldgen;
 
 import com.smellysleepy.meadow.*;
-import com.smellysleepy.meadow.common.worldgen.strange_plant.*;
+import com.smellysleepy.meadow.common.worldgen.feature.StrangePlantFeature;
 import com.smellysleepy.meadow.common.worldgen.tree.meadow.MeadowTreeFeature;
-import com.smellysleepy.meadow.common.worldgen.tree.meadow.small.*;
+import com.smellysleepy.meadow.common.worldgen.tree.meadow.SmallMeadowTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraftforge.registries.*;

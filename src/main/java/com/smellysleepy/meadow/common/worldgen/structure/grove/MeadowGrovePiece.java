@@ -1,8 +1,8 @@
-package com.smellysleepy.meadow.common.worldgen.biome;
+package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.UnsafeBoundingBox;
-import com.smellysleepy.meadow.common.worldgen.biome.MeadowGroveStructure.CalcifiedArea;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveStructure.CalcifiedArea;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;
