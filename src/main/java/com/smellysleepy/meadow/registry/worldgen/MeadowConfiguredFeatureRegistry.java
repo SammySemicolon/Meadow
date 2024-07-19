@@ -24,6 +24,11 @@ public class MeadowConfiguredFeatureRegistry {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_DIAMOND_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("diamond_tree"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_NETHERITE_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("netherite_tree"));
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_LARGE_MEADOW_PATCH = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("large_meadow_patch"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_MEADOW_PATCH = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("meadow_patch"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_SMALL_MEADOW_PATCH = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("small_meadow_patch"));
+
+
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRIMSON_SUN = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("crimson_sun"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> LAZURITE_ROSE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("lazurite_rose"));

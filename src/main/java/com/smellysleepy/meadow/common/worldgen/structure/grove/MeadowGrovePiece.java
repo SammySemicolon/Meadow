@@ -245,10 +245,13 @@ public class MeadowGrovePiece extends StructurePiece {
             }
         }
         else {
-            if (randomSource.nextFloat() < 0.01f) {
+            float rand = randomSource.nextFloat();
+            if (rand < 0.01f) {
                 feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-            } else if (randomSource.nextFloat() < 0.02f) {
+            } else if (rand < 0.02f) {
                 feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
+            } else if (rand < 0.025f) {
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH;
             }
         }
         if (feature != null) {
@@ -275,20 +278,31 @@ public class MeadowGrovePiece extends StructurePiece {
             float midpoint = groveDepth * 0.5f;
             float end = groveDepth * 0.7f;
 
-            if (featureTypeOffset > start && featureTypeOffset < midpoint) {
-                if (randomSource.nextFloat() < 0.015f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-                } else if (randomSource.nextFloat() < 0.03f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
+            if (randomSource.nextFloat() < 0.02f) {
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH;
+            } else {
+                float rand = randomSource.nextFloat();
+                if (featureTypeOffset > start && featureTypeOffset < midpoint) {
+                    if (rand < 0.015f) {
+                        feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
+                    } else if (rand < 0.03f) {
+                        feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
+                    }
                 }
-            }
-            if (featureTypeOffset >= midpoint && featureTypeOffset < end) {
-                if (randomSource.nextFloat() < 0.02f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
+                if (featureTypeOffset >= midpoint && featureTypeOffset < end) {
+                    if (rand < 0.02f) {
+                        feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
+                    }
                 }
             }
             if (featureTypeOffset >= end) {
-
+                float rand = randomSource.nextFloat();
+                if (rand < 0.005f) {
+                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH;
+                }
+                else if (rand < 0.0075f) {
+                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH;
+                }
             }
         }
         if (feature != null) {

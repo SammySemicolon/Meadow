@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.tree.mineral;
 
 import com.google.common.collect.ImmutableList;
+import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
@@ -35,7 +36,6 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
     public static final LodestoneLayerToken LOGS = new LodestoneLayerToken();
     public static final LodestoneLayerToken FOLIAGE = new LodestoneLayerToken();
     public static final LodestoneLayerToken LEAVES = new LodestoneLayerToken();
-    private static final PerlinSimplexNoise COVERING_NOISE = new PerlinSimplexNoise(new WorldgenRandom(new LegacyRandomSource(1234L)), ImmutableList.of(0));
 
     public MineralTreeFeature() {
         super(MineralTreeFeatureConfiguration.CODEC);
@@ -83,49 +83,15 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
             }
         }
         int coverageRadius = RandomHelper.randomBetween(level.getRandom(), 4, 8);
-        generateCovering(level, config, filler, pos, coverageRadius);
+        BlockStateEntry entry = create(config.grass.defaultBlockState()).setForcePlace().build();
+        Set<BlockPos> covering = WorldgenHelper.generateCovering(level, pos, coverageRadius);
+        for (BlockPos blockPos : covering) {
+            filler.getLayer(COVERING).put(blockPos, entry);
+        }
+
         filler.fill(level);
         updateLeaves(level, filler.getLayer(LOGS).keySet());
         return true;
-    }
-
-    public static void generateCovering(ServerLevelAccessor level, MineralTreeFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos center, int radius) {
-        int x = center.getX();
-        int z = center.getZ();
-        var mutable = new BlockPos.MutableBlockPos();
-        var grass = config.grass.defaultBlockState();
-
-        int searchRadius = radius * 2 + 1;
-        float limit = Mth.sqrt(radius * radius + radius * radius);
-        for (int i = 0; i < searchRadius; i++) {
-            for (int j = 0; j < searchRadius; j++) {
-                int offsetX = x + i - radius;
-                int offsetZ = z + j - radius;
-                float differenceX = x - offsetX;
-                float differenceZ = z - offsetZ;
-                float distance = Mth.sqrt(differenceX * differenceX + differenceZ * differenceZ);
-                double theta = Math.toDegrees(Math.atan2(differenceX, differenceZ)) * 0.01f;
-                double noise = (COVERING_NOISE.getValue(x * 10000 + theta, z * 10000 + theta, true)+1)/2;
-                double threshold = Easing.SINE_IN_OUT.clamped(noise, 0.5f, 2) * radius * (limit-distance)/limit;
-                if (distance <= threshold) {
-                    mutable.set(offsetX, center.getY(), offsetZ);
-                    int verticalRange = 4;
-                    for (int k = 0; !level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
-                        mutable.move(Direction.UP);
-                    }
-                    for (int k = 0; level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
-                        mutable.move(Direction.DOWN);
-                    }
-                    if (level.getBlockState(mutable).is(MOSS_REPLACEABLE)) {
-                        filler.getLayer(COVERING).put(mutable.immutable(), create(grass).setForcePlace());
-                    }
-                }
-            }
-        }
-    }
-
-    public static float pointDistancePlane(double x1, double z1, double x2, double z2) {
-        return (float) Math.hypot(x1 - x2, z1 - z2);
     }
 
     public boolean makeStraightTrunk(WorldGenLevel level, LodestoneBlockFiller filler, BlockPos.MutableBlockPos pos, int trunkHeight) {
