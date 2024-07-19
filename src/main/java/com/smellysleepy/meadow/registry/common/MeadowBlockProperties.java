@@ -94,25 +94,27 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_FLORA_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .offsetType(BlockBehaviour.OffsetType.XZ)
+                .pushReaction(PushReaction.DESTROY)
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
-                .pushReaction(PushReaction.DESTROY)
-                .instabreak()
-                .randomTicks()
+                .setCutoutRenderType()
                 .noCollission()
                 .noOcclusion()
-                .setCutoutRenderType()
-                .offsetType(BlockBehaviour.OffsetType.XZ);
+                .randomTicks()
+                .instabreak();
     }
 
     public static LodestoneBlockProperties MINERAL_LEAVES_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .addTag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND)
                 .isValidSpawn(Blocks::ocelotOrParrot)
                 .sound(SoundType.CHERRY_LEAVES)
                 .isViewBlocking(Blocks::never)
                 .isSuffocating(Blocks::never)
                 .addTag(BlockTags.LEAVES)
                 .setCutoutRenderType()
+                .lightLevel(b -> 6)
                 .strength(0.2F)
                 .randomTicks()
                 .noOcclusion()

@@ -1,6 +1,5 @@
 package com.smellysleepy.meadow.common.block.flora.mineral_flora;
 
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockProperties;
 import com.smellysleepy.meadow.registry.common.MeadowItemProperties;
 import net.minecraft.resources.ResourceKey;
@@ -35,8 +34,8 @@ public class MineralFloraRegistryBundle {
         this.id = id;
         String prefix = id.getPath();
         grass = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES()));
-        flora = BLOCKS.register(prefix + "_flora", () -> new MineralPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
-        flower = BLOCKS.register(prefix + "_flower", () -> new TallMineralPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
+        flora = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
+        flower = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
         sapling = BLOCKS.register(prefix + "_sapling", () -> new MineralSapling(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), feature, tag));
         leaves = BLOCKS.register(prefix + "_leaves", () -> new MineralLeaves(MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES()));
 
@@ -45,5 +44,5 @@ public class MineralFloraRegistryBundle {
         flowerItem = register(prefix + "_flower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(flower.get(), p));
         saplingItem = register(prefix + "_sapling", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(sapling.get(), p));
         leavesItem = register(prefix + "_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(leaves.get(), p));
-        }
+    }
 }

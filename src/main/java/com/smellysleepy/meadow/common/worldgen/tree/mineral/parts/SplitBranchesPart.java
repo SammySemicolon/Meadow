@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.block.meadow.wood.MeadowLogBlock;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
@@ -13,8 +14,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature.LOGS;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
@@ -50,28 +50,35 @@ public class SplitBranchesPart extends MineralTreePart {
     }
 
     @Override
-    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
         RandomSource random = level.getRandom();
-        List<BlockPos> endPoints = new ArrayList<>();
+        Map<BlockPos, Direction> directionMap = new HashMap<>();
+        Direction forbiddenDirection = extraData instanceof DirectionalResultData directionalResultData ? directionalResultData.directionMap.get(partPos) : null;
+
         int count = random.nextIntBetweenInclusive(minCount, maxCount);
+        int directionOffset = random.nextInt(4);
+        int step = random.nextIntBetweenInclusive(1, 2);
         for (int i = 0; i < count; i++) {
             int rootsOffset = random.nextIntBetweenInclusive(minOffset, maxOffset);
-            Direction direction = Direction.from2DDataValue(i);
+            Direction direction = Direction.from2DDataValue((i*step+directionOffset)%4);
+            if (direction.getOpposite().equals(forbiddenDirection)) {
+                direction = forbiddenDirection;
+            }
             int trunkHeight = random.nextIntBetweenInclusive(minHeight, maxHeight);
             BlockPos.MutableBlockPos mutable = partPos.mutable();
             for (int j = 0; j < rootsOffset; j++) {
                 mutable.move(direction);
                 if (!feature.canPlace(level, mutable)) {
-                    return new PartPlacementResult(false);
+                    return failure();
                 }
-                filler.getLayer(LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState()));
+                filler.getLayer(LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(MeadowLogBlock.AXIS, direction.getAxis())));
             }
             boolean success = feature.makeStraightTrunk(level, filler, mutable, trunkHeight);
             if (!success) {
-                return new PartPlacementResult(false);
+                return failure();
             }
-            endPoints.add(mutable.immutable());
+            directionMap.put(mutable.immutable(), direction);
         }
-        return new PartPlacementResult(true, endPoints);
+        return success(directionMap.keySet()).addExtraData(new DirectionalResultData(directionMap));
     }
 }

@@ -29,8 +29,8 @@ public class LeafBlobPart extends MineralTreePart {
     }
 
     @Override
-    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
         feature.makeBlob(level, bundle.leaves, filler.getLayer(LEAVES), partPos.mutable(), leafSizes);
-        return new PartPlacementResult(true, partPos);
+        return success(partPos);
     }
 }

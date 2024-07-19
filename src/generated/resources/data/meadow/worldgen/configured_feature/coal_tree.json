@@ -11,21 +11,24 @@
       {
         "type": "meadow:offset",
         "xOffset": 0,
-        "yOffset": -4,
+        "yOffset": -2,
         "zOffset": 0
       },
       {
-        "type": "meadow:puffy_leaves",
-        "extraBlobs": 4,
+        "type": "meadow:random_offsets",
+        "maxOffset": 2,
+        "minOffset": 0,
+        "offsetCount": 4
+      },
+      {
+        "type": "meadow:leaf_blob",
         "leafSizes": [
           1,
           2,
           2,
           2,
           1
-        ],
-        "maxBlobOffset": 2,
-        "minBlobOffset": 0
+        ]
       }
     ]
   }

@@ -5,9 +5,11 @@
     "parts": [
       {
         "type": "meadow:thick_stump",
-        "maxHeight": 2,
-        "minHeight": 2,
-        "width": 2
+        "sizes": [
+          2,
+          2,
+          1
+        ]
       },
       {
         "type": "meadow:stump_folds",

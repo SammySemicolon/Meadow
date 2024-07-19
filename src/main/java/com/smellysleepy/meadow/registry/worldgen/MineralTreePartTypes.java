@@ -20,7 +20,7 @@ public class MineralTreePartTypes {
             type -> Optional.of(type.getId()).map(DataResult::success).orElseThrow());
 
     public static final MineralTreePartType<LeafBlobPart> LEAF_BLOB = register(MeadowMod.meadowModPath("leaf_blob"), LeafBlobPart.CODEC);
-    public static final MineralTreePartType<PuffyLeavesPart> PUFFY_LEAVES = register(MeadowMod.meadowModPath("puffy_leaves"), PuffyLeavesPart.CODEC);
+    public static final MineralTreePartType<LeafDiamondPart> LEAF_DIAMOND = register(MeadowMod.meadowModPath("leaf_diamond"), LeafDiamondPart.CODEC);
     public static final MineralTreePartType<StraightTrunkPart> STRAIGHT_TRUNK = register(MeadowMod.meadowModPath("straight_trunk"), StraightTrunkPart.CODEC);
     public static final MineralTreePartType<ConvergingTrunkPart> CONVERGING_TRUNK = register(MeadowMod.meadowModPath("converging_trunk"), ConvergingTrunkPart.CODEC);
 
@@ -30,7 +30,9 @@ public class MineralTreePartTypes {
     public static final MineralTreePartType<SplitBranchesPart> SPLITTING_BRANCHES = register(MeadowMod.meadowModPath("splitting_branches"), SplitBranchesPart.CODEC);
 
     public static final MineralTreePartType<OffsetPart> OFFSET = register(MeadowMod.meadowModPath("offset"), OffsetPart.CODEC);
+    public static final MineralTreePartType<DirectionalOffset> DIRECTIONAL_OFFSET = register(MeadowMod.meadowModPath("directional_offset"), DirectionalOffset.CODEC);
     public static final MineralTreePartType<ReturnPart> RETURN = register(MeadowMod.meadowModPath("return"), ReturnPart.CODEC);
+    public static final MineralTreePartType<RandomOffsetsPart> RANDOM_OFFSETS = register(MeadowMod.meadowModPath("random_offsets"), RandomOffsetsPart.CODEC);
 
     public static void init() {
 

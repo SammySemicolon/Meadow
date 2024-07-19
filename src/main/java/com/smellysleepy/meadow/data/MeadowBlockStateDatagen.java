@@ -2,7 +2,6 @@ package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
-import com.smellysleepy.meadow.common.block.flora.mineral_flora.TallMineralPlant;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.data.*;
 import net.minecraft.world.level.block.*;
@@ -47,8 +46,9 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         setTexturePath("mineral_flora/");
         for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA.values()) {
             BlockStateSmithTypes.GRASS_BLOCK.act(data, bundle.grass);
+            BlockStateSmithTypes.CUSTOM_MODEL.act(data, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, this::directionalBlock, fromFunction(models()::cross), bundle.flora);
             BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, bundle.flower);
-            BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.flora, bundle.sapling);
+            BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.sapling);
             BlockStateSmithTypes.LEAVES_BLOCK.act(data, bundle.leaves);
         }
         setTexturePath("");

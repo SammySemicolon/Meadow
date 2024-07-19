@@ -1,11 +1,9 @@
 package com.smellysleepy.meadow.common.worldgen.tree.mineral;
 
-import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.common.worldgen.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,8 +12,7 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.BlockStateEntry;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.LodestoneLayerToken;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Supplier;
 
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.updateLeaves;
@@ -43,24 +40,33 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         var filler = new LodestoneBlockFiller().addLayers(LOGS, LEAVES, FOLIAGE);
         List<MineralTreePart> parts = context.config().parts;
 
-        List<BlockPos> endPoints = null;
+        Set<BlockPos> endPoints = null;
+        Map<BlockPos, MineralTreePart.ExtraPartResultData> extraData = new HashMap<>();
         for (MineralTreePart part : parts) {
             if (endPoints != null) {
-                List<BlockPos> newEndPoints = new ArrayList<>();
+                Set<BlockPos> newEndPoints = new HashSet<>();
+                Map<BlockPos, MineralTreePart.ExtraPartResultData> newExtraData = new HashMap<>();
                 for (BlockPos partEndPoint : endPoints) {
-                    MineralTreePart.PartPlacementResult result = part.place(level, this, bundle, filler, partEndPoint, pos);
+                    MineralTreePart.PartPlacementResult result = part.place(level, this, bundle, filler, partEndPoint, pos, extraData.get(partEndPoint));
                     if (!result.isSuccess) {
                         return false;
                     }
                     newEndPoints.addAll(result.partEndPoints);
+                    for (BlockPos endPoint : result.partEndPoints) {
+                        newExtraData.put(endPoint, result.extraData);
+                    }
                 }
                 endPoints = newEndPoints;
+                extraData = newExtraData;
             } else {
-                MineralTreePart.PartPlacementResult result = part.place(level, this, bundle, filler, pos, pos);
+                MineralTreePart.PartPlacementResult result = part.place(level, this, bundle, filler, pos, pos, null);
                 if (!result.isSuccess) {
                     return false;
                 }
                 endPoints = result.partEndPoints;
+                for (BlockPos endPoint : endPoints) {
+                    extraData.put(endPoint, result.extraData);
+                }
             }
         }
         filler.fill(level);
@@ -92,11 +98,11 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         boolean success = true;
 
         for (int size : sizes) {
-            mutable.move(Direction.UP);
             boolean result = makeRoundShape(level, layer, mutable, size, entry);
             if (!result) {
                 success = false;
             }
+            mutable.move(Direction.UP);
         }
         return success;
     }
@@ -132,11 +138,11 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         boolean success = true;
 
         for (int size : sizes) {
-            mutable.move(Direction.UP);
             boolean result = makeDiamondShape(level, layer, mutable, size, entry);
             if (!result) {
                 success = false;
             }
+            mutable.move(Direction.UP);
         }
         return success;
     }

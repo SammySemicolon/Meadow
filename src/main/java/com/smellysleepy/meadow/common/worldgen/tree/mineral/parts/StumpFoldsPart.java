@@ -15,8 +15,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
-import java.util.Arrays;
-
 import static com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature.LOGS;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
@@ -57,7 +55,7 @@ public class StumpFoldsPart extends MineralTreePart {
     }
 
     @Override
-    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
         RandomSource random = level.getRandom();
         int count = random.nextIntBetweenInclusive(minCount, maxCount);
         for (int i = 0; i < count; i++) {
@@ -87,6 +85,6 @@ public class StumpFoldsPart extends MineralTreePart {
                 }
             }
         }
-        return new PartPlacementResult(true, partPos);
+        return success(partPos);
     }
 }

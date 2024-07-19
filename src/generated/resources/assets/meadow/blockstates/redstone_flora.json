@@ -1,7 +1,30 @@
 {
   "variants": {
-    "": {
+    "facing=down": {
+      "model": "meadow:block/redstone_flora",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "meadow:block/redstone_flora",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "meadow:block/redstone_flora",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "meadow:block/redstone_flora",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
       "model": "meadow:block/redstone_flora"
+    },
+    "facing=west": {
+      "model": "meadow:block/redstone_flora",
+      "x": 90,
+      "y": 270
     }
   }
 }

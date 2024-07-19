@@ -1,7 +1,30 @@
 {
   "variants": {
-    "": {
+    "facing=down": {
+      "model": "meadow:block/amethyst_flora",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "meadow:block/amethyst_flora",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "meadow:block/amethyst_flora",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "meadow:block/amethyst_flora",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
       "model": "meadow:block/amethyst_flora"
+    },
+    "facing=west": {
+      "model": "meadow:block/amethyst_flora",
+      "x": 90,
+      "y": 270
     }
   }
 }

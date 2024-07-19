@@ -1,0 +1,74 @@
+{
+  "type": "meadow:mineral_tree",
+  "config": {
+    "bundle": "meadow:gold",
+    "parts": [
+      {
+        "type": "meadow:thick_stump",
+        "sizes": [
+          1
+        ]
+      },
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 3,
+        "minHeight": 2
+      },
+      {
+        "type": "meadow:splitting_branches",
+        "maxCount": 1,
+        "maxHeight": 1,
+        "maxOffset": 3,
+        "minCount": 1,
+        "minHeight": 1,
+        "minOffset": 2
+      },
+      {
+        "type": "meadow:splitting_branches",
+        "maxCount": 1,
+        "maxHeight": 3,
+        "maxOffset": 3,
+        "minCount": 1,
+        "minHeight": 2,
+        "minOffset": 2
+      },
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 3,
+        "minHeight": 2
+      },
+      {
+        "type": "meadow:leaf_blob",
+        "leafSizes": [
+          2,
+          3,
+          4,
+          2
+        ]
+      },
+      {
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -2,
+        "zOffset": 0
+      },
+      {
+        "type": "meadow:splitting_branches",
+        "maxCount": 4,
+        "maxHeight": 4,
+        "maxOffset": 3,
+        "minCount": 3,
+        "minHeight": 2,
+        "minOffset": 2
+      },
+      {
+        "type": "meadow:leaf_blob",
+        "leafSizes": [
+          2,
+          3,
+          2
+        ]
+      }
+    ]
+  }
+}

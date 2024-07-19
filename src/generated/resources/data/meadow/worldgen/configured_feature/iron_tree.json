@@ -1,0 +1,63 @@
+{
+  "type": "meadow:mineral_tree",
+  "config": {
+    "bundle": "meadow:iron",
+    "parts": [
+      {
+        "type": "meadow:thick_stump",
+        "sizes": [
+          1,
+          1
+        ]
+      },
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 5,
+        "minHeight": 4
+      },
+      {
+        "type": "meadow:return"
+      },
+      {
+        "type": "meadow:directional_offset"
+      },
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 8,
+        "minHeight": 6
+      },
+      {
+        "type": "meadow:directional_offset"
+      },
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 4,
+        "minHeight": 3
+      },
+      {
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -2,
+        "zOffset": 0
+      },
+      {
+        "type": "meadow:random_offsets",
+        "maxOffset": 2,
+        "minOffset": 0,
+        "offsetCount": 4
+      },
+      {
+        "type": "meadow:leaf_diamond",
+        "leafSizes": [
+          0,
+          1,
+          2,
+          3,
+          2,
+          1,
+          0
+        ]
+      }
+    ]
+  }
+}

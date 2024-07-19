@@ -33,11 +33,11 @@ public class StraightTrunkPart extends MineralTreePart {
     }
 
     @Override
-    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos) {
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
         RandomSource random = level.getRandom();
         int trunkHeight = random.nextIntBetweenInclusive(minHeight, maxHeight);
         BlockPos.MutableBlockPos mutable = partPos.mutable();
-        boolean success = feature.makeStraightTrunk(level, filler, mutable, trunkHeight);
-        return new PartPlacementResult(success, mutable.immutable());
+        boolean trunk = feature.makeStraightTrunk(level, filler, mutable, trunkHeight);
+        return conditionalSuccess(trunk, mutable.immutable());
     }
 }
