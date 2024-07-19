@@ -2,9 +2,9 @@ package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.common.block.meadow.wood.MeadowLogBlock;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
@@ -50,7 +50,7 @@ public class SplitBranchesPart extends MineralTreePart {
     }
 
     @Override
-    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralTreeFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
         RandomSource random = level.getRandom();
         Map<BlockPos, Direction> directionMap = new HashMap<>();
         Direction forbiddenDirection = extraData instanceof DirectionalResultData directionalResultData ? directionalResultData.directionMap.get(partPos) : null;

@@ -1,6 +1,5 @@
 package com.smellysleepy.meadow.common.block.meadow.leaves;
 
-import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.visual_effects.*;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
@@ -8,10 +7,13 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.phys.*;
-import team.lodestar.lodestone.systems.particle.world.behaviors.components.*;
-import team.lodestar.lodestone.systems.particle.world.options.*;
+import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+
+import java.awt.*;
 
 public class MeadowLeavesBlock extends LeavesBlock {
+
+    public static final Color ASPEN_LEAVES_COLOR = new Color(255, 215, 111);
 
     public MeadowLeavesBlock(Properties properties) {
         super(properties);
@@ -28,7 +30,8 @@ public class MeadowLeavesBlock extends LeavesBlock {
                 double posY = (double)pPos.getY() - 0.05D;
                 double posZ = (double)pPos.getZ() + pRandom.nextDouble();
 
-                var leaves = MeadowParticleEffects.meadowLeaves(pLevel, new Vec3(posX, posY, posZ));
+                var leaves = MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ));
+                leaves.getBuilder().setColorData(ColorParticleData.create(ASPEN_LEAVES_COLOR).build());
                 leaves.spawnParticles();
             }
         }

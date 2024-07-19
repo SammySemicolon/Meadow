@@ -1,7 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen.tree.mineral;
 
 import com.mojang.serialization.Codec;
-import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +23,7 @@ public abstract class MineralTreePart {
         return type;
     }
 
-    public abstract PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData);
+    public abstract PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralTreeFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData);
 
 
     public PartPlacementResult failure() {

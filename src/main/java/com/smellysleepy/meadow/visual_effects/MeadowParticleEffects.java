@@ -8,22 +8,23 @@ import team.lodestar.lodestone.systems.easing.*;
 import team.lodestar.lodestone.systems.particle.*;
 import team.lodestar.lodestone.systems.particle.builder.*;
 import team.lodestar.lodestone.systems.particle.data.*;
-import team.lodestar.lodestone.systems.particle.data.spin.*;
+import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 import team.lodestar.lodestone.systems.particle.render_types.*;
 import team.lodestar.lodestone.systems.particle.world.*;
 import team.lodestar.lodestone.systems.particle.world.behaviors.components.*;
 import team.lodestar.lodestone.systems.particle.world.options.*;
 
+import java.awt.*;
 import java.util.function.*;
 
 import static net.minecraft.util.Mth.*;
 
 public class MeadowParticleEffects {
 
-    public static ParticleEffectSpawner meadowLeaves(Level level, Vec3 pos) {
-        return meadowLeaves(level, pos, new WorldParticleOptions(MeadowParticleRegistry.ASPEN_LEAVES).setBehavior(new SparkBehaviorComponent()));
+    public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos) {
+        return fallingLeaves(level, pos, new WorldParticleOptions(MeadowParticleRegistry.FALLING_LEAVES).setBehavior(new SparkBehaviorComponent()));
     }
-    public static ParticleEffectSpawner meadowLeaves(Level level, Vec3 pos, WorldParticleOptions options) {
+    public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 
         float scale = RandomHelper.randomBetween(rand, 0.075F, 0.1F);
@@ -56,12 +57,12 @@ public class MeadowParticleEffects {
             p.setParticleSpeed(p.getParticleSpeed().add(x, y, z).multiply(scalar, scalar, scalar));
         };
         var worldParticleBuilder = WorldParticleBuilder.create(options)
+                .setDiscardFunction(SimpleParticleOptions.ParticleDiscardFunctionType.ENDING_CURVE_INVISIBLE)
+                .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.RANDOM_SPRITE)
+                .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)
                 .setTransparencyData(transparencyData)
                 .setScaleData(scaleData)
                 .setLifetime(lifetime)
-                .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)
-                .setDiscardFunction(SimpleParticleOptions.ParticleDiscardFunctionType.ENDING_CURVE_INVISIBLE)
-                .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.RANDOM_SPRITE)
                 .addTickActor(fall);
 
         return new ParticleEffectSpawner(level, pos, worldParticleBuilder);

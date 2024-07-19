@@ -1,32 +1,49 @@
 {
   "type": "meadow:mineral_tree",
   "config": {
-    "bundle": "meadow:redstone",
+    "flora": "meadow:redstone_flora",
+    "grass": "meadow:redstone_grass_block",
+    "hangingLeaves": "meadow:redstone_flora",
+    "leaves": "meadow:redstone_leaves",
     "parts": [
       {
         "type": "meadow:thick_stump",
         "sizes": [
           2,
-          2,
           1
         ]
       },
       {
-        "type": "meadow:stump_folds",
-        "maxCount": 2,
-        "maxDistance": 4,
-        "maxHeight": 2,
-        "maxWidth": 1,
-        "minCount": 1,
-        "minDistance": 3,
-        "minHeight": 2,
-        "minWidth": 1
+        "type": "meadow:straight_trunk",
+        "maxHeight": 4,
+        "minHeight": 2
+      },
+      {
+        "type": "meadow:directional_offset"
       },
       {
         "type": "meadow:straight_trunk",
-        "maxHeight": 6,
-        "minHeight": 3
+        "maxHeight": 3,
+        "minHeight": 1
+      },
+      {
+        "type": "meadow:directional_offset"
+      },
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 2,
+        "minHeight": 1
+      },
+      {
+        "type": "meadow:leaf_blob",
+        "leafSizes": [
+          1,
+          3,
+          2,
+          1
+        ]
       }
-    ]
+    ],
+    "sapling": "meadow:redstone_sapling"
   }
 }

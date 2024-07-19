@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.awt.*;
+
 import static com.smellysleepy.meadow.registry.common.MeadowBlockRegistry.BLOCKS;
 import static com.smellysleepy.meadow.registry.common.MeadowItemRegistry.register;
 
@@ -30,14 +32,14 @@ public class MineralFloraRegistryBundle {
     public final RegistryObject<Item> saplingItem;
     public final RegistryObject<Item> leavesItem;
 
-    public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, TagKey<Block> tag) {
+    public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Color color, TagKey<Block> tag) {
         this.id = id;
         String prefix = id.getPath();
         grass = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES()));
         flora = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
         flower = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
         sapling = BLOCKS.register(prefix + "_sapling", () -> new MineralSapling(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), feature, tag));
-        leaves = BLOCKS.register(prefix + "_leaves", () -> new MineralLeaves(MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES()));
+        leaves = BLOCKS.register(prefix + "_leaves", () -> new MineralLeaves(MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES(), color));
 
         grassItem = register(prefix + "_grass_block", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(grass.get(), p));
         floraItem = register(prefix + "_flora", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(flora.get(), p));

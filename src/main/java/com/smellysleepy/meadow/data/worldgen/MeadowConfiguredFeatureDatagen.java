@@ -37,6 +37,7 @@ public class MeadowConfiguredFeatureDatagen {
                 new MineralTreeFeatureConfiguration(MineralFloraRegistry.COAL_FLORA, List.of(
                         new StraightTrunkPart(7, 9),
                         new OffsetPart(0, -2, 0),
+                        new LeafBlobPart(List.of(1, 2, 2, 2, 2, 1)),
                         new RandomOffsetsPart(4, 0, 2),
                         new LeafBlobPart(List.of(1, 2, 2, 2, 1))
                 ))
@@ -56,9 +57,13 @@ public class MeadowConfiguredFeatureDatagen {
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_REDSTONE_TREE, addTreeConfig(MeadowFeatureRegistry.MINERAL_TREE.get(),
                 new MineralTreeFeatureConfiguration(MineralFloraRegistry.REDSTONE_FLORA, List.of(
-                        new ThickStumpPart(List.of(2, 2, 1)),
-                        new StumpFoldsPart(2, 2, 1, 1, 3, 4, 1, 2),
-                        new StraightTrunkPart(3, 6)
+                        new ThickStumpPart(List.of(2, 1)),
+                        new StraightTrunkPart(2, 4),
+                        new DirectionalOffset(),
+                        new StraightTrunkPart(1, 3),
+                        new DirectionalOffset(),
+                        new StraightTrunkPart(1, 2),
+                        new LeafBlobPart(List.of(1, 3, 2, 1))
                 ))
         ));
 
@@ -82,8 +87,9 @@ public class MeadowConfiguredFeatureDatagen {
                         new DirectionalOffset(),
                         new StraightTrunkPart(3, 4),
                         new OffsetPart(0, -3, 0),
-                        new RandomOffsetsPart(4, 0, 2),
-                        new LeafDiamondPart(List.of(0, 1, 2, 3, 2, 1, 0))
+                        new LeafDiamondPart(List.of(0, 1, 2, 3, 2, 1, 0)),
+                        new RandomOffsetsPart(4, 0, 1),
+                        new LeafDiamondPart(List.of(0, 1, 2, 1, 0))
                 ))
         ));
 
@@ -93,10 +99,10 @@ public class MeadowConfiguredFeatureDatagen {
                         new StraightTrunkPart(2, 3),
                         new SplitBranchesPart(1, 1, 2, 3, 1, 1),
                         new SplitBranchesPart(2, 3, 2, 3, 1, 1),
-                        new StraightTrunkPart(2, 3),
+                        new StraightTrunkPart(4, 5),
                         new LeafBlobPart(List.of(2, 3, 4, 2)),
-                        new OffsetPart(0, -2, 0),
-                        new SplitBranchesPart(2, 4, 2, 3, 3, 4),
+                        new OffsetPart(0, -3, 0),
+                        new SplitBranchesPart(1, 2, 2, 3, 3, 4),
                         new LeafBlobPart(List.of(2, 3, 2))
                 ))
         ));

@@ -11,18 +11,16 @@ import team.lodestar.lodestone.systems.particle.data.*;
 import team.lodestar.lodestone.systems.particle.data.color.*;
 import team.lodestar.lodestone.systems.particle.data.spin.*;
 import team.lodestar.lodestone.systems.particle.render_types.*;
-import team.lodestar.lodestone.systems.particle.world.*;
 import team.lodestar.lodestone.systems.particle.world.behaviors.components.*;
 import team.lodestar.lodestone.systems.particle.world.options.*;
 
 import java.awt.*;
-import java.util.function.*;
 
 import static net.minecraft.util.Mth.*;
 
 public class StrangeFloraParticleEffects {
 
-    public static ParticleEffectSpawner mineralFlora(Level level, Vec3 pos) {
+    public static ParticleEffectSpawner mineralFloraShine(Level level, Vec3 pos) {
         var rand = level.getRandom();
 
         var pitchData = SpinParticleData.createRandomDirection(rand, nextFloat(rand, 0.01f, 0.02f), nextFloat(rand, 0.05f, 0.125f), 0f)
@@ -34,12 +32,12 @@ public class StrangeFloraParticleEffects {
         if (rand.nextBoolean()) {
             options.setBehavior(new BedrockDirectionalBehaviorComponent(pitchData, yawData));
         }
-        return mineralFlora(level, pos, options);
+        return mineralFloraShine(level, pos, options);
     }
-    public static ParticleEffectSpawner mineralFlora(Level level, Vec3 pos, WorldParticleOptions options) {
+    public static ParticleEffectSpawner mineralFloraShine(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 
-        float scale = RandomHelper.randomBetween(rand, 0.04F, 0.05F);
+        float scale = RandomHelper.randomBetween(rand, 0.06F, 0.09F);
         int lifetime = RandomHelper.randomBetween(rand, 100, 120);
         var spinData = SpinParticleData.createRandomDirection(rand, nextFloat(rand, 0.01f, 0.025f), nextFloat(rand, 0.1f, 0.125f), 0f)
                 .randomSpinOffset(rand).build();

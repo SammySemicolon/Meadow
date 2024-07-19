@@ -1,7 +1,10 @@
 {
   "type": "meadow:mineral_tree",
   "config": {
-    "bundle": "meadow:emerald",
+    "flora": "meadow:emerald_flora",
+    "grass": "meadow:emerald_grass_block",
+    "hangingLeaves": "meadow:emerald_flora",
+    "leaves": "meadow:emerald_leaves",
     "parts": [
       {
         "type": "meadow:thick_stump",
@@ -65,6 +68,7 @@
           1
         ]
       }
-    ]
+    ],
+    "sapling": "meadow:emerald_sapling"
   }
 }

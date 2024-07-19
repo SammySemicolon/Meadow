@@ -10,6 +10,14 @@ import team.lodestar.lodestone.systems.block.*;
 
 public class MeadowBlockProperties {
 
+    public static LodestoneBlockProperties CALCIFIED_BLOCK_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(2.5F, 4.0F)
+                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
+                .mapColor(MapColor.COLOR_BLUE)
+                .sound(SoundType.NETHERRACK);
+    }
+
     public static LodestoneBlockProperties WALL_FUNGUS_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .randomTicks()
@@ -36,18 +44,20 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties MEADOW_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(1.75F, 4.0F)
-                .mapColor(MapColor.WOOD)
+                .instrument(NoteBlockInstrument.BASS)
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
                 .sound(SoundType.CHERRY_WOOD)
-                .instrument(NoteBlockInstrument.BASS);
+                .mapColor(MapColor.WOOD);
     }
 
     public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(1.25F, 4.0F)
-                .mapColor(MapColor.WOOD)
-                .sound(SoundType.CHERRY_WOOD)
-                .pushReaction(PushReaction.DESTROY)
                 .instrument(NoteBlockInstrument.BASS)
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .pushReaction(PushReaction.DESTROY)
+                .sound(SoundType.CHERRY_WOOD)
+                .mapColor(MapColor.WOOD)
                 .setCutoutRenderType();
     }
 

@@ -1,7 +1,10 @@
 {
   "type": "meadow:mineral_tree",
   "config": {
-    "bundle": "meadow:copper",
+    "flora": "meadow:copper_flora",
+    "grass": "meadow:copper_grass_block",
+    "hangingLeaves": "meadow:copper_flora",
+    "leaves": "meadow:copper_leaves",
     "parts": [
       {
         "type": "meadow:straight_trunk",
@@ -34,6 +37,7 @@
           2
         ]
       }
-    ]
+    ],
+    "sapling": "meadow:copper_sapling"
   }
 }

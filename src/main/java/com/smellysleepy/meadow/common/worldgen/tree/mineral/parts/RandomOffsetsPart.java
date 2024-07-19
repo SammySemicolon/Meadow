@@ -2,8 +2,8 @@ package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
@@ -36,7 +36,7 @@ public class RandomOffsetsPart extends MineralTreePart {
     }
 
     @Override
-    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralTreeFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
         RandomSource random = level.getRandom();
         Set<BlockPos> endPoints = new HashSet<>();
         for (int i = 0; i < offsetCount; i++) {

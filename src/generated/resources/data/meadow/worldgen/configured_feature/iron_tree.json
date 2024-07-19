@@ -1,7 +1,10 @@
 {
   "type": "meadow:mineral_tree",
   "config": {
-    "bundle": "meadow:iron",
+    "flora": "meadow:iron_flora",
+    "grass": "meadow:iron_grass_block",
+    "hangingLeaves": "meadow:iron_flora",
+    "leaves": "meadow:iron_leaves",
     "parts": [
       {
         "type": "meadow:thick_stump",
@@ -37,14 +40,8 @@
       {
         "type": "meadow:offset",
         "xOffset": 0,
-        "yOffset": -2,
+        "yOffset": -3,
         "zOffset": 0
-      },
-      {
-        "type": "meadow:random_offsets",
-        "maxOffset": 2,
-        "minOffset": 0,
-        "offsetCount": 4
       },
       {
         "type": "meadow:leaf_diamond",
@@ -57,7 +54,24 @@
           1,
           0
         ]
+      },
+      {
+        "type": "meadow:random_offsets",
+        "maxOffset": 1,
+        "minOffset": 0,
+        "offsetCount": 4
+      },
+      {
+        "type": "meadow:leaf_diamond",
+        "leafSizes": [
+          0,
+          1,
+          2,
+          1,
+          0
+        ]
       }
-    ]
+    ],
+    "sapling": "meadow:iron_sapling"
   }
 }

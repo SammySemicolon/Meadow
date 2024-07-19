@@ -2,8 +2,8 @@ package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
@@ -31,9 +31,9 @@ public class ThickStumpPart extends MineralTreePart {
     }
 
     @Override
-    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralFloraRegistryBundle bundle, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
+    public PartPlacementResult place(WorldGenLevel level, MineralTreeFeature feature, MineralTreeFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos partPos, BlockPos featurePos, ExtraPartResultData extraData) {
         BlockPos.MutableBlockPos mutable = partPos.mutable();
-        boolean stump = feature.makeDiamond(level, MeadowBlockRegistry.ASPEN_LOG, filler.getLayer(LOGS), mutable, sizes);
+        boolean stump = feature.makeDiamond(level, MeadowBlockRegistry.ASPEN_LOG.get(), filler.getLayer(LOGS), mutable, sizes);
         return conditionalSuccess(stump, mutable.immutable());
     }
 }

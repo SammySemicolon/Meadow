@@ -77,10 +77,10 @@ public class StrangePlantFeature extends Feature<StrangePlantFeatureConfiguratio
                 if (floor <= (Math.floor(naturalNoiseValue) - 1)) {
                     mutable.set(xp, center.getY(), zp);
                     int verticalRange = 4;
-                    for (int k = 0; level.isStateAtPosition(mutable, s -> !s.canBeReplaced()) && k < verticalRange; ++k) {
+                    for (int k = 0; !level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
                         mutable.move(Direction.UP);
                     }
-                    for (int k = 0; level.isStateAtPosition(mutable, s -> s.canBeReplaced()) && k < verticalRange; ++k) {
+                    for (int k = 0; level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
                         mutable.move(Direction.DOWN);
                     }
                     if (level.getBlockState(mutable).is(MOSS_REPLACEABLE)) {

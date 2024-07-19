@@ -1,7 +1,10 @@
 {
   "type": "meadow:mineral_tree",
   "config": {
-    "bundle": "meadow:coal",
+    "flora": "meadow:coal_flora",
+    "grass": "meadow:coal_grass_block",
+    "hangingLeaves": "meadow:coal_flora",
+    "leaves": "meadow:coal_leaves",
     "parts": [
       {
         "type": "meadow:straight_trunk",
@@ -13,6 +16,17 @@
         "xOffset": 0,
         "yOffset": -2,
         "zOffset": 0
+      },
+      {
+        "type": "meadow:leaf_blob",
+        "leafSizes": [
+          1,
+          2,
+          2,
+          2,
+          2,
+          1
+        ]
       },
       {
         "type": "meadow:random_offsets",
@@ -30,6 +44,7 @@
           1
         ]
       }
-    ]
+    ],
+    "sapling": "meadow:coal_sapling"
   }
 }

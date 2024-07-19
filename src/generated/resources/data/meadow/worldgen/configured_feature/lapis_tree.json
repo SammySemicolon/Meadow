@@ -1,7 +1,10 @@
 {
   "type": "meadow:mineral_tree",
   "config": {
-    "bundle": "meadow:lapis",
+    "flora": "meadow:lapis_flora",
+    "grass": "meadow:lapis_grass_block",
+    "hangingLeaves": "meadow:lapis_flora",
+    "leaves": "meadow:lapis_leaves",
     "parts": [
       {
         "type": "meadow:straight_trunk",
@@ -59,6 +62,7 @@
           1
         ]
       }
-    ]
+    ],
+    "sapling": "meadow:lapis_sapling"
   }
 }

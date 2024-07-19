@@ -1,7 +1,10 @@
 {
   "type": "meadow:mineral_tree",
   "config": {
-    "bundle": "meadow:gold",
+    "flora": "meadow:gold_flora",
+    "grass": "meadow:gold_grass_block",
+    "hangingLeaves": "meadow:gold_flora",
+    "leaves": "meadow:gold_leaves",
     "parts": [
       {
         "type": "meadow:thick_stump",
@@ -34,8 +37,8 @@
       },
       {
         "type": "meadow:straight_trunk",
-        "maxHeight": 3,
-        "minHeight": 2
+        "maxHeight": 5,
+        "minHeight": 4
       },
       {
         "type": "meadow:leaf_blob",
@@ -49,16 +52,16 @@
       {
         "type": "meadow:offset",
         "xOffset": 0,
-        "yOffset": -2,
+        "yOffset": -3,
         "zOffset": 0
       },
       {
         "type": "meadow:splitting_branches",
         "maxCount": 4,
-        "maxHeight": 4,
+        "maxHeight": 2,
         "maxOffset": 3,
         "minCount": 3,
-        "minHeight": 2,
+        "minHeight": 1,
         "minOffset": 2
       },
       {
@@ -69,6 +72,7 @@
           2
         ]
       }
-    ]
+    ],
+    "sapling": "meadow:gold_sapling"
   }
 }

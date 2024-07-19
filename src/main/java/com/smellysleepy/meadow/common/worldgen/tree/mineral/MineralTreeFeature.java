@@ -1,13 +1,24 @@
 package com.smellysleepy.meadow.common.worldgen.tree.mineral;
 
+import com.google.common.collect.ImmutableList;
+import com.smellysleepy.meadow.MeadowMod;
+import com.smellysleepy.meadow.common.worldgen.strange_plant.StrangePlantFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
+import net.minecraft.world.phys.Vec2;
+import team.lodestar.lodestone.systems.easing.Easing;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.BlockStateEntry;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.LodestoneLayerToken;
@@ -16,13 +27,17 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.updateLeaves;
+import static net.minecraft.tags.BlockTags.MOSS_REPLACEABLE;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
 public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureConfiguration> {
 
+    public static final LodestoneLayerToken COVERING = new LodestoneLayerToken();
+    public static final LodestoneLayerToken PLANTS = new LodestoneLayerToken();
     public static final LodestoneLayerToken LOGS = new LodestoneLayerToken();
     public static final LodestoneLayerToken FOLIAGE = new LodestoneLayerToken();
     public static final LodestoneLayerToken LEAVES = new LodestoneLayerToken();
+    private static final PerlinSimplexNoise COVERING_NOISE = new PerlinSimplexNoise(new WorldgenRandom(new LegacyRandomSource(1234L)), ImmutableList.of(0));
 
     public MineralTreeFeature() {
         super(MineralTreeFeatureConfiguration.CODEC);
@@ -32,12 +47,12 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
     public final boolean place(FeaturePlaceContext<MineralTreeFeatureConfiguration> context) {
         var level = context.level();
         var pos = context.origin();
-        var bundle = context.config().bundle;
-        if (level.isEmptyBlock(pos.below()) || !bundle.sapling.get().defaultBlockState().canSurvive(level, pos)) {
+        var config = context.config();
+        if (level.isEmptyBlock(pos.below()) || !config.sapling.defaultBlockState().canSurvive(level, pos)) {
             return false;
         }
 
-        var filler = new LodestoneBlockFiller().addLayers(LOGS, LEAVES, FOLIAGE);
+        var filler = new LodestoneBlockFiller().addLayers(COVERING, PLANTS, LOGS, LEAVES, FOLIAGE);
         List<MineralTreePart> parts = context.config().parts;
 
         Set<BlockPos> endPoints = null;
@@ -47,7 +62,7 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
                 Set<BlockPos> newEndPoints = new HashSet<>();
                 Map<BlockPos, MineralTreePart.ExtraPartResultData> newExtraData = new HashMap<>();
                 for (BlockPos partEndPoint : endPoints) {
-                    MineralTreePart.PartPlacementResult result = part.place(level, this, bundle, filler, partEndPoint, pos, extraData.get(partEndPoint));
+                    MineralTreePart.PartPlacementResult result = part.place(level, this, config, filler, partEndPoint, pos, extraData.get(partEndPoint));
                     if (!result.isSuccess) {
                         return false;
                     }
@@ -59,7 +74,7 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
                 endPoints = newEndPoints;
                 extraData = newExtraData;
             } else {
-                MineralTreePart.PartPlacementResult result = part.place(level, this, bundle, filler, pos, pos, null);
+                MineralTreePart.PartPlacementResult result = part.place(level, this, config, filler, pos, pos, null);
                 if (!result.isSuccess) {
                     return false;
                 }
@@ -69,9 +84,49 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
                 }
             }
         }
+        generateCovering(level, config, filler, pos, 4);
         filler.fill(level);
         updateLeaves(level, filler.getLayer(LOGS).keySet());
         return true;
+    }
+
+    public static void generateCovering(ServerLevelAccessor level, MineralTreeFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos center, int radius) {
+        int x = center.getX();
+        int z = center.getZ();
+        var mutable = new BlockPos.MutableBlockPos();
+        var grass = config.grass.defaultBlockState();
+
+        int searchRadius = radius * 2 + 1;
+        float limit = Mth.sqrt(radius * radius + radius * radius);
+        for (int i = 0; i < searchRadius; i++) {
+            for (int j = 0; j < searchRadius; j++) {
+                int offsetX = x + i - radius;
+                int offsetZ = z + j - radius;
+                float differenceX = x - offsetX;
+                float differenceZ = z - offsetZ;
+                float distance = Mth.sqrt(differenceX * differenceX + differenceZ * differenceZ);
+                double theta = Math.toDegrees(Math.atan2(differenceX, differenceZ)) * 0.01f;
+                double noise = (COVERING_NOISE.getValue(x * 10000 + theta, z * 10000 + theta, true)+1)/2;
+                double threshold = Easing.SINE_IN_OUT.clamped(noise, 0.5f, 2) * radius * (limit-distance)/limit;
+                if (distance <= threshold) {
+                    mutable.set(offsetX, center.getY(), offsetZ);
+                    int verticalRange = 4;
+                    for (int k = 0; !level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
+                        mutable.move(Direction.UP);
+                    }
+                    for (int k = 0; level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
+                        mutable.move(Direction.DOWN);
+                    }
+                    if (level.getBlockState(mutable).is(MOSS_REPLACEABLE)) {
+                        filler.getLayer(COVERING).put(mutable.immutable(), create(grass).setForcePlace());
+                    }
+                }
+            }
+        }
+    }
+
+    public static float pointDistancePlane(double x1, double z1, double x2, double z2) {
+        return (float) Math.hypot(x1 - x2, z1 - z2);
     }
 
     public boolean makeStraightTrunk(WorldGenLevel level, LodestoneBlockFiller filler, BlockPos.MutableBlockPos pos, int trunkHeight) {
@@ -88,8 +143,8 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         return true;
     }
 
-    public boolean makeBlob(WorldGenLevel level, Supplier<Block> state, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
-        return makeBlob(level, state.get().defaultBlockState(), layer, pos, sizes);
+    public boolean makeBlob(WorldGenLevel level, Block block, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
+        return makeBlob(level, block.defaultBlockState(), layer, pos, sizes);
     }
 
     public boolean makeBlob(WorldGenLevel level, BlockState state, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
@@ -128,8 +183,8 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         return success;
     }
 
-    public boolean makeDiamond(WorldGenLevel level, Supplier<Block> state, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
-        return makeDiamond(level, state.get().defaultBlockState(), layer, pos, sizes);
+    public boolean makeDiamond(WorldGenLevel level, Block block, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
+        return makeDiamond(level, block.defaultBlockState(), layer, pos, sizes);
     }
 
     public boolean makeDiamond(WorldGenLevel level, BlockState state, LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos.MutableBlockPos pos, List<Integer> sizes) {
