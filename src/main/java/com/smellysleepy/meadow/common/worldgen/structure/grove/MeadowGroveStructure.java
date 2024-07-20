@@ -70,14 +70,14 @@ public class MeadowGroveStructure extends Structure {
         for (int i = 0; i < calcifiedAreaCounter; i++) {
             float x = 6.28f * random.nextFloat();
             float z = 6.28f * random.nextFloat();
-            float distance = RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 0.6f, 1f);
+            float distance = RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 0.4f, 0.7f);
             var direction = new Vec2(Mth.sin(x), Mth.cos(z)).normalized().scale(distance);
             float size = RandomHelper.randomBetween(random, Easing.CIRC_IN, 0.2f, 0.3f);
             if (i == 1) {
                 size /= 2f;
             }
             var distributor = getRandomWeightedMineralFeatureDistributor();
-            calcifiedAreas.add(new CalcifiedArea(groveCenter, groveRadius, direction, distributor, size, distance > 0.8f && random.nextBoolean()));
+            calcifiedAreas.add(new CalcifiedArea(groveCenter, groveRadius, direction, distributor, size, distance > 0.5f && random.nextBoolean()));
         }
 
         return onTopOfChunkCenter(context, Heightmap.Types.OCEAN_FLOOR_WG,
