@@ -2,6 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.smellysleepy.meadow.common.worldgen.MineralFeatureDistribution;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructureTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
@@ -11,6 +12,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -29,7 +31,7 @@ import team.lodestar.lodestone.systems.easing.Easing;
 
 import java.util.*;
 
-import static com.smellysleepy.meadow.common.worldgen.MineralTreeDistribution.getRandomWeightedTree;
+import static com.smellysleepy.meadow.common.worldgen.MineralFeatureDistribution.getRandomWeightedMineralFeatureDistributor;
 
 public class MeadowGroveStructure extends Structure {
 
@@ -63,20 +65,18 @@ public class MeadowGroveStructure extends Structure {
         int groveDepth = random.nextIntBetweenInclusive(16, 20);
 
         List<CalcifiedArea> calcifiedAreas = new ArrayList<>();
-        int calcifiedAreaCounter = RandomHelper.randomBetween(random, Easing.QUAD_IN_OUT, 0, 6);
+//        int calcifiedAreaCounter = RandomHelper.randomBetween(random, Easing.QUAD_IN, 0, 3);
+        int calcifiedAreaCounter = 6;
         for (int i = 0; i < calcifiedAreaCounter; i++) {
             float x = 6.28f * random.nextFloat();
             float z = 6.28f * random.nextFloat();
-            float distance = RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 0.25f, 1f);
-            var direction = new Vec2(Mth.sin(x), Mth.cos(z)).normalized().scale(distance*groveRadius*0.6f);
-            var pos = new BlockPos.MutableBlockPos(groveCenter.getX()+direction.x, groveCenter.getY(), groveCenter.getZ()+direction.y);
-            float size = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.05f, 0.2f) * groveRadius;
-            ResourceKey<ConfiguredFeature<?, ?>> tree = getRandomWeightedTree();
-            calcifiedAreas.add(new CalcifiedArea(pos, tree, size, distance > 0.8f && random.nextBoolean()));
+            float distance = RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 0.5f, 1f);
+            var direction = new Vec2(Mth.sin(x), Mth.cos(z)).normalized().scale(distance * groveRadius * 0.4f);
+            var pos = new BlockPos.MutableBlockPos(groveCenter.getX() + direction.x, groveCenter.getY(), groveCenter.getZ() + direction.y);
+            float size = RandomHelper.randomBetween(random, Easing.CIRC_IN, 0.0725f, 0.125f) * groveRadius;
+            var distributor = getRandomWeightedMineralFeatureDistributor();
+            calcifiedAreas.add(new CalcifiedArea(pos, distributor, size, distance > 0.7f && random.nextBoolean()));
         }
-
-//        calcifiedAreas.add(new CalcifiedAreaCenter(groveCenter.mutable(), groveRadius*0.1f, false));
-
 
         return onTopOfChunkCenter(context, Heightmap.Types.OCEAN_FLOOR_WG,
                 (b) -> createGrovePieces(context, b, levelHeightAccessor, groveCenter, calcifiedAreas, groveRadius, groveHeight, groveDepth));
@@ -116,13 +116,27 @@ public class MeadowGroveStructure extends Structure {
     public static class CalcifiedArea {
         private final BlockPos.MutableBlockPos center;
 
-        private final ResourceKey<ConfiguredFeature<?, ?>> treeType;
+        private final ResourceKey<ConfiguredFeature<?, ?>> treeFeature;
+        private final ResourceKey<ConfiguredFeature<?, ?>> plantFeature;
+        private final ResourceKey<ConfiguredFeature<?, ?>> oreFeature;
+        private final ResourceKey<ConfiguredFeature<?, ?>> patchFeature;
         private final double size;
         private final boolean isRampRegion;
 
-        public CalcifiedArea(BlockPos.MutableBlockPos center, ResourceKey<ConfiguredFeature<?, ?>> treeType, double size, boolean isRampRegion) {
+        public CalcifiedArea(BlockPos.MutableBlockPos center, MineralFeatureDistribution distribution, double size, boolean isRampRegion) {
+            this(center, distribution.tree, distribution.plant, distribution.ore, distribution.patch, size, isRampRegion);
+        }
+        public CalcifiedArea(BlockPos.MutableBlockPos center,
+                             ResourceKey<ConfiguredFeature<?, ?>> treeFeature,
+                             ResourceKey<ConfiguredFeature<?, ?>> plantFeature,
+                             ResourceKey<ConfiguredFeature<?, ?>> oreFeature,
+                             ResourceKey<ConfiguredFeature<?, ?>> patchFeature,
+                             double size, boolean isRampRegion) {
             this.center = center;
-            this.treeType = treeType;
+            this.treeFeature = treeFeature;
+            this.plantFeature = plantFeature;
+            this.oreFeature = oreFeature;
+            this.patchFeature = patchFeature;
             this.size = size;
             this.isRampRegion = isRampRegion;
         }
@@ -130,7 +144,10 @@ public class MeadowGroveStructure extends Structure {
         public static CalcifiedArea deserialize(CompoundTag tag) {
             return new CalcifiedArea(
                     NbtUtils.readBlockPos(tag.getCompound("position")).mutable(),
-                    ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("treeType"))),
+                    ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("treeFeature"))),
+                    ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("plantFeature"))),
+                    ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("oreFeature"))),
+                    ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("patchFeature"))),
                     tag.getDouble("size"),
                     tag.getBoolean("isRampRegion"));
         }
@@ -138,7 +155,10 @@ public class MeadowGroveStructure extends Structure {
         public CompoundTag serialize() {
             CompoundTag tag = new CompoundTag();
             tag.put("position", NbtUtils.writeBlockPos(center));
-            tag.putString("treeType", treeType.location().toString());
+            tag.putString("treeFeature", treeFeature.location().toString());
+            tag.putString("plantFeature", plantFeature.location().toString());
+            tag.putString("oreFeature", oreFeature.location().toString());
+            tag.putString("patchFeature", patchFeature.location().toString());
             tag.putDouble("size", size);
             tag.putBoolean("isRampRegion", isRampRegion);
             return tag;
@@ -163,8 +183,22 @@ public class MeadowGroveStructure extends Structure {
             return isRampRegion;
         }
 
-        public ResourceKey<ConfiguredFeature<?, ?>> getTreeType() {
-            return treeType;
+        public ResourceKey<ConfiguredFeature<?, ?>> chooseFeature(RandomSource randomSource) {
+            return chooseFeature(randomSource, 1);
+        }
+
+        public ResourceKey<ConfiguredFeature<?, ?>> chooseFeature(RandomSource randomSource, float scalar) {
+            float rand = randomSource.nextFloat();
+            if (rand < 0.0025f * scalar) {
+                return treeFeature;
+            } else if (rand < 0.0075f * scalar) {
+                return plantFeature;
+            } else if (rand < 0.025f * scalar) {
+                return patchFeature;
+            } else if (rand < 0.05f * scalar) {
+                return oreFeature;
+            }
+            return null;
         }
     }
 }

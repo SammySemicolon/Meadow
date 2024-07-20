@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:coal_grass_block",
+    "foliage": "meadow:coal_flora",
+    "ore": "minecraft:coal_ore",
+    "plant": "meadow:coal_flower"
+  }
+}

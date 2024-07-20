@@ -1,10 +1,10 @@
 package com.smellysleepy.meadow.common.worldgen.feature;
 
 import com.google.common.collect.*;
+import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import net.minecraft.core.*;
-import net.minecraft.util.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.synth.*;
@@ -12,7 +12,6 @@ import team.lodestar.lodestone.systems.worldgen.*;
 
 import java.util.*;
 
-import static net.minecraft.tags.BlockTags.*;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
 public class StrangePlantFeature extends Feature<StrangePlantFeatureConfiguration> {
@@ -31,71 +30,51 @@ public class StrangePlantFeature extends Feature<StrangePlantFeatureConfiguratio
         var pos = context.origin();
         var rand = context.random();
         var config = context.config();
-        var plant = config.plant.defaultBlockState();
+        var plant = config.flower.defaultBlockState();
         if (level.isEmptyBlock(pos.below()) || !plant.canSurvive(level, pos)) {
             return false;
         }
-        LodestoneBlockFiller filler = new LodestoneBlockFiller().addLayers(PLANTS, COVERING);
-
-        filler.getLayer(PLANTS).put(pos.above(), create(plant));
-        generateCovering(level, config, filler, pos, 5);
-        filler.fill(level);
-        return true;
-    }
-
-    public static void generateCovering(ServerLevelAccessor level, StrangePlantFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos pos, int radius) {
-        Map<Integer, Double> noiseValues = new HashMap<>();
-        for (int i = 0; i <= 360; i++) {
-            noiseValues.put(i, 1+COVERING_NOISE.getValue(pos.getX() + pos.getZ() + i * 0.02f, pos.getY() / 0.05f, true));
+        var mutable = pos.mutable();
+        for (int j = 0; j < 4; j++) {
+            if (!level.getBlockState(mutable).isAir()) {
+                return false;
+            }
+            mutable.move(Direction.UP);
         }
-        generateCovering(level, config, filler, pos, radius, noiseValues);
-    }
+        LodestoneBlockFiller filler = new LodestoneBlockFiller().addLayers(PLANTS, COVERING);
+        LodestoneBlockFiller.BlockStateEntry blockEntry = create(config.block.defaultBlockState()).setForcePlace().build();
+        LodestoneBlockFiller.BlockStateEntry oreEntry = create(config.ore.defaultBlockState()).setForcePlace().build();
+        LodestoneBlockFiller.BlockStateEntry grassEntry = create(config.grass.defaultBlockState()).setForcePlace().build();
+        Set<BlockPos> covering = WorldgenHelper.generateCovering(level, pos, 6);
+        for (BlockPos blockPos : covering) {
+            filler.getLayer(COVERING).put(blockPos, blockEntry);
+        }
 
-    public static void generateCovering(ServerLevelAccessor level, StrangePlantFeatureConfiguration config, LodestoneBlockFiller filler, BlockPos center, int radius, Map<Integer, Double> noiseValues) {
-        var rand = level.getRandom();
-        int x = center.getX();
-        int z = center.getZ();
-        var mutable = new BlockPos.MutableBlockPos();
-
-        int oreCounter = radius / 4;
-        var ore = config.ore.defaultBlockState();
-        var primaryDecorator = config.primaryDecorator.defaultBlockState();
-        var secondaryDecorator = config.secondaryDecorator.defaultBlockState();
-
-        for (int i = 0; i < radius * 2 + 1; i++) {
-            for (int j = 0; j < radius * 2 + 1; j++) {
-                int xp = x + i - radius;
-                int zp = z + j - radius;
-                double theta = 180 + 180 / Math.PI * Math.atan2(x - xp, z - zp);
-                double naturalNoiseValue = Math.abs(noiseValues.get(Mth.floor(theta))) * radius;
-                int floor = (int) Math.floor(pointDistancePlane(xp, zp, x, z));
-                if (floor <= (Math.floor(naturalNoiseValue) - 1)) {
-                    mutable.set(xp, center.getY(), zp);
-                    int verticalRange = 4;
-                    for (int k = 0; !level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
-                        mutable.move(Direction.UP);
-                    }
-                    for (int k = 0; level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
-                        mutable.move(Direction.DOWN);
-                    }
-                    if (level.getBlockState(mutable).is(MOSS_REPLACEABLE)) {
-                        var block = primaryDecorator;
-                        if (oreCounter == 0) {
-                            oreCounter = 4;
-                            block = ore;
-                        }
-                        else if (floor > 2 * radius / naturalNoiseValue) {
-                            block = secondaryDecorator;
-                        }
-                        filler.getLayer(COVERING).put(mutable.immutable(), create(block).setForcePlace());
-                        oreCounter--;
-                    }
+        Set<BlockPos> oreCovering = WorldgenHelper.generateCovering(level, pos, 2);
+        for (BlockPos blockPos : oreCovering) {
+            filler.getLayer(COVERING).put(blockPos, oreEntry);
+        }
+        mutable = pos.mutable();
+        for (int i = 0; i < 4; i++) {
+            Set<BlockPos> foliageCovering = WorldgenHelper.generateCovering(level, mutable, 3);
+            for (BlockPos blockPos : foliageCovering) {
+                if (rand.nextFloat() < 0.4f) {
+                    filler.getLayer(PLANTS).put(blockPos.above(), grassEntry);
                 }
             }
+            int offset = 2 + i;
+            mutable.move(rand.nextIntBetweenInclusive(-offset, offset), 0, rand.nextIntBetweenInclusive(-offset, offset));
         }
-    }
 
-    public static float pointDistancePlane(double x1, double z1, double x2, double z2) {
-        return (float) Math.hypot(x1 - x2, z1 - z2);
+        if (plant.hasProperty(DoublePlantBlock.HALF)) {
+            filler.getLayer(PLANTS).put(pos, create(plant).setForcePlace());
+            filler.getLayer(PLANTS).put(pos.above(), create(plant.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)).setForcePlace());
+        }
+        else {
+            filler.getLayer(PLANTS).put(pos, create(plant).setForcePlace());
+        }
+
+        filler.fill(level);
+        return true;
     }
 }

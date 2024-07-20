@@ -62,7 +62,7 @@ public class MeadowGrovePiece extends StructurePiece {
         CompoundTag calcifiedAreaTag = tag.getCompound("calcifiedAreas");
         int count = calcifiedAreaTag.getInt("count");
         for (int i = 0; i < count; i++) {
-            this.calcifiedAreas.add(CalcifiedArea.deserialize(calcifiedAreaTag.getCompound("calcifiedArea_"+i)));
+            this.calcifiedAreas.add(CalcifiedArea.deserialize(calcifiedAreaTag.getCompound("calcifiedArea_" + i)));
         }
     }
 
@@ -76,7 +76,7 @@ public class MeadowGrovePiece extends StructurePiece {
         calcifiedAreaTag.putInt("count", calcifiedAreas.size());
         for (int i = 0; i < calcifiedAreas.size(); i++) {
             var calcifiedAreaCenter = calcifiedAreas.get(i);
-            calcifiedAreaTag.put("calcifiedArea_" + i,calcifiedAreaCenter.serialize());
+            calcifiedAreaTag.put("calcifiedArea_" + i, calcifiedAreaCenter.serialize());
         }
 
         tag.put("calcifiedAreas", calcifiedAreaTag);
@@ -139,7 +139,7 @@ public class MeadowGrovePiece extends StructurePiece {
         int ceilingCoverage = Math.min(ceilingPattern.size() - 1, height < 2 ? 0 : Mth.floor((2 + height) * 2));
 
         int surfaceLimit = centerY - depth;
-        List<BlockState> surfaceCovering = getSurfaceBlockPattern(chunk, pos, calcificationNoise, surfaceLimit);
+        List<BlockState> surfaceCovering = getSurfaceBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, calcificationNoise, surfaceLimit);
         int surfaceCoverage = Math.min(surfaceCovering.size() - 1, depth < 6 ? 0 : Mth.floor(depth / 2f));
 
         int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
@@ -159,7 +159,7 @@ public class MeadowGrovePiece extends StructurePiece {
         int rampDepth = getGroveDepth(noiseSampler, pos, localDepth, rampDelta);
         int rampYLevel = centerY - rampDepth;
         int rampHeight = Mth.ceil(rampDepth * Easing.QUINTIC_IN_OUT.clamped(rampNoise, 0.8f, 1.2f));
-        List<BlockState> rampBlockPattern = getRampBlockPattern(chunk, pos, upperCalcificationNoise, surfaceLimit + rampYLevel);
+        List<BlockState> rampBlockPattern = getRampBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, upperCalcificationNoise, surfaceLimit + rampYLevel);
 
         createShell(chunk, pos, unsafeBoundingBox, ceilingPatternBlock, blockX, blockZ, ceilingShellStart, ceilingShellLimit, surfaceShellStart, surfaceShellLimit);
 
@@ -176,7 +176,6 @@ public class MeadowGrovePiece extends StructurePiece {
             }
         }
         if (centerY > surfacePlacementDepth) {
-            BlockState peripheralState = getPeripheralState(noiseSampler, blockX, blockZ, sqrtDistance, offset);
             for (int y = centerY; y > surfacePlacementDepth; y--) { //surface
                 pos.set(blockX, y, blockZ);
                 unsafeBoundingBox.encapsulate(pos);
@@ -191,14 +190,14 @@ public class MeadowGrovePiece extends StructurePiece {
                 if (y <= surfaceLimit) {
                     int index = Mth.clamp(surfaceLimit - y, 0, surfaceCoverage);
                     BlockState state = surfaceCovering.get(index);
-                    chunk.setBlockState(pos, peripheralState != null ? peripheralState : state, true);
+                    chunk.setBlockState(pos, state, true);
                     continue;
                 }
 
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
-        createRamps(chunk, noiseSampler, random, pos, rampBlockPattern, rampYLevel, blockX, blockZ, rampHeight, upperCalcificationNoise, smoothedRampNoise, sqrtDistance, offset);
+        createRamps(chunk, random, pos, rampBlockPattern, rampYLevel, blockX, blockZ, rampHeight, upperCalcificationNoise, smoothedRampNoise, sqrtDistance, offset);
         return Optional.empty();
     }
 
@@ -232,6 +231,7 @@ public class MeadowGrovePiece extends StructurePiece {
             chunk.setBlockState(pos, Blocks.STONE.defaultBlockState(), true);
         }
     }
+
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, double calcificationNoise, double sqrtDistance, double offset) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
         Optional<Pair<CalcifiedArea, Double>> optional = getCalcification(pos.mutable(), calcificationNoise, true);
@@ -239,12 +239,9 @@ public class MeadowGrovePiece extends StructurePiece {
             var pair = optional.get();
             double delta = pair.getSecond();
             if (delta > 0.05f) {
-                if (randomSource.nextFloat() < 0.0075f) {
-                    feature = pair.getFirst().getTreeType();
-                }
+                feature = pair.getFirst().chooseFeature(randomSource);
             }
-        }
-        else {
+        } else {
             float rand = randomSource.nextFloat();
             if (rand < 0.01f) {
                 feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
@@ -259,6 +256,7 @@ public class MeadowGrovePiece extends StructurePiece {
         }
         return null;
     }
+
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createSurfaceFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, double calcificationNoise, double sqrtDistance, double offset) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
 
@@ -267,12 +265,9 @@ public class MeadowGrovePiece extends StructurePiece {
             var pair = optional.get();
             double delta = pair.getSecond();
             if (delta > 0.05f) {
-                if (randomSource.nextFloat() < 0.005f) {
-                    feature = pair.getFirst().getTreeType();
-                }
+                feature = pair.getFirst().chooseFeature(randomSource, 1.25f);
             }
-        }
-        else {
+        } else {
             int featureTypeOffset = groveCenter.getY() - pos.getY();
             float start = groveDepth * 0.3f;
             float midpoint = groveDepth * 0.5f;
@@ -299,8 +294,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 float rand = randomSource.nextFloat();
                 if (rand < 0.005f) {
                     feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH;
-                }
-                else if (rand < 0.0075f) {
+                } else if (rand < 0.0075f) {
                     feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH;
                 }
             }
@@ -311,7 +305,7 @@ public class MeadowGrovePiece extends StructurePiece {
         return null;
     }
 
-    private void createRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, RandomSource random, BlockPos.MutableBlockPos pos, List<BlockState> rampBlockPattern, int yLevel, int blockX, int blockZ, int rampHeight, double calcificationNoise, double noise, double sqrtDistance, double offset) {
+    private void createRamps(ChunkAccess chunk, RandomSource random, BlockPos.MutableBlockPos pos, List<BlockState> rampBlockPattern, int yLevel, int blockX, int blockZ, int rampHeight, double calcificationNoise, double noise, double sqrtDistance, double offset) {
         boolean isAtEdge = sqrtDistance > offset * 0.95f;
         float noiseOffset = Easing.QUAD_OUT.clamped((sqrtDistance - offset * 0.6f) / (offset * 0.4f), 0, 0.3f);
         if (sqrtDistance < offset * 0.6f) {
@@ -325,12 +319,11 @@ public class MeadowGrovePiece extends StructurePiece {
             int rampTop = yLevel + rampHeight;
 
             if (!isAtEdge) {
-                var feature = createRampFeatures(random, pos.set(blockX, rampTop+1, blockZ), calcificationNoise, sqrtDistance, offset);
+                var feature = createRampFeatures(random, pos.set(blockX, rampTop + 1, blockZ), calcificationNoise, sqrtDistance, offset);
                 if (feature != null) {
                     bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
                 }
             }
-            BlockState peripheralState = getPeripheralState(noiseSampler, blockX, blockZ, sqrtDistance, offset);
             for (int i = 0; i < rampHeight; i++) {
                 if (i > topCutoff) {
                     break;
@@ -348,7 +341,7 @@ public class MeadowGrovePiece extends StructurePiece {
                             state = Blocks.STONE.defaultBlockState();
                         }
                     }
-                    chunk.setBlockState(pos, peripheralState != null ? peripheralState : state, true);
+                    chunk.setBlockState(pos, state, true);
                 }
             }
         }
@@ -381,14 +374,13 @@ public class MeadowGrovePiece extends StructurePiece {
             boolean foundHigher = false;
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 2; j++) {
-                    int offsetX = Mth.clamp(x - 1 + i * 2, 0, coverage-1);
-                    int offsetZ = Mth.clamp(z - j + i * 2, 0, coverage-1);
+                    int offsetX = Mth.clamp(x - 1 + i * 2, 0, coverage - 1);
+                    int offsetZ = Mth.clamp(z - j + i * 2, 0, coverage - 1);
 
                     double noise;
                     if (noiseValues[offsetX][offsetZ] == 0) {
-                        noise = noiseValues[offsetX][offsetZ] = getRampNoise(noiseSampler, blockX+offsetX, blockZ+offsetZ) / 2;
-                    }
-                    else {
+                        noise = noiseValues[offsetX][offsetZ] = getRampNoise(noiseSampler, blockX + offsetX, blockZ + offsetZ) / 2;
+                    } else {
                         noise = noiseValues[offsetX][offsetZ];
                     }
                     if (noise > highestNoise) {
@@ -414,17 +406,6 @@ public class MeadowGrovePiece extends StructurePiece {
         return (noise - threshold) / (1 - threshold);
     }
 
-    public BlockState getPeripheralState(ImprovedNoise noiseSampler, int blockX, int blockZ, double distance, double offset) {
-        if (distance > offset * 0.8f) {
-            double stateNoise = getNoise(noiseSampler, blockX, blockZ, 75000, 0.15f) / 2;
-            float stateNoiseOffset = (float) ((distance - offset * 0.8f) / (offset * 0.2f)) * 0.25f;
-            if (stateNoise > 0.5f - stateNoiseOffset && stateNoise < 0.6f + stateNoiseOffset) {
-                return Blocks.STONE.defaultBlockState();
-            }
-        }
-        return null;
-    }
-
     public Optional<Pair<CalcifiedArea, Double>> getCalcification(BlockPos.MutableBlockPos pos, double noise, boolean isRampRegion) {
         if (calcifiedAreas.isEmpty()) {
             return Optional.empty();
@@ -447,7 +428,7 @@ public class MeadowGrovePiece extends StructurePiece {
         double threshold = closestArea.getThreshold(noise);
         double delta = closestArea.getDelta(pos, noise);
         if (delta <= threshold) {
-            return Optional.of(Pair.of(closestArea, -(delta-threshold)));
+            return Optional.of(Pair.of(closestArea, -(delta - threshold)));
         }
         return Optional.empty();
     }
@@ -500,36 +481,47 @@ public class MeadowGrovePiece extends StructurePiece {
         return pattern;
     }
 
-    private List<BlockState> getRampBlockPattern(ChunkAccess chunk, BlockPos.MutableBlockPos pos, double calcificationNoise, int startingY) {
-        return getSurfaceBlockPattern(chunk, pos, true, calcificationNoise, startingY);
+    private List<BlockState> getRampBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, double sqrtDistance, double offset, double calcificationNoise, int startingY) {
+        return getSurfaceBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, true, calcificationNoise, startingY);
     }
-    private List<BlockState> getSurfaceBlockPattern(ChunkAccess chunk, BlockPos.MutableBlockPos pos, double calcificationNoise, int startingY) {
-        return getSurfaceBlockPattern(chunk, pos, false, calcificationNoise, startingY);
+
+    private List<BlockState> getSurfaceBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, double sqrtDistance, double offset, double calcificationNoise, int startingY) {
+        return getSurfaceBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, false, calcificationNoise, startingY);
     }
-    private List<BlockState> getSurfaceBlockPattern(ChunkAccess chunk, BlockPos.MutableBlockPos pos, boolean isRamp, double calcificationNoise, int startingY) {
+
+    private List<BlockState> getSurfaceBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, double sqrtDistance, double offset, boolean isRamp, double calcificationNoise, int startingY) {
         ArrayList<BlockState> pattern = new ArrayList<>();
+        boolean useCracks = makeCracks(noiseSampler, pos.getX(), pos.getZ(), sqrtDistance, offset);
         Optional<Pair<CalcifiedArea, Double>> calcification = getCalcification(pos.mutable(), calcificationNoise, isRamp);
         if (calcification.isPresent()) {
-            double delta = calcification.get().getSecond();
-            if (delta < 0.04f) {
-                pattern.add(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState());
+            if (!useCracks) {
+                useCracks = makeCracks(noiseSampler, pos.getX(), pos.getZ(),  0.025f);
             }
-            else if (delta < 0.08f) {
+            double delta = calcification.get().getSecond();
+            if (useCracks || delta < 0.04f) {
+                pattern.add(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState());
+            } else if (delta < 0.08f) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_ROCK.get().defaultBlockState());
             }
             pattern.add(Blocks.STONE.defaultBlockState());
             pattern.add(Blocks.STONE.defaultBlockState());
         } else {
-            pattern.add(MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get().defaultBlockState());
-            pattern.add(Blocks.DIRT.defaultBlockState());
-            pattern.add(Blocks.DIRT.defaultBlockState());
+            if (useCracks) {
+                for (int i = 0; i < 3; i++) {
+                    pattern.add(Blocks.STONE.defaultBlockState());
+                }
+            } else {
+                pattern.add(MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get().defaultBlockState());
+                pattern.add(Blocks.DIRT.defaultBlockState());
+                pattern.add(Blocks.DIRT.defaultBlockState());
+            }
         }
         for (int i = 3; i < 8; i++) {
             if (i > 3 && i <= 6) {
                 pattern.add(Blocks.TUFF.defaultBlockState());
                 continue;
             }
-            BlockState existingBlock = chunk.getBlockState(pos.setY(startingY-i));
+            BlockState existingBlock = chunk.getBlockState(pos.setY(startingY - i));
             if (existingBlock.is(Tags.Blocks.ORES)) {
                 pattern.add(existingBlock);
                 continue;
@@ -537,6 +529,18 @@ public class MeadowGrovePiece extends StructurePiece {
             pattern.add(Blocks.STONE.defaultBlockState());
         }
         return pattern;
+    }
+
+    public boolean makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, double distance, double offset) {
+        if (distance > offset * 0.8f) {
+            float stateNoiseOffset = (float) ((distance - offset * 0.8f) / (offset * 0.2f)) * 0.25f;
+            return makeCracks(noiseSampler, blockX, blockZ, stateNoiseOffset);
+        }
+        return false;
+    }
+    public boolean makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, float stateNoiseOffset) {
+        double stateNoise = getNoise(noiseSampler, blockX, blockZ, 75000, 0.15f) / 2;
+        return stateNoise > 0.45f - stateNoiseOffset && stateNoise < 0.55f + stateNoiseOffset;
     }
 
     public static double getNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, float noiseFrequency, boolean blur) {

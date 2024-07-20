@@ -3,7 +3,6 @@ package com.smellysleepy.meadow.common.worldgen.tree.mineral;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
-import com.smellysleepy.meadow.registry.common.MineralFloraRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -30,7 +29,7 @@ public class MineralTreeFeatureConfiguration implements FeatureConfiguration {
     public final List<MineralTreePart> parts;
 
     public MineralTreeFeatureConfiguration(MineralFloraRegistryBundle bundle, List<MineralTreePart> parts) {
-        this(bundle.sapling.get(), bundle.leaves.get(), bundle.flora.get(), bundle.grass.get(), bundle.flora.get(), parts);
+        this(bundle.saplingBlock.get(), bundle.leavesBlock.get(), bundle.floraBlock.get(), bundle.grassBlock.get(), bundle.floraBlock.get(), parts);
     }
     public MineralTreeFeatureConfiguration(Block sapling, Block leaves, Block hangingLeaves, Block grass, Block flora, List<MineralTreePart> parts) {
         this.sapling = sapling;

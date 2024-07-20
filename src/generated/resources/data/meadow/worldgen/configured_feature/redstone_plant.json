@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:redstone_grass_block",
+    "foliage": "meadow:redstone_flora",
+    "ore": "minecraft:redstone_ore",
+    "plant": "meadow:redstone_flower"
+  }
+}

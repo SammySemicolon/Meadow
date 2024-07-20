@@ -37,7 +37,7 @@ public class MeadowConfiguredFeatureDatagen {
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COAL_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(),
                 new MineralTreeFeatureConfiguration(MineralFloraRegistry.COAL_FLORA, List.of(
                         new StraightTrunkPart(7, 9),
-                        new OffsetPart(0, -2, 0),
+                        new OffsetPart(0, -3, 0),
                         new LeafBlobPart(List.of(1, 2, 2, 2, 2, 1)),
                         new RandomOffsetsPart(4, 0, 2),
                         new LeafBlobPart(List.of(1, 2, 2, 2, 1))
@@ -121,6 +121,59 @@ public class MeadowConfiguredFeatureDatagen {
                 ))
         ));
 
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COAL_PLANT, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MineralFloraRegistry.COAL_FLORA, Blocks.COAL_ORE
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LAPIS_PLANT, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MineralFloraRegistry.LAPIS_FLORA, Blocks.LAPIS_ORE
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_REDSTONE_PLANT, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MineralFloraRegistry.REDSTONE_FLORA, Blocks.REDSTONE_ORE
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COPPER_PLANT, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MineralFloraRegistry.COPPER_FLORA, Blocks.COPPER_ORE
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_IRON_PLANT, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MineralFloraRegistry.IRON_FLORA, Blocks.IRON_ORE
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_GOLD_PLANT, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MineralFloraRegistry.GOLD_FLORA, Blocks.GOLD_ORE
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_EMERALD_PLANT, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MineralFloraRegistry.EMERALD_FLORA, Blocks.EMERALD_ORE
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_DIAMOND_PLANT, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
+                MineralFloraRegistry.DIAMOND_FLORA, Blocks.DIAMOND_ORE
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COAL_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                MineralFloraRegistry.COAL_FLORA, List.of(1, 1, 2, 2, 1)
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LAPIS_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                MineralFloraRegistry.LAPIS_FLORA, List.of(1, 1, 2, 2, 1)
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_REDSTONE_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                MineralFloraRegistry.REDSTONE_FLORA, List.of(1, 1, 2, 2, 1)
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COPPER_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                MineralFloraRegistry.COPPER_FLORA, List.of(1, 1, 2, 2, 1)
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_IRON_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                MineralFloraRegistry.IRON_FLORA, List.of(1, 1, 2, 2, 1)
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_GOLD_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                MineralFloraRegistry.GOLD_FLORA, List.of(1, 1, 2, 2, 1)
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_EMERALD_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                MineralFloraRegistry.EMERALD_FLORA, List.of(1, 1, 2, 2, 1)
+        )));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_DIAMOND_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                MineralFloraRegistry.DIAMOND_FLORA, List.of(1, 1, 2, 2, 1)
+        )));
+
+
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
                 List.of(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), MeadowBlockRegistry.TALL_MEADOW_GRASS.get(), MeadowBlockRegistry.MEDIUM_MEADOW_GRASS.get(), MeadowBlockRegistry.SHORT_MEADOW_GRASS.get()),
                 List.of(3, 6, 9, 4)
@@ -135,23 +188,6 @@ public class MeadowConfiguredFeatureDatagen {
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
                 List.of(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), MeadowBlockRegistry.MEDIUM_MEADOW_GRASS.get(), MeadowBlockRegistry.SHORT_MEADOW_GRASS.get()),
                 List.of(3, 4, 2)
-        )));
-        
-
-        context.register(MeadowConfiguredFeatureRegistry.CRIMSON_SUN, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
-                MineralFloraRegistry.REDSTONE_FLORA.flower.get(),
-                Blocks.REDSTONE_ORE,
-                Blocks.BARRIER,
-                Blocks.TUFF,
-                Blocks.ANDESITE
-        )));
-
-        context.register(MeadowConfiguredFeatureRegistry.LAZURITE_ROSE, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
-                MineralFloraRegistry.LAPIS_FLORA.flower.get(),
-                Blocks.DEEPSLATE_LAPIS_ORE,
-                Blocks.BARRIER,
-                MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get(),
-                Blocks.TUFF
         )));
     }
 

@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:copper_grass_block",
+    "foliage": "meadow:copper_flora",
+    "ore": "minecraft:copper_ore",
+    "plant": "meadow:copper_flower"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:gold_grass_block",
+    "foliage": "meadow:gold_flora",
+    "ore": "minecraft:gold_ore",
+    "plant": "meadow:gold_flower"
+  }
+}

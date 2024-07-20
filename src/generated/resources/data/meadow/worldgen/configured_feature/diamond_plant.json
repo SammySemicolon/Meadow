@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:diamond_grass_block",
+    "foliage": "meadow:diamond_flora",
+    "ore": "minecraft:diamond_ore",
+    "plant": "meadow:diamond_flower"
+  }
+}

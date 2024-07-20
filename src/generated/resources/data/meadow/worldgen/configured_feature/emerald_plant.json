@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:emerald_grass_block",
+    "foliage": "meadow:emerald_flora",
+    "ore": "minecraft:emerald_ore",
+    "plant": "meadow:emerald_flower"
+  }
+}

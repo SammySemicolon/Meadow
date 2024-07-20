@@ -78,19 +78,21 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
         return ASPEN_LEAVES_PROPERTIES()
                 .noCollission()
-                .lightLevel(s -> 4);
+                .lightLevel(s -> 8);
     }
 
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .offsetType(BlockBehaviour.OffsetType.XZ)
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
-                .instabreak()
+                .setCutoutRenderType()
+                .lightLevel(s -> 6)
                 .noCollission()
                 .noOcclusion()
-                .setCutoutRenderType()
-                .lightLevel(s -> 2);
+                .replaceable()
+                .instabreak();
     }
 
     public static LodestoneBlockProperties MINERAL_GRASS_BLOCK_PROPERTIES() {
@@ -115,6 +117,19 @@ public class MeadowBlockProperties {
                 .instabreak();
     }
 
+    public static LodestoneBlockProperties MINERAL_GRASS_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .offsetType(BlockBehaviour.OffsetType.XZ)
+                .pushReaction(PushReaction.DESTROY)
+                .mapColor(MapColor.GRASS)
+                .sound(SoundType.GRASS)
+                .setCutoutRenderType()
+                .noCollission()
+                .noOcclusion()
+                .replaceable()
+                .instabreak();
+    }
+
     public static LodestoneBlockProperties MINERAL_LEAVES_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND)
@@ -124,21 +139,9 @@ public class MeadowBlockProperties {
                 .isSuffocating(Blocks::never)
                 .addTag(BlockTags.LEAVES)
                 .setCutoutRenderType()
-                .lightLevel(b -> 6)
                 .strength(0.2F)
                 .randomTicks()
                 .noOcclusion()
                 .needsHoe();
-    }
-
-    public static LodestoneBlockProperties MINERAL_GRASS_PROPERTIES() {
-        return new LodestoneBlockProperties()
-                .sound(SoundType.CHERRY_LEAVES)
-                .mapColor(MapColor.GRASS)
-                .setCutoutRenderType()
-                .noCollission()
-                .noOcclusion()
-                .randomTicks()
-                .instabreak();
     }
 }

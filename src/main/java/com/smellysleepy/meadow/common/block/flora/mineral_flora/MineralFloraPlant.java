@@ -7,7 +7,7 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.*;
 
-public class MineralFloraPlant extends AbstractStrangeCovering {
+public class MineralFloraPlant extends AbstractStrangePlant {
 
     public final TagKey<Block> oreTag;
 

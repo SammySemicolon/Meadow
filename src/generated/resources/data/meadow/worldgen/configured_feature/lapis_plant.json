@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:lapis_grass_block",
+    "foliage": "meadow:lapis_flora",
+    "ore": "minecraft:lapis_ore",
+    "plant": "meadow:lapis_flower"
+  }
+}

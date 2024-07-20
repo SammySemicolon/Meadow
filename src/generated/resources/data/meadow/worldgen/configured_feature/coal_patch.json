@@ -1,0 +1,15 @@
+{
+  "type": "meadow:layered_patch",
+  "config": {
+    "patchSizes": [
+      1,
+      1,
+      2,
+      2,
+      1
+    ],
+    "plants": [
+      "meadow:coal_flora"
+    ]
+  }
+}

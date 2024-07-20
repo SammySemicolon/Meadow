@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.common.worldgen.feature.patch;
 import com.mojang.serialization.Codec;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -34,19 +35,30 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
 
       List<Integer> patchSizes = config.patchSizes;
       List<Block> plants = config.plants;
-      for (int i = 0; i < Math.min(patchSizes.size(), plants.size()); i++) {
-         int size = patchSizes.get(i);
-         Block plant = plants.get(i);
+      for (int i = 0; i < Math.max(patchSizes.size(), plants.size()); i++) {
+         int size = patchSizes.get(Math.min(i, patchSizes.size()-1));
+         Block plant = plants.get(Math.min(i, plants.size()-1));
          Set<BlockPos> covering = WorldgenHelper.generateCovering(level, mutable, size);
          for (BlockPos blockPos : covering) {
             BlockPos above = blockPos.above();
             BlockState state = plant.defaultBlockState();
-            if (plant.canSurvive(state, level, above)) {
-               if (plant instanceof DoublePlantBlock) {
-                  DoublePlantBlock.placeAt(level, state, above, 3);
+            boolean hasSpace = true;
+            mutable = above.mutable();
+            for (int j = 0; j < 4; j++) {
+               if (!level.getBlockState(mutable).isAir()) {
+                  hasSpace = false;
+                  break;
                }
-               else {
-                  level.setBlock(above, state, 3);
+               mutable.move(Direction.UP);
+            }
+
+            if (hasSpace) {
+               if (plant.canSurvive(state, level, above)) {
+                  if (plant instanceof DoublePlantBlock) {
+                     DoublePlantBlock.placeAt(level, state, above, 3);
+                  } else {
+                     level.setBlock(above, state, 3);
+                  }
                }
             }
          }

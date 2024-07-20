@@ -22,6 +22,6 @@ public class MeadowItemModelDatagen extends LodestoneItemModelProvider {
     protected void registerModels() {
         var items = new HashSet<>(MeadowItemRegistry.ITEMS.getEntries());
         AbstractItemModelSmith.ItemModelSmithData data = new AbstractItemModelSmith.ItemModelSmithData(this, items::remove);
-        ItemModelSmithTypes.HANDHELD_ITEM.act(data, MeadowItemRegistry.MAGIC_STICK);
+//        ItemModelSmithTypes.HANDHELD_ITEM.act(data);
     }
 }

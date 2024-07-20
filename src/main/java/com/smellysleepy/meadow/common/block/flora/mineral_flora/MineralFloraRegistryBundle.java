@@ -20,11 +20,11 @@ public class MineralFloraRegistryBundle {
 
     public final ResourceLocation id;
 
-    public final RegistryObject<Block> grass;
-    public final RegistryObject<Block> flora;
-    public final RegistryObject<Block> flower;
-    public final RegistryObject<Block> sapling;
-    public final RegistryObject<Block> leaves;
+    public final RegistryObject<Block> grassBlock;
+    public final RegistryObject<Block> floraBlock;
+    public final RegistryObject<Block> flowerBlock;
+    public final RegistryObject<Block> saplingBlock;
+    public final RegistryObject<Block> leavesBlock;
 
     public final RegistryObject<Item> grassItem;
     public final RegistryObject<Item> floraItem;
@@ -35,16 +35,16 @@ public class MineralFloraRegistryBundle {
     public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Color color, TagKey<Block> tag) {
         this.id = id;
         String prefix = id.getPath();
-        grass = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES()));
-        flora = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
-        flower = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
-        sapling = BLOCKS.register(prefix + "_sapling", () -> new MineralSapling(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), feature, tag));
-        leaves = BLOCKS.register(prefix + "_leaves", () -> new MineralLeaves(MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES(), color));
+        grassBlock = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES()));
+        floraBlock = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(MeadowBlockProperties.MINERAL_GRASS_PROPERTIES(), tag));
+        flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), tag));
+        saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSapling(MeadowBlockProperties.MINERAL_FLORA_PROPERTIES(), feature, tag));
+        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeaves(MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES(), color));
 
-        grassItem = register(prefix + "_grass_block", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(grass.get(), p));
-        floraItem = register(prefix + "_flora", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(flora.get(), p));
-        flowerItem = register(prefix + "_flower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(flower.get(), p));
-        saplingItem = register(prefix + "_sapling", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(sapling.get(), p));
-        leavesItem = register(prefix + "_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(leaves.get(), p));
+        grassItem = register(prefix + "_grass_block", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(grassBlock.get(), p));
+        floraItem = register(prefix + "_flora", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(floraBlock.get(), p));
+        flowerItem = register(prefix + "_flower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(flowerBlock.get(), p));
+        saplingItem = register(prefix + "_sapling", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(saplingBlock.get(), p));
+        leavesItem = register(prefix + "_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(leavesBlock.get(), p));
     }
 }

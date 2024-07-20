@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:iron_grass_block",
+    "foliage": "meadow:iron_flora",
+    "ore": "minecraft:iron_ore",
+    "plant": "meadow:iron_flower"
+  }
+}
