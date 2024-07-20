@@ -66,16 +66,18 @@ public class MeadowGroveStructure extends Structure {
 
         List<CalcifiedArea> calcifiedAreas = new ArrayList<>();
 //        int calcifiedAreaCounter = RandomHelper.randomBetween(random, Easing.QUAD_IN, 0, 3);
-        int calcifiedAreaCounter = 6;
+        int calcifiedAreaCounter = 2;
         for (int i = 0; i < calcifiedAreaCounter; i++) {
             float x = 6.28f * random.nextFloat();
             float z = 6.28f * random.nextFloat();
-            float distance = RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 0.5f, 1f);
-            var direction = new Vec2(Mth.sin(x), Mth.cos(z)).normalized().scale(distance * groveRadius * 0.4f);
-            var pos = new BlockPos.MutableBlockPos(groveCenter.getX() + direction.x, groveCenter.getY(), groveCenter.getZ() + direction.y);
-            float size = RandomHelper.randomBetween(random, Easing.CIRC_IN, 0.0725f, 0.125f) * groveRadius;
+            float distance = RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 0.6f, 1f);
+            var direction = new Vec2(Mth.sin(x), Mth.cos(z)).normalized().scale(distance);
+            float size = RandomHelper.randomBetween(random, Easing.CIRC_IN, 0.2f, 0.3f);
+            if (i == 1) {
+                size /= 2f;
+            }
             var distributor = getRandomWeightedMineralFeatureDistributor();
-            calcifiedAreas.add(new CalcifiedArea(pos, distributor, size, distance > 0.7f && random.nextBoolean()));
+            calcifiedAreas.add(new CalcifiedArea(groveCenter, groveRadius, direction, distributor, size, distance > 0.8f && random.nextBoolean()));
         }
 
         return onTopOfChunkCenter(context, Heightmap.Types.OCEAN_FLOOR_WG,
@@ -114,7 +116,9 @@ public class MeadowGroveStructure extends Structure {
     }
 
     public static class CalcifiedArea {
-        private final BlockPos.MutableBlockPos center;
+        private final BlockPos groveCenter;
+        private final double groveRadius;
+        private final Vec2 direction;
 
         private final ResourceKey<ConfiguredFeature<?, ?>> treeFeature;
         private final ResourceKey<ConfiguredFeature<?, ?>> plantFeature;
@@ -123,16 +127,18 @@ public class MeadowGroveStructure extends Structure {
         private final double size;
         private final boolean isRampRegion;
 
-        public CalcifiedArea(BlockPos.MutableBlockPos center, MineralFeatureDistribution distribution, double size, boolean isRampRegion) {
-            this(center, distribution.tree, distribution.plant, distribution.ore, distribution.patch, size, isRampRegion);
+        public CalcifiedArea(BlockPos groveCenter, double groveRadius, Vec2 direction, MineralFeatureDistribution distribution, double size, boolean isRampRegion) {
+            this(groveCenter, groveRadius, direction, distribution.tree, distribution.plant, distribution.ore, distribution.patch, size, isRampRegion);
         }
-        public CalcifiedArea(BlockPos.MutableBlockPos center,
+        public CalcifiedArea(BlockPos groveCenter, double groveRadius, Vec2 direction,
                              ResourceKey<ConfiguredFeature<?, ?>> treeFeature,
                              ResourceKey<ConfiguredFeature<?, ?>> plantFeature,
                              ResourceKey<ConfiguredFeature<?, ?>> oreFeature,
                              ResourceKey<ConfiguredFeature<?, ?>> patchFeature,
                              double size, boolean isRampRegion) {
-            this.center = center;
+            this.groveCenter = groveCenter;
+            this.groveRadius = groveRadius;
+            this.direction = direction;
             this.treeFeature = treeFeature;
             this.plantFeature = plantFeature;
             this.oreFeature = oreFeature;
@@ -143,7 +149,9 @@ public class MeadowGroveStructure extends Structure {
 
         public static CalcifiedArea deserialize(CompoundTag tag) {
             return new CalcifiedArea(
-                    NbtUtils.readBlockPos(tag.getCompound("position")).mutable(),
+                    NbtUtils.readBlockPos(tag.getCompound("groveCenter")).mutable(),
+                    tag.getDouble("groveRadius"),
+                    new Vec2(tag.getFloat("directionX"), tag.getFloat("directionZ")),
                     ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("treeFeature"))),
                     ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("plantFeature"))),
                     ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("oreFeature"))),
@@ -154,7 +162,10 @@ public class MeadowGroveStructure extends Structure {
 
         public CompoundTag serialize() {
             CompoundTag tag = new CompoundTag();
-            tag.put("position", NbtUtils.writeBlockPos(center));
+            tag.put("groveCenter", NbtUtils.writeBlockPos(groveCenter));
+            tag.putDouble("groveRadius", groveRadius);
+            tag.putFloat("directionX", direction.x);
+            tag.putFloat("directionZ", direction.y);
             tag.putString("treeFeature", treeFeature.location().toString());
             tag.putString("plantFeature", plantFeature.location().toString());
             tag.putString("oreFeature", oreFeature.location().toString());
@@ -164,19 +175,18 @@ public class MeadowGroveStructure extends Structure {
             return tag;
         }
 
-        public double getDistance(BlockPos target) {
-            return center.setY(target.getY()).distSqr(target);
+        public double getDistance(BlockPos from, double localRadius) {
+            double x = (groveCenter.getX() + direction.x * localRadius) - from.getX();
+            double z = (groveCenter.getZ() + direction.y * localRadius) - from.getZ();
+            return x * x + z * z;
         }
 
-        public double getThreshold(double noise) {
-            return Easing.SINE_IN_OUT.clamped(noise, 0.5f, 1f);
+        public double getThreshold(double noise, double localRadius) {
+            return size * localRadius * Easing.SINE_IN_OUT.clamped(noise, 0.5f, 1f);
         }
 
-        public double getDelta(BlockPos target, double noise) {
-            float differenceX = center.getX() - target.getX();
-            float differenceZ = center.getZ() - target.getZ();
-            float distance = Mth.sqrt(differenceX * differenceX + differenceZ * differenceZ);
-            return distance / (size * getThreshold(noise));
+        public double getDelta(BlockPos from, double noise, double localRadius) {
+            return Math.sqrt(getDistance(from, localRadius));
         }
 
         public boolean isRampRegion() {
@@ -191,11 +201,11 @@ public class MeadowGroveStructure extends Structure {
             float rand = randomSource.nextFloat();
             if (rand < 0.0025f * scalar) {
                 return treeFeature;
-            } else if (rand < 0.0075f * scalar) {
+            } else if (rand < 0.01f * scalar) {
                 return plantFeature;
-            } else if (rand < 0.025f * scalar) {
+            } else if (rand < 0.04f * scalar) {
                 return patchFeature;
-            } else if (rand < 0.05f * scalar) {
+            } else if (rand < 0.06f * scalar) {
                 return oreFeature;
             }
             return null;

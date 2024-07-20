@@ -9,7 +9,7 @@
     "meadow:amethyst_leaves",
     "meadow:redstone_leaves",
     "meadow:amethyst_grass_block",
-    "meadow:meadow_grass_block",
+    "meadow:calcified_earth",
     "meadow:emerald_leaves",
     "meadow:netherite_grass_block",
     "meadow:gold_grass_block",
@@ -22,6 +22,7 @@
     "meadow:redstone_grass_block",
     "meadow:copper_grass_block",
     "meadow:diamond_grass_block",
+    "meadow:calcified_rock",
     "meadow:copper_leaves"
   ]
 }

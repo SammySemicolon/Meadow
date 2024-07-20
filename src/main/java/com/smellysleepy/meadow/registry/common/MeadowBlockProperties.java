@@ -14,6 +14,7 @@ public class MeadowBlockProperties {
         return new LodestoneBlockProperties()
                 .strength(2.5F, 4.0F)
                 .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
+                .addTag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND)
                 .mapColor(MapColor.COLOR_BLUE)
                 .sound(SoundType.NETHERRACK);
     }
@@ -37,8 +38,7 @@ public class MeadowBlockProperties {
                 .strength(0.6F)
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
-                .addTag(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND)
-                .addTag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND);
+                .addTag(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND);
     }
 
     public static LodestoneBlockProperties MEADOW_WOOD_PROPERTIES() {
