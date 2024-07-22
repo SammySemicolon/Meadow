@@ -18,7 +18,6 @@ public class StrangePlantFeature extends Feature<StrangePlantFeatureConfiguratio
 
     public static final LodestoneBlockFiller.LodestoneLayerToken PLANTS = new LodestoneBlockFiller.LodestoneLayerToken();
     public static final LodestoneBlockFiller.LodestoneLayerToken COVERING = new LodestoneBlockFiller.LodestoneLayerToken();
-    private static final PerlinSimplexNoise COVERING_NOISE = new PerlinSimplexNoise(new WorldgenRandom(new LegacyRandomSource(1234L)), ImmutableList.of(0));
 
     public StrangePlantFeature() {
         super(StrangePlantFeatureConfiguration.CODEC);

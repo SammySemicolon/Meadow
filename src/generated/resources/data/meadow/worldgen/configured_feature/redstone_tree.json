@@ -5,6 +5,7 @@
     "grass": "meadow:redstone_grass_block",
     "hangingLeaves": "meadow:redstone_flora",
     "leaves": "meadow:redstone_leaves",
+    "ore": "minecraft:redstone_ore",
     "parts": [
       {
         "type": "meadow:thick_stump",

@@ -5,6 +5,7 @@
     "grass": "meadow:coal_grass_block",
     "hangingLeaves": "meadow:coal_flora",
     "leaves": "meadow:coal_leaves",
+    "ore": "minecraft:coal_ore",
     "parts": [
       {
         "type": "meadow:straight_trunk",

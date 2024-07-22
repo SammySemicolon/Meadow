@@ -1,8 +1,8 @@
-package com.smellysleepy.meadow.common.worldgen.tree.meadow;
+package com.smellysleepy.meadow.common.worldgen.feature.tree.meadow;
 
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.ThinMeadowLogBlock.*;
-import com.smellysleepy.meadow.common.worldgen.tree.*;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.*;

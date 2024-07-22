@@ -3,8 +3,6 @@ package com.smellysleepy.meadow.common.worldgen.feature.patch;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.parts.ThickStumpPart;
-import com.smellysleepy.meadow.registry.common.MineralFloraRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;

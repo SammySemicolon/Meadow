@@ -5,6 +5,7 @@
     "grass": "meadow:gold_grass_block",
     "hangingLeaves": "meadow:gold_flora",
     "leaves": "meadow:gold_leaves",
+    "ore": "minecraft:gold_ore",
     "parts": [
       {
         "type": "meadow:thick_stump",

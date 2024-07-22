@@ -2,10 +2,10 @@ package com.smellysleepy.meadow.data.worldgen;
 
 import com.smellysleepy.meadow.common.worldgen.feature.StrangePlantFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.patch.LayeredPatchConfiguration;
-import com.smellysleepy.meadow.common.worldgen.tree.meadow.MeadowTreeFeatureConfiguration;
-import com.smellysleepy.meadow.common.worldgen.tree.meadow.SmallMeadowTreeFeatureConfiguration;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.parts.*;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.MeadowTreeFeatureConfiguration;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.SmallMeadowTreeFeatureConfiguration;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.data.worldgen.*;
@@ -35,7 +35,7 @@ public class MeadowConfiguredFeatureDatagen {
         )));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COAL_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.COAL_FLORA, List.of(
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.COAL_FLORA, Blocks.COAL_ORE, List.of(
                         new StraightTrunkPart(7, 9),
                         new OffsetPart(0, -3, 0),
                         new LeafBlobPart(List.of(1, 2, 2, 2, 2, 1)),
@@ -45,7 +45,7 @@ public class MeadowConfiguredFeatureDatagen {
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LAPIS_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.LAPIS_FLORA, List.of(
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.LAPIS_FLORA, Blocks.LAPIS_ORE, List.of(
                         new StraightTrunkPart(8, 10),
                         new OffsetPart(0, -1, 0),
                         new LeafBlobPart(List.of(1, 2, 2, 2, 2, 2, 1)),
@@ -57,7 +57,7 @@ public class MeadowConfiguredFeatureDatagen {
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_REDSTONE_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.REDSTONE_FLORA, List.of(
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.REDSTONE_FLORA, Blocks.REDSTONE_ORE, List.of(
                         new ThickStumpPart(List.of(2, 1)),
                         new StraightTrunkPart(2, 4),
                         new DirectionalOffset(),
@@ -69,7 +69,7 @@ public class MeadowConfiguredFeatureDatagen {
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COPPER_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.COPPER_FLORA, List.of(
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.COPPER_FLORA, Blocks.COPPER_ORE, List.of(
                         new StraightTrunkPart(3, 4),
                         new LeafBlobPart(List.of(3, 2)),
                         new ReturnPart(),
@@ -79,7 +79,7 @@ public class MeadowConfiguredFeatureDatagen {
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_IRON_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.IRON_FLORA, List.of(
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.IRON_FLORA, Blocks.IRON_ORE, List.of(
                         new ThickStumpPart(List.of(1, 1)),
                         new StraightTrunkPart(4, 5),
                         new ReturnPart(),
@@ -95,7 +95,7 @@ public class MeadowConfiguredFeatureDatagen {
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_GOLD_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.GOLD_FLORA, List.of(
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.GOLD_FLORA, Blocks.GOLD_ORE, List.of(
                         new ThickStumpPart(List.of(1)),
                         new StraightTrunkPart(2, 3),
                         new SplitBranchesPart(1, 1, 2, 3, 1, 1),
@@ -109,7 +109,7 @@ public class MeadowConfiguredFeatureDatagen {
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_EMERALD_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(),
-                new MineralTreeFeatureConfiguration(MineralFloraRegistry.EMERALD_FLORA, List.of(
+                new MineralTreeFeatureConfiguration(MineralFloraRegistry.EMERALD_FLORA, Blocks.EMERALD_ORE, List.of(
                         new ThickStumpPart(List.of(1, 1)),
                         new StraightTrunkPart(10, 12),
                         new OffsetPart(0, -3, 0),

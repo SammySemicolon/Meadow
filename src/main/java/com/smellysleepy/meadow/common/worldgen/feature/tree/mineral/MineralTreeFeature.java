@@ -1,23 +1,15 @@
-package com.smellysleepy.meadow.common.worldgen.tree.mineral;
+package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral;
 
-import com.google.common.collect.ImmutableList;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
-import com.smellysleepy.meadow.common.worldgen.tree.AbstractTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import team.lodestar.lodestone.helpers.RandomHelper;
-import team.lodestar.lodestone.systems.easing.Easing;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.BlockStateEntry;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.LodestoneLayerToken;
@@ -26,7 +18,6 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.updateLeaves;
-import static net.minecraft.tags.BlockTags.MOSS_REPLACEABLE;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
 public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureConfiguration> {
@@ -50,6 +41,7 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
             return false;
         }
 
+        var rand = context.random();
         var filler = new LodestoneBlockFiller().addLayers(COVERING, PLANTS, LOGS, LEAVES, FOLIAGE);
         List<MineralTreePart> parts = context.config().parts;
 
@@ -82,11 +74,30 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
                 }
             }
         }
-        int coverageRadius = RandomHelper.randomBetween(level.getRandom(), 4, 8);
+        int coverageRadius = RandomHelper.randomBetween(rand, 4, 8);
         BlockStateEntry entry = create(config.grass.defaultBlockState()).setForcePlace().build();
+        BlockStateEntry oreEntry = create(config.ore.defaultBlockState()).setForcePlace().build();
+        BlockStateEntry floraEntry = create(config.flora.defaultBlockState()).setForcePlace().build();
         Set<BlockPos> covering = WorldgenHelper.generateCovering(level, pos, coverageRadius);
         for (BlockPos blockPos : covering) {
             filler.getLayer(COVERING).put(blockPos, entry);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            BlockPos orePos = pos.offset(rand.nextInt(4), 0, rand.nextInt(4));
+
+            Set<BlockPos> oreCovering = WorldgenHelper.generateCovering(level, orePos, 3);
+            for (BlockPos blockPos : oreCovering) {
+                filler.getLayer(COVERING).put(blockPos, oreEntry);
+            }
+        }
+
+        var mutable = pos.mutable();
+        Set<BlockPos> foliageCovering = WorldgenHelper.generateCovering(level, mutable, coverageRadius + 2);
+        for (BlockPos blockPos : foliageCovering) {
+            if (rand.nextFloat() < 0.4f) {
+                filler.getLayer(FOLIAGE).put(blockPos.above(), floraEntry);
+            }
         }
 
         filler.fill(level);

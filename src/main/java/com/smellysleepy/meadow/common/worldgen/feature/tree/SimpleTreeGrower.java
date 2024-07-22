@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.tree;
+package com.smellysleepy.meadow.common.worldgen.feature.tree;
 
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import net.minecraft.resources.ResourceKey;

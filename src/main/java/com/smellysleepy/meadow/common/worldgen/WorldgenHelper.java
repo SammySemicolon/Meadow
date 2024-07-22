@@ -1,7 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen;
 
 import com.google.common.collect.*;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
 import net.minecraft.core.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.*;
@@ -9,14 +8,11 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import team.lodestar.lodestone.systems.easing.Easing;
-import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 import java.util.*;
-
-import static net.minecraft.tags.BlockTags.MOSS_REPLACEABLE;
-import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
 public class WorldgenHelper {
 
@@ -50,7 +46,7 @@ public class WorldgenHelper {
                     for (int k = 0; level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
                         mutable.move(Direction.DOWN);
                     }
-                    if (!level.getBlockState(mutable).canBeReplaced()) {
+                    if (!level.getBlockState(mutable).canBeReplaced() && level.getBlockState(mutable.above()).canBeReplaced()) {
                         positions.add(mutable.immutable());
                     }
                 }
@@ -101,5 +97,44 @@ public class WorldgenHelper {
                 }
             }
         }
+    }
+
+    public static double getNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, float noiseFrequency, boolean blur) {
+        return getNoise(noiseSampler, blockX, blockZ, 0, noiseFrequency, blur);
+    }
+
+    public static double getNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, int offset, float noiseFrequency, boolean blur) {
+        if (blur) {
+            return getBlurredNoise(noiseSampler, blockX, blockZ, offset, noiseFrequency);
+        }
+        return noiseSampler.noise((blockX + offset) * noiseFrequency, 0, (blockZ + offset) * noiseFrequency) + 1;
+    }
+
+    public static double getBlurredNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, float noiseFrequency) {
+        return getBlurredNoise(noiseSampler, blockX, blockZ, 0, 1, noiseFrequency);
+    }
+
+    public static double getBlurredNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, int offset, float noiseFrequency) {
+        return getBlurredNoise(noiseSampler, blockX, blockZ, offset, 1, noiseFrequency);
+    }
+
+    public static double getBlurredNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, int offset, int blurRadius, float noiseFrequency) {
+        double noise = 0;
+        int count = 0;
+        for (int x = -blurRadius; x <= blurRadius; x++) {
+            for (int z = -blurRadius; z <= blurRadius; z++) {
+                noise += getNoise(noiseSampler, blockX, blockZ, offset, noiseFrequency);
+                count++;
+            }
+        }
+        return noise / count;
+    }
+
+    public static double getNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, float noiseFrequency) {
+        return getNoise(noiseSampler, blockX, blockZ, 0, noiseFrequency);
+    }
+
+    public static double getNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, int offset, float noiseFrequency) {
+        return noiseSampler.noise((blockX + offset) * noiseFrequency, 0, (blockZ + offset) * noiseFrequency) + 1;
     }
 }

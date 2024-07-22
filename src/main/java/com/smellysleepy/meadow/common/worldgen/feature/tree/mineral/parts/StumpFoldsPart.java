@@ -1,11 +1,11 @@
-package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
+package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.block.meadow.wood.MeadowLogBlock;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
-import static com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature.LOGS;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
 public class StumpFoldsPart extends MineralTreePart {
@@ -79,7 +78,7 @@ public class StumpFoldsPart extends MineralTreePart {
                     BlockPos.MutableBlockPos copy = mutable.mutable().move(clockWise, k);
                     int relativeHeight = height-Math.abs(k);
                     for (int l = 0; l < relativeHeight; l++) {
-                        filler.getLayer(LOGS).put(copy.immutable(), create(state));
+                        filler.getLayer(MineralTreeFeature.LOGS).put(copy.immutable(), create(state));
                         copy.move(Direction.UP);
                     }
                 }
