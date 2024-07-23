@@ -56,7 +56,7 @@ public class MeadowGroveStructure extends Structure {
         var groveCenter = new BlockPos(blockX, blockY, blockZ);
 
         int groveRadius = (int) (random.nextIntBetweenInclusive(128, 192) * RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 1.5f, 2f));
-        int groveHeight = random.nextIntBetweenInclusive(28, 32);
+        int groveHeight = random.nextIntBetweenInclusive(32, 40);
         int groveDepth = random.nextIntBetweenInclusive(16, 20);
 
         List<SpecialMeadowRegion> specialRegions = new ArrayList<>();
@@ -71,19 +71,21 @@ public class MeadowGroveStructure extends Structure {
             specialRegions.add(new CalcifiedRegion(directionalOffset, size, distributor));
         }
 
-        int lakeCounter = RandomHelper.randomBetween(random, Easing.SINE_OUT, 4, 16);
+        int lakeCounter = RandomHelper.randomBetween(random, Easing.QUAD_IN, 4, 12);
         for (int i = 0; i < lakeCounter; i++) {
             boolean isCentralLake = i == 0;
-            float sizeMultiplier = isCentralLake ? 3 : 1;
+            float sizeMultiplier = isCentralLake ? 2.5f : 1;
             float depthMultiplier = isCentralLake ? 2 : 1;
             float distanceMultiplier = isCentralLake ? 0.1f : 1;
             float x = 6.28f * i / lakeCounter;
             float z = 6.28f * i / lakeCounter;
             float distance = RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 0.3f, 0.4f) * distanceMultiplier;
             var directionalOffset = new Vec2(Mth.sin(x), Mth.cos(z)).normalized().scale(distance);
-            float size = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.06f, 0.09f) * sizeMultiplier;
-            float depth = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.4f, 0.6f) * depthMultiplier;
-            specialRegions.add(new LakeRegion(directionalOffset, size, depth));
+            float size = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.04f, 0.08f) * sizeMultiplier;
+            float depth = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.2f, 0.6f) * depthMultiplier;
+            float surfaceLevel = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.6f, 0.8f);
+
+            specialRegions.add(new LakeRegion(directionalOffset, size, depth, surfaceLevel));
         }
 
         return onTopOfChunkCenter(context, Heightmap.Types.OCEAN_FLOOR_WG,

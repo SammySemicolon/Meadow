@@ -10,6 +10,7 @@ import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
@@ -30,7 +31,6 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
 import team.lodestar.lodestone.systems.easing.Easing;
 
@@ -148,7 +148,8 @@ public class MeadowGrovePiece extends StructurePiece {
         Optional<Pair<CalcifiedRegion, Double>> calcifiedRegionOptional = getClosestRegion(CalcifiedRegion.class, blockX, blockZ, calcificationNoise, localRadius);
 
         double lakeNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 75000, 0.01f) * 0.5f;
-        Optional<Pair<LakeRegion, Double>> lakeRegionOptional = getClosestRegion(LakeRegion.class, blockX, blockZ, lakeNoise, groveRadius);
+        double relativeLakeRadius = localRadius * 0.7f + groveRadius * 0.3f;
+        Optional<Pair<LakeRegion, Double>> lakeRegionOptional = getClosestRegion(LakeRegion.class, blockX, blockZ, lakeNoise, relativeLakeRadius);
 
         BlockState ceilingPatternBlock = chooseSediment(noiseSampler, blockX, ceilingLimit, blockZ);
 
@@ -162,28 +163,44 @@ public class MeadowGrovePiece extends StructurePiece {
             var pair = lakeRegionOptional.get();
             var lakeRegion = pair.getFirst();
             double lakeDelta = pair.getSecond();
-            int terrainDepth = (int) (groveDepth * 0.6f);
-            int waterDepth = (int) (groveDepth * 0.7f);
+            int terrainDepth = (int) (groveDepth * lakeRegion.getSurfaceLevel());
+            int waterDepth = (int) (groveDepth * lakeRegion.getWaterLevel());
             int lakeDepth;
-            if (lakeDelta < 0.4f) {
-                lakeDepth = depth - Mth.floor(Easing.SINE_IN.ease(lakeDelta, 0, depth-terrainDepth, 0.4f));
+            if (lakeDelta < 0.2f) {
+                lakeDepth = depth - Mth.floor(Easing.SINE_IN.ease(lakeDelta, 0, depth-terrainDepth, 0.2f));
             }
             else {
-                double lakeCarverDepth = lakeRegion.getDepth() * (waterDepth + flatDepth);
-                lakeDepth = Mth.floor(Easing.BACK_IN_OUT.ease(Easing.SINE_IN.ease((lakeDelta-0.4f)/0.6f, 0, 1), terrainDepth, lakeCarverDepth));
+                double lakeCarverDepth = lakeRegion.getLakeDepth() * (waterDepth + flatDepth);
+                float carverDelta = (lakeDelta > 0.7f ? Easing.CUBIC_OUT : Easing.BACK_IN_OUT).ease((lakeDelta - 0.2f) / 0.8f, 0, 1);
+                lakeDepth = Mth.floor(Easing.SINE_OUT.ease(carverDelta, terrainDepth, lakeCarverDepth));
             }
             surfaceLimit = centerY - lakeDepth;
-            if (lakeDelta >= 0.6f) {
+            if (lakeDelta >= 0.4f) {
                 placeWater = true;
                 waterStartingPoint = centerY - waterDepth;
-                if (calcifiedRegionOptional.isEmpty()) {
-                    Block block = Blocks.DIRT;
-                    if (lakeDelta > 0.8f) {
-                        block = Blocks.STONE;
-                    }
-                    surfacePattern.set(0, block.defaultBlockState());
-                }
             }
+            Block[] blocks = new Block[]{
+                    Blocks.WHITE_STAINED_GLASS,
+                    Blocks.ORANGE_STAINED_GLASS,
+                    Blocks.MAGENTA_STAINED_GLASS,
+                    Blocks.LIGHT_BLUE_STAINED_GLASS,
+                    Blocks.YELLOW_STAINED_GLASS,
+                    Blocks.LIME_STAINED_GLASS,
+                    Blocks.PINK_STAINED_GLASS,
+                    Blocks.GRAY_STAINED_GLASS,
+                    Blocks.LIGHT_GRAY_STAINED_GLASS,
+                    Blocks.CYAN_STAINED_GLASS
+            };
+            if (calcifiedRegionOptional.isEmpty()) {
+                Block block = blocks[Mth.clamp(Mth.floor(lakeDelta*10), 0, 10)];
+
+
+//                    if (lakeDelta > 0.8f) {
+//                        block = Blocks.STONE;
+//                    }
+                surfacePattern.set(0, block.defaultBlockState());
+            }
+
         }
 
         int ceilingCoverage = Mth.clamp(height < 2 ? 0 : Mth.floor((2 + height) * 2), 0, ceilingPattern.size() - 1);
@@ -327,14 +344,19 @@ public class MeadowGrovePiece extends StructurePiece {
 
         if (noise >= bottomThreshold) {
             int bottomCutoff = Mth.floor(rampHeight * Easing.QUAD_IN_OUT.clamped(getRampCutIn(noise, bottomThreshold), 0, 1));
+            pos.set(blockX, yLevel, blockZ);
+            while (chunk.getBlockState(pos).canBeReplaced()) {
+                pos.move(Direction.DOWN);
+                if (pos.getY() % 2 == 0) {
+                    rampHeight++;
+                }
+            }
+            yLevel = pos.getY();
             for (int i = 0; i < rampHeight; i++) {
                 if (i > bottomCutoff) {
                     break;
                 }
                 pos.set(blockX, yLevel + i, blockZ);
-                if (chunk.getBlockState(pos).canBeReplaced()) {
-                    chunk.setBlockState(pos, Blocks.STONE.defaultBlockState(), true);
-                }
             }
         }
     }
@@ -459,8 +481,11 @@ public class MeadowGrovePiece extends StructurePiece {
             if (regionClass.isInstance(specialRegion)) {
                 double distance = specialRegion.getDistance(groveCenter, blockX, blockZ, localRadius);
                 if (distance < lowestDistance) {
-                    lowestDistance = distance;
-                    closestArea = regionClass.cast(specialRegion);
+                    double threshold = specialRegion.getThreshold(noise, localRadius);
+                    if (distance <= threshold) {
+                        lowestDistance = distance;
+                        closestArea = regionClass.cast(specialRegion);
+                    }
                 }
             }
         }
