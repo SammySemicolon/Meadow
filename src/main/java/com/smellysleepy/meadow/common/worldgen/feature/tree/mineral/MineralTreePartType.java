@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.tree.mineral;
+package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.resources.ResourceLocation;

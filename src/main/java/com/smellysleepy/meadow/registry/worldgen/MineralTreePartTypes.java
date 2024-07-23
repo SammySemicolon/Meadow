@@ -3,9 +3,9 @@ package com.smellysleepy.meadow.registry.worldgen;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePartType;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.parts.*;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePartType;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts.*;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;

@@ -1,9 +1,9 @@
-package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
+package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;

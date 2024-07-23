@@ -5,6 +5,7 @@
     "grass": "meadow:lapis_grass_block",
     "hangingLeaves": "meadow:lapis_flora",
     "leaves": "meadow:lapis_leaves",
+    "ore": "minecraft:lapis_ore",
     "parts": [
       {
         "type": "meadow:straight_trunk",

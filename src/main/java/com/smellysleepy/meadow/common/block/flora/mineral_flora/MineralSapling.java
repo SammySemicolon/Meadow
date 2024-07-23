@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.block.flora.mineral_flora;
 
-import com.smellysleepy.meadow.common.worldgen.tree.SimpleTreeGrower;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.SimpleTreeGrower;
 import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;

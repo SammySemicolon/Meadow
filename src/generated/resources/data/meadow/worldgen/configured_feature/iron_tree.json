@@ -5,6 +5,7 @@
     "grass": "meadow:iron_grass_block",
     "hangingLeaves": "meadow:iron_flora",
     "leaves": "meadow:iron_leaves",
+    "ore": "minecraft:iron_ore",
     "parts": [
       {
         "type": "meadow:thick_stump",

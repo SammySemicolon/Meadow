@@ -5,6 +5,7 @@
     "grass": "meadow:emerald_grass_block",
     "hangingLeaves": "meadow:emerald_flora",
     "leaves": "meadow:emerald_leaves",
+    "ore": "minecraft:emerald_ore",
     "parts": [
       {
         "type": "meadow:thick_stump",

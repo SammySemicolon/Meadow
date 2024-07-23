@@ -1,11 +1,11 @@
-package com.smellysleepy.meadow.common.worldgen.tree.mineral.parts;
+package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.block.meadow.wood.MeadowLogBlock;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeatureConfiguration;
-import com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreePart;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,6 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 import java.util.*;
 
-import static com.smellysleepy.meadow.common.worldgen.tree.mineral.MineralTreeFeature.LOGS;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
 public class SplitBranchesPart extends MineralTreePart {
@@ -71,7 +70,7 @@ public class SplitBranchesPart extends MineralTreePart {
                 if (!feature.canPlace(level, mutable)) {
                     return failure();
                 }
-                filler.getLayer(LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(MeadowLogBlock.AXIS, direction.getAxis())));
+                filler.getLayer(MineralTreeFeature.LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(MeadowLogBlock.AXIS, direction.getAxis())));
             }
             boolean success = feature.makeStraightTrunk(level, filler, mutable, trunkHeight);
             if (!success) {

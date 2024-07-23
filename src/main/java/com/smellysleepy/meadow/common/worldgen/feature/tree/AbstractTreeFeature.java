@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.tree;
+package com.smellysleepy.meadow.common.worldgen.feature.tree;
 
 import com.mojang.serialization.*;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;

@@ -88,7 +88,6 @@ public class MeadowBlockProperties {
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
                 .setCutoutRenderType()
-                .lightLevel(s -> 6)
                 .noCollission()
                 .noOcclusion()
                 .replaceable()

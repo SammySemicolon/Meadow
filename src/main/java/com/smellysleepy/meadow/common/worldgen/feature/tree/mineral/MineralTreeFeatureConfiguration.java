@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.tree.mineral;
+package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -18,6 +18,7 @@ public class MineralTreeFeatureConfiguration implements FeatureConfiguration {
                             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("hangingLeaves").forGetter(obj -> obj.hangingLeaves),
                             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("grass").forGetter(obj -> obj.grass),
                             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("flora").forGetter(obj -> obj.flora),
+                            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("ore").forGetter(obj -> obj.ore),
                             MineralTreePart.CODEC.listOf().fieldOf("parts").forGetter(obj -> obj.parts))
                     .apply(inst, MineralTreeFeatureConfiguration::new));
 
@@ -26,17 +27,19 @@ public class MineralTreeFeatureConfiguration implements FeatureConfiguration {
     public final Block hangingLeaves;
     public final Block grass;
     public final Block flora;
+    public final Block ore;
     public final List<MineralTreePart> parts;
 
-    public MineralTreeFeatureConfiguration(MineralFloraRegistryBundle bundle, List<MineralTreePart> parts) {
-        this(bundle.saplingBlock.get(), bundle.leavesBlock.get(), bundle.floraBlock.get(), bundle.grassBlock.get(), bundle.floraBlock.get(), parts);
+    public MineralTreeFeatureConfiguration(MineralFloraRegistryBundle bundle, Block ore, List<MineralTreePart> parts) {
+        this(bundle.saplingBlock.get(), bundle.leavesBlock.get(), bundle.floraBlock.get(), bundle.grassBlock.get(), bundle.floraBlock.get(), ore, parts);
     }
-    public MineralTreeFeatureConfiguration(Block sapling, Block leaves, Block hangingLeaves, Block grass, Block flora, List<MineralTreePart> parts) {
+    public MineralTreeFeatureConfiguration(Block sapling, Block leaves, Block hangingLeaves, Block grass, Block flora, Block ore, List<MineralTreePart> parts) {
         this.sapling = sapling;
         this.leaves = leaves;
         this.hangingLeaves = hangingLeaves;
         this.grass = grass;
         this.flora = flora;
+        this.ore = ore;
         this.parts = parts;
     }
 }
