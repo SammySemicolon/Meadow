@@ -241,7 +241,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 pos.set(blockX, y, blockZ);
                 unsafeBoundingBox.encapsulate(pos);
 
-                if (y == surfaceLimit + 1) {
+                if (!placeWater && y == surfaceLimit + 1) {
                     var feature = createSurfaceFeatures(random, pos, calcifiedRegionOptional.orElse(null));
                     if (feature != null) {
                         bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
@@ -302,16 +302,16 @@ public class MeadowGrovePiece extends StructurePiece {
         float noiseOffset = Easing.QUAD_OUT.clamped((sqrtDistance - offset * 0.6f) / (offset * 0.4f), 0, 0.3f);
         float topThreshold = 0.6f - noiseOffset;
         float bottomThreshold = 0.625f - noiseOffset;
-        if (noise < topThreshold || noise < bottomThreshold) {
-            noise = getSmoothedRampNoise(noiseSampler, noise, blockX, blockZ);
-        }
+        noise = (noise + getSmoothedRampNoise(noiseSampler, noise, blockX, blockZ)) * 0.5f;
 
         if (sqrtDistance < offset * 0.6f) {
             noise *= (sqrtDistance - offset * 0.6f) / offset * 0.6f;
         }
 
         if (noise >= topThreshold) {
-            int topCutoff = Mth.floor(rampHeight * Easing.CIRC_OUT.clamped(getRampCutIn(noise, topThreshold), 0, 1));
+            Easing easing = noise >= (1-topThreshold*topThreshold) ? Easing.QUAD_IN_OUT : Easing.QUARTIC_OUT;
+            int topCutoff = Mth.floor(rampHeight * Easing.SINE_OUT.ease(easing.clamped(getRampCutIn(noise, topThreshold), 0, 1), 0, 1));
+//            int topCutoff = Mth.floor(rampHeight * Easing.SINE_IN.ease(Easing.QUARTIC_OUT.clamped(getRampCutIn(noise, topThreshold), 0, 1), 0, 1));
             int rampTop = yLevel + rampHeight;
 
             if (!isAtEdge) {
@@ -343,14 +343,12 @@ public class MeadowGrovePiece extends StructurePiece {
         }
 
         if (noise >= bottomThreshold) {
-            int bottomCutoff = Mth.floor(rampHeight * Easing.QUAD_IN_OUT.clamped(getRampCutIn(noise, bottomThreshold), 0, 1));
             pos.set(blockX, yLevel, blockZ);
             while (chunk.getBlockState(pos).canBeReplaced()) {
                 pos.move(Direction.DOWN);
-                if (pos.getY() % 2 == 0) {
-                    rampHeight++;
-                }
+                rampHeight++;
             }
+            int bottomCutoff = Mth.floor(rampHeight * Easing.QUAD_IN_OUT.clamped(getRampCutIn(noise, bottomThreshold), 0, 1));
             yLevel = pos.getY();
             for (int i = 0; i < rampHeight; i++) {
                 if (i > bottomCutoff) {
@@ -481,7 +479,7 @@ public class MeadowGrovePiece extends StructurePiece {
             if (regionClass.isInstance(specialRegion)) {
                 double distance = specialRegion.getDistance(groveCenter, blockX, blockZ, localRadius);
                 if (distance < lowestDistance) {
-                    double threshold = specialRegion.getThreshold(noise, localRadius);
+                    double threshold = Mth.square(specialRegion.getThreshold(noise, localRadius));
                     if (distance <= threshold) {
                         lowestDistance = distance;
                         closestArea = regionClass.cast(specialRegion);
