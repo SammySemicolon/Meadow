@@ -77,14 +77,13 @@ public class MeadowGroveStructure extends Structure {
             float sizeMultiplier = isCentralLake ? 2.5f : 1;
             float depthMultiplier = isCentralLake ? 2 : 1;
             float distanceMultiplier = isCentralLake ? 0.1f : 1;
-            float x = 6.28f * i / lakeCounter + RandomHelper.randomBetween(random, -0.78f, 0.78f);
-            float z = 6.28f * i / lakeCounter + RandomHelper.randomBetween(random, -0.78f, 0.78f);
+            float x = 6.28f * i / lakeCounter + RandomHelper.randomBetween(random, 0, 0.78f);
+            float z = 6.28f * i / lakeCounter + RandomHelper.randomBetween(random, 0, 0.78f);
             float distance = RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 0.3f, 0.4f) * distanceMultiplier;
             var directionalOffset = new Vec2(Mth.sin(x), Mth.cos(z)).normalized().scale(distance);
             float size = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.04f, 0.08f) * sizeMultiplier;
             float depth = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.2f, 0.6f) * depthMultiplier;
             float surfaceLevel = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 0.6f, 0.8f);
-
             specialRegions.add(new LakeRegion(directionalOffset, size, depth, surfaceLevel));
         }
 

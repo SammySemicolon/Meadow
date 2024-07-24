@@ -145,21 +145,21 @@ public class MeadowTreeFeature extends AbstractTreeFeature<MeadowTreeFeatureConf
         int[] leafSizes = new int[]{1, 2, 3, 3, 2, 1};
         var mutable = pos.mutable();
 
-//        Supplier<BlockStateEntry> leavesEntry = () -> create((rollForFancyLeaves(rand) ? config.fancyLeaves : config.leaves).defaultBlockState()).build();
+        Supplier<BlockStateEntry> leavesEntry = () -> create((rollForFancyLeaves(rand) ? config.fancyLeaves : config.leaves).defaultBlockState()).build();
 
-        BlockStateEntry leavesEntry = create(config.leaves.defaultBlockState()).build();
-//        BlockStateEntry hangingLeavesEntry = create(config.hangingLeaves.defaultBlockState())
-//                .setDiscardPredicate((l, p, s) -> !filler.getLayer(LEAVES).containsKey(p.above()))
-//                .build();
+//        BlockStateEntry leavesEntry = create(config.leaves.defaultBlockState()).build();
+        BlockStateEntry hangingLeavesEntry = create(config.hangingLeaves.defaultBlockState())
+                .setDiscardPredicate((l, p, s) -> !filler.getLayer(LEAVES).containsKey(p.above()))
+                .build();
         for (int i = 0; i < 6; i++) {
             mutable.move(Direction.UP);
             makeLeafSlice(filler.getLayer(LEAVES), mutable, leafSizes[i], leavesEntry);
         }
-//        mutable.set(pos).move(Direction.DOWN);
-//        for (int i = 0; i < 3; i++) {
-//            mutable.move(Direction.UP);
-//            makeLeafSlice(filler.getLayer(HANGING_LEAVES), mutable, leafSizes[i], hangingLeavesEntry);
-//        }
+        mutable.set(pos).move(Direction.DOWN);
+        for (int i = 0; i < 3; i++) {
+            mutable.move(Direction.UP);
+            makeLeafSlice(filler.getLayer(HANGING_LEAVES), mutable, leafSizes[i], hangingLeavesEntry);
+        }
     }
 
     public void makeLeafSlice(LodestoneBlockFiller.LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, BlockStateEntry entry) {

@@ -78,7 +78,7 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         BlockStateEntry entry = create(config.grass.defaultBlockState()).setForcePlace().build();
         BlockStateEntry oreEntry = create(config.ore.defaultBlockState()).setForcePlace().build();
         BlockStateEntry floraEntry = create(config.flora.defaultBlockState()).setForcePlace().build();
-        Set<BlockPos> covering = WorldgenHelper.generateCovering(level, pos, coverageRadius);
+        Set<BlockPos> covering = WorldgenHelper.fetchCoveringPositions(level, pos, coverageRadius);
         for (BlockPos blockPos : covering) {
             filler.getLayer(COVERING).put(blockPos, entry);
         }
@@ -86,14 +86,14 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         for (int i = 0; i < 3; i++) {
             BlockPos orePos = pos.offset(rand.nextInt(4), 0, rand.nextInt(4));
 
-            Set<BlockPos> oreCovering = WorldgenHelper.generateCovering(level, orePos, 3);
+            Set<BlockPos> oreCovering = WorldgenHelper.fetchCoveringPositions(level, orePos, 3);
             for (BlockPos blockPos : oreCovering) {
                 filler.getLayer(COVERING).put(blockPos, oreEntry);
             }
         }
 
         var mutable = pos.mutable();
-        Set<BlockPos> foliageCovering = WorldgenHelper.generateCovering(level, mutable, coverageRadius + 2);
+        Set<BlockPos> foliageCovering = WorldgenHelper.fetchCoveringPositions(level, mutable, coverageRadius + 2);
         for (BlockPos blockPos : foliageCovering) {
             if (rand.nextFloat() < 0.4f) {
                 filler.getLayer(FOLIAGE).put(blockPos.above(), floraEntry);

@@ -1,25 +1,21 @@
 package com.smellysleepy.meadow.common.worldgen.feature.patch;
 
-import com.mojang.serialization.Codec;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
-import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 import java.util.List;
 import java.util.Set;
-
-import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
 public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
    public LayeredPatchFeature() {
@@ -38,14 +34,15 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
       for (int i = 0; i < Math.max(patchSizes.size(), plants.size()); i++) {
          int size = patchSizes.get(Math.min(i, patchSizes.size()-1));
          Block plant = plants.get(Math.min(i, plants.size()-1));
-         Set<BlockPos> covering = WorldgenHelper.generateCovering(level, mutable, size);
+         Set<BlockPos> covering = WorldgenHelper.fetchCoveringPositions(level, mutable, size);
          for (BlockPos blockPos : covering) {
-            BlockPos above = blockPos.above();
+            BlockPos coveragePos = blockPos.above();
             BlockState state = plant.defaultBlockState();
+            boolean isWater = state.hasProperty(BlockStateProperties.WATERLOGGED) || !state.getFluidState().isEmpty();
             boolean hasSpace = true;
-            mutable = above.mutable();
+            mutable = coveragePos.mutable();
             for (int j = 0; j < 4; j++) {
-               if (!level.getBlockState(mutable).isAir()) {
+               if (!level.getBlockState(mutable).canBeReplaced()) {
                   hasSpace = false;
                   break;
                }
@@ -53,11 +50,21 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
             }
 
             if (hasSpace) {
-               if (plant.canSurvive(state, level, above)) {
+               if (isWater) {
+                  if (!level.isWaterAt(coveragePos)) {
+                     continue;
+                  }
+               }
+               if (plant.canSurvive(state, level, coveragePos)) {
                   if (plant instanceof DoublePlantBlock) {
-                     DoublePlantBlock.placeAt(level, state, above, 3);
+                     if (isWater) {
+                        if (!level.isWaterAt(coveragePos.above())) {
+                           continue;
+                        }
+                     }
+                     DoublePlantBlock.placeAt(level, state, coveragePos, 3);
                   } else {
-                     level.setBlock(above, state, 3);
+                     level.setBlock(coveragePos, copyWaterloggedFrom(level, coveragePos, state), 3);
                   }
                }
             }
@@ -67,5 +74,9 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
       }
 
       return true;
+   }
+
+   public static BlockState copyWaterloggedFrom(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+      return pState.hasProperty(BlockStateProperties.WATERLOGGED) ? pState.setValue(BlockStateProperties.WATERLOGGED, pLevel.isWaterAt(pPos)) : pState;
    }
 }

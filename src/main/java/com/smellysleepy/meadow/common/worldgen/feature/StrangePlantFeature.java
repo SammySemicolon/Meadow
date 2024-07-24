@@ -1,13 +1,10 @@
 package com.smellysleepy.meadow.common.worldgen.feature;
 
-import com.google.common.collect.*;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import net.minecraft.core.*;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.feature.*;
-import net.minecraft.world.level.levelgen.synth.*;
 import team.lodestar.lodestone.systems.worldgen.*;
 
 import java.util.*;
@@ -44,22 +41,20 @@ public class StrangePlantFeature extends Feature<StrangePlantFeatureConfiguratio
         LodestoneBlockFiller.BlockStateEntry blockEntry = create(config.block.defaultBlockState()).setForcePlace().build();
         LodestoneBlockFiller.BlockStateEntry oreEntry = create(config.ore.defaultBlockState()).setForcePlace().build();
         LodestoneBlockFiller.BlockStateEntry grassEntry = create(config.grass.defaultBlockState()).setForcePlace().build();
-        Set<BlockPos> covering = WorldgenHelper.generateCovering(level, pos, 6);
+        Set<BlockPos> covering = WorldgenHelper.fetchCoveringPositions(level, pos, 6);
         for (BlockPos blockPos : covering) {
             filler.getLayer(COVERING).put(blockPos, blockEntry);
         }
 
-        Set<BlockPos> oreCovering = WorldgenHelper.generateCovering(level, pos, 2);
+        Set<BlockPos> oreCovering = WorldgenHelper.fetchCoveringPositions(level, pos, 2);
         for (BlockPos blockPos : oreCovering) {
             filler.getLayer(COVERING).put(blockPos, oreEntry);
         }
         mutable = pos.mutable();
         for (int i = 0; i < 4; i++) {
-            Set<BlockPos> foliageCovering = WorldgenHelper.generateCovering(level, mutable, 3);
+            Set<BlockPos> foliageCovering = WorldgenHelper.fetchCoveringPositions(level, mutable, 3, b -> rand.nextFloat() < 0.4f);
             for (BlockPos blockPos : foliageCovering) {
-                if (rand.nextFloat() < 0.4f) {
-                    filler.getLayer(PLANTS).put(blockPos.above(), grassEntry);
-                }
+                filler.getLayer(PLANTS).put(blockPos.above(), grassEntry);
             }
             int offset = 2 + i;
             mutable.move(rand.nextIntBetweenInclusive(-offset, offset), 0, rand.nextIntBetweenInclusive(-offset, offset));

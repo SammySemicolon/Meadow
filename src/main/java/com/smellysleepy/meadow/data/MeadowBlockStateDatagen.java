@@ -29,7 +29,9 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK);
 
-
+        setTexturePath("pearlflower/");
+        BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_PEARLFLOWER, MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER);
+        MeadowBlockStateSmithTypes.SMALL_TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.PEARLFLOWER, MeadowBlockRegistry.GRASSY_PEARLFLOWER);
 
         setTexturePath("aspen_wood/");
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LOG, MeadowBlockRegistry.CALCIFIED_ASPEN_LOG);

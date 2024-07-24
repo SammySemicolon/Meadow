@@ -60,18 +60,14 @@ public class CalcifiedRegion extends SpecialMeadowRegion {
     }
 
     public ResourceKey<ConfiguredFeature<?, ?>> chooseFeature(RandomSource randomSource) {
-        return chooseFeature(randomSource, 1);
-    }
-
-    public ResourceKey<ConfiguredFeature<?, ?>> chooseFeature(RandomSource randomSource, float scalar) {
         float rand = randomSource.nextFloat();
-        if (rand < 0.0025f * scalar) {
+        if (rand < 0.0025f) {
             return treeFeature;
-        } else if (rand < 0.01f * scalar) {
+        } else if (rand < 0.01f) {
             return plantFeature;
-        } else if (rand < 0.04f * scalar) {
+        } else if (rand < 0.04f) {
             return patchFeature;
-        } else if (rand < 0.06f * scalar) {
+        } else if (rand < 0.06f) {
             return oreFeature;
         }
         return null;

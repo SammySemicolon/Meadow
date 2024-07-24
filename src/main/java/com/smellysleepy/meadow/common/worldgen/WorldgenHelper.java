@@ -13,18 +13,23 @@ import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import team.lodestar.lodestone.systems.easing.Easing;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class WorldgenHelper {
 
     private static final PerlinSimplexNoise COVERING_NOISE = new PerlinSimplexNoise(new WorldgenRandom(new LegacyRandomSource(1234L)), ImmutableList.of(0));
 
-    public static Set<BlockPos> generateCovering(ServerLevelAccessor level, BlockPos center, int radius) {
+    public static Set<BlockPos> fetchCoveringPositions(ServerLevelAccessor level, BlockPos center, int radius) {
+        return fetchCoveringPositions(level, center, radius, b->true);
+    }
+    public static Set<BlockPos> fetchCoveringPositions(ServerLevelAccessor level, BlockPos center, int radius, Predicate<BlockState> statePredicate) {
         Set<BlockPos> positions = new HashSet<>();
 
         int x = center.getX();
         int z = center.getZ();
         var mutable = new BlockPos.MutableBlockPos();
 
+        int verticalRange = 6;
         int searchRadius = radius * 2 + 1;
         float limit = Mth.sqrt(radius * radius + radius * radius);
         for (int i = 0; i < searchRadius; i++) {
@@ -39,14 +44,19 @@ public class WorldgenHelper {
                 double threshold = Easing.SINE_IN_OUT.clamped(noise, 0.5f, 2) * radius * (limit-distance)/limit;
                 if (distance <= threshold) {
                     mutable.set(offsetX, center.getY(), offsetZ);
-                    int verticalRange = 4;
                     for (int k = 0; !level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
                         mutable.move(Direction.UP);
                     }
                     for (int k = 0; level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
                         mutable.move(Direction.DOWN);
                     }
-                    if (!level.getBlockState(mutable).canBeReplaced() && level.getBlockState(mutable.above()).canBeReplaced()) {
+                    if (level.getBlockState(mutable).canBeReplaced() || level.getBlockState(mutable.below()).canBeReplaced()) {
+                        continue;
+                    }
+                    if (!level.getBlockState(mutable.above()).canBeReplaced()) {
+                        continue;
+                    }
+                    if (statePredicate.test(level.getBlockState(mutable))) {
                         positions.add(mutable.immutable());
                     }
                 }

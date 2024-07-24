@@ -1,10 +1,10 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
+import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
-import com.smellysleepy.meadow.common.block.flora.*;
 import net.minecraft.core.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.*;
@@ -38,6 +38,18 @@ public class MeadowBlockStateSmithTypes {
         builder.addModel();
     });
 
+    public static BlockStateSmith<MeadowTallHangingLeavesBlock> TALL_HANGING_LEAVES = new BlockStateSmith<>(MeadowTallHangingLeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_bottom"), (block, provider) -> {
+        String name = provider.getBlockName(block);
+        final ResourceLocation bottomTexture = provider.getBlockTexture(name + "_bottom");
+        final ResourceLocation topTexture = provider.getBlockTexture(name + "_top");
+        ModelFile model = provider.models().withExistingParent(name + "_bottom", MeadowMod.meadowModPath("block/templates/template_hanging_leaves"))
+                .texture("hanging_leaves", bottomTexture);
+        ModelFile topModel = provider.models().withExistingParent(name + "_top", MeadowMod.meadowModPath("block/templates/template_hanging_leaves"))
+                .texture("hanging_leaves", topTexture);
+
+        provider.getVariantBuilder(block).forAllStates(s -> ConfiguredModel.builder().modelFile(s.getValue(MeadowTallHangingLeavesBlock.HALF).equals(DoubleBlockHalf.UPPER) ? topModel : model).build());
+    });
+
     public static BlockStateSmith<LeavesBlock> FLOWERING_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_0"), (block, provider) -> {
         String name = provider.getBlockName(block);
         Function<Integer, ModelFile> modelProvider = (i) ->
@@ -55,19 +67,16 @@ public class MeadowBlockStateSmithTypes {
         builder.addModel();
     });
 
-
-    public static BlockStateSmith<MeadowTallHangingLeavesBlock> TALL_HANGING_LEAVES = new BlockStateSmith<>(MeadowTallHangingLeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_bottom"), (block, provider) -> {
+    public static BlockStateSmith<PearlFlowerBlock> SMALL_TALL_CROSS_MODEL_BLOCK = new BlockStateSmith<>(PearlFlowerBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_bottom"), (block, provider) -> {
         String name = provider.getBlockName(block);
         final ResourceLocation bottomTexture = provider.getBlockTexture(name + "_bottom");
         final ResourceLocation topTexture = provider.getBlockTexture(name + "_top");
-        ModelFile model = provider.models().withExistingParent(name + "_bottom", MeadowMod.meadowModPath("block/templates/template_hanging_leaves"))
-                .texture("hanging_leaves", bottomTexture);
-        ModelFile topModel = provider.models().withExistingParent(name + "_top", MeadowMod.meadowModPath("block/templates/template_hanging_leaves"))
-                .texture("hanging_leaves", topTexture);
-
-        provider.getVariantBuilder(block).forAllStates(s -> ConfiguredModel.builder().modelFile(s.getValue(MeadowTallHangingLeavesBlock.HALF).equals(DoubleBlockHalf.UPPER) ? topModel : model).build());
-
+        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_tall_one_block_flower"))
+                .texture("bottom_cross", bottomTexture)
+                .texture("top_cross", topTexture);
+        provider.getVariantBuilder(block).forAllStates(s -> ConfiguredModel.builder().modelFile(model).build());
     });
+
 
     public static BlockStateSmith<MeadowWallFungusBlock> WALL_MUSHROOM = new BlockStateSmith<>(MeadowWallFungusBlock.class, ItemModelSmithTypes.GENERATED_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);

@@ -9,9 +9,13 @@ import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.data.worldgen.*;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 import java.util.*;
 
@@ -189,6 +193,34 @@ public class MeadowConfiguredFeatureDatagen {
                 List.of(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), MeadowBlockRegistry.MEDIUM_MEADOW_GRASS.get(), MeadowBlockRegistry.SHORT_MEADOW_GRASS.get()),
                 List.of(3, 4, 2)
         )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_LAKE_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                List.of(Blocks.SEAGRASS, Blocks.TALL_SEAGRASS, Blocks.SEAGRASS),
+                List.of(1, 4, 2, 1)
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_LAKE_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                List.of(Blocks.SEAGRASS),
+                List.of(1, 2, 1)
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_LAKE_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
+                List.of(Blocks.SEAGRASS),
+                List.of(1, 1)
+        )));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_GRASSY_PEARLFLOWER, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(
+                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                                .add(MeadowBlockRegistry.GRASSY_PEARLFLOWER.get().defaultBlockState(), 3)
+                                .add(MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER.get().defaultBlockState(), 1)))));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(
+                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                                .add(MeadowBlockRegistry.PEARLFLOWER.get().defaultBlockState(), 3)
+                                .add(MeadowBlockRegistry.TALL_PEARLFLOWER.get().defaultBlockState(), 1)))));
+
     }
 
     private static ConfiguredFeature<?, ?> addOreConfig(List<OreConfiguration.TargetBlockState> targetList, int veinSize) {

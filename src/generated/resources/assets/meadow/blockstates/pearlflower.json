@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "waterlogged=false": {
+      "model": "meadow:block/pearlflower"
+    },
+    "waterlogged=true": {
+      "model": "meadow:block/pearlflower"
+    }
+  }
+}

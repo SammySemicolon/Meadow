@@ -11,6 +11,8 @@ import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.data.worldgen.features.AquaticFeatures;
+import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
@@ -98,10 +100,22 @@ public class MeadowGrovePiece extends StructurePiece {
         var mutableBlockPos = new BlockPos.MutableBlockPos();
         ChunkAccess chunk = worldGenLevel.getChunk(chunkPos.x, chunkPos.z);
 
+        int pearlflowerCount = random.nextIntBetweenInclusive(2, 4);
+        List<Pair<Integer, Integer>> pearlflower = new ArrayList<>();
+
+        int step = 16 / pearlflowerCount;
+        for (int i = 0; i < pearlflowerCount; i++) {
+            int x = chunkPos.getBlockX(random.nextIntBetweenInclusive(i*step, (i+1)*step));
+            int z = chunkPos.getBlockZ(random.nextIntBetweenInclusive(0, 16));
+            pearlflower.add(Pair.of(x, z));
+        }
+
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 int blockX = chunkPos.getBlockX(x);
                 int blockZ = chunkPos.getBlockZ(z);
+
+                boolean hasPearlflower = pearlflower.stream().anyMatch(p -> p.getFirst().equals(blockX) && p.getSecond().equals(blockZ));
 
                 mutableBlockPos.set(blockX, 0, blockZ);
 
@@ -117,7 +131,7 @@ public class MeadowGrovePiece extends StructurePiece {
 
                 buildGroveLayer(
                         chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
-                        localRadius, localHeight, localDepth, blendWidth, rimSize, blockX, blockZ);
+                        hasPearlflower, localRadius, localHeight, localDepth, blendWidth, rimSize, blockX, blockZ);
             }
         }
         if (unsafeBoundingBox.valid()) {
@@ -126,7 +140,7 @@ public class MeadowGrovePiece extends StructurePiece {
     }
 
     private Optional<Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>>> buildGroveLayer(ChunkAccess chunk, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockPos.MutableBlockPos pos, RandomSource random,
-                                                                                           double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize, int blockX, int blockZ) {
+                                                                                           boolean hasPearlflower, double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize, int blockX, int blockZ) {
         double offset = localRadius - blendWidth - rimSize;
         if (!pos.setY(groveCenter.getY()).closerThan(groveCenter, offset)) {
             return Optional.empty();
@@ -157,7 +171,10 @@ public class MeadowGrovePiece extends StructurePiece {
         List<BlockState> surfacePattern = getSurfaceBlockPattern(chunk, noiseSampler, pos, calcifiedRegionOptional.orElse(null), sqrtDistance, offset, surfaceLimit);
 
         boolean placeWater = false;
+        double waterDelta = 0;
         int waterStartingPoint = 0;
+        boolean useLakeGrass = false;
+        double lakeGrassDelta = 0;
 
         if (lakeRegionOptional.isPresent()) {
             var pair = lakeRegionOptional.get();
@@ -167,38 +184,37 @@ public class MeadowGrovePiece extends StructurePiece {
             int waterDepth = (int) (groveDepth * lakeRegion.getWaterLevel());
             int lakeDepth;
             if (lakeDelta < 0.2f) {
-                lakeDepth = depth - Mth.floor(Easing.SINE_IN.ease(lakeDelta, 0, depth-terrainDepth, 0.2f));
-            }
-            else {
+                lakeDepth = depth - Mth.floor(Easing.SINE_IN.ease(lakeDelta, 0, depth - terrainDepth, 0.2f));
+            } else {
                 double lakeCarverDepth = lakeRegion.getLakeDepth() * (waterDepth + flatDepth);
                 float carverDelta = (lakeDelta > 0.7f ? Easing.CUBIC_OUT : Easing.BACK_IN_OUT).ease((lakeDelta - 0.2f) / 0.8f, 0, 1);
                 lakeDepth = Mth.floor(Easing.SINE_OUT.ease(carverDelta, terrainDepth, lakeCarverDepth));
             }
             surfaceLimit = centerY - lakeDepth;
-            if (lakeDelta >= 0.4f) {
+
+            boolean isNearWater = lakeDelta >= 0.4f;
+            if (isNearWater) {
+                useLakeGrass = true;
+                lakeGrassDelta = (lakeDelta-0.3f) / 0.7f;
+            }
+            if (lakeDelta >= 0.5f && lakeDepth > waterDepth) {
                 placeWater = true;
+                waterDelta = (lakeDelta-0.5f)/0.5f;
                 waterStartingPoint = centerY - waterDepth;
             }
-            Block[] blocks = new Block[]{
-                    Blocks.WHITE_STAINED_GLASS,
-                    Blocks.ORANGE_STAINED_GLASS,
-                    Blocks.MAGENTA_STAINED_GLASS,
-                    Blocks.LIGHT_BLUE_STAINED_GLASS,
-                    Blocks.YELLOW_STAINED_GLASS,
-                    Blocks.LIME_STAINED_GLASS,
-                    Blocks.PINK_STAINED_GLASS,
-                    Blocks.GRAY_STAINED_GLASS,
-                    Blocks.LIGHT_GRAY_STAINED_GLASS,
-                    Blocks.CYAN_STAINED_GLASS
-            };
             if (calcifiedRegionOptional.isEmpty()) {
-                Block block = blocks[Mth.clamp(Mth.floor(lakeDelta*10), 0, 10)];
+                if (isNearWater) {
+                    Block block = Blocks.GRASS_BLOCK;
+                    if (lakeDelta > 0.7f) {
+                        block = Blocks.STONE;
+                    } else if (lakeDelta > 0.55f) {
+                        block = Blocks.GRAVEL;
+                    } else if (lakeDelta > 0.45f && placeWater) {
+                        block = Blocks.DIRT;
+                    }
 
-
-//                    if (lakeDelta > 0.8f) {
-//                        block = Blocks.STONE;
-//                    }
-                surfacePattern.set(0, block.defaultBlockState());
+                    surfacePattern.set(0, block.defaultBlockState());
+                }
             }
 
         }
@@ -241,8 +257,25 @@ public class MeadowGrovePiece extends StructurePiece {
                 pos.set(blockX, y, blockZ);
                 unsafeBoundingBox.encapsulate(pos);
 
-                if (!placeWater && y == surfaceLimit + 1) {
-                    var feature = createSurfaceFeatures(random, pos, calcifiedRegionOptional.orElse(null));
+                if (y == surfaceLimit + 1) {
+                    Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature;
+
+                    if (hasPearlflower) {
+                        feature = Pair.of(pos.immutable(), useLakeGrass ?
+                                MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER :
+                                calcifiedRegionOptional.isPresent() ?
+                                        MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER :
+                                        MeadowConfiguredFeatureRegistry.CONFIGURED_GRASSY_PEARLFLOWER);
+                    }
+                    else {
+                        if (placeWater) {
+                            feature = createWaterFeatures(random, pos, waterDelta);
+                        } else if (useLakeGrass) {
+                            feature = createLakeFeatures(random, pos, lakeGrassDelta);
+                        } else {
+                            feature = createSurfaceFeatures(random, pos, calcifiedRegionOptional.orElse(null));
+                        }
+                    }
                     if (feature != null) {
                         bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
                     }
@@ -262,7 +295,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
-        createRamps(chunk, noiseSampler, random, pos, rampBlockPattern, rampYLevel, blockX, blockZ, rampHeight, rampNoise, sqrtDistance, offset);
+        createRamps(chunk, noiseSampler, random, pos, rampBlockPattern, hasPearlflower, rampYLevel, blockX, blockZ, rampHeight, rampNoise, sqrtDistance, offset);
         return Optional.empty();
     }
 
@@ -297,7 +330,7 @@ public class MeadowGrovePiece extends StructurePiece {
         }
     }
 
-    private void createRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, RandomSource random, BlockPos.MutableBlockPos pos, List<BlockState> rampBlockPattern, int yLevel, int blockX, int blockZ, int rampHeight, double noise, double sqrtDistance, double offset) {
+    private void createRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, RandomSource random, BlockPos.MutableBlockPos pos, List<BlockState> rampBlockPattern, boolean hasPearlflower, int yLevel, int blockX, int blockZ, int rampHeight, double noise, double sqrtDistance, double offset) {
         boolean isAtEdge = sqrtDistance > offset * 0.95f;
         float noiseOffset = Easing.QUAD_OUT.clamped((sqrtDistance - offset * 0.6f) / (offset * 0.4f), 0, 0.3f);
         float topThreshold = 0.6f - noiseOffset;
@@ -311,11 +344,17 @@ public class MeadowGrovePiece extends StructurePiece {
         if (noise >= topThreshold) {
             Easing easing = noise >= (1-topThreshold*topThreshold) ? Easing.QUAD_IN_OUT : Easing.QUARTIC_OUT;
             int topCutoff = Mth.floor(rampHeight * Easing.SINE_OUT.ease(easing.clamped(getRampCutIn(noise, topThreshold), 0, 1), 0, 1));
-//            int topCutoff = Mth.floor(rampHeight * Easing.SINE_IN.ease(Easing.QUARTIC_OUT.clamped(getRampCutIn(noise, topThreshold), 0, 1), 0, 1));
             int rampTop = yLevel + rampHeight;
 
             if (!isAtEdge) {
-                var feature = createRampFeatures(random, pos.set(blockX, rampTop + 1, blockZ));
+                pos.set(blockX, rampTop + 1, blockZ);
+                Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature;
+                if (hasPearlflower && chunk.getBlockState(pos).canBeReplaced()) {
+                    feature = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_GRASSY_PEARLFLOWER);
+                }
+                else {
+                    feature = createRampFeatures(random, pos);
+                }
                 if (feature != null) {
                     bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
                 }
@@ -375,13 +414,44 @@ public class MeadowGrovePiece extends StructurePiece {
         return null;
     }
 
+    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createLakeFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, double delta) {
+        ResourceKey<ConfiguredFeature<?, ?>> feature = null;
+        double rand = randomSource.nextFloat() * delta;
+        if (rand < 0.0025f) {
+            feature = VegetationFeatures.FLOWER_DEFAULT;
+        } else if (rand < 0.01f) {
+            feature = VegetationFeatures.PATCH_GRASS;
+        }
+        if (feature != null) {
+            return Pair.of(pos.immutable(), feature);
+        }
+        return null;
+    }
+    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createWaterFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, double delta) {
+        ResourceKey<ConfiguredFeature<?, ?>> feature = null;
+        double rand = randomSource.nextFloat() * delta;
+        if (rand < 0.005f) {
+            feature = AquaticFeatures.WARM_OCEAN_VEGETATION;
+        } else if (rand < 0.015f) {
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_LAKE_PATCH;
+        } else if (rand < 0.025f) {
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_LAKE_PATCH;
+        } else if (rand < 0.035f) {
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_LAKE_PATCH;
+        }
+        if (feature != null) {
+            return Pair.of(pos.immutable(), feature);
+        }
+        return null;
+    }
+
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createSurfaceFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, @Nullable Pair<CalcifiedRegion, Double> calcification) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
 
         if (calcification != null) {
             double delta = calcification.getSecond();
             if (delta > 0.05f) {
-                feature = calcification.getFirst().chooseFeature(randomSource, 1.25f);
+                feature = calcification.getFirst().chooseFeature(randomSource);
             }
         } else {
             int featureTypeOffset = groveCenter.getY() - pos.getY();
@@ -389,10 +459,11 @@ public class MeadowGrovePiece extends StructurePiece {
             float midpoint = groveDepth * 0.5f;
             float end = groveDepth * 0.7f;
 
-            if (randomSource.nextFloat() < 0.02f) {
+            float rand = randomSource.nextFloat();
+            if (rand < 0.02f) {
                 feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH;
             } else {
-                float rand = randomSource.nextFloat();
+                rand = randomSource.nextFloat();
                 if (featureTypeOffset > start && featureTypeOffset < midpoint) {
                     if (rand < 0.015f) {
                         feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
@@ -401,13 +472,16 @@ public class MeadowGrovePiece extends StructurePiece {
                     }
                 }
                 if (featureTypeOffset >= midpoint && featureTypeOffset < end) {
-                    if (rand < 0.02f) {
+                    if (rand < 0.005f) {
+                        feature = MeadowConfiguredFeatureRegistry.CONFIGURED_GRASSY_PEARLFLOWER;
+                    } else if (rand < 0.02f) {
                         feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
                     }
                 }
+
             }
             if (featureTypeOffset >= end) {
-                float rand = randomSource.nextFloat();
+                rand = randomSource.nextFloat();
                 if (rand < 0.005f) {
                     feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH;
                 } else if (rand < 0.0075f) {

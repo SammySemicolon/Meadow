@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "meadow:block/pearlflower/grassy_pearlflower_bottom"
+  }
+}

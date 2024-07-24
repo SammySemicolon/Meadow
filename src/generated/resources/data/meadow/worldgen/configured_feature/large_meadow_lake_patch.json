@@ -1,0 +1,16 @@
+{
+  "type": "meadow:layered_patch",
+  "config": {
+    "patchSizes": [
+      1,
+      4,
+      2,
+      1
+    ],
+    "plants": [
+      "minecraft:seagrass",
+      "minecraft:tall_seagrass",
+      "minecraft:seagrass"
+    ]
+  }
+}

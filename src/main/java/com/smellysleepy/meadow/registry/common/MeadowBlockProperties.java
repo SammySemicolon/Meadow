@@ -94,6 +94,19 @@ public class MeadowBlockProperties {
                 .instabreak();
     }
 
+    public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .offsetType(BlockBehaviour.OffsetType.XZ)
+                .mapColor(MapColor.TERRACOTTA_WHITE)
+                .sound(SoundType.FLOWERING_AZALEA)
+                .setCutoutRenderType()
+                .lightLevel(s -> 12)
+                .noCollission()
+                .noOcclusion()
+                .replaceable()
+                .instabreak();
+    }
+
     public static LodestoneBlockProperties MINERAL_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .randomTicks()
