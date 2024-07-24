@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.data.worldgen;
 
+import com.smellysleepy.meadow.common.worldgen.feature.PearlFlowerConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.StrangePlantFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.patch.LayeredPatchConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.MeadowTreeFeatureConfiguration;
@@ -26,7 +27,6 @@ public class MeadowConfiguredFeatureDatagen {
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
                 MeadowBlockRegistry.THIN_ASPEN_LOG.get(),
                 MeadowBlockRegistry.ASPEN_LEAVES.get(),
-                MeadowBlockRegistry.FLOWERING_ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
         )));
 
@@ -34,7 +34,6 @@ public class MeadowConfiguredFeatureDatagen {
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
                 MeadowBlockRegistry.ASPEN_LOG.get(),
                 MeadowBlockRegistry.ASPEN_LEAVES.get(),
-                MeadowBlockRegistry.FLOWERING_ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
         )));
 
@@ -209,17 +208,17 @@ public class MeadowConfiguredFeatureDatagen {
                 List.of(1, 1)
         )));
 
-        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_GRASSY_PEARLFLOWER, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
-                new SimpleBlockConfiguration(
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, new ConfiguredFeature<>(MeadowFeatureRegistry.PEARLFLOWER.get(),
+                new PearlFlowerConfiguration(
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                                 .add(MeadowBlockRegistry.GRASSY_PEARLFLOWER.get().defaultBlockState(), 3)
-                                .add(MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER.get().defaultBlockState(), 1)))));
-
-        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
-                new SimpleBlockConfiguration(
+                                .add(MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER.get().defaultBlockState(), 1)),
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                                 .add(MeadowBlockRegistry.PEARLFLOWER.get().defaultBlockState(), 3)
-                                .add(MeadowBlockRegistry.TALL_PEARLFLOWER.get().defaultBlockState(), 1)))));
+                                .add(MeadowBlockRegistry.TALL_PEARLFLOWER.get().defaultBlockState(), 1)),
+                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                                .add(MeadowBlockRegistry.MARINE_PEARLFLOWER.get().defaultBlockState(), 3)
+                                .add(MeadowBlockRegistry.TALL_MARINE_PEARLFLOWER.get().defaultBlockState(), 1)))));
 
     }
 

@@ -3,7 +3,7 @@
   "config": {
     "flora": "meadow:copper_flora",
     "grass": "meadow:copper_grass_block",
-    "hangingLeaves": "meadow:copper_flora",
+    "hangingLeaves": "meadow:hanging_copper_leaves",
     "leaves": "meadow:copper_leaves",
     "ore": "minecraft:copper_ore",
     "parts": [

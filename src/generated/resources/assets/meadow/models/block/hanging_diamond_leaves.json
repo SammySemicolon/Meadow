@@ -1,0 +1,6 @@
+{
+  "parent": "meadow:block/templates/template_hanging_leaves",
+  "textures": {
+    "hanging_leaves": "meadow:block/mineral_flora/hanging_diamond_leaves"
+  }
+}

@@ -6,6 +6,8 @@ import net.minecraft.util.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.*;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 
@@ -13,10 +15,19 @@ import java.awt.*;
 
 public class MeadowLeavesBlock extends LeavesBlock {
 
-    public static final Color ASPEN_LEAVES_COLOR = new Color(255, 215, 111);
+    public static final Color ASPEN_LEAVES_COLOR = new Color(255, 192, 27);
+
+//    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 4);
 
     public MeadowLeavesBlock(Properties properties) {
         super(properties);
+//        registerDefaultState(defaultBlockState().setValue(COLOR, 0));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+//        pBuilder.add(COLOR);
+        super.createBlockStateDefinition(pBuilder);
     }
 
     @Override

@@ -31,10 +31,6 @@ public class SmallMeadowTreeFeature extends AbstractTreeFeature<SmallMeadowTreeF
         return Mth.nextInt(random, 2, 4);
     }
 
-    private boolean rollForFancyLeaves(RandomSource random) {
-        return random.nextFloat() < 0.25f;
-    }
-
     @Override
     public boolean place(FeaturePlaceContext<SmallMeadowTreeFeatureConfiguration> context) {
         WorldGenLevel level = context.level();
@@ -48,7 +44,6 @@ public class SmallMeadowTreeFeature extends AbstractTreeFeature<SmallMeadowTreeF
         Block log = context.config().log;
         BlockState logState = log.defaultBlockState();
         Block leaves = context.config().leaves;
-        Block fancyLeaves = context.config().fancyLeaves;
         Block hangingLeaves = context.config().hangingLeaves;
 
         LodestoneBlockFiller filler = new LodestoneBlockFiller().addLayers(LOGS, LEAVES);
@@ -98,7 +93,7 @@ public class SmallMeadowTreeFeature extends AbstractTreeFeature<SmallMeadowTreeF
                         }
                     }
 
-                    Block block = y >= 0 ? rollForFancyLeaves(rand) ? fancyLeaves : leaves : hangingLeaves;
+                    Block block = y >= 0 ? leaves : hangingLeaves;
                     BlockState state = block.defaultBlockState();
                     var entry = LodestoneBlockFiller.create(state);
                     filler.getLayer(LEAVES).put(mutable.offset(x, y, z), entry);

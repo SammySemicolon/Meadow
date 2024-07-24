@@ -13,6 +13,6 @@ public class MeadowGrassBlock extends TallGrassBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND);
+        return pState.is(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON);
     }
 }

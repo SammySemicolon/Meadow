@@ -30,12 +30,16 @@ public class MeadowBlockTagDatagen extends LodestoneBlockTagsProvider {
         return "Meadow Block Tags";
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         Set<RegistryObject<Block>> blocks = new HashSet<>(BLOCKS.getEntries());
 
-        tag(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND).addTag(BlockTags.MOSS_REPLACEABLE);
-        tag(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND).addTags(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND, Tags.Blocks.ORES);
+        tag(MeadowBlockTagRegistry.CALCIFICATION);
+
+        tag(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON).addTag(BlockTags.MOSS_REPLACEABLE);
+        tag(MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON).addTags(BlockTags.MOSS_REPLACEABLE, Tags.Blocks.ORES);
+        tag(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON).addTags(BlockTags.LUSH_GROUND_REPLACEABLE);
 
         addTagsFromBlockProperties(blocks.stream().map(RegistryObject::get).collect(Collectors.toList()));
     }

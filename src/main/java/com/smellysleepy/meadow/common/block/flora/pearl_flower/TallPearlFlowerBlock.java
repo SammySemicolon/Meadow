@@ -28,7 +28,7 @@ public class TallPearlFlowerBlock extends TallFlowerBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(MeadowBlockTagRegistry.MEADOW_GRASS_GROUND) || super.mayPlaceOn(pState, pLevel, pPos);
+        return pState.is(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON) || super.mayPlaceOn(pState, pLevel, pPos);
     }
 
     @Override

@@ -1,0 +1,7 @@
+{
+  "parent": "meadow:block/templates/template_tall_one_block_flower",
+  "textures": {
+    "bottom_cross": "meadow:block/pearlflower/marine_pearlflower_bottom",
+    "top_cross": "meadow:block/pearlflower/marine_pearlflower_top"
+  }
+}

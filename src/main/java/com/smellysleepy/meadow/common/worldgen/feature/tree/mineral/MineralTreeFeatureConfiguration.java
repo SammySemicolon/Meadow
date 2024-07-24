@@ -31,7 +31,7 @@ public class MineralTreeFeatureConfiguration implements FeatureConfiguration {
     public final List<MineralTreePart> parts;
 
     public MineralTreeFeatureConfiguration(MineralFloraRegistryBundle bundle, Block ore, List<MineralTreePart> parts) {
-        this(bundle.saplingBlock.get(), bundle.leavesBlock.get(), bundle.floraBlock.get(), bundle.grassBlock.get(), bundle.floraBlock.get(), ore, parts);
+        this(bundle.saplingBlock.get(), bundle.leavesBlock.get(), bundle.hangingLeavesBlock.get(), bundle.grassBlock.get(), bundle.floraBlock.get(), ore, parts);
     }
     public MineralTreeFeatureConfiguration(Block sapling, Block leaves, Block hangingLeaves, Block grass, Block flora, Block ore, List<MineralTreePart> parts) {
         this.sapling = sapling;
