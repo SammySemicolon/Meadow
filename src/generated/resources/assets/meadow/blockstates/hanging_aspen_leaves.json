@@ -1,7 +1,18 @@
 {
   "variants": {
-    "": {
-      "model": "meadow:block/hanging_aspen_leaves_3"
-    }
+    "": [
+      {
+        "model": "meadow:block/hanging_aspen_leaves_0"
+      },
+      {
+        "model": "meadow:block/hanging_aspen_leaves_1"
+      },
+      {
+        "model": "meadow:block/hanging_aspen_leaves_2"
+      },
+      {
+        "model": "meadow:block/hanging_aspen_leaves_3"
+      }
+    ]
   }
 }

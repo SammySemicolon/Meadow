@@ -41,6 +41,9 @@ public class MeadowBlockStateSmithTypes {
                     .nextModel().modelFile(model).rotationY(90)
                     .nextModel().modelFile(model).rotationY(180)
                     .nextModel().modelFile(model).rotationY(270);
+            if (i != 3) {
+                builder = builder.nextModel();
+            }
 
         }
         builder.addModel();
