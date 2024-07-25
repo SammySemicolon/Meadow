@@ -2,7 +2,7 @@ package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
-import com.smellysleepy.meadow.common.block.meadow.leaves.*;
+import com.smellysleepy.meadow.common.block.meadow.flora.MeadowGrassBlock;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import net.minecraft.core.*;
 import net.minecraft.resources.*;
@@ -29,7 +29,7 @@ public class MeadowBlockStateSmithTypes {
                 .addModel();
     });
 
-    public static BlockStateSmith<LeavesBlock> HANGING_ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_0"), (block, provider) -> {
+    public static BlockStateSmith<LeavesBlock> HANGING_ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_0"), (block, provider) -> {
         String name = provider.getBlockName(block);
         Function<Integer, ModelFile> modelProvider = (i) ->
                 provider.models().withExistingParent(name+"_"+i, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
@@ -68,8 +68,10 @@ public class MeadowBlockStateSmithTypes {
     public static BlockStateSmith<ThinMeadowLogBlock> THIN_LOG_BLOCK = new BlockStateSmith<>(ThinMeadowLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
         String logName = name.replace("thin_", "");
+        boolean isPartiallyCalcified = logName.contains("partially_");
         final ResourceLocation sideTexture = provider.getBlockTexture(logName);
-        final ResourceLocation topTexture = provider.getBlockTexture(logName + "_top");
+        final ResourceLocation topTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_calcified_", "") : logName) + "_top");
+        final ResourceLocation bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_", "") : logName) + "_top");
         final ResourceLocation smallLeavesTexture = provider.getBlockTexture(name + "_small_leaves");
         final ResourceLocation mediumLeavesTexture = provider.getBlockTexture(name + "_medium_leaves");
         final ResourceLocation largeLeavesTexture = provider.getBlockTexture(name + "_large_leaves");
@@ -77,26 +79,31 @@ public class MeadowBlockStateSmithTypes {
         final ResourceLocation hangingLeavesTexture = provider.getBlockTexture("thin_aspen_log_hanging_leaves");
         ModelFile noLeaves = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
-                .texture("top", topTexture);
+                .texture("top", topTexture)
+                .texture("bottom", bottomTexture);
 
         ModelFile smallLeaves = provider.models().withExistingParent(name+"_small_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
+                .texture("bottom", bottomTexture)
                 .texture("leaves", smallLeavesTexture);
 
         ModelFile mediumLeaves = provider.models().withExistingParent(name+"_medium_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
+                .texture("bottom", bottomTexture)
                 .texture("leaves", mediumLeavesTexture);
 
         ModelFile largeLeaves = provider.models().withExistingParent(name+"_large_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
+                .texture("bottom", bottomTexture)
                 .texture("leaves", largeLeavesTexture);
 
         ModelFile topLeaves = provider.models().withExistingParent(name+"_top_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves_top"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
+                .texture("bottom", bottomTexture)
                 .texture("leaves", largeLeavesTexture)
                 .texture("leaves_block", topLeavesTexture)
                 .texture("hanging_leaves", hangingLeavesTexture);
@@ -141,5 +148,34 @@ public class MeadowBlockStateSmithTypes {
                             .rotationY(rotationY)
                             .build();
                 });
+    });
+
+    public static BlockStateSmith<MeadowGrassBlock> MEADOW_GRASS_BLOCK = new BlockStateSmith<>(MeadowGrassBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+        String name = provider.getBlockName(block);
+        ResourceLocation side = provider.getBlockTexture(name+"_side");
+        ResourceLocation sideOverlay = provider.getBlockTexture(name+"_side_overlay");
+        ResourceLocation dirt = new ResourceLocation("block/dirt");
+        ResourceLocation top = provider.getBlockTexture(name + "_top");
+        ModelFile model = provider.models().withExistingParent(name, new ResourceLocation("block/grass_block"))
+                .texture("bottom", dirt)
+                .texture("top", top)
+                .texture("side", side)
+                .texture("overlay", sideOverlay);
+        ModelFile grayscaleModel = provider.models().withExistingParent(name+"_grayscale", new ResourceLocation("block/grass_block"))
+                .texture("bottom", dirt)
+                .texture("top", top.withSuffix("_grayscale"))
+                .texture("side", side)
+                .texture("overlay", sideOverlay.withSuffix("_grayscale"));
+
+        provider.getVariantBuilder(block).forAllStates(s -> {
+            var grassModel = s.getValue(MeadowGrassBlock.GRASS_TYPE).equals(MeadowGrassBlock.MeadowGrassType.DEFAULT) ? model : grayscaleModel;
+            return ConfiguredModel.builder()
+                    .modelFile(grassModel)
+                    .nextModel().modelFile(grassModel).rotationY(90)
+                    .nextModel().modelFile(grassModel).rotationY(180)
+                    .nextModel().modelFile(grassModel).rotationY(270)
+                    .build();
+        });
+
     });
 }

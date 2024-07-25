@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.registry.common;
 
+import com.smellysleepy.meadow.common.block.meadow.wood.ThinMeadowLogBlock;
 import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
@@ -71,7 +72,8 @@ public class MeadowBlockProperties {
                 .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.CHERRY_WOOD)
                 .mapColor(MapColor.WOOD)
-                .setCutoutRenderType();
+                .setCutoutRenderType()
+                .lightLevel(s -> s.getValue(ThinMeadowLogBlock.LEAVES).equals(ThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
     }
 
     public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {
@@ -91,7 +93,7 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
         return ASPEN_LEAVES_PROPERTIES()
                 .noCollission()
-                .lightLevel(s -> 8);
+                .lightLevel(s -> 4);
     }
 
     public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {

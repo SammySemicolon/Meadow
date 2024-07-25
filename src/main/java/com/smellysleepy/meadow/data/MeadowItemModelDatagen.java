@@ -21,12 +21,17 @@ public class MeadowItemModelDatagen extends LodestoneItemModelProvider {
 
     @Override
     protected void registerModels() {
-        var items = new HashSet<>(MeadowItemRegistry.ITEMS.getEntries());
+        Set<Supplier<? extends Item>> items = new HashSet<>(MeadowItemRegistry.ITEMS.getEntries());
         AbstractItemModelSmith.ItemModelSmithData data = new AbstractItemModelSmith.ItemModelSmithData(this, items::remove);
+
+        items.removeIf(i -> i.get() instanceof BlockItem);
 
         setTexturePath("mineral_fruit/");
         for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA.values()) {
             ItemModelSmithTypes.GENERATED_ITEM.act(data, bundle.fruitItem);
         }
+        setTexturePath("");
+
+        ItemModelSmithTypes.GENERATED_ITEM.act(data, items);
     }
 }

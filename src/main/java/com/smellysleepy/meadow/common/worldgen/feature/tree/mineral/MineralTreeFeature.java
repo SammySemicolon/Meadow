@@ -76,12 +76,12 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
             }
         }
         int coverageRadius = RandomHelper.randomBetween(rand, 4, 8);
-        BlockStateEntry entry = create(config.grass.defaultBlockState()).setForcePlace().build();
+        BlockStateEntry coveringEntry = create(config.grass.defaultBlockState()).setForcePlace().build();
         BlockStateEntry oreEntry = create(config.ore.defaultBlockState()).setForcePlace().build();
         BlockStateEntry floraEntry = create(config.flora.defaultBlockState()).setForcePlace().build();
         Set<BlockPos> covering = WorldgenHelper.fetchCoveringPositions(level, pos, coverageRadius);
         for (BlockPos blockPos : covering) {
-            filler.getLayer(COVERING).put(blockPos, entry);
+            filler.getLayer(COVERING).put(blockPos, coveringEntry);
         }
 
         for (int i = 0; i < 3; i++) {

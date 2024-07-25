@@ -14,19 +14,16 @@ import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.*;
 import net.minecraftforge.common.*;
-import team.lodestar.lodestone.systems.block.*;
-
-import java.util.function.*;
 
 public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
 
-    public static final EnumProperty<MeadowLeaves> LEAVES = EnumProperty.create("leaves", MeadowLeaves.class);
+    public static final EnumProperty<MeadowLeavesType> LEAVES = EnumProperty.create("leaves", MeadowLeavesType.class);
 
     protected static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 
     public ThinMeadowLogBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(LEAVES, MeadowLeaves.NONE));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LEAVES, MeadowLeavesType.NONE));
     }
 
     @Override
@@ -42,7 +39,7 @@ public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
 
     @Override
     public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        if (pState.getValue(LEAVES).equals(MeadowLeaves.TOP)) {
+        if (pState.getValue(LEAVES).equals(MeadowLeavesType.TOP)) {
             return Shapes.empty();
         }
         return SHAPE;
@@ -50,7 +47,7 @@ public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        if (pState.getValue(LEAVES).equals(MeadowLeaves.TOP)) {
+        if (pState.getValue(LEAVES).equals(MeadowLeavesType.TOP)) {
             return super.getShape(pState, pLevel, pPos, pContext);
         }
         return SHAPE;
@@ -58,7 +55,7 @@ public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
 
     @Override
     public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        return !pState.getValue(LEAVES).equals(MeadowLeaves.TOP);
+        return !pState.getValue(LEAVES).equals(MeadowLeavesType.TOP);
     }
 
     @Override
@@ -75,7 +72,7 @@ public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (stack.canPerformAction(ToolActions.SHEARS_HARVEST)) {
-            if (!pState.getValue(LEAVES).equals(MeadowLeaves.NONE)) {
+            if (!pState.getValue(LEAVES).equals(MeadowLeavesType.NONE)) {
                 pLevel.setBlock(pPos, pState.setValue(LEAVES, pState.getValue(LEAVES).previous()), 3);
                 pLevel.playSound(null, pPos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
@@ -85,7 +82,7 @@ public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
 
-    public enum MeadowLeaves implements StringRepresentable {
+    public enum MeadowLeavesType implements StringRepresentable {
         NONE("none"),
         SMALL("small"),
         MEDIUM("medium"),
@@ -93,7 +90,7 @@ public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
         TOP("top");
 
         private final String name;
-        MeadowLeaves(String pName) {
+        MeadowLeavesType(String pName) {
             this.name = pName;
         }
 
@@ -105,13 +102,13 @@ public class ThinMeadowLogBlock extends Block implements BonemealableBlock{
             return this.name;
         }
 
-        private static final MeadowLeaves[] VALUES = values();
+        private static final MeadowLeavesType[] VALUES = values();
 
-        public MeadowLeaves next() {
+        public MeadowLeavesType next() {
             return VALUES[(this.ordinal() + 1) % VALUES.length];
         }
 
-        public MeadowLeaves previous() {
+        public MeadowLeavesType previous() {
             return VALUES[(ordinal() - 1  + VALUES.length) % VALUES.length];
         }
     }

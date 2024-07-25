@@ -4,7 +4,9 @@ import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.data.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.*;
 import team.lodestar.lodestone.systems.datagen.*;
 import team.lodestar.lodestone.systems.datagen.providers.*;
@@ -23,7 +25,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         Set<Supplier<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
         AbstractBlockStateSmith.StateSmithData data = new AbstractBlockStateSmith.StateSmithData(this, blocks::remove);
 
-        BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::varyingRotationBlock, this::grassBlockModel, MeadowBlockRegistry.MEADOW_GRASS_BLOCK);
+        MeadowBlockStateSmithTypes.MEADOW_GRASS_BLOCK.act(data, MeadowBlockRegistry.MEADOW_GRASS_BLOCK);
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS);
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
 
@@ -35,7 +37,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 
         setTexturePath("aspen_wood/");
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LOG, MeadowBlockRegistry.CALCIFIED_ASPEN_LOG);
-        MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_ASPEN_LOG, MeadowBlockRegistry.THIN_CALCIFIED_ASPEN_LOG);
+        MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_ASPEN_LOG, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.THIN_CALCIFIED_ASPEN_LOG);
         MeadowBlockStateSmithTypes.DIRECTIONAL_LOG_BLOCK.act(data, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG);
 
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS, MeadowBlockRegistry.ASPEN_BOARDS, MeadowBlockRegistry.HEAVY_ASPEN_BOARDS);
@@ -55,6 +57,5 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
             MeadowBlockStateSmithTypes.HANGING_LEAVES.act(data, bundle.hangingLeavesBlock);
         }
         setTexturePath("");
-
     }
 }

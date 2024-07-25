@@ -30,12 +30,11 @@ public class WorldgenHelper {
         var mutable = new BlockPos.MutableBlockPos();
 
         int verticalRange = 6;
-        int searchRadius = radius * 2 + 1;
         float limit = Mth.sqrt(radius * radius + radius * radius);
-        for (int i = 0; i < searchRadius; i++) {
-            for (int j = 0; j < searchRadius; j++) {
-                int offsetX = x + i - radius;
-                int offsetZ = z + j - radius;
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                int offsetX = x + i;
+                int offsetZ = z + j;
                 float differenceX = x - offsetX;
                 float differenceZ = z - offsetZ;
                 float distance = Mth.sqrt(differenceX * differenceX + differenceZ * differenceZ);
