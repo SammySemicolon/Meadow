@@ -1,57 +1,6 @@
 {
   "variants": {
-    "grass_type=blue_0": [
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale"
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 270
-      }
-    ],
-    "grass_type=blue_1": [
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale"
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 270
-      }
-    ],
-    "grass_type=blue_2": [
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale"
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 270
-      }
-    ],
-    "grass_type=default": [
+    "": [
       {
         "model": "meadow:block/meadow_grass_block"
       },
@@ -65,74 +14,6 @@
       },
       {
         "model": "meadow:block/meadow_grass_block",
-        "y": 270
-      }
-    ],
-    "grass_type=green_0": [
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale"
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 270
-      }
-    ],
-    "grass_type=green_1": [
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale"
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 270
-      }
-    ],
-    "grass_type=green_2": [
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale"
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 270
-      }
-    ],
-    "grass_type=snowy": [
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale"
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/meadow_grass_block_grayscale",
         "y": 270
       }
     ]

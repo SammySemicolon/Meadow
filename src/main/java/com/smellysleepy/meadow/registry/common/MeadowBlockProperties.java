@@ -37,10 +37,10 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
-                .randomTicks()
-                .strength(0.6F)
                 .mapColor(MapColor.GRASS)
-                .sound(SoundType.GRASS);
+                .sound(SoundType.GRASS)
+                .strength(0.6F)
+                .randomTicks();
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {

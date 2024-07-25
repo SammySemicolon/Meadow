@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.registry.common;
 
+import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
 import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.flora.pearl_flower.TallPearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
@@ -19,10 +20,12 @@ import net.minecraftforge.registries.*;
 import static com.smellysleepy.meadow.MeadowMod.MEADOW;
 
 public class MeadowBlockRegistry {
+
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MEADOW);
 
     public static final RegistryObject<Block> CALCIFIED_EARTH = BLOCKS.register("calcified_earth", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
     public static final RegistryObject<Block> CALCIFIED_ROCK = BLOCKS.register("calcified_rock", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
+    public static final RegistryObject<Block> CALCIFIED_COVERING = BLOCKS.register("calcified_covering", () -> new CalcifiedCoveringBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().setCutoutRenderType().noOcclusion()));
 
     public static final RegistryObject<Block> MEADOW_GRASS_BLOCK = BLOCKS.register("meadow_grass_block", () -> new MeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_BLOCK_PROPERTIES()));
 
@@ -67,18 +70,6 @@ public class MeadowBlockRegistry {
         @SubscribeEvent
         public static void setBlockColors(RegisterColorHandlersEvent.Block event) {
             BlockColors blockColors = event.getBlockColors();
-
-            blockColors.register((s, l, p, c) -> {
-                var grassType = s.getValue(MeadowGrassBlock.GRASS_TYPE);
-                if (grassType.color == null) {
-                    return -1;
-                }
-                var color = grassType.color;
-                int red = color.getRed();
-                int green = color.getGreen();
-                int blue = color.getBlue();
-                return red << 16 | green << 8 | blue;
-            }, MEADOW_GRASS_BLOCK.get());
         }
     }
 }
