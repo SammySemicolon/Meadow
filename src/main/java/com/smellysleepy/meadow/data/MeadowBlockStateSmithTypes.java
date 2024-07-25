@@ -36,13 +36,13 @@ public class MeadowBlockStateSmithTypes {
                 provider.models().withExistingParent(name+"_"+i, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
 
         ConfiguredModel.Builder<VariantBlockStateBuilder> builder = provider.getVariantBuilder(block).partialState().modelForState();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             ModelFile model = modelProvider.apply(i);
             builder.modelFile(model)
                     .nextModel().modelFile(model).rotationY(90)
                     .nextModel().modelFile(model).rotationY(180)
                     .nextModel().modelFile(model).rotationY(270);
-            if (i != 3) {
+            if (i != 2) {
                 builder = builder.nextModel();
             }
 

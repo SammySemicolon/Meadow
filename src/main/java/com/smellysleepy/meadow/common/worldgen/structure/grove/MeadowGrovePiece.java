@@ -2,6 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.UnsafeBoundingBox;
+import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.CalcifiedRegion;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.LakeRegion;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -42,6 +44,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
 public class MeadowGrovePiece extends StructurePiece {
 
@@ -225,8 +229,12 @@ public class MeadowGrovePiece extends StructurePiece {
         int ceilingCoverage = Mth.clamp(height < 2 ? 0 : Mth.floor((2 + height) * 2), 0, ceilingPattern.size() - 1);
         int surfaceCoverage = Mth.clamp(depth < 6 ? 0 : Mth.floor(depth / 2f), 0, surfacePattern.size() - 1);
 
-        int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
         int ceilingPlacementHeight = ceilingLimit + ceilingCoverage;
+        int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
+
+        if (surfacePattern.get(0).getBlock() instanceof CalcifiedCoveringBlock) {
+            surfaceLimit++;
+        }
 
         int ceilingShellOffset = (height > 8 ? Mth.floor((height - 8) * 0.2f) : 0);
         int ceilingShellLimit = ceilingPlacementHeight + 6 - ceilingShellOffset;
@@ -633,15 +641,22 @@ public class MeadowGrovePiece extends StructurePiece {
 
     private List<BlockState> getSurfaceBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, Pair<CalcifiedRegion, Double> calcification, double sqrtDistance, double offset, int startingY) {
         ArrayList<BlockState> pattern = new ArrayList<>();
-        boolean useCracks = makeCracks(noiseSampler, pos.getX(), pos.getZ(), sqrtDistance, offset);
-        if (calcification != null) {
+        double crackDelta = makeCracks(noiseSampler, pos.getX(), pos.getZ(), sqrtDistance, offset);
+        boolean useCracks = crackDelta > 0;
+        if (calcification != null && calcification.getSecond() < 0.03f) {
+            pattern.add(MeadowBlockRegistry.CALCIFIED_COVERING.get().defaultBlockState().setValue(MultifaceBlock.getFaceProperty(Direction.DOWN), true));
+        }
+        if (calcification != null && calcification.getSecond() >= 0.03f) {
             if (!useCracks) {
-                useCracks = makeCracks(noiseSampler, pos.getX(), pos.getZ(), 0.025f);
+                crackDelta = makeCracks(noiseSampler, pos.getX(), pos.getZ(), 0.025f);
             }
             double delta = calcification.getSecond();
-            if (useCracks || delta < 0.04f) {
+
+            if (crackDelta >= 0f && crackDelta < 0.2f) {
+                pattern.add(MeadowBlockRegistry.CALCIFIED_COVERING.get().defaultBlockState().setValue(MultifaceBlock.getFaceProperty(Direction.DOWN), true));
+            } else if ((crackDelta >= 0.2f && crackDelta < 0.4f) || delta < 0.04f) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState());
-            } else if (delta < 0.08f) {
+            } else if ((crackDelta >= 0.4f) || delta < 0.06f) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_ROCK.get().defaultBlockState());
             }
             pattern.add(Blocks.STONE.defaultBlockState());
@@ -673,16 +688,24 @@ public class MeadowGrovePiece extends StructurePiece {
         return pattern;
     }
 
-    public boolean makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, double distance, double offset) {
+    public double makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, double distance, double offset) {
         if (distance > offset * 0.8f) {
             float stateNoiseOffset = (float) ((distance - offset * 0.8f) / (offset * 0.2f)) * 0.25f;
             return makeCracks(noiseSampler, blockX, blockZ, stateNoiseOffset);
         }
-        return false;
+        return -1f;
     }
-    public boolean makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, float stateNoiseOffset) {
+    public double makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, float stateNoiseOffset) {
         double stateNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 75000, 0.15f) / 2;
-        return stateNoise > 0.45f - stateNoiseOffset && stateNoise < 0.55f + stateNoiseOffset;
-    }
+        float bottomThreshold = 0.45f - stateNoiseOffset;
+        if (stateNoise > bottomThreshold && stateNoise < 0.5f) {
+            return (stateNoise-bottomThreshold)/(0.5f-bottomThreshold);
+        }
+        float topThreshold = 0.55f + stateNoiseOffset;
+        if (stateNoise < topThreshold && stateNoise > 0.5f) {
+            return 1 - (stateNoise-topThreshold)/(0.5f-topThreshold);
+        }
 
+        return -1f;
+    }
 }
