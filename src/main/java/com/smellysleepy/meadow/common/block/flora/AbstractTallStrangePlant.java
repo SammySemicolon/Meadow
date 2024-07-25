@@ -13,6 +13,6 @@ public abstract class AbstractTallStrangePlant extends TallFlowerBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(MeadowBlockTagRegistry.STRANGE_FLORA_GROUND);
+        return pState.is(MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON);
     }
 }

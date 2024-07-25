@@ -14,6 +14,6 @@ public class MeadowCreativeTabRegistry {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup." + MeadowMod.MEADOW))
                     .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-                    .icon(() -> MeadowItemRegistry.ASPEN_SAPLING.get().getDefaultInstance()).build()
+                    .icon(() -> MeadowItemRegistry.MEADOW_GRASS_BLOCK.get().getDefaultInstance()).build()
     );
 }

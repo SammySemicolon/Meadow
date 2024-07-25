@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral;
 
+import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
@@ -99,6 +100,17 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
                 filler.getLayer(FOLIAGE).put(blockPos.above(), floraEntry);
             }
         }
+
+        var leavesLayer = filler.getLayer(LEAVES);
+        Set<BlockPos> hangingLeavesPositions = new HashSet<>();
+        for (Map.Entry<BlockPos, BlockStateEntry> leaves : leavesLayer.entrySet()) {
+            BlockPos below = leaves.getKey().below();
+            if (!leavesLayer.containsKey(below)) {
+                hangingLeavesPositions.add(below);
+            }
+        }
+        BlockStateEntry hangingLeavesEntry = create(config.hangingLeaves.defaultBlockState()).build();
+        hangingLeavesPositions.forEach(p -> leavesLayer.put(p, hangingLeavesEntry));
 
         filler.fill(level);
         updateLeaves(level, filler.getLayer(LOGS).keySet());

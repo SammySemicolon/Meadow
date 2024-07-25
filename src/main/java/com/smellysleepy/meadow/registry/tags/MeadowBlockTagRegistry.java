@@ -8,8 +8,10 @@ import net.minecraftforge.registries.*;
 
 public class MeadowBlockTagRegistry {
 
-    public static final TagKey<Block> MEADOW_GRASS_GROUND = meadowTag("meadow_grass_ground");
-    public static final TagKey<Block> STRANGE_FLORA_GROUND = meadowTag("strange_flora_ground");
+    public static final TagKey<Block> CALCIFICATION = meadowTag("calcification");
+    public static final TagKey<Block> MEADOW_GRASS_CAN_PLACE_ON = meadowTag("meadow_grass_can_place_on");
+    public static final TagKey<Block> MINERAL_FLORA_CAN_PLACE_ON = meadowTag("mineral_flora_can_place_on");
+    public static final TagKey<Block> PEARLFLOWER_CAN_PLACE_ON = meadowTag("pearlflower_can_place_on");
 
     private static TagKey<Block> modTag(String path) {
         return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), new ResourceLocation(path));

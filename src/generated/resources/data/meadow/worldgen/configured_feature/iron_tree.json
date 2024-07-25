@@ -3,7 +3,7 @@
   "config": {
     "flora": "meadow:iron_flora",
     "grass": "meadow:iron_grass_block",
-    "hangingLeaves": "meadow:iron_flora",
+    "hangingLeaves": "meadow:hanging_iron_leaves",
     "leaves": "meadow:iron_leaves",
     "ore": "minecraft:iron_ore",
     "parts": [

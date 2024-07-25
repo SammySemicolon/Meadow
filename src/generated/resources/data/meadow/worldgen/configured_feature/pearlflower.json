@@ -1,7 +1,55 @@
 {
-  "type": "minecraft:simple_block",
+  "type": "meadow:pearlflower",
   "config": {
-    "to_place": {
+    "marine": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "meadow:marine_pearlflower",
+            "Properties": {
+              "waterlogged": "false"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "meadow:tall_marine_pearlflower",
+            "Properties": {
+              "half": "lower",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "meadow": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "meadow:grassy_pearlflower",
+            "Properties": {
+              "waterlogged": "false"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "meadow:tall_grassy_pearlflower",
+            "Properties": {
+              "half": "lower",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "stone": {
       "type": "minecraft:weighted_state_provider",
       "entries": [
         {

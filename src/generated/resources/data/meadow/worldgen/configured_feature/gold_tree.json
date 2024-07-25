@@ -3,7 +3,7 @@
   "config": {
     "flora": "meadow:gold_flora",
     "grass": "meadow:gold_grass_block",
-    "hangingLeaves": "meadow:gold_flora",
+    "hangingLeaves": "meadow:hanging_gold_leaves",
     "leaves": "meadow:gold_leaves",
     "ore": "minecraft:gold_ore",
     "parts": [

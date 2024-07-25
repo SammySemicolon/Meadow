@@ -3,7 +3,7 @@
   "config": {
     "flora": "meadow:emerald_flora",
     "grass": "meadow:emerald_grass_block",
-    "hangingLeaves": "meadow:emerald_flora",
+    "hangingLeaves": "meadow:hanging_emerald_leaves",
     "leaves": "meadow:emerald_leaves",
     "ore": "minecraft:emerald_ore",
     "parts": [

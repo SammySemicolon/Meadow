@@ -3,7 +3,7 @@
   "config": {
     "flora": "meadow:lapis_flora",
     "grass": "meadow:lapis_grass_block",
-    "hangingLeaves": "meadow:lapis_flora",
+    "hangingLeaves": "meadow:hanging_lapis_leaves",
     "leaves": "meadow:lapis_leaves",
     "ore": "minecraft:lapis_ore",
     "parts": [

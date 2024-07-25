@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "meadow:block/hanging_coal_leaves"
+      },
+      {
+        "model": "meadow:block/hanging_coal_leaves",
+        "y": 90
+      },
+      {
+        "model": "meadow:block/hanging_coal_leaves",
+        "y": 180
+      },
+      {
+        "model": "meadow:block/hanging_coal_leaves",
+        "y": 270
+      }
+    ]
+  }
+}

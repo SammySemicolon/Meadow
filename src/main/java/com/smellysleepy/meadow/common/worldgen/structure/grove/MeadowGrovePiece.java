@@ -216,7 +216,6 @@ public class MeadowGrovePiece extends StructurePiece {
                     surfacePattern.set(0, block.defaultBlockState());
                 }
             }
-
         }
 
         int ceilingCoverage = Mth.clamp(height < 2 ? 0 : Mth.floor((2 + height) * 2), 0, ceilingPattern.size() - 1);
@@ -261,11 +260,7 @@ public class MeadowGrovePiece extends StructurePiece {
                     Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature;
 
                     if (hasPearlflower) {
-                        feature = Pair.of(pos.immutable(), useLakeGrass ?
-                                MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER :
-                                calcifiedRegionOptional.isPresent() ?
-                                        MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER :
-                                        MeadowConfiguredFeatureRegistry.CONFIGURED_GRASSY_PEARLFLOWER);
+                        feature = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER);
                     }
                     else {
                         if (placeWater) {
@@ -349,8 +344,8 @@ public class MeadowGrovePiece extends StructurePiece {
             if (!isAtEdge) {
                 pos.set(blockX, rampTop + 1, blockZ);
                 Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature;
-                if (hasPearlflower && chunk.getBlockState(pos).canBeReplaced()) {
-                    feature = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_GRASSY_PEARLFLOWER);
+                if (hasPearlflower) {
+                    feature = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER);
                 }
                 else {
                     feature = createRampFeatures(random, pos);
@@ -403,9 +398,9 @@ public class MeadowGrovePiece extends StructurePiece {
         float rand = randomSource.nextFloat();
         if (rand < 0.01f) {
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-        } else if (rand < 0.02f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
         } else if (rand < 0.025f) {
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
+        } else if (rand < 0.05f) {
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH;
         }
         if (feature != null) {
@@ -472,9 +467,7 @@ public class MeadowGrovePiece extends StructurePiece {
                     }
                 }
                 if (featureTypeOffset >= midpoint && featureTypeOffset < end) {
-                    if (rand < 0.005f) {
-                        feature = MeadowConfiguredFeatureRegistry.CONFIGURED_GRASSY_PEARLFLOWER;
-                    } else if (rand < 0.02f) {
+                    if (rand < 0.02f) {
                         feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
                     }
                 }

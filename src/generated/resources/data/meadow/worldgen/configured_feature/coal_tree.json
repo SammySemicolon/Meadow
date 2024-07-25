@@ -3,7 +3,7 @@
   "config": {
     "flora": "meadow:coal_flora",
     "grass": "meadow:coal_grass_block",
-    "hangingLeaves": "meadow:coal_flora",
+    "hangingLeaves": "meadow:hanging_coal_leaves",
     "leaves": "meadow:coal_leaves",
     "ore": "minecraft:coal_ore",
     "parts": [

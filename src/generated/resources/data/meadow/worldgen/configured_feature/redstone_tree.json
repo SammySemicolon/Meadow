@@ -3,7 +3,7 @@
   "config": {
     "flora": "meadow:redstone_flora",
     "grass": "meadow:redstone_grass_block",
-    "hangingLeaves": "meadow:redstone_flora",
+    "hangingLeaves": "meadow:hanging_redstone_leaves",
     "leaves": "meadow:redstone_leaves",
     "ore": "minecraft:redstone_ore",
     "parts": [

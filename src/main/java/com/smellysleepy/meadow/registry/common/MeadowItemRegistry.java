@@ -25,7 +25,6 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> THIN_ASPEN_LOG = register("thin_aspen_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.THIN_ASPEN_LOG.get(), p));
     public static final RegistryObject<Item> ASPEN_LOG = register("aspen_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_LOG.get(), p));
 
-
     public static final RegistryObject<Item> MEADOW_GRASS_BLOCK = register("meadow_grass_block", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get(), p));
 
     public static final RegistryObject<Item> TALL_MEADOW_GRASS = register("tall_meadow_grass", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_MEADOW_GRASS.get(), p));
@@ -34,6 +33,8 @@ public class MeadowItemRegistry {
 
     public static final RegistryObject<Item> TALL_GRASSY_PEARLFLOWER = register("tall_grassy_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> GRASSY_PEARLFLOWER = register("grassy_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.GRASSY_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> TALL_MARINE_PEARLFLOWER = register("tall_marine_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_MARINE_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> MARINE_PEARLFLOWER = register("marine_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MARINE_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> TALL_PEARLFLOWER = register("tall_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> PEARLFLOWER = register("pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PEARLFLOWER.get(), p));
 
@@ -41,10 +42,7 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> SMALL_ASPEN_SAPLING = register("small_aspen_sapling", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SMALL_ASPEN_SAPLING.get(), p.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.15f).build())));
 
     public static final RegistryObject<Item> ASPEN_LEAVES = register("aspen_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_LEAVES.get(), p));
-    public static final RegistryObject<Item> FLOWERING_ASPEN_LEAVES = register("flowering_aspen_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.FLOWERING_ASPEN_LEAVES.get(), p));
     public static final RegistryObject<Item> HANGING_ASPEN_LEAVES = register("hanging_aspen_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get(), p));
-    public static final RegistryObject<Item> TALL_HANGING_ASPEN_LEAVES = register("tall_hanging_aspen_leaves", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_HANGING_ASPEN_LEAVES.get(), p));
-    public static final RegistryObject<Item> ASPEN_LEAF_PILE = register("aspen_leaf_pile", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_LEAF_PILE.get(), p));
 
     public static final RegistryObject<Item> ASPEN_PLANKS = register("aspen_planks", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_PLANKS.get(), p));
     public static final RegistryObject<Item> ASPEN_BOARDS = register("aspen_boards", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_BOARDS.get(), p));

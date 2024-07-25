@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
+import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.data.*;
@@ -22,6 +23,10 @@ public class MeadowItemModelDatagen extends LodestoneItemModelProvider {
     protected void registerModels() {
         var items = new HashSet<>(MeadowItemRegistry.ITEMS.getEntries());
         AbstractItemModelSmith.ItemModelSmithData data = new AbstractItemModelSmith.ItemModelSmithData(this, items::remove);
-//        ItemModelSmithTypes.HANDHELD_ITEM.act(data);
+
+        setTexturePath("mineral_fruit/");
+        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA.values()) {
+            ItemModelSmithTypes.GENERATED_ITEM.act(data, bundle.fruitItem);
+        }
     }
 }

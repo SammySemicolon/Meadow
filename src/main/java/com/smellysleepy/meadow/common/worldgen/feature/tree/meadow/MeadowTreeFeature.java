@@ -1,5 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.meadow;
 
+import com.mojang.datafixers.util.Pair;
+import com.smellysleepy.meadow.common.block.meadow.leaves.MeadowLeavesBlock;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
@@ -10,6 +12,9 @@ import net.minecraft.world.level.levelgen.feature.*;
 import team.lodestar.lodestone.systems.worldgen.*;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.*;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.*;
 
 import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.*;
@@ -88,6 +93,13 @@ public class MeadowTreeFeature extends AbstractTreeFeature<MeadowTreeFeatureConf
             }
         }
 
+//        int color = rand.nextIntBetweenInclusive(0, 4);
+//        BlockStateEntry leavesEntry = create(config.leaves.defaultBlockState().setValue(MeadowLeavesBlock.COLOR, color)).build();
+//        BlockStateEntry hangingLeavesEntry = create(config.hangingLeaves.defaultBlockState().setValue(MeadowLeavesBlock.COLOR, color)).build();
+
+        BlockStateEntry leavesEntry = create(config.leaves.defaultBlockState()).build();
+        BlockStateEntry hangingLeavesEntry = create(config.hangingLeaves.defaultBlockState()).build();
+
         int branches = Mth.nextInt(rand, 1, 4);
         int directionOffset = rand.nextInt(4);
         for (int i = 0; i < branches; i++) { //Branches
@@ -121,9 +133,19 @@ public class MeadowTreeFeature extends AbstractTreeFeature<MeadowTreeFeatureConf
                 filler.getLayer(LOGS).put(mutable.immutable(), create(logState));
                 mutable.move(Direction.UP);
             }
-            makeLeafBlob(config, rand, filler, mutable.move(Direction.DOWN, branchHeight));
+            makeLeafBlob(config, leavesEntry, filler, mutable.move(Direction.DOWN, branchHeight));
         }
-        makeLeafBlob(config, rand, filler, mutable.set(pos).move(Direction.UP, trunkHeight-2));
+        makeLeafBlob(config, leavesEntry, filler, mutable.set(pos).move(Direction.UP, trunkHeight-2));
+
+        var leavesLayer = filler.getLayer(LEAVES);
+        Set<BlockPos> hangingLeavesPositions = new HashSet<>();
+        for (Map.Entry<BlockPos, BlockStateEntry> leaves : leavesLayer.entrySet()) {
+            BlockPos below = leaves.getKey().below();
+            if (!leavesLayer.containsKey(below)) {
+                hangingLeavesPositions.add(below);
+            }
+        }
+        hangingLeavesPositions.forEach(p -> leavesLayer.put(p, hangingLeavesEntry));
 
         filler.fill(level);
         updateLeaves(level, filler.getLayer(LOGS).keySet());
@@ -141,24 +163,13 @@ public class MeadowTreeFeature extends AbstractTreeFeature<MeadowTreeFeatureConf
         }
     }
 
-    public void makeLeafBlob(MeadowTreeFeatureConfiguration config, RandomSource rand, LodestoneBlockFiller filler, BlockPos pos) {
+    public void makeLeafBlob(MeadowTreeFeatureConfiguration config, BlockStateEntry leavesEntry, LodestoneBlockFiller filler, BlockPos pos) {
         int[] leafSizes = new int[]{1, 2, 3, 3, 2, 1};
         var mutable = pos.mutable();
 
-        Supplier<BlockStateEntry> leavesEntry = () -> create((rollForFancyLeaves(rand) ? config.fancyLeaves : config.leaves).defaultBlockState()).build();
-
-//        BlockStateEntry leavesEntry = create(config.leaves.defaultBlockState()).build();
-        BlockStateEntry hangingLeavesEntry = create(config.hangingLeaves.defaultBlockState())
-                .setDiscardPredicate((l, p, s) -> !filler.getLayer(LEAVES).containsKey(p.above()))
-                .build();
         for (int i = 0; i < 6; i++) {
             mutable.move(Direction.UP);
             makeLeafSlice(filler.getLayer(LEAVES), mutable, leafSizes[i], leavesEntry);
-        }
-        mutable.set(pos).move(Direction.DOWN);
-        for (int i = 0; i < 3; i++) {
-            mutable.move(Direction.UP);
-            makeLeafSlice(filler.getLayer(HANGING_LEAVES), mutable, leafSizes[i], hangingLeavesEntry);
         }
     }
 

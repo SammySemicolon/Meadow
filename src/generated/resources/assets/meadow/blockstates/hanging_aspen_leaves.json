@@ -2,63 +2,18 @@
   "variants": {
     "": [
       {
-        "model": "meadow:block/hanging_aspen_leaves_0"
+        "model": "meadow:block/hanging_aspen_leaves"
       },
       {
-        "model": "meadow:block/hanging_aspen_leaves_0",
+        "model": "meadow:block/hanging_aspen_leaves",
         "y": 90
       },
       {
-        "model": "meadow:block/hanging_aspen_leaves_0",
+        "model": "meadow:block/hanging_aspen_leaves",
         "y": 180
       },
       {
-        "model": "meadow:block/hanging_aspen_leaves_0",
-        "y": 270
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_1"
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_1",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_1",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_1",
-        "y": 270
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_2"
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_2",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_2",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_2",
-        "y": 270
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_3"
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_3",
-        "y": 90
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_3",
-        "y": 180
-      },
-      {
-        "model": "meadow:block/hanging_aspen_leaves_3",
+        "model": "meadow:block/hanging_aspen_leaves",
         "y": 270
       }
     ]
