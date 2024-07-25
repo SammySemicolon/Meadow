@@ -12,6 +12,8 @@ import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.data.worldgen.features.AquaticFeatures;
+import net.minecraft.data.worldgen.features.CaveFeatures;
+import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -192,7 +194,7 @@ public class MeadowGrovePiece extends StructurePiece {
             }
             surfaceLimit = centerY - lakeDepth;
 
-            boolean isNearWater = lakeDelta >= 0.4f;
+            boolean isNearWater = lakeDelta >= 0.3f;
             if (isNearWater) {
                 useLakeGrass = true;
                 lakeGrassDelta = (lakeDelta-0.3f) / 0.7f;
@@ -205,12 +207,14 @@ public class MeadowGrovePiece extends StructurePiece {
             if (calcifiedRegionOptional.isEmpty()) {
                 if (isNearWater) {
                     Block block = Blocks.GRASS_BLOCK;
-                    if (lakeDelta > 0.7f) {
+                    if (lakeGrassDelta > 0.5f) {
                         block = Blocks.STONE;
-                    } else if (lakeDelta > 0.55f) {
+                    } else if (lakeGrassDelta > 0.4f) {
                         block = Blocks.GRAVEL;
-                    } else if (lakeDelta > 0.45f && placeWater) {
+                    } else if (lakeGrassDelta > 0.3f && placeWater) {
                         block = Blocks.DIRT;
+                    } else if (lakeGrassDelta < 0.1f) {
+                        block = Blocks.ROOTED_DIRT;
                     }
 
                     surfacePattern.set(0, block.defaultBlockState());
@@ -412,10 +416,19 @@ public class MeadowGrovePiece extends StructurePiece {
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createLakeFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, double delta) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
         double rand = randomSource.nextFloat() * delta;
-        if (rand < 0.0025f) {
+
+        if (rand < 0.005f) {
             feature = VegetationFeatures.FLOWER_DEFAULT;
         } else if (rand < 0.01f) {
             feature = VegetationFeatures.PATCH_GRASS;
+        } else if (rand < 0.0125f) {
+            feature = VegetationFeatures.PATCH_TALL_GRASS;
+        } else if (rand < 0.0175f) {
+            feature = VegetationFeatures.PATCH_SUGAR_CANE;
+        } else if (rand < 0.02f) {
+            feature = TreeFeatures.AZALEA_TREE;
+        } else if (rand < 0.03f) {
+            feature = CaveFeatures.MOSS_VEGETATION;
         }
         if (feature != null) {
             return Pair.of(pos.immutable(), feature);

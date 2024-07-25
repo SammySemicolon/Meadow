@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "meadow:block/aspen_wood/hanging_aspen_leaves_0"
+    "layer0": "meadow:item/pearlflower_bud"
   }
 }

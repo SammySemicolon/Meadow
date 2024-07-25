@@ -4,7 +4,6 @@ import com.smellysleepy.meadow.common.worldgen.feature.PearlFlowerConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.StrangePlantFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.patch.LayeredPatchConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.MeadowTreeFeatureConfiguration;
-import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.SmallMeadowTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts.*;
 import com.smellysleepy.meadow.registry.common.*;
@@ -15,7 +14,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 import java.util.*;
@@ -23,9 +21,11 @@ import java.util.*;
 public class MeadowConfiguredFeatureDatagen {
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
-        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.SMALL_ASPEN_TREE.get(), new SmallMeadowTreeFeatureConfiguration(
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.SMALL_ASPEN_TREE.get(), new MeadowTreeFeatureConfiguration(
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
                 MeadowBlockRegistry.THIN_ASPEN_LOG.get(),
+                MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG.get(),
+                MeadowBlockRegistry.THIN_CALCIFIED_ASPEN_LOG.get(),
                 MeadowBlockRegistry.ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
         )));
@@ -33,6 +33,8 @@ public class MeadowConfiguredFeatureDatagen {
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.ASPEN_TREE.get(), new MeadowTreeFeatureConfiguration(
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
                 MeadowBlockRegistry.ASPEN_LOG.get(),
+                MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG.get(),
+                MeadowBlockRegistry.CALCIFIED_ASPEN_LOG.get(),
                 MeadowBlockRegistry.ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
         )));

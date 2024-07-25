@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.awt.*;
 
 public class HangingMineralLeavesBlock extends MineralLeavesBlock {
-    protected static final VoxelShape SHAPE = Block.box(3.0D, 3.0D, 3.0D, 13.0D, 16.0D, 13.0D);
+    protected static final VoxelShape SHAPE = Block.box(2.0D, 12.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
     public HangingMineralLeavesBlock(Properties pProperties, Color color) {
         super(pProperties, color);

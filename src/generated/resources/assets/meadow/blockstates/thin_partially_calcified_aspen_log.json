@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "leaves=large": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_large_leaves"
+    },
+    "leaves=medium": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_medium_leaves"
+    },
+    "leaves=none": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log"
+    },
+    "leaves=small": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_small_leaves"
+    },
+    "leaves=top": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_top_leaves"
+    }
+  }
+}

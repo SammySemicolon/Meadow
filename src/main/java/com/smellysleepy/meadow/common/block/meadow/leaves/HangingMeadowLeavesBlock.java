@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.phys.shapes.*;
 
 public class HangingMeadowLeavesBlock extends MeadowLeavesBlock {
-    protected static final VoxelShape SHAPE = Block.box(3.0D, 3.0D, 3.0D, 13.0D, 16.0D, 13.0D);
+    protected static final VoxelShape SHAPE = Block.box(2.0D, 12.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
     public HangingMeadowLeavesBlock(Properties properties) {
         super(properties);
