@@ -29,12 +29,25 @@ public class MeadowBlockStateSmithTypes {
                 .addModel();
     });
 
-//    public static BlockStateSmith<LeavesBlock> HANGING_ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_0"), (block, provider) -> {
-//        String name = provider.getBlockName(block);
-//        Function<Integer, ModelFile> modelProvider = (i) ->
-//                provider.models().withExistingParent(name+"_"+i, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
-//        provider.getVariantBuilder(block).forAllStates(s -> ConfiguredModel.builder().modelFile(modelProvider.apply(s.getValue(MeadowLeavesBlock.COLOR))).build());
-//    });
+    public static BlockStateSmith<LeavesBlock> HANGING_ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_0"), (block, provider) -> {
+        String name = provider.getBlockName(block);
+        Function<Integer, ModelFile> modelProvider = (i) ->
+                provider.models().withExistingParent(name+"_"+i, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
+
+        ConfiguredModel.Builder<VariantBlockStateBuilder> builder = provider.getVariantBuilder(block).partialState().modelForState();
+        for (int i = 0; i < 4; i++) {
+            ModelFile model = modelProvider.apply(i);
+            builder.modelFile(model)
+                    .nextModel().modelFile(model).rotationY(90)
+                    .nextModel().modelFile(model).rotationY(180)
+                    .nextModel().modelFile(model).rotationY(270);
+            if (i != 3) {
+                builder = builder.nextModel();
+            }
+
+        }
+        builder.addModel();
+    });
 //    public static BlockStateSmith<LeavesBlock> ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_0"), (block, provider) -> {
 //        String name = provider.getBlockName(block);
 //        Function<Integer, ModelFile> modelProvider = (i) ->

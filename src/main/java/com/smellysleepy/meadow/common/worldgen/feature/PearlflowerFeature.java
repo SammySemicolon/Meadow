@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature;
 
 import com.mojang.serialization.Codec;
+import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
@@ -25,7 +26,7 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
         BlockState below = worldgenlevel.getBlockState(blockpos.below());
         BlockStateProvider provider = config.meadow();
         boolean isWaterlogged = worldgenlevel.isWaterAt(blockpos);
-        if (below.is(BlockTags.BASE_STONE_OVERWORLD) && !isWaterlogged){
+        if ((below.is(BlockTags.BASE_STONE_OVERWORLD) || below.is(MeadowBlockTagRegistry.CALCIFICATION)) && !isWaterlogged){
             provider = config.stone();
         }
         else if (below.is(BlockTags.MOSS_REPLACEABLE) || isWaterlogged) {
