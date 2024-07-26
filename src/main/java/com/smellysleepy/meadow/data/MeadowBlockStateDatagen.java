@@ -25,11 +25,13 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         Set<Supplier<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
         AbstractBlockStateSmith.StateSmithData data = new AbstractBlockStateSmith.StateSmithData(this, blocks::remove);
 
-        MeadowBlockStateSmithTypes.MEADOW_GRASS_BLOCK.act(data, MeadowBlockRegistry.MEADOW_GRASS_BLOCK);
+        BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::varyingRotationBlock, this::grassBlockModel, MeadowBlockRegistry.MEADOW_GRASS_BLOCK);
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS);
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
 
+        setTexturePath("calcification/");
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK);
+        MeadowBlockStateSmithTypes.COVERING_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_COVERING);
 
         setTexturePath("pearlflower/");
         BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_PEARLFLOWER, MeadowBlockRegistry.TALL_MARINE_PEARLFLOWER, MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER);

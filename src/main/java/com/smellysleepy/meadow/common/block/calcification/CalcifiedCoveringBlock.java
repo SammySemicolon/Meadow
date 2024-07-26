@@ -1,5 +1,6 @@
-package com.smellysleepy.meadow.common.block.meadow.leaves;
+package com.smellysleepy.meadow.common.block.calcification;
 
+import com.smellysleepy.meadow.registry.common.MeadowItemRegistry;
 import net.minecraft.core.*;
 import net.minecraft.server.level.*;
 import net.minecraft.util.*;
@@ -11,13 +12,13 @@ import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.material.*;
 
-public class MeadowLeafPileBlock extends MultifaceBlock implements BonemealableBlock, SimpleWaterloggedBlock {
+public class CalcifiedCoveringBlock extends MultifaceBlock implements BonemealableBlock, SimpleWaterloggedBlock {
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private final MultifaceSpreader spreader = new MultifaceSpreader(this);
 
-    public MeadowLeafPileBlock(BlockBehaviour.Properties pProperties) {
+    public CalcifiedCoveringBlock(BlockBehaviour.Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.valueOf(false)));
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -37,7 +38,7 @@ public class MeadowLeafPileBlock extends MultifaceBlock implements BonemealableB
 
     @Override
     public boolean canBeReplaced(BlockState pState, BlockPlaceContext pUseContext) {
-        return !pUseContext.getItemInHand().is(Items.GLOW_LICHEN) || super.canBeReplaced(pState, pUseContext);
+        return !pUseContext.getItemInHand().is(MeadowItemRegistry.CALCIFIED_COVERING.get()) || super.canBeReplaced(pState, pUseContext);
     }
 
     @Override

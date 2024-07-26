@@ -1,10 +1,14 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.meadow;
 
+import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.MultifaceBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
@@ -34,9 +38,10 @@ public abstract class AbstractMeadowTreeFeature extends AbstractTreeFeature<Mead
         if (level.isEmptyBlock(pos.below()) || !config.sapling.defaultBlockState().canSurvive(level, pos)) {
             return false;
         }
-        var filler = new LodestoneBlockFiller().addLayers(COVERING, LOGS, LEAVES);
+        var filler = new LodestoneBlockFiller().addLayers(LOGS, COVERING, LEAVES);
         if (place(context, filler)) {
-            var coveringEntry = create(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState()).setForcePlace().build();
+            var calcifiedEarthEntry = create(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState()).setForcePlace().build();
+            var coveringEntry = create(MeadowBlockRegistry.CALCIFIED_COVERING.get().defaultBlockState().setValue(MultifaceBlock.getFaceProperty(Direction.DOWN), true)).build();
 
             var logsLayer = filler.getLayer(LOGS);
             Set<BlockPos> coveringPositions = new HashSet<>();
@@ -50,7 +55,14 @@ public abstract class AbstractMeadowTreeFeature extends AbstractTreeFeature<Mead
                 }
             }
             for (BlockPos blockPos : coveringPositions) {
-                filler.getLayer(COVERING).put(blockPos, coveringEntry);
+                filler.getLayer(COVERING).put(blockPos, calcifiedEarthEntry);
+
+                BlockPos above = blockPos.above();
+                for (int i = 0; i < 4; i++) {
+                    Direction direction = Direction.from2DDataValue(i);
+                    BlockPos offsetPos = above.relative(direction);
+                    filler.getLayer(COVERING).put(offsetPos, coveringEntry);
+                }
             }
 
 

@@ -13,12 +13,23 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties CALCIFIED_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .strength(2.5F, 4.0F)
+                .strength(0.75F, 4.0F)
                 .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
 
                 .mapColor(MapColor.COLOR_BLUE)
                 .sound(SoundType.NETHERRACK);
+    }
+
+    public static LodestoneBlockProperties CALCIFIED_COVERING_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(0.25F, 2.0F)
+                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.MINEABLE_WITH_HOE)
+                .addTags(MeadowBlockTagRegistry.CALCIFICATION)
+                .mapColor(MapColor.COLOR_BLUE)
+                .sound(SoundType.GLOW_LICHEN)
+                .setCutoutRenderType()
+                .noOcclusion();
     }
 
     public static LodestoneBlockProperties WALL_FUNGUS_PROPERTIES() {
@@ -37,10 +48,10 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
-                .randomTicks()
-                .strength(0.6F)
                 .mapColor(MapColor.GRASS)
-                .sound(SoundType.GRASS);
+                .sound(SoundType.GRASS)
+                .strength(0.6F)
+                .randomTicks();
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {

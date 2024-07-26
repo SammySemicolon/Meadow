@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
+import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
 import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.flora.MeadowGrassBlock;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
@@ -35,13 +36,13 @@ public class MeadowBlockStateSmithTypes {
                 provider.models().withExistingParent(name+"_"+i, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
 
         ConfiguredModel.Builder<VariantBlockStateBuilder> builder = provider.getVariantBuilder(block).partialState().modelForState();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             ModelFile model = modelProvider.apply(i);
             builder.modelFile(model)
                     .nextModel().modelFile(model).rotationY(90)
                     .nextModel().modelFile(model).rotationY(180)
                     .nextModel().modelFile(model).rotationY(270);
-            if (i != 3) {
+            if (i != 2) {
                 builder = builder.nextModel();
             }
 
@@ -150,32 +151,28 @@ public class MeadowBlockStateSmithTypes {
                 });
     });
 
-    public static BlockStateSmith<MeadowGrassBlock> MEADOW_GRASS_BLOCK = new BlockStateSmith<>(MeadowGrassBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+    public static BlockStateSmith<CalcifiedCoveringBlock> COVERING_BLOCK = new BlockStateSmith<>(CalcifiedCoveringBlock.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
-        ResourceLocation side = provider.getBlockTexture(name+"_side");
-        ResourceLocation sideOverlay = provider.getBlockTexture(name+"_side_overlay");
-        ResourceLocation dirt = new ResourceLocation("block/dirt");
-        ResourceLocation top = provider.getBlockTexture(name + "_top");
-        ModelFile model = provider.models().withExistingParent(name, new ResourceLocation("block/grass_block"))
-                .texture("bottom", dirt)
-                .texture("top", top)
-                .texture("side", side)
-                .texture("overlay", sideOverlay);
-        ModelFile grayscaleModel = provider.models().withExistingParent(name+"_grayscale", new ResourceLocation("block/grass_block"))
-                .texture("bottom", dirt)
-                .texture("top", top.withSuffix("_grayscale"))
-                .texture("side", side)
-                .texture("overlay", sideOverlay.withSuffix("_grayscale"));
+        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_covering"))
+                .texture("covering", provider.getBlockTexture(name));
+        MultiPartBlockStateBuilder multipartBuilder = provider.getMultipartBuilder(block);
+        for (Direction direction : Direction.values()) {
+            BooleanProperty property = (BooleanProperty) block.defaultBlockState().getProperties().stream().filter(p -> p.getName().equals(direction.getName())).findFirst().orElseThrow();
+            int yRotation = ((int) direction.toYRot()+180) % 360;
+            int xRotation = 0;
+            if (direction.getAxis().isVertical()) {
+                xRotation = direction.equals(Direction.UP) ? 270 : 90;
+            }
+            multipartBuilder.part().modelFile(model).rotationY(yRotation).rotationX(xRotation).addModel()
+                    .condition(property, true).end();
 
-        provider.getVariantBuilder(block).forAllStates(s -> {
-            var grassModel = s.getValue(MeadowGrassBlock.GRASS_TYPE).equals(MeadowGrassBlock.MeadowGrassType.DEFAULT) ? model : grayscaleModel;
-            return ConfiguredModel.builder()
-                    .modelFile(grassModel)
-                    .nextModel().modelFile(grassModel).rotationY(90)
-                    .nextModel().modelFile(grassModel).rotationY(180)
-                    .nextModel().modelFile(grassModel).rotationY(270)
-                    .build();
-        });
-
+            //handles the situation where the block is all alone, not connected to anything
+            final MultiPartBlockStateBuilder.PartBuilder partBuilder = multipartBuilder.part().modelFile(model).rotationY(yRotation).rotationX(xRotation).addModel();
+            for (Direction again : Direction.values()) {
+                property = (BooleanProperty) block.defaultBlockState().getProperties().stream().filter(p -> p.getName().equals(again.getName())).findFirst().orElseThrow();
+                partBuilder.condition(property, false);
+            }
+            partBuilder.end();
+        }
     });
 }
