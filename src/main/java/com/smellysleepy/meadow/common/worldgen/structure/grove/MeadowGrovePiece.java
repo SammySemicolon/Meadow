@@ -12,6 +12,8 @@ import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.AquaticFeatures;
 import net.minecraft.data.worldgen.features.CaveFeatures;
 import net.minecraft.data.worldgen.features.TreeFeatures;
@@ -55,7 +57,7 @@ public class MeadowGrovePiece extends StructurePiece {
     private final int groveHeight;
     private final int groveDepth;
 
-    public List<Pair<BlockPos, ResourceLocation>> bufferedFeatures = new ArrayList<>();
+    public final List<Pair<BlockPos, ResourceLocation>> bufferedFeatures = new ArrayList<>();
 
     protected MeadowGrovePiece(BlockPos groveCenter, List<SpecialMeadowRegion> specialRegions, int groveRadius, int groveHeight, int groveDepth, BoundingBox boundingBox) {
         super(MeadowStructurePieceTypes.MEADOW_GROVE.get(), 0, boundingBox);
@@ -73,13 +75,24 @@ public class MeadowGrovePiece extends StructurePiece {
         this.groveHeight = tag.getInt("groveHeight");
         this.groveDepth = tag.getInt("groveDepth");
         this.specialRegions = new ArrayList<>();
+
         CompoundTag regionsTag = tag.getCompound("regions");
-        int count = regionsTag.getInt("count");
-        for (int i = 0; i < count; i++) {
+        int regionCount = regionsTag.getInt("count");
+        for (int i = 0; i < regionCount; i++) {
             CompoundTag compound = regionsTag.getCompound("specialRegion_" + i);
             ResourceLocation type = ResourceLocation.tryParse(compound.getString("type"));
             SpecialMeadowRegion region = SpecialMeadowRegion.DECODER.get(type).apply(compound);
             this.specialRegions.add(region);
+        }
+
+        CompoundTag features = tag.getCompound("features");
+        int featureCount = features.getInt("count");
+        bufferedFeatures.clear();
+        for (int i = 0; i < featureCount; i++) {
+            CompoundTag feature = features.getCompound("feature_"+i);
+            BlockPos blockPos = NbtUtils.readBlockPos(feature.getCompound("featurePosition"));
+            ResourceLocation resourceKeyId = new ResourceLocation(feature.getString("featureType"));
+            bufferedFeatures.add(Pair.of(blockPos, resourceKeyId));
         }
     }
 
@@ -88,6 +101,7 @@ public class MeadowGrovePiece extends StructurePiece {
         tag.put("groveCenter", NbtUtils.writeBlockPos(groveCenter));
         tag.putInt("groveRadius", groveRadius);
         tag.putInt("groveHeight", groveHeight);
+        tag.putInt("groveDepth", groveDepth);
 
         CompoundTag regionsTag = new CompoundTag();
         regionsTag.putInt("count", specialRegions.size());
@@ -97,14 +111,43 @@ public class MeadowGrovePiece extends StructurePiece {
         }
 
         tag.put("regions", regionsTag);
+
+        CompoundTag featuresTag = new CompoundTag();
+
+        featuresTag.putInt("count", bufferedFeatures.size());
+        for (int i = 0; i < bufferedFeatures.size(); i++) {
+            var bufferedFeature = bufferedFeatures.get(i);
+            CompoundTag feature = new CompoundTag();
+
+            feature.put("featurePosition", NbtUtils.writeBlockPos(bufferedFeature.getFirst()));
+            feature.putString("featureType", bufferedFeature.getFirst().toString());
+            featuresTag.put("feature_"+i, feature);
+        }
+        tag.put("features", featuresTag);
+
     }
 
     @Override
-    public void postProcess(WorldGenLevel worldGenLevel, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox box, ChunkPos chunkPos, BlockPos pos) {
+    public void postProcess(WorldGenLevel worldGenLevel, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
+        for (Pair<BlockPos, ResourceLocation> pair : bufferedFeatures) {
+            var pos = pair.getFirst();
+            var location = pair.getSecond();
+            ResourceKey<ConfiguredFeature<?, ?>> key = ResourceKey.create(Registries.CONFIGURED_FEATURE, location);
+            Holder<ConfiguredFeature<?, ?>> holder = worldGenLevel.registryAccess()
+                    .registryOrThrow(Registries.CONFIGURED_FEATURE)
+                    .getHolder(key).orElseThrow();
+            holder.get().place(worldGenLevel, chunkGenerator, randomSource, pos);
+        }
+    }
+
+    public static void carveGroveShape(MeadowGrovePiece grovePiece, WorldGenLevel worldGenLevel, RandomSource random, ChunkAccess chunk, ChunkPos chunkPos) {
         var noiseSampler = new ImprovedNoise(new XoroshiroRandomSource(worldGenLevel.getSeed()));
         var unsafeBoundingBox = new UnsafeBoundingBox();
         var mutableBlockPos = new BlockPos.MutableBlockPos();
-        ChunkAccess chunk = worldGenLevel.getChunk(chunkPos.x, chunkPos.z);
+
+        int groveRadius = grovePiece.groveRadius;
+        int groveHeight = grovePiece.groveHeight;
+        int groveDepth = grovePiece.groveDepth;
 
         int pearlflowerCount = random.nextIntBetweenInclusive(2, 4);
         List<Pair<Integer, Integer>> pearlflower = new ArrayList<>();
@@ -135,15 +178,16 @@ public class MeadowGrovePiece extends StructurePiece {
                 int blendWidth = 48;
                 int rimSize = (int) (localRadius * 0.05);
 
-                buildGroveLayer(
+                grovePiece.buildGroveLayer(
                         chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
                         hasPearlflower, localRadius, localHeight, localDepth, blendWidth, rimSize, blockX, blockZ);
             }
         }
         if (unsafeBoundingBox.valid()) {
-            this.boundingBox = unsafeBoundingBox.toBoundingBox();
+            grovePiece.boundingBox = unsafeBoundingBox.toBoundingBox();
         }
     }
+
 
     private Optional<Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>>> buildGroveLayer(ChunkAccess chunk, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockPos.MutableBlockPos pos, RandomSource random,
                                                                                            boolean hasPearlflower, double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize, int blockX, int blockZ) {

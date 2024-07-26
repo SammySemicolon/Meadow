@@ -38,7 +38,7 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
          for (BlockPos blockPos : covering) {
             BlockPos coveragePos = blockPos.above();
             BlockState state = plant.defaultBlockState();
-            boolean isWater = state.hasProperty(BlockStateProperties.WATERLOGGED) || !state.getFluidState().isEmpty();
+            boolean needsWater = state.hasProperty(BlockStateProperties.WATERLOGGED) || !state.getFluidState().isEmpty();
             boolean hasSpace = true;
             mutable = coveragePos.mutable();
             for (int j = 0; j < 4; j++) {
@@ -50,14 +50,14 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
             }
 
             if (hasSpace) {
-               if (isWater) {
+               if (needsWater) {
                   if (!level.isWaterAt(coveragePos)) {
                      continue;
                   }
                }
                if (plant.canSurvive(state, level, coveragePos)) {
                   if (plant instanceof DoublePlantBlock) {
-                     if (isWater) {
+                     if (needsWater) {
                         if (!level.isWaterAt(coveragePos.above())) {
                            continue;
                         }

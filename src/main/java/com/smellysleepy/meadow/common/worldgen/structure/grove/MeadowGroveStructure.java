@@ -55,7 +55,7 @@ public class MeadowGroveStructure extends Structure {
         int blockY = Math.min(random.nextIntBetweenInclusive(-16, 48), baseHeight - random.nextIntBetweenInclusive(64, 96));
         var groveCenter = new BlockPos(blockX, blockY, blockZ);
 
-        int groveRadius = (int) (random.nextIntBetweenInclusive(128, 192) * RandomHelper.randomBetween(random, Easing.CUBIC_OUT, 1.5f, 2f));
+        int groveRadius = random.nextIntBetweenInclusive(192, 256);
         int groveHeight = random.nextIntBetweenInclusive(32, 40);
         int groveDepth = random.nextIntBetweenInclusive(16, 20);
 
@@ -87,15 +87,12 @@ public class MeadowGroveStructure extends Structure {
             specialRegions.add(new LakeRegion(directionalOffset, size, depth, surfaceLevel));
         }
 
-        return onTopOfChunkCenter(context, Heightmap.Types.OCEAN_FLOOR_WG,
-                (b) -> createGrovePieces(context, b, levelHeightAccessor, groveCenter, specialRegions, groveRadius, groveHeight, groveDepth));
+        return Optional.of(new Structure.GenerationStub(groveCenter, (b) -> createGrovePieces(context, b, levelHeightAccessor, groveCenter, specialRegions, groveRadius, groveHeight, groveDepth)));
     }
 
     private static void createGrovePieces(GenerationContext context, StructurePiecesBuilder piecesBuilder, LevelHeightAccessor levelHeightAccessor, BlockPos groveCenter, List<SpecialMeadowRegion> specialRegions, int groveRadius, int groveHeight, int groveDepth) {
         var chunkPos = context.chunkPos();
         int radius = SectionPos.blockToSectionCoord(groveRadius) + 1;
-
-        Collection<MeadowGroveDecoratorPiece> decorators = new ArrayList<>();
 
         for (int chunkX = -radius; chunkX <= radius; chunkX++) {
             for (int chunkZ = -radius; chunkZ <= radius; chunkZ++) {
@@ -106,14 +103,9 @@ public class MeadowGroveStructure extends Structure {
                         chunkStartPos.getX(), levelHeightAccessor.getMinBuildHeight(), chunkStartPos.getZ(),
                         chunkStartPos.getX() + 15, levelHeightAccessor.getMaxBuildHeight(), chunkStartPos.getZ() + 15
                 );
-                MeadowGrovePiece meadowGrovePiece = new MeadowGrovePiece(groveCenter, specialRegions, groveRadius, groveHeight, groveDepth, boundingBox);
-                piecesBuilder.addPiece(meadowGrovePiece);
+                piecesBuilder.addPiece(new MeadowGrovePiece(groveCenter, specialRegions, groveRadius, groveHeight, groveDepth, boundingBox));
 
-                decorators.add(new MeadowGroveDecoratorPiece(meadowGrovePiece, boundingBox));
             }
-        }
-        for (MeadowGroveDecoratorPiece decorator : decorators) {
-            piecesBuilder.addPiece(decorator);
         }
     }
 

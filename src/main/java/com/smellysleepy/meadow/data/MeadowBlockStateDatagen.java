@@ -2,12 +2,15 @@ package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.flora.pearl_flower.TallPearlFlowerBlock;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.data.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.*;
+import team.lodestar.lodestone.helpers.DataHelper;
 import team.lodestar.lodestone.systems.datagen.*;
 import team.lodestar.lodestone.systems.datagen.providers.*;
 import team.lodestar.lodestone.systems.datagen.statesmith.*;
@@ -34,8 +37,8 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         MeadowBlockStateSmithTypes.COVERING_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_COVERING);
 
         setTexturePath("pearlflower/");
-        BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_PEARLFLOWER, MeadowBlockRegistry.TALL_MARINE_PEARLFLOWER, MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER);
-        MeadowBlockStateSmithTypes.SMALL_TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.PEARLFLOWER, MeadowBlockRegistry.MARINE_PEARLFLOWER, MeadowBlockRegistry.GRASSY_PEARLFLOWER);
+        DataHelper.getAll(blocks, b -> b.get() instanceof TallPearlFlowerBlock).forEach(b -> BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, b));
+        DataHelper.getAll(blocks, b -> b.get() instanceof PearlFlowerBlock).forEach(b -> MeadowBlockStateSmithTypes.SMALL_TALL_CROSS_MODEL_BLOCK.act(data, b));
 
         setTexturePath("aspen_wood/");
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LOG, MeadowBlockRegistry.CALCIFIED_ASPEN_LOG);
