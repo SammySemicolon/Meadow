@@ -33,7 +33,7 @@ public class MeadowGroveInjection {
             for (StructurePiece piece : structureStart.getPieces()) {
                 if (piece.getBoundingBox().intersects(boundingBox)) {
                     if (piece instanceof MeadowGrovePiece grovePiece) {
-                        MeadowGrovePiece.carveGroveShape(grovePiece, serverLevel, serverLevel.getRandom(), chunkAccess, chunkPos);
+                        MeadowGrovePiece.carveGroveShape(grovePiece, serverLevel, worldGenRegion.getRandom(), chunkAccess, chunkPos);
                     }
                 }
             }

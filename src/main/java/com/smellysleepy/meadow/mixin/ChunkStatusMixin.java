@@ -17,8 +17,8 @@ import java.util.List;
 @Mixin(ChunkStatus.class)
 public class ChunkStatusMixin {
 
-    @Inject(method = "lambda$static$9", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void injectCragTerrain(ChunkStatus chunkStatus, ServerLevel serverLevel, ChunkGenerator chunkGenerator, List list, ChunkAccess chunkAccess, CallbackInfo ci, WorldGenRegion worldGenRegion) {
+    @Inject(method = "lambda$static$10", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
+    private static void injectCragTerrain(ChunkStatus chunkStatus, ServerLevel serverLevel, ChunkGenerator chunkGenerator, List<ChunkAccess> list, ChunkAccess chunkAccess, CallbackInfo ci, WorldGenRegion worldGenRegion) {
         MeadowGroveInjection.injectGrove(serverLevel, chunkAccess, worldGenRegion);
     }
 }
