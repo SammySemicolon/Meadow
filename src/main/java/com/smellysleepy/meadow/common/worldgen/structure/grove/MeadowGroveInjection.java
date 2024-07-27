@@ -19,21 +19,29 @@ import java.util.List;
 
 public class MeadowGroveInjection {
 
-    public static void injectGrove(ServerLevel serverLevel, ChunkAccess chunkAccess, WorldGenRegion worldGenRegion) {
-        ChunkPos chunkPos = chunkAccess.getPos();
-        int x = SectionPos.sectionToBlockCoord(chunkPos.x);
-        int z = SectionPos.sectionToBlockCoord(chunkPos.z);
-        BoundingBox boundingBox = new BoundingBox(
-                x, serverLevel.getMinBuildHeight(), z,
-                x + 15, serverLevel.getMaxBuildHeight(), z + 15
-        );
+    public static void injectGrove(ServerLevel serverLevel, ChunkAccess access, WorldGenRegion worldGenRegion) {
+        ChunkPos chunkpos = access.getPos();
 
-        StructureStart structureStart = chunkAccess.getStartForStructure(worldGenRegion.registryAccess().registryOrThrow(Registries.STRUCTURE).getOrThrow(MeadowStructures.MEADOW_GROVE));
-        if (structureStart != null) {
-            for (StructurePiece piece : structureStart.getPieces()) {
-                if (piece.getBoundingBox().intersects(boundingBox)) {
-                    if (piece instanceof MeadowGrovePiece grovePiece) {
-                        MeadowGrovePiece.carveGroveShape(grovePiece, serverLevel, worldGenRegion.getRandom(), chunkAccess, chunkPos);
+        for (int j = -8; j <= 8; ++j) {
+            for (int k = -8; k <= 8; ++k) {
+                ChunkPos chunkPos = new ChunkPos(chunkpos.x + j, chunkpos.z + k);
+                ChunkAccess chunkaccess = worldGenRegion.getChunk(chunkPos.x, chunkPos.z);
+
+                int x = SectionPos.sectionToBlockCoord(chunkPos.x);
+                int z = SectionPos.sectionToBlockCoord(chunkPos.z);
+                BoundingBox boundingBox = new BoundingBox(
+                        x, serverLevel.getMinBuildHeight(), z,
+                        x + 15, serverLevel.getMaxBuildHeight(), z + 15
+                );
+
+                StructureStart structureStart = chunkaccess.getStartForStructure(worldGenRegion.registryAccess().registryOrThrow(Registries.STRUCTURE).getOrThrow(MeadowStructures.MEADOW_GROVE));
+                if (structureStart != null) {
+                    for (StructurePiece piece : structureStart.getPieces()) {
+                        if (piece.getBoundingBox().intersects(boundingBox)) {
+                            if (piece instanceof MeadowGrovePiece grovePiece) {
+                                MeadowGrovePiece.carveGroveShape(grovePiece, worldGenRegion, worldGenRegion.getRandom(), chunkaccess, chunkPos);
+                            }
+                        }
                     }
                 }
             }
