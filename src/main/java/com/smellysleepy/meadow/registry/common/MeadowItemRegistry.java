@@ -19,6 +19,8 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> CALCIFIED_EARTH = register("calcified_earth", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_EARTH.get(), p));
     public static final RegistryObject<Item> CALCIFIED_ROCK = register("calcified_rock", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_ROCK.get(), p));
     public static final RegistryObject<Item> CALCIFIED_COVERING = register("calcified_covering", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_COVERING.get(), p));
+    public static final RegistryObject<Item> CALCIFIED_DRIPSTONE = register("calcified_dripstone", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get(), p));
+    public static final RegistryObject<Item> GIANT_CALCIFIED_DRIPSTONE = register("giant_calcified_dripstone", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get(), p));
 
     public static final RegistryObject<Item> CALCIFIED_ASPEN_LOG = register("calcified_aspen_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_ASPEN_LOG.get(), p));
     public static final RegistryObject<Item> THIN_CALCIFIED_ASPEN_LOG = register("thin_calcified_aspen_log", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.THIN_CALCIFIED_ASPEN_LOG.get(), p));

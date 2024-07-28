@@ -6,9 +6,7 @@ import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.flora.pearl_flower.TallPearlFlowerBlock;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.data.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
-import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.*;
 import team.lodestar.lodestone.helpers.DataHelper;
 import team.lodestar.lodestone.systems.datagen.*;
@@ -35,6 +33,8 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         setTexturePath("calcification/");
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK);
         MeadowBlockStateSmithTypes.COVERING_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_COVERING);
+        MeadowBlockStateSmithTypes.POINTED_DRIPSTONE_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_DRIPSTONE);
+        MeadowBlockStateSmithTypes.GIANT_POINTED_DRIPSTONE_BLOCK.act(data, MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE);
 
         setTexturePath("pearlflower/");
         DataHelper.getAll(blocks, b -> b.get() instanceof TallPearlFlowerBlock).forEach(b -> BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, b));

@@ -1,0 +1,7 @@
+{
+  "parent": "meadow:block/templates/template_giant_pointed_dripstone",
+  "textures": {
+    "left_cross": "meadow:block/calcification/giant_calcified_dripstone_tip_left",
+    "right_cross": "meadow:block/calcification/giant_calcified_dripstone_tip_right"
+  }
+}

@@ -1,6 +1,8 @@
 {
   "values": [
     "meadow:calcified_earth",
+    "meadow:giant_calcified_dripstone",
+    "meadow:calcified_dripstone",
     "meadow:calcified_covering",
     "meadow:calcified_rock"
   ]

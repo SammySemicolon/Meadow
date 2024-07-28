@@ -3,12 +3,12 @@ package com.smellysleepy.meadow.data;
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
 import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
-import com.smellysleepy.meadow.common.block.meadow.flora.MeadowGrassBlock;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import net.minecraft.core.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraftforge.client.model.generators.*;
 import team.lodestar.lodestone.systems.block.*;
@@ -33,7 +33,7 @@ public class MeadowBlockStateSmithTypes {
     public static BlockStateSmith<LeavesBlock> HANGING_ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_0"), (block, provider) -> {
         String name = provider.getBlockName(block);
         Function<Integer, ModelFile> modelProvider = (i) ->
-                provider.models().withExistingParent(name+"_"+i, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
+                provider.models().withExistingParent(name + "_" + i, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
 
         ConfiguredModel.Builder<VariantBlockStateBuilder> builder = provider.getVariantBuilder(block).partialState().modelForState();
         for (int i = 0; i < 3; i++) {
@@ -83,25 +83,25 @@ public class MeadowBlockStateSmithTypes {
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture);
 
-        ModelFile smallLeaves = provider.models().withExistingParent(name+"_small_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+        ModelFile smallLeaves = provider.models().withExistingParent(name + "_small_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture)
                 .texture("leaves", smallLeavesTexture);
 
-        ModelFile mediumLeaves = provider.models().withExistingParent(name+"_medium_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+        ModelFile mediumLeaves = provider.models().withExistingParent(name + "_medium_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture)
                 .texture("leaves", mediumLeavesTexture);
 
-        ModelFile largeLeaves = provider.models().withExistingParent(name+"_large_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+        ModelFile largeLeaves = provider.models().withExistingParent(name + "_large_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture)
                 .texture("leaves", largeLeavesTexture);
 
-        ModelFile topLeaves = provider.models().withExistingParent(name+"_top_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves_top"))
+        ModelFile topLeaves = provider.models().withExistingParent(name + "_top_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves_top"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture)
@@ -158,7 +158,7 @@ public class MeadowBlockStateSmithTypes {
         MultiPartBlockStateBuilder multipartBuilder = provider.getMultipartBuilder(block);
         for (Direction direction : Direction.values()) {
             BooleanProperty property = (BooleanProperty) block.defaultBlockState().getProperties().stream().filter(p -> p.getName().equals(direction.getName())).findFirst().orElseThrow();
-            int yRotation = ((int) direction.toYRot()+180) % 360;
+            int yRotation = ((int) direction.toYRot() + 180) % 360;
             int xRotation = 0;
             if (direction.getAxis().isVertical()) {
                 xRotation = direction.equals(Direction.UP) ? 270 : 90;
@@ -174,5 +174,45 @@ public class MeadowBlockStateSmithTypes {
             }
             partBuilder.end();
         }
+    });
+
+    public static BlockStateSmith<PointedDripstoneBlock> POINTED_DRIPSTONE_BLOCK = new BlockStateSmith<>(PointedDripstoneBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_tip"), (block, provider) -> {
+        String name = provider.getBlockName(block);
+
+        provider.getVariantBuilder(block)
+                .forAllStates(state -> {
+                    DripstoneThickness thickness = state.getValue(PointedDripstoneBlock.THICKNESS);
+                    Direction direction = state.getValue(PointedDripstoneBlock.TIP_DIRECTION);
+                    String partName = name + "_" + thickness;
+                    ModelFile model = provider.models().withExistingParent(partName, new ResourceLocation("block/pointed_dripstone"))
+                            .texture("cross", provider.getBlockTexture(partName));
+
+                    final int rotationY = direction.equals(Direction.UP) ? 0 : 180;
+                    return ConfiguredModel.builder()
+                            .modelFile(model)
+                            .rotationY(rotationY)
+                            .build();
+                });
+    });
+    public static BlockStateSmith<PointedDripstoneBlock> GIANT_POINTED_DRIPSTONE_BLOCK = new BlockStateSmith<>(PointedDripstoneBlock.class, ItemModelSmithTypes.GENERATED_ITEM, (block, provider) -> {
+        String name = provider.getBlockName(block);
+
+        provider.getVariantBuilder(block)
+                .forAllStates(state -> {
+                    DripstoneThickness thickness = state.getValue(PointedDripstoneBlock.THICKNESS);
+                    Direction direction = state.getValue(PointedDripstoneBlock.TIP_DIRECTION);
+                    String partName = name + "_" + thickness;
+                    String leftCross = partName + "_left";
+                    String rightCross = partName + "_right";
+                    ModelFile model = provider.models().withExistingParent(partName, MeadowMod.meadowModPath("block/templates/template_giant_pointed_dripstone"))
+                            .texture("left_cross", provider.getBlockTexture(leftCross))
+                            .texture("right_cross", provider.getBlockTexture(rightCross));
+
+                    final int rotationX = direction.equals(Direction.UP) ? 0 : 180;
+                    return ConfiguredModel.builder()
+                            .modelFile(model)
+                            .rotationX(rotationX)
+                            .build();
+                });
     });
 }

@@ -21,6 +21,16 @@ public class MeadowBlockProperties {
                 .sound(SoundType.NETHERRACK);
     }
 
+    public static LodestoneBlockProperties CALCIFIED_DRIPSTONE_BLOCK_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(0.5F, 4.0F)
+                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
+                .addTags(MeadowBlockTagRegistry.CALCIFICATION)
+                .mapColor(MapColor.COLOR_BLUE)
+                .sound(SoundType.NETHERRACK)
+                .setCutoutRenderType();
+    }
+
     public static LodestoneBlockProperties CALCIFIED_COVERING_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(0.25F, 2.0F)

@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.registry.common;
 
 import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
+import com.smellysleepy.meadow.common.block.calcification.CalcifiedPointedDripstoneBlock;
 import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.flora.pearl_flower.TallPearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
@@ -26,6 +27,9 @@ public class MeadowBlockRegistry {
     public static final RegistryObject<Block> CALCIFIED_EARTH = BLOCKS.register("calcified_earth", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
     public static final RegistryObject<Block> CALCIFIED_ROCK = BLOCKS.register("calcified_rock", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
     public static final RegistryObject<CalcifiedCoveringBlock> CALCIFIED_COVERING = BLOCKS.register("calcified_covering", () -> new CalcifiedCoveringBlock(MeadowBlockProperties.CALCIFIED_COVERING_PROPERTIES()));
+
+    public static final RegistryObject<Block> CALCIFIED_DRIPSTONE = BLOCKS.register("calcified_dripstone", () -> new CalcifiedPointedDripstoneBlock(MeadowBlockProperties.CALCIFIED_DRIPSTONE_BLOCK_PROPERTIES()));
+    public static final RegistryObject<Block> GIANT_CALCIFIED_DRIPSTONE = BLOCKS.register("giant_calcified_dripstone", () -> new CalcifiedPointedDripstoneBlock(MeadowBlockProperties.CALCIFIED_DRIPSTONE_BLOCK_PROPERTIES()));
 
     public static final RegistryObject<Block> MEADOW_GRASS_BLOCK = BLOCKS.register("meadow_grass_block", () -> new MeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_BLOCK_PROPERTIES()));
 
