@@ -30,7 +30,7 @@ public class MeadowStructures {
                                     MobCategory.CREATURE,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.PIECE, SimpleWeightedRandomList.create(new MobSpawnSettings.SpawnerData(EntityType.CAT, 5, 4, 10)))
                             ),
-                            GenerationStep.Decoration.RAW_GENERATION, TerrainAdjustment.NONE)
+                            GenerationStep.Decoration.RAW_GENERATION, TerrainAdjustment.BURY)
             )
     );
     

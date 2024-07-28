@@ -51,6 +51,8 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> GRASSY_PEARLFLOWER = register("grassy_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.GRASSY_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> TALL_MARINE_PEARLFLOWER = register("tall_marine_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_MARINE_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> MARINE_PEARLFLOWER = register("marine_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MARINE_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> TALL_CALCIFIED_PEARLFLOWER = register("tall_calcified_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_CALCIFIED_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> CALCIFIED_PEARLFLOWER = register("calcified_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> TALL_PEARLFLOWER = register("tall_pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> PEARLFLOWER = register("pearlflower", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PEARLFLOWER.get(), p));
 
