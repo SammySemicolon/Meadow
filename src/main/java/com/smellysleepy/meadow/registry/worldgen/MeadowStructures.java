@@ -9,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
@@ -28,7 +29,7 @@ public class MeadowStructures {
                     structure(structureFactoryBootstapContext.lookup(Registries.BIOME).getOrThrow(MeadowBiomeTagRegistry.HAS_MEADOW_GROVES),
                             Map.of(
                                     MobCategory.CREATURE,
-                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.PIECE, SimpleWeightedRandomList.create(new MobSpawnSettings.SpawnerData(EntityType.CAT, 5, 4, 10)))
+                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create())
                             ),
                             GenerationStep.Decoration.RAW_GENERATION, TerrainAdjustment.BURY)
             )

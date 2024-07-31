@@ -63,17 +63,15 @@ public class SmallMeadowTreeFeature extends AbstractMeadowTreeFeature {
         for (int i = 0; i <= trunkHeight; i++) {
             int leafStateIndex = i == trunkHeight ? 4 : Mth.clamp(i, 0, 3);
             final BlockPos logPos = mutable.immutable();
-            if (canPlace(level, logPos)) {
-                BlockState state = logState;
-                if (i <= calcificationHeight) {
-                    state = i == calcificationHeight ? partiallyCalcifiedLogState : calcifiedLogState;
-                }
-                var entry = create(state.setValue(ThinMeadowLogBlock.LEAVES, MeadowLeavesType.values()[leafStateIndex]));
-                filler.getLayer(LOGS).put(logPos, entry);
-            }
-            else {
+            if (!canPlace(level, logPos)) {
                 return false;
             }
+            BlockState state = logState;
+            if (i <= calcificationHeight) {
+                state = i == calcificationHeight ? partiallyCalcifiedLogState : calcifiedLogState;
+            }
+            var entry = create(state.setValue(ThinMeadowLogBlock.LEAVES, MeadowLeavesType.values()[leafStateIndex]));
+            filler.getLayer(LOGS).put(logPos, entry);
             mutable.move(Direction.UP);
         }
 
@@ -86,7 +84,11 @@ public class SmallMeadowTreeFeature extends AbstractMeadowTreeFeature {
                             continue;
                         }
                     }
-                    filler.getLayer(LEAVES).put(mutable.offset(x, y, z), leavesEntry);
+                    BlockPos leafPos = mutable.offset(x, y, z);
+                    if (!canPlace(level, leafPos)) {
+                        return false;
+                    }
+                    filler.getLayer(LEAVES).put(leafPos, leavesEntry);
                 }
             }
         }

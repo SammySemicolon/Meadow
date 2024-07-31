@@ -57,11 +57,12 @@ public abstract class AbstractMeadowTreeFeature extends AbstractTreeFeature<Mead
             for (BlockPos blockPos : coveringPositions) {
                 filler.getLayer(COVERING).put(blockPos, calcifiedEarthEntry);
 
-                BlockPos above = blockPos.above();
                 for (int i = 0; i < 4; i++) {
                     Direction direction = Direction.from2DDataValue(i);
-                    BlockPos offsetPos = above.relative(direction);
-                    filler.getLayer(COVERING).put(offsetPos, coveringEntry);
+                    BlockPos offsetPos = blockPos.relative(direction);
+                    if (level.getBlockState(offsetPos).isFaceSturdy(level, offsetPos, Direction.UP)) {
+                        filler.getLayer(COVERING).put(offsetPos.above(), coveringEntry);
+                    }
                 }
             }
 

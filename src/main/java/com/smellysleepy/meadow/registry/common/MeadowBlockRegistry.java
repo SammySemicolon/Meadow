@@ -33,9 +33,9 @@ public class MeadowBlockRegistry {
 
     public static final RegistryObject<Block> MEADOW_GRASS_BLOCK = BLOCKS.register("meadow_grass_block", () -> new MeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_BLOCK_PROPERTIES()));
 
-    public static final RegistryObject<Block> TALL_MEADOW_GRASS = BLOCKS.register("tall_meadow_grass", () -> new TallMeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
-    public static final RegistryObject<Block> MEDIUM_MEADOW_GRASS = BLOCKS.register("medium_meadow_grass", () -> new MeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
-    public static final RegistryObject<Block> SHORT_MEADOW_GRASS = BLOCKS.register("short_meadow_grass", () -> new MeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<TallMeadowGrassBlock> TALL_MEADOW_GRASS = BLOCKS.register("tall_meadow_grass", () -> new TallMeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<MediumMeadowGrassBlock> MEDIUM_MEADOW_GRASS = BLOCKS.register("medium_meadow_grass", () -> new MediumMeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<ShortMeadowGrassBlock> SHORT_MEADOW_GRASS = BLOCKS.register("short_meadow_grass", () -> new ShortMeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
 
     public static final RegistryObject<Block> TALL_GRASSY_PEARLFLOWER = BLOCKS.register("tall_grassy_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> GRASSY_PEARLFLOWER = BLOCKS.register("grassy_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.PEARLFLOWER_PROPERTIES()));

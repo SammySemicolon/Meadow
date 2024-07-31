@@ -6,8 +6,8 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 
-public class TallMeadowGrass extends DoublePlantBlock {
-    public TallMeadowGrass(Properties pProperties) {
+public class TallMeadowGrassBlock extends DoublePlantBlock {
+    public TallMeadowGrassBlock(Properties pProperties) {
         super(pProperties);
     }
 

@@ -49,13 +49,14 @@ public class WorldgenHelper {
                     for (int k = 0; level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
                         mutable.move(Direction.DOWN);
                     }
-                    if (level.getBlockState(mutable).canBeReplaced() || level.getBlockState(mutable.below()).canBeReplaced()) {
+                    BlockState state = level.getBlockState(mutable);
+                    if (state.canBeReplaced() || !state.isFaceSturdy(level, mutable, Direction.UP)) {
                         continue;
                     }
-                    if (!level.getBlockState(mutable.above()).canBeReplaced()) {
+                    if (level.getBlockState(mutable.below()).canBeReplaced() || !level.getBlockState(mutable.above()).canBeReplaced()) {
                         continue;
                     }
-                    if (statePredicate.test(level.getBlockState(mutable))) {
+                    if (statePredicate.test(state)) {
                         positions.add(mutable.immutable());
                     }
                 }

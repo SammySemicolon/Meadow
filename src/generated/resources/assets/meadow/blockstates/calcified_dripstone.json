@@ -2,11 +2,11 @@
   "variants": {
     "thickness=base,vertical_direction=down,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_base",
-      "y": 180
+      "x": 180
     },
     "thickness=base,vertical_direction=down,waterlogged=true": {
       "model": "meadow:block/calcified_dripstone_base",
-      "y": 180
+      "x": 180
     },
     "thickness=base,vertical_direction=up,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_base"
@@ -16,11 +16,11 @@
     },
     "thickness=frustum,vertical_direction=down,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_frustum",
-      "y": 180
+      "x": 180
     },
     "thickness=frustum,vertical_direction=down,waterlogged=true": {
       "model": "meadow:block/calcified_dripstone_frustum",
-      "y": 180
+      "x": 180
     },
     "thickness=frustum,vertical_direction=up,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_frustum"
@@ -30,11 +30,11 @@
     },
     "thickness=middle,vertical_direction=down,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_middle",
-      "y": 180
+      "x": 180
     },
     "thickness=middle,vertical_direction=down,waterlogged=true": {
       "model": "meadow:block/calcified_dripstone_middle",
-      "y": 180
+      "x": 180
     },
     "thickness=middle,vertical_direction=up,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_middle"
@@ -44,11 +44,11 @@
     },
     "thickness=tip,vertical_direction=down,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_tip",
-      "y": 180
+      "x": 180
     },
     "thickness=tip,vertical_direction=down,waterlogged=true": {
       "model": "meadow:block/calcified_dripstone_tip",
-      "y": 180
+      "x": 180
     },
     "thickness=tip,vertical_direction=up,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_tip"
@@ -58,11 +58,11 @@
     },
     "thickness=tip_merge,vertical_direction=down,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_tip_merge",
-      "y": 180
+      "x": 180
     },
     "thickness=tip_merge,vertical_direction=down,waterlogged=true": {
       "model": "meadow:block/calcified_dripstone_tip_merge",
-      "y": 180
+      "x": 180
     },
     "thickness=tip_merge,vertical_direction=up,waterlogged=false": {
       "model": "meadow:block/calcified_dripstone_tip_merge"

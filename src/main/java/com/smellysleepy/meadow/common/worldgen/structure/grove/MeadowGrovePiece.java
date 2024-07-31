@@ -2,7 +2,6 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.UnsafeBoundingBox;
-import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.CalcifiedRegion;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.LakeRegion;
@@ -47,8 +46,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
-
 public class MeadowGrovePiece extends StructurePiece {
 
     private final BlockPos groveCenter;
@@ -56,6 +53,8 @@ public class MeadowGrovePiece extends StructurePiece {
     private final int groveRadius;
     private final int groveHeight;
     private final int groveDepth;
+
+    public boolean hasGenerated;
 
     public final List<Pair<BlockPos, ResourceLocation>> bufferedFeatures = new ArrayList<>();
 
@@ -74,6 +73,8 @@ public class MeadowGrovePiece extends StructurePiece {
         this.groveRadius = tag.getInt("groveRadius");
         this.groveHeight = tag.getInt("groveHeight");
         this.groveDepth = tag.getInt("groveDepth");
+        this.hasGenerated = tag.getBoolean("hasGenerated");
+
         this.specialRegions = new ArrayList<>();
 
         CompoundTag regionsTag = tag.getCompound("regions");
@@ -102,6 +103,7 @@ public class MeadowGrovePiece extends StructurePiece {
         tag.putInt("groveRadius", groveRadius);
         tag.putInt("groveHeight", groveHeight);
         tag.putInt("groveDepth", groveDepth);
+        tag.putBoolean("hasGenerated", hasGenerated);
 
         CompoundTag regionsTag = new CompoundTag();
         regionsTag.putInt("count", specialRegions.size());
@@ -129,6 +131,9 @@ public class MeadowGrovePiece extends StructurePiece {
 
     @Override
     public void postProcess(WorldGenLevel worldGenLevel, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
+        if (!hasGenerated) {
+            carveGroveShape(this, worldGenLevel, randomSource, worldGenLevel.getChunk(chunkPos.x, chunkPos.z), chunkPos);
+        }
         for (Pair<BlockPos, ResourceLocation> pair : bufferedFeatures) {
             var pos = pair.getFirst();
             var location = pair.getSecond();
@@ -138,9 +143,11 @@ public class MeadowGrovePiece extends StructurePiece {
                     .getHolder(key).orElseThrow();
             holder.get().place(worldGenLevel, chunkGenerator, randomSource, pos);
         }
+        bufferedFeatures.clear();
     }
 
     public static void carveGroveShape(MeadowGrovePiece grovePiece, WorldGenLevel worldGenLevel, RandomSource random, ChunkAccess chunk, ChunkPos chunkPos) {
+        grovePiece.hasGenerated = true;
         var noiseSampler = new ImprovedNoise(new XoroshiroRandomSource(worldGenLevel.getSeed()));
         var unsafeBoundingBox = new UnsafeBoundingBox();
         var mutableBlockPos = new BlockPos.MutableBlockPos();
@@ -216,9 +223,11 @@ public class MeadowGrovePiece extends StructurePiece {
         Optional<Pair<LakeRegion, Double>> lakeRegionOptional = getClosestRegion(LakeRegion.class, blockX, blockZ, lakeNoise, relativeLakeRadius);
 
         BlockState ceilingPatternBlock = chooseSediment(noiseSampler, blockX, ceilingLimit, blockZ);
-
         List<BlockState> ceilingPattern = getCeilingPattern(chunk, ceilingPatternBlock, pos, ceilingLimit);
-        List<BlockState> surfacePattern = getSurfaceBlockPattern(chunk, noiseSampler, pos, calcifiedRegionOptional.orElse(null), sqrtDistance, offset, surfaceLimit);
+
+        Pair<List<BlockState>, Integer> surfacePatternData = getSurfaceBlockPattern(chunk, noiseSampler, pos, calcifiedRegionOptional.orElse(null), sqrtDistance, offset, surfaceLimit);
+        List<BlockState> surfacePattern = surfacePatternData.getFirst();
+        int surfacePatternOffset = surfacePatternData.getSecond();
 
         boolean placeWater = false;
         double waterDelta = 0;
@@ -252,7 +261,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 waterDelta = (lakeDelta-0.5f)/0.5f;
                 waterStartingPoint = centerY - waterDepth;
             }
-            if (calcifiedRegionOptional.isEmpty()) {
+            if (calcifiedRegionOptional.isEmpty() || calcifiedRegionOptional.get().getSecond() < 0.03f) {
                 if (isNearWater) {
                     Block block = Blocks.GRASS_BLOCK;
                     if (lakeGrassDelta > 0.5f) {
@@ -264,8 +273,7 @@ public class MeadowGrovePiece extends StructurePiece {
                     } else if (lakeGrassDelta < 0.1f) {
                         block = Blocks.ROOTED_DIRT;
                     }
-
-                    surfacePattern.set(0, block.defaultBlockState());
+                    surfacePattern.set(surfacePatternOffset, block.defaultBlockState());
                 }
             }
         }
@@ -276,9 +284,7 @@ public class MeadowGrovePiece extends StructurePiece {
         int ceilingPlacementHeight = ceilingLimit + ceilingCoverage;
         int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
 
-        if (surfacePattern.get(0).getBlock() instanceof CalcifiedCoveringBlock) {
-            surfaceLimit++;
-        }
+        surfaceLimit += surfacePatternOffset;
 
         int ceilingShellOffset = (height > 8 ? Mth.floor((height - 8) * 0.2f) : 0);
         int ceilingShellLimit = ceilingPlacementHeight + 6 - ceilingShellOffset;
@@ -291,7 +297,7 @@ public class MeadowGrovePiece extends StructurePiece {
         double rampNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 75000, 0.01f) / 2;
         int rampYLevel = centerY - flatDepth;
         int rampHeight = Mth.ceil(flatDepth * Easing.QUINTIC_IN_OUT.clamped(rampNoise, 0.8f, 1.2f));
-        List<BlockState> rampBlockPattern = getRampBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, rampYLevel);
+        List<BlockState> rampBlockPattern = getRampBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, rampYLevel).getFirst();
 
         createShell(chunk, pos, unsafeBoundingBox, ceilingPatternBlock, blockX, blockZ, ceilingShellStart, ceilingShellLimit, surfaceShellStart, surfaceShellLimit);
 
@@ -452,9 +458,9 @@ public class MeadowGrovePiece extends StructurePiece {
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
         float rand = randomSource.nextFloat();
-        if (rand < 0.01f) {
+        if (rand < 0.02f) {
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-        } else if (rand < 0.025f) {
+        } else if (rand < 0.03f) {
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
         } else if (rand < 0.05f) {
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH;
@@ -525,9 +531,9 @@ public class MeadowGrovePiece extends StructurePiece {
             } else {
                 rand = randomSource.nextFloat();
                 if (featureTypeOffset > start && featureTypeOffset < midpoint) {
-                    if (rand < 0.015f) {
+                    if (rand < 0.03f) {
                         feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-                    } else if (rand < 0.03f) {
+                    } else if (rand < 0.04f) {
                         feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
                     }
                 }
@@ -662,7 +668,7 @@ public class MeadowGrovePiece extends StructurePiece {
 
     private List<BlockState> getCeilingPattern(ChunkAccess chunk, BlockState patternState, BlockPos.MutableBlockPos pos, int startingY) {
         ArrayList<BlockState> pattern = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 12; i++) {
             if (i > 1 && i <= 3) {
                 pattern.add(Blocks.TUFF.defaultBlockState());
                 continue;
@@ -679,16 +685,18 @@ public class MeadowGrovePiece extends StructurePiece {
         return pattern;
     }
 
-    private List<BlockState> getRampBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, double sqrtDistance, double offset, int startingY) {
+    private Pair<List<BlockState>, Integer> getRampBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, double sqrtDistance, double offset, int startingY) {
         return getSurfaceBlockPattern(chunk, noiseSampler, pos, null, sqrtDistance, offset, startingY);
     }
 
-    private List<BlockState> getSurfaceBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, Pair<CalcifiedRegion, Double> calcification, double sqrtDistance, double offset, int startingY) {
+    private Pair<List<BlockState>, Integer> getSurfaceBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, Pair<CalcifiedRegion, Double> calcification, double sqrtDistance, double offset, int startingY) {
         ArrayList<BlockState> pattern = new ArrayList<>();
+        int patternOffset = 0;
         double crackDelta = makeCracks(noiseSampler, pos.getX(), pos.getZ(), sqrtDistance, offset);
         boolean useCracks = crackDelta > 0;
         if (calcification != null && calcification.getSecond() < 0.03f) {
             pattern.add(MeadowBlockRegistry.CALCIFIED_COVERING.get().defaultBlockState().setValue(MultifaceBlock.getFaceProperty(Direction.DOWN), true));
+            patternOffset++;
         }
         if (calcification != null && calcification.getSecond() >= 0.03f) {
             if (!useCracks) {
@@ -698,6 +706,7 @@ public class MeadowGrovePiece extends StructurePiece {
 
             if (crackDelta >= 0f && crackDelta < 0.2f) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_COVERING.get().defaultBlockState().setValue(MultifaceBlock.getFaceProperty(Direction.DOWN), true));
+                patternOffset++;
             } else if ((crackDelta >= 0.2f && crackDelta < 0.4f) || delta < 0.04f) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState());
             } else if ((crackDelta >= 0.4f) || delta < 0.06f) {
@@ -729,7 +738,7 @@ public class MeadowGrovePiece extends StructurePiece {
             }
             pattern.add(Blocks.STONE.defaultBlockState());
         }
-        return pattern;
+        return Pair.of(pattern, patternOffset);
     }
 
     public double makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, double distance, double offset) {

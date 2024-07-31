@@ -24,6 +24,9 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
         ExistingFileHelper helper = event.getExistingFileHelper();
 
+
+        generator.addProvider(event.includeClient(), new MeadowLangDatagen(output));
+
         MeadowItemModelDatagen itemModelsProvider = new MeadowItemModelDatagen(output, helper);
 
         generator.addProvider(event.includeClient(), new MeadowBlockStateDatagen(output, helper, itemModelsProvider));

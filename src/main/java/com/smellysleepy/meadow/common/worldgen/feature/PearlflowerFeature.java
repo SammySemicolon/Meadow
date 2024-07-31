@@ -26,7 +26,10 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
         BlockState below = worldgenlevel.getBlockState(blockpos.below());
         BlockStateProvider provider = config.meadow();
         boolean isWaterlogged = worldgenlevel.isWaterAt(blockpos);
-        if ((below.is(BlockTags.BASE_STONE_OVERWORLD) || below.is(MeadowBlockTagRegistry.CALCIFICATION)) && !isWaterlogged){
+        if (below.is(MeadowBlockTagRegistry.CALCIFICATION)) {
+            provider = config.calcified();
+        }
+        else if ((below.is(BlockTags.BASE_STONE_OVERWORLD)) && !isWaterlogged){
             provider = config.stone();
         }
         else if (below.is(BlockTags.MOSS_REPLACEABLE) || isWaterlogged) {

@@ -187,10 +187,10 @@ public class MeadowBlockStateSmithTypes {
                     ModelFile model = provider.models().withExistingParent(partName, new ResourceLocation("block/pointed_dripstone"))
                             .texture("cross", provider.getBlockTexture(partName));
 
-                    final int rotationY = direction.equals(Direction.UP) ? 0 : 180;
+                    final int rotationX = direction.equals(Direction.UP) ? 0 : 180;
                     return ConfiguredModel.builder()
                             .modelFile(model)
-                            .rotationY(rotationY)
+                            .rotationX(rotationX)
                             .build();
                 });
     });

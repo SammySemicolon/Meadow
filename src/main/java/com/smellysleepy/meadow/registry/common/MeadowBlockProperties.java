@@ -14,9 +14,8 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties CALCIFIED_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(0.75F, 4.0F)
-                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
-
+                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
                 .mapColor(MapColor.COLOR_BLUE)
                 .sound(SoundType.NETHERRACK);
     }
@@ -34,46 +33,40 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties CALCIFIED_COVERING_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(0.25F, 2.0F)
+                .isValidSpawn(Blocks::ocelotOrParrot)
+                .isViewBlocking(Blocks::never)
+                .isSuffocating(Blocks::never)
+                .setCutoutRenderType()
+                .noCollission()
+                .noOcclusion()
                 .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.MINEABLE_WITH_HOE)
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION)
                 .mapColor(MapColor.COLOR_BLUE)
-                .sound(SoundType.GLOW_LICHEN)
-                .setCutoutRenderType()
-                .noOcclusion();
-    }
-
-    public static LodestoneBlockProperties WALL_FUNGUS_PROPERTIES() {
-        return new LodestoneBlockProperties()
-                .randomTicks()
-                .strength(0.2F, 2.0F)
-                .noCollission()
-                .noOcclusion()
-                .isValidSpawn(Blocks::ocelotOrParrot)
-                .isSuffocating(Blocks::never)
-                .isViewBlocking(Blocks::never)
-                .setCutoutRenderType()
-                .needsHoe();
+                .sound(SoundType.GLOW_LICHEN);
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .isValidSpawn(Blocks::ocelotOrParrot)
+                .isSuffocating(Blocks::never)
+                .isViewBlocking(Blocks::never)
+                .strength(0.6F)
+                .randomTicks()
                 .addTags(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
                 .mapColor(MapColor.GRASS)
-                .sound(SoundType.GRASS)
-                .strength(0.6F)
-                .randomTicks();
+                .sound(SoundType.GRASS);
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .offsetType(BlockBehaviour.OffsetType.XZ)
-                .mapColor(MapColor.GRASS)
-                .sound(SoundType.GRASS)
                 .setCutoutRenderType()
                 .noCollission()
                 .noOcclusion()
                 .replaceable()
-                .instabreak();
+                .instabreak()
+                .offsetType(BlockBehaviour.OffsetType.XZ)
+                .mapColor(MapColor.GRASS)
+                .sound(SoundType.GRASS);
     }
 
     public static LodestoneBlockProperties MEADOW_WOOD_PROPERTIES() {
@@ -87,34 +80,34 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .lightLevel(s -> s.getValue(ThinMeadowLogBlock.LEAVES).equals(ThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0)
                 .strength(1.25F, 4.0F)
+                .setCutoutRenderType()
                 .instrument(NoteBlockInstrument.BASS)
                 .addTag(BlockTags.MINEABLE_WITH_AXE)
                 .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.CHERRY_WOOD)
-                .mapColor(MapColor.WOOD)
-                .setCutoutRenderType()
-                .lightLevel(s -> s.getValue(ThinMeadowLogBlock.LEAVES).equals(ThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
+                .mapColor(MapColor.WOOD);
     }
 
     public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .isValidSpawn(Blocks::ocelotOrParrot)
+                .isViewBlocking(Blocks::never)
+                .isSuffocating(Blocks::never)
+                .setCutoutRenderType()
                 .strength(0.2F)
                 .randomTicks()
                 .noOcclusion()
-                .setCutoutRenderType()
-                .isValidSpawn(Blocks::ocelotOrParrot)
-                .isSuffocating(Blocks::never)
-                .isViewBlocking(Blocks::never)
-                .sound(SoundType.CHERRY_LEAVES)
                 .needsHoe()
+                .sound(SoundType.CHERRY_LEAVES)
                 .addTag(BlockTags.LEAVES);
     }
 
     public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
         return ASPEN_LEAVES_PROPERTIES()
-                .noCollission()
-                .lightLevel(s -> 4);
+                .lightLevel(s -> 4)
+                .noCollission();
     }
 
     public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {

@@ -1,6 +1,30 @@
 {
   "type": "meadow:pearlflower",
   "config": {
+    "calcified": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "meadow:calcified_pearlflower",
+            "Properties": {
+              "waterlogged": "false"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "meadow:tall_calcified_pearlflower",
+            "Properties": {
+              "half": "lower",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    },
     "marine": {
       "type": "minecraft:weighted_state_provider",
       "entries": [

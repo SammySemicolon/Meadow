@@ -39,9 +39,13 @@ public class TallPearlFlowerBlock extends TallFlowerBlock {
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        BlockState state = super.getStateForPlacement(pContext);
+        if (state == null) {
+            return null;
+        }
         FluidState fluidstate = pContext.getLevel().getFluidState(pContext.getClickedPos());
         boolean flag = fluidstate.getType() == Fluids.WATER;
-        return super.getStateForPlacement(pContext).setValue(WATERLOGGED, flag);
+        return state.setValue(WATERLOGGED, flag);
     }
 
     @Override

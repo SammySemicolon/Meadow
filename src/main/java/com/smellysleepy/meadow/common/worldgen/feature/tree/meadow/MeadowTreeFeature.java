@@ -1,27 +1,16 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.meadow;
 
-import com.mojang.datafixers.util.Pair;
-import com.smellysleepy.meadow.common.block.meadow.leaves.MeadowLeavesBlock;
 import com.smellysleepy.meadow.common.block.meadow.wood.PartiallyCalcifiedMeadowLogBlock;
-import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
-import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.levelgen.feature.*;
-import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.worldgen.*;
-import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.*;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import java.util.function.*;
 
-import static com.smellysleepy.meadow.common.worldgen.WorldgenHelper.*;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.*;
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
 
@@ -133,10 +122,12 @@ public class MeadowTreeFeature extends AbstractMeadowTreeFeature {
                 filler.getLayer(LOGS).put(mutable.immutable(), create(logState));
                 mutable.move(Direction.UP);
             }
-            makeLeafBlob(leavesEntry, filler, mutable.move(Direction.DOWN, branchHeight));
+            var success = makeLeafBlob(level, filler, leavesEntry, mutable.move(Direction.DOWN, branchHeight));
+            if (!success) {
+                return false;
+            }
         }
-        makeLeafBlob(leavesEntry, filler, mutable.set(pos).move(Direction.UP, trunkHeight-2));
-        return true;
+        return makeLeafBlob(level, filler, leavesEntry, mutable.set(pos).move(Direction.UP, trunkHeight-2));
     }
 
     public void addDownwardsTrunkConnections(BlockState calcifiedLogState, RandomSource randomSource, WorldGenLevel level, LodestoneBlockFiller filler, BlockPos pos) {
@@ -154,27 +145,36 @@ public class MeadowTreeFeature extends AbstractMeadowTreeFeature {
         }
     }
 
-    public void makeLeafBlob(BlockStateEntry leavesEntry, LodestoneBlockFiller filler, BlockPos pos) {
+    public boolean makeLeafBlob(WorldGenLevel level, LodestoneBlockFiller filler, BlockStateEntry leavesEntry, BlockPos pos) {
         int[] leafSizes = new int[]{1, 2, 3, 3, 2, 1};
         var mutable = pos.mutable();
 
         for (int i = 0; i < 6; i++) {
             mutable.move(Direction.UP);
-            makeLeafSlice(filler.getLayer(LEAVES), mutable, leafSizes[i], leavesEntry);
+            boolean success = makeLeafSlice(level, filler.getLayer(LEAVES), mutable, leafSizes[i], leavesEntry);
+            if (!success) {
+                return false;
+            }
         }
+        return true;
     }
 
-    public void makeLeafSlice(LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, BlockStateEntry entry) {
-        makeLeafSlice(layer, pos, leavesSize, ()->entry);
+    public boolean makeLeafSlice(WorldGenLevel level, LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, BlockStateEntry entry) {
+        return makeLeafSlice(level, layer, pos, leavesSize, ()->entry);
     }
-    public void makeLeafSlice(LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, Supplier<BlockStateEntry> entry) {
+    public boolean makeLeafSlice(WorldGenLevel level, LodestoneBlockFillerLayer layer, BlockPos pos, int leavesSize, Supplier<BlockStateEntry> entry) {
         for (int x = -leavesSize; x <= leavesSize; x++) {
             for (int z = -leavesSize; z <= leavesSize; z++) {
                 if (Math.abs(x) == leavesSize && Math.abs(z) == leavesSize) {
                     continue;
                 }
-                layer.put(pos.offset(x, 0, z), entry.get());
+                BlockPos offsetPos = pos.offset(x, 0, z);
+                if (!canPlace(level, offsetPos)) {
+                    return false;
+                }
+                layer.put(offsetPos, entry.get());
             }
         }
+        return true;
     }
 }

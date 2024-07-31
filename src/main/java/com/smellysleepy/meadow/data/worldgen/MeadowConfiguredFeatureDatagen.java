@@ -220,7 +220,10 @@ public class MeadowConfiguredFeatureDatagen {
                                 .add(MeadowBlockRegistry.TALL_PEARLFLOWER.get().defaultBlockState(), 1)),
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                                 .add(MeadowBlockRegistry.MARINE_PEARLFLOWER.get().defaultBlockState(), 3)
-                                .add(MeadowBlockRegistry.TALL_MARINE_PEARLFLOWER.get().defaultBlockState(), 1)))));
+                                .add(MeadowBlockRegistry.TALL_MARINE_PEARLFLOWER.get().defaultBlockState(), 1)),
+                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                                .add(MeadowBlockRegistry.CALCIFIED_PEARLFLOWER.get().defaultBlockState(), 3)
+                                .add(MeadowBlockRegistry.TALL_CALCIFIED_PEARLFLOWER.get().defaultBlockState(), 1)))));
 
     }
 
