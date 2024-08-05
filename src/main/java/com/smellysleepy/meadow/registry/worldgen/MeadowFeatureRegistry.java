@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.registry.worldgen;
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.worldgen.feature.PearlflowerFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.StrangePlantFeature;
+import com.smellysleepy.meadow.common.worldgen.feature.calcification.PointyCalcificationFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.patch.LayeredPatchFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.MeadowTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.SmallMeadowTreeFeature;
@@ -24,5 +25,7 @@ public class MeadowFeatureRegistry {
     public static final RegistryObject<PearlflowerFeature> PEARLFLOWER = FEATURE_TYPES.register("pearlflower", PearlflowerFeature::new);
 
     public static final RegistryObject<LayeredPatchFeature> LAYERED_PATCH = FEATURE_TYPES.register("layered_patch", LayeredPatchFeature::new);
+
+    public static final RegistryObject<PointyCalcificationFeature> POINTY_CALCIFICATION = FEATURE_TYPES.register("pointy_calcification", PointyCalcificationFeature::new);
 
 }

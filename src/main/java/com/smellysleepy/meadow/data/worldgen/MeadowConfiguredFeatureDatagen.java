@@ -2,6 +2,7 @@ package com.smellysleepy.meadow.data.worldgen;
 
 import com.smellysleepy.meadow.common.worldgen.feature.PearlFlowerConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.StrangePlantFeatureConfiguration;
+import com.smellysleepy.meadow.common.worldgen.feature.calcification.PointyCalcificationConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.patch.LayeredPatchConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.MeadowTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
@@ -224,6 +225,20 @@ public class MeadowConfiguredFeatureDatagen {
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                                 .add(MeadowBlockRegistry.CALCIFIED_PEARLFLOWER.get().defaultBlockState(), 3)
                                 .add(MeadowBlockRegistry.TALL_CALCIFIED_PEARLFLOWER.get().defaultBlockState(), 1)))));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES, new ConfiguredFeature<>(MeadowFeatureRegistry.POINTY_CALCIFICATION.get(),
+                new PointyCalcificationConfiguration(
+                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                                .add(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get().defaultBlockState(), 3)
+                                .add(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get().defaultBlockState(), 1)),
+                        1, 3, 4, 6)));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES, new ConfiguredFeature<>(MeadowFeatureRegistry.POINTY_CALCIFICATION.get(),
+                new PointyCalcificationConfiguration(
+                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                                .add(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get().defaultBlockState(), 5)
+                                .add(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get().defaultBlockState(), 1)),
+                        1, 2, 2, 4)));
 
     }
 

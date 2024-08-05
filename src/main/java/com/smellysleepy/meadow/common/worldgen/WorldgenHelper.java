@@ -1,11 +1,14 @@
 package com.smellysleepy.meadow.common.worldgen;
 
 import com.google.common.collect.*;
+import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.block.state.properties.DripstoneThickness;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
@@ -13,6 +16,7 @@ import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import team.lodestar.lodestone.systems.easing.Easing;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class WorldgenHelper {
@@ -64,6 +68,47 @@ public class WorldgenHelper {
         }
         return positions;
     }
+
+    public static void growPointedCalcification(LevelAccessor pLevel, Block block, BlockPos pPos, Direction pDirection, int pHeight, boolean pMergeTip) {
+        if (isCalcifiedBase(pLevel.getBlockState(pPos.relative(pDirection.getOpposite())))) {
+            BlockPos.MutableBlockPos blockpos$mutableblockpos = pPos.mutable();
+            buildBaseToTipColumn(block, pDirection, pHeight, pMergeTip, (state) -> {
+                if (state.is(block)) {
+                    state = state.setValue(PointedDripstoneBlock.WATERLOGGED, pLevel.isWaterAt(blockpos$mutableblockpos));
+                }
+
+                pLevel.setBlock(blockpos$mutableblockpos, state, 2);
+                blockpos$mutableblockpos.move(pDirection);
+            });
+        }
+    }
+
+    private static void buildBaseToTipColumn(Block block, Direction pDirection, int pHeight, boolean pMergeTip, Consumer<BlockState> pBlockSetter) {
+        if (pHeight >= 3) {
+            pBlockSetter.accept(createPointedCalcification(block, pDirection, DripstoneThickness.BASE));
+
+            for(int i = 0; i < pHeight - 3; ++i) {
+                pBlockSetter.accept(createPointedCalcification(block, pDirection, DripstoneThickness.MIDDLE));
+            }
+        }
+
+        if (pHeight >= 2) {
+            pBlockSetter.accept(createPointedCalcification(block, pDirection, DripstoneThickness.FRUSTUM));
+        }
+
+        if (pHeight >= 1) {
+            pBlockSetter.accept(createPointedCalcification(block, pDirection, pMergeTip ? DripstoneThickness.TIP_MERGE : DripstoneThickness.TIP));
+        }
+
+    }
+    private static BlockState createPointedCalcification(Block block, Direction pDirection, DripstoneThickness pDripstoneThickness) {
+        return block.defaultBlockState().setValue(PointedDripstoneBlock.TIP_DIRECTION, pDirection).setValue(PointedDripstoneBlock.THICKNESS, pDripstoneThickness);
+    }
+
+    private static boolean isCalcifiedBase(BlockState pState) {
+        return pState.is(MeadowBlockTagRegistry.CALCIFICATION) || pState.is(BlockTags.MOSS_REPLACEABLE);
+    }
+
 
     public static void updateLeaves(LevelAccessor pLevel, Set<BlockPos> logPositions) {
         List<Set<BlockPos>> list = Lists.newArrayList();

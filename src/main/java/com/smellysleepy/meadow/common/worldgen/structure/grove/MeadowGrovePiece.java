@@ -516,8 +516,23 @@ public class MeadowGrovePiece extends StructurePiece {
 
         if (calcification != null) {
             double delta = calcification.getSecond();
+            float rand = randomSource.nextFloat();
             if (delta > 0.05f) {
-                feature = calcification.getFirst().chooseFeature(randomSource);
+                if (rand < 0.01f) {
+                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES;
+                } else if (rand < 0.03f) {
+                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES;
+                }
+                else {
+                    feature = calcification.getFirst().chooseFeature(randomSource);
+                }
+            }
+            else {
+                if (rand < 0.02f) {
+                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES;
+                } else if (rand < 0.05f) {
+                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES;
+                }
             }
         } else {
             int featureTypeOffset = groveCenter.getY() - pos.getY();

@@ -56,5 +56,8 @@ public class MeadowConfiguredFeatureRegistry {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_PEARLFLOWER = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("pearlflower"));
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_LARGE_CALCIFIED_STALAGMITES = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("large_calcified_stalagmites"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_STALAGMITES = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_stalagmites"));
+
 
 }

@@ -1,0 +1,36 @@
+{
+  "type": "meadow:pointy_calcification",
+  "config": {
+    "maxHeight": 4,
+    "maxSize": 2,
+    "minHeight": 2,
+    "minSize": 1,
+    "stalagmiteProvider": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "meadow:calcified_dripstone",
+            "Properties": {
+              "thickness": "tip",
+              "vertical_direction": "up",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 5
+        },
+        {
+          "data": {
+            "Name": "meadow:giant_calcified_dripstone",
+            "Properties": {
+              "thickness": "tip",
+              "vertical_direction": "up",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    }
+  }
+}
