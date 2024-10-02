@@ -37,6 +37,9 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
          Set<BlockPos> covering = WorldgenHelper.fetchCoveringPositions(level, mutable, size);
          for (BlockPos blockPos : covering) {
             BlockPos coveragePos = blockPos.above();
+            if (!level.getBlockState(coveragePos).isAir()) {
+               continue;
+            }
             BlockState state = plant.defaultBlockState();
             boolean needsWater = state.hasProperty(BlockStateProperties.WATERLOGGED) || !state.getFluidState().isEmpty();
             boolean hasSpace = true;
