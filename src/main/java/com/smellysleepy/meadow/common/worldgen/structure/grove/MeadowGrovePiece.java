@@ -131,9 +131,8 @@ public class MeadowGrovePiece extends StructurePiece {
 
     @Override
     public void postProcess(WorldGenLevel worldGenLevel, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
-        if (!hasGenerated) {
-            carveGroveShape(this, worldGenLevel, randomSource, worldGenLevel.getChunk(chunkPos.x, chunkPos.z), chunkPos);
-        }
+        carveGroveShape(this, worldGenLevel, randomSource, worldGenLevel.getChunk(chunkPos.x, chunkPos.z), chunkPos);
+
         for (Pair<BlockPos, ResourceLocation> pair : bufferedFeatures) {
             var pos = pair.getFirst();
             var location = pair.getSecond();
@@ -203,7 +202,7 @@ public class MeadowGrovePiece extends StructurePiece {
             return Optional.empty();
         }
         int centerY = groveCenter.getY();
-        double distance = pos.setY(centerY).distSqr(groveCenter);
+        double distance = MeadowGroveShape.CIRCLE.distSqr(pos.setY(centerY), groveCenter, Mth.square(offset));
         double sqrtDistance = Math.sqrt(distance);
         double delta = (distance - Mth.square(offset)) / Mth.square(localRadius - offset);
         double flatDelta = -(distance / Mth.square(localRadius - offset));
