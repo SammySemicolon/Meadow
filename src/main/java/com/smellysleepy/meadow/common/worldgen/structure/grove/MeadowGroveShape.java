@@ -1,92 +1,35 @@
 package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import net.minecraft.core.*;
+import net.minecraft.util.Mth;
+import team.lodestar.lodestone.helpers.EasingHelper;
+import team.lodestar.lodestone.systems.easing.Easing;
 
 public interface MeadowGroveShape {
 
-    MeadowGroveShape CIRCLE = (center, point, size) -> center.distSqr(point);
-    MeadowGroveShape HEART = (center, point, size) -> {
+    MeadowGroveShape CIRCLE = (center, point, size) -> 1f;
+    MeadowGroveShape FUNNY = (center, point, size) -> {
+        double seed = ((20 + center.getX() + center.getY() + center.getZ()) << 2) * 12.345;
+
         double x = (point.getX() - center.getX());
         double z = (point.getZ() - center.getZ());
-        double a = Math.pow(x * x + z * z - 1, 3);
-        double b = x * x * z * z * z;
-        return Math.pow(a - b, 2);
-    };
-    MeadowGroveShape HALF_MOON = (center, point, size) -> {
-        double x = (point.getX() - center.getX());
-        double y = (point.getZ() - center.getZ());
 
-        double distToOuterCircle = Math.pow(Math.sqrt(x * x + y * y) - size * 0.5, 2);
-        double distToInnerCircle = Math.pow(Math.sqrt((x + size * 0.25) * (x + size * 0.25) + y * y) - (size * 0.3), 2);
+        double angle = Math.atan2(-x, z) * 2;
 
-        return Math.min(distToOuterCircle, -distToInnerCircle);
-    };
-    MeadowGroveShape YIN_YANG = (center, point, size) -> {
-        double x = (point.getX() - center.getX());
-        double y = (point.getZ() - center.getZ());
+        double distance = Math.sqrt(x*x+z*z);
+        double commitment = (seed * 0.2f) % 0.4f + (seed * 0.4f) % 0.6f;
+        double delta = Mth.clamp(distance / size * commitment, 0, 1);
 
-        double v = (x + size * 0.25) * (x + size * 0.25);
-        double topHalf = Math.pow(Math.sqrt(v + y * y) - size * 0.25, 2);
-        double v1 = (x - size * 0.25) * (x - size * 0.25);
-        double bottomHalf = Math.pow(Math.sqrt(v1 + y * y) - size * 0.25, 2);
+        double one = seed % 8, oneRate = 1 + seed % 1.5f; seed *= 1.01f;
+        double two = (seed * 2) % 16, twoRate = 1 + seed % 0.5f; seed *= 1.01f;
+        double three = seed % 6, threeRate = 2 + seed % 3f; seed *= 1.01f;
+        double four = seed % 3, fourRate = 3 + seed % 4f; seed *= 1.01f;
+        double five = seed % 2, fiveRate = 4 + seed % 2f;
 
-        double smallDotTop = Math.pow(Math.sqrt(v + (y - size * 0.25) * (y - size * 0.25)) - size * 0.08, 2);
-        double smallDotBottom = Math.pow(Math.sqrt(v1 + (y + size * 0.25) * (y + size * 0.25)) - size * 0.08, 2);
-
-        return Math.min(Math.min(topHalf, bottomHalf), Math.min(smallDotTop, smallDotBottom));
-    };
-    MeadowGroveShape WAVY_STAR = (center, point, size) -> {
-        double x = (point.getX() - center.getX());
-        double y = (point.getZ() - center.getZ());
-
-        double angle = Math.atan2(y, x);
-        double distToCenter = Math.sqrt(x * x + y * y);
-
-        double r = size * (1 + 0.3 * Math.sin(6 * angle));
-
-        return Math.pow(distToCenter - r, 2);
-    };
-    MeadowGroveShape WEIRD_TRIANGLE = (center, point, size) -> {
-        double x = (point.getX() - center.getX());
-        double y = (point.getZ() - center.getZ());
-
-        double angle = Math.atan2(y, x);
-        double distToEdge = Math.abs(Math.cos(angle) * Math.sin(3 * angle));
-
-        return Math.pow(distToEdge * size - Math.sqrt(x * x + y * y), 2);
-    };
-    MeadowGroveShape FLOWER = (center, point, size) -> {
-        double x = (point.getX() - center.getX());
-        double y = (point.getZ() - center.getZ());
-
-        double angle = Math.atan2(y, x);
-        double distToCenter = Math.sqrt(x * x + y * y);
-
-        double r = size * (1 + 0.5 * Math.sin(8 * angle));
-
-        return Math.pow(distToCenter - r, 2);
-    };
-    MeadowGroveShape SPIKES = (center, point, size) -> {
-        double x = (point.getX() - center.getX());
-        double y = (point.getZ() - center.getZ());
-
-        double angle = Math.atan2(y, x);
-        double distToCenter = Math.sqrt(x * x + y * y);
-
-        double r = size * (1 + 0.4 * Math.sin(5 * angle));
-
-        return Math.pow(distToCenter - r, 2);
-    };
-    MeadowGroveShape SPIRAL = (center, point, size) -> {
-        double x = (point.getX() - center.getX());
-        double y = (point.getZ() - center.getZ());
-
-        double angle = Math.atan2(y, x);
-        double distToCenter = Math.sqrt(x * x + y * y);
-
-        double r = size * angle / (2 * Math.PI);
-
-        return Math.pow(distToCenter - r, 2);
+        double xDistance = one * Math.pow(Math.sin(oneRate * angle), 3.0);
+        double zDistance = (two * Math.cos(twoRate * angle) - three * Math.cos(threeRate * angle) - four * Math.cos(fourRate * angle) - five * Math.cos(fiveRate * angle));
+        double shape = Math.abs(xDistance) / one + Math.abs(zDistance) / (two + three + four + five);
+        return EasingHelper.weightedEasingLerp(Easing.SINE_IN_OUT, delta, 1f, shape);
     };
 
     double distSqr(Vec3i center, Vec3i point, double size);

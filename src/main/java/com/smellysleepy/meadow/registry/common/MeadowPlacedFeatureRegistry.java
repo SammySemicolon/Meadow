@@ -9,6 +9,7 @@ public class MeadowPlacedFeatureRegistry {
 
     public static final ResourceKey<PlacedFeature> ASPEN_TREE = registerKey("aspen_tree");
     public static final ResourceKey<PlacedFeature> SMALL_ASPEN_TREE = registerKey("small_aspen_tree");
+
     public static ResourceKey<PlacedFeature> registerKey(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, MeadowMod.meadowModPath(name));
     }

@@ -9,12 +9,15 @@ import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeF
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
+import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.*;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 import java.util.*;
@@ -179,6 +182,24 @@ public class MeadowConfiguredFeatureDatagen {
                 MineralFloraRegistry.DIAMOND_FLORA, List.of(1, 1, 2, 2, 1)
         )));
 
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COAL_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.COAL_FLORA.floraBlock.get().defaultBlockState()))));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LAPIS_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.LAPIS_FLORA.floraBlock.get().defaultBlockState()))));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_REDSTONE_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.REDSTONE_FLORA.floraBlock.get().defaultBlockState()))));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_COPPER_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.COPPER_FLORA.floraBlock.get().defaultBlockState()))));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_IRON_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.IRON_FLORA.floraBlock.get().defaultBlockState()))));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_GOLD_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.GOLD_FLORA.floraBlock.get().defaultBlockState()))));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_EMERALD_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.EMERALD_FLORA.floraBlock.get().defaultBlockState()))));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_DIAMOND_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.DIAMOND_FLORA.floraBlock.get().defaultBlockState()))));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_NETHERITE_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MineralFloraRegistry.NETHERITE_FLORA.floraBlock.get().defaultBlockState()))));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
                 List.of(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), MeadowBlockRegistry.TALL_MEADOW_GRASS.get(), MeadowBlockRegistry.MEDIUM_MEADOW_GRASS.get(), MeadowBlockRegistry.SHORT_MEADOW_GRASS.get()),
@@ -211,6 +232,10 @@ public class MeadowConfiguredFeatureDatagen {
                 List.of(1, 1)
         )));
 
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_GRASS_BONEMEAL, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get().defaultBlockState()))));
+
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, new ConfiguredFeature<>(MeadowFeatureRegistry.PEARLFLOWER.get(),
                 new PearlFlowerConfiguration(
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
@@ -240,6 +265,11 @@ public class MeadowConfiguredFeatureDatagen {
                                 .add(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get().defaultBlockState(), 1)),
                         1, 2, 2, 4)));
 
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING, new ConfiguredFeature<>(Feature.MULTIFACE_GROWTH,
+                new MultifaceGrowthConfiguration(MeadowBlockRegistry.CALCIFIED_COVERING.get(), 20, false, true, true, 0.5F,
+                        HolderSet.direct(Block::builtInRegistryHolder,
+                                Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE, Blocks.DRIPSTONE_BLOCK, Blocks.CALCITE, Blocks.TUFF, Blocks.DEEPSLATE,
+                                Blocks.DIRT, MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get(), MeadowBlockRegistry.CALCIFIED_EARTH.get(), MeadowBlockRegistry.CALCIFIED_ROCK.get()))));
     }
 
     private static ConfiguredFeature<?, ?> addOreConfig(List<OreConfiguration.TargetBlockState> targetList, int veinSize) {

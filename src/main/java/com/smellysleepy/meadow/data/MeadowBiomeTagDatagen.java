@@ -18,6 +18,6 @@ public class MeadowBiomeTagDatagen extends BiomeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        tag(MeadowBiomeTagRegistry.HAS_MEADOW_GROVES).addTags(BiomeTags.HAS_VILLAGE_PLAINS, BiomeTags.HAS_VILLAGE_TAIGA);
+        tag(MeadowBiomeTagRegistry.HAS_MEADOW_GROVES).addTags(BiomeTags.HAS_VILLAGE_PLAINS, BiomeTags.HAS_VILLAGE_TAIGA, BiomeTags.IS_FOREST, BiomeTags.HAS_ANCIENT_CITY);
     }
 }

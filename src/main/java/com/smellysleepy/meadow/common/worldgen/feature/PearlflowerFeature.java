@@ -1,16 +1,14 @@
 package com.smellysleepy.meadow.common.worldgen.feature;
 
-import com.mojang.serialization.Codec;
 import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
 
@@ -19,12 +17,12 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
     }
 
     public boolean place(FeaturePlaceContext<PearlFlowerConfiguration> context) {
-        PearlFlowerConfiguration config = context.config();
-        WorldGenLevel worldgenlevel = context.level();
-        BlockPos blockpos = context.origin();
+        var config = context.config();
+        var worldgenlevel = context.level();
+        var blockpos = context.origin();
 
-        BlockState below = worldgenlevel.getBlockState(blockpos.below());
-        BlockStateProvider provider = config.meadow();
+        var below = worldgenlevel.getBlockState(blockpos.below());
+        var provider = config.meadow();
         boolean isWaterlogged = worldgenlevel.isWaterAt(blockpos);
         if (below.is(MeadowBlockTagRegistry.CALCIFICATION)) {
             provider = config.calcified();
@@ -36,7 +34,8 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
             provider = config.marine();
         }
 
-        BlockState blockstate = provider.getState(context.random(), blockpos);
+
+        var blockstate = provider.getState(context.random(), blockpos);
         if (blockstate.canSurvive(worldgenlevel, blockpos)) {
             if (!worldgenlevel.getBlockState(blockpos).canBeReplaced()) {
                 return false;
@@ -48,7 +47,7 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
 
                 DoublePlantBlock.placeAt(worldgenlevel, blockstate, blockpos, 2);
             } else {
-                worldgenlevel.setBlock(blockpos, blockstate, 2);
+                worldgenlevel.setBlock(blockpos, copyWaterloggedFrom(worldgenlevel, blockpos, blockstate), 2);
             }
 
             return true;
@@ -57,4 +56,7 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
         }
     }
 
+    public static BlockState copyWaterloggedFrom(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+        return pState.hasProperty(BlockStateProperties.WATERLOGGED) ? pState.setValue(BlockStateProperties.WATERLOGGED, pLevel.isWaterAt(pPos)) : pState;
+    }
 }

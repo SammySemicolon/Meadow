@@ -131,8 +131,12 @@ public class MeadowGrovePiece extends StructurePiece {
 
     @Override
     public void postProcess(WorldGenLevel worldGenLevel, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
-        carveGroveShape(this, worldGenLevel, randomSource, worldGenLevel.getChunk(chunkPos.x, chunkPos.z), chunkPos);
-
+     try {
+         carveGroveShape(this, worldGenLevel, randomSource, worldGenLevel.getChunk(chunkPos.x, chunkPos.z), chunkPos);
+     }
+     catch (Exception exception) {
+         float f = 0;
+     }
         for (Pair<BlockPos, ResourceLocation> pair : bufferedFeatures) {
             var pos = pair.getFirst();
             var location = pair.getSecond();
@@ -182,7 +186,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 double localDepth = (int) Mth.clampedLerp(groveDepth * 0.6, groveDepth, depthNoise);
 
                 int blendWidth = 48;
-                int rimSize = (int) (localRadius * 0.05);
+                int rimSize = (int) (localRadius * 0.075);
 
                 grovePiece.buildGroveLayer(
                         chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
@@ -197,36 +201,40 @@ public class MeadowGrovePiece extends StructurePiece {
 
     private Optional<Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>>> buildGroveLayer(ChunkAccess chunk, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockPos.MutableBlockPos pos, RandomSource random,
                                                                                            boolean hasPearlflower, double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize, int blockX, int blockZ) {
-        double offset = localRadius - blendWidth - rimSize;
-        if (!pos.setY(groveCenter.getY()).closerThan(groveCenter, offset)) {
+
+        int centerY = groveCenter.getY();
+        pos.setY(centerY);
+        double shapeRadius = MeadowGroveShape.FUNNY.distSqr(groveCenter, pos, localRadius);
+        double radius = localRadius * shapeRadius;
+        double offset = radius - blendWidth - rimSize;
+        if (!pos.closerThan(groveCenter, offset)) {
             return Optional.empty();
         }
-        int centerY = groveCenter.getY();
-        double distance = MeadowGroveShape.CIRCLE.distSqr(pos.setY(centerY), groveCenter, Mth.square(offset));
+        double distance = pos.distSqr(groveCenter);
         double sqrtDistance = Math.sqrt(distance);
-        double delta = (distance - Mth.square(offset)) / Mth.square(localRadius - offset);
-        double flatDelta = -(distance / Mth.square(localRadius - offset));
-        int flatDepth = getGroveDepth(noiseSampler, pos, localDepth, flatDelta);
+        double delta = (distance - Mth.square(offset)) / Mth.square(radius - offset);
+        double flatDelta = -(distance / Mth.square(radius - offset));
 
         int height = getGroveHeight(noiseSampler, pos, localHeight, delta);
         int depth = getGroveDepth(noiseSampler, pos, localDepth, delta);
+        int flatDepth = getGroveDepth(noiseSampler, pos, localDepth, flatDelta);
 
         int ceilingLimit = centerY + height;
         int surfaceLimit = centerY - depth;
 
         double calcificationNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 25000, 0.02f) * 0.5f;
-        Optional<Pair<CalcifiedRegion, Double>> calcifiedRegionOptional = getClosestRegion(CalcifiedRegion.class, blockX, blockZ, calcificationNoise, localRadius);
+        var calcifiedRegionOptional = getClosestRegion(CalcifiedRegion.class, blockX, blockZ, calcificationNoise, radius);
 
         double lakeNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 75000, 0.01f) * 0.5f;
-        double relativeLakeRadius = localRadius * 0.7f + groveRadius * 0.3f;
-        Optional<Pair<LakeRegion, Double>> lakeRegionOptional = getClosestRegion(LakeRegion.class, blockX, blockZ, lakeNoise, relativeLakeRadius);
+        double relativeLakeRadius = radius * 0.7f + groveRadius * 0.3f;
+        var lakeRegionOptional = getClosestRegion(LakeRegion.class, blockX, blockZ, lakeNoise, relativeLakeRadius);
 
-        BlockState ceilingPatternBlock = chooseSediment(noiseSampler, blockX, ceilingLimit, blockZ);
-        List<BlockState> ceilingPattern = getCeilingPattern(chunk, ceilingPatternBlock, pos, ceilingLimit);
+        var ceilingPatternBlock = chooseSediment(noiseSampler, blockX, ceilingLimit, blockZ);
+        var ceilingPattern = getCeilingPattern(chunk, ceilingPatternBlock, pos, ceilingLimit);
 
-        Pair<List<BlockState>, Integer> surfacePatternData = getSurfaceBlockPattern(chunk, noiseSampler, pos, calcifiedRegionOptional.orElse(null), sqrtDistance, offset, surfaceLimit);
-        List<BlockState> surfacePattern = surfacePatternData.getFirst();
-        int surfacePatternOffset = surfacePatternData.getSecond();
+        var surfacePatternData = getSurfaceBlockPattern(chunk, noiseSampler, pos, calcifiedRegionOptional.orElse(null), sqrtDistance, offset, surfaceLimit);
+        var surfacePattern = surfacePatternData.getFirst();
+        var surfaceFeature = surfacePatternData.getSecond();
 
         boolean placeWater = false;
         double waterDelta = 0;
@@ -272,7 +280,7 @@ public class MeadowGrovePiece extends StructurePiece {
                     } else if (lakeGrassDelta < 0.1f) {
                         block = Blocks.ROOTED_DIRT;
                     }
-                    surfacePattern.set(surfacePatternOffset, block.defaultBlockState());
+                    surfacePattern.set(0, block.defaultBlockState());
                 }
             }
         }
@@ -282,8 +290,6 @@ public class MeadowGrovePiece extends StructurePiece {
 
         int ceilingPlacementHeight = ceilingLimit + ceilingCoverage;
         int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
-
-        surfaceLimit += surfacePatternOffset;
 
         int ceilingShellOffset = (height > 8 ? Mth.floor((height - 8) * 0.2f) : 0);
         int ceilingShellLimit = ceilingPlacementHeight + 6 - ceilingShellOffset;
@@ -305,7 +311,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 pos.set(blockX, y, blockZ);
                 unsafeBoundingBox.encapsulate(pos);
                 if (y >= ceilingLimit) {
-                    int index = Mth.clamp(y - ceilingLimit, 0, ceilingCoverage);
+                    int index = Mth.clamp(y - ceilingLimit, 0, Math.min(ceilingPattern.size(), ceilingCoverage));
                     chunk.setBlockState(pos, ceilingPattern.get(index), true);
                     continue;
                 }
@@ -319,8 +325,10 @@ public class MeadowGrovePiece extends StructurePiece {
 
                 if (y == surfaceLimit + 1) {
                     Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature;
-
-                    if (hasPearlflower) {
+                    if (surfaceFeature != null) {
+                        feature = Pair.of(pos.immutable(), surfaceFeature);
+                    }
+                    else if (hasPearlflower) {
                         feature = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER);
                     }
                     else {
@@ -338,7 +346,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 }
 
                 if (y <= surfaceLimit) {
-                    int index = Mth.clamp(surfaceLimit - y, 0, surfaceCoverage);
+                    int index = Mth.clamp(surfaceLimit - y, 0, Math.min(surfaceCoverage, surfacePattern.size()));
                     BlockState state = surfacePattern.get(index);
                     chunk.setBlockState(pos, state, true);
                     continue;
@@ -621,7 +629,7 @@ public class MeadowGrovePiece extends StructurePiece {
         return (noise - threshold) / (1 - threshold);
     }
 
-    public <T extends SpecialMeadowRegion> Optional<Pair<T, Double>> getClosestRegion(Class<T> regionClass, int blockX, int blockZ, double noise, double localRadius) {
+    public <T extends SpecialMeadowRegion> Optional<Pair<T, Double>> getClosestRegion(Class<T> regionClass, int blockX, int blockZ, double noise, double radius) {
         if (specialRegions.isEmpty()) {
             return Optional.empty();
         }
@@ -629,9 +637,9 @@ public class MeadowGrovePiece extends StructurePiece {
         T closestArea = null;
         for (SpecialMeadowRegion specialRegion : specialRegions) {
             if (regionClass.isInstance(specialRegion)) {
-                double distance = specialRegion.getDistance(groveCenter, blockX, blockZ, localRadius);
+                double distance = specialRegion.getDistance(groveCenter, blockX, blockZ, radius);
                 if (distance < lowestDistance) {
-                    double threshold = Mth.square(specialRegion.getThreshold(noise, localRadius));
+                    double threshold = Mth.square(specialRegion.getThreshold(noise, radius));
                     if (distance <= threshold) {
                         lowestDistance = distance;
                         closestArea = regionClass.cast(specialRegion);
@@ -642,7 +650,7 @@ public class MeadowGrovePiece extends StructurePiece {
         if (closestArea == null) {
             return Optional.empty();
         }
-        double threshold = closestArea.getThreshold(noise, localRadius);
+        double threshold = closestArea.getThreshold(noise, radius);
         double distance = Math.sqrt(lowestDistance);
         if (distance <= threshold) {
             double second = 1 - (distance / threshold);
@@ -660,9 +668,13 @@ public class MeadowGrovePiece extends StructurePiece {
     }
 
     private int getVerticalSize(ImprovedNoise noiseSampler, BlockPos pos, Easing easing, float frequency, double depthOffsetScalar, double value, double total, double delta) {
-        double depthNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 100000, frequency) * 0.5f;
+        double depthNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 100000, frequency);
+        for (int i = 0; i < 4; i++) {
+            var direction = Direction.from2DDataValue(i);
+            depthNoise += WorldgenHelper.getNoise(noiseSampler, pos.getX()+direction.getStepX(), pos.getZ()+direction.getStepZ(), 100000, frequency);
+        }
 
-        double depthOffset = easing.clamped(depthNoise, 0, (value * depthOffsetScalar));
+        double depthOffset = easing.clamped(depthNoise * 0.1f, 0, (value * depthOffsetScalar));
         return (int) Easing.SINE_IN_OUT.clamped(-delta, 0, total / 2f + depthOffset);
     }
 
@@ -699,28 +711,26 @@ public class MeadowGrovePiece extends StructurePiece {
         return pattern;
     }
 
-    private Pair<List<BlockState>, Integer> getRampBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, double sqrtDistance, double offset, int startingY) {
+    private Pair<List<BlockState>, ResourceKey<ConfiguredFeature<?, ?>>> getRampBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, double sqrtDistance, double offset, int startingY) {
         return getSurfaceBlockPattern(chunk, noiseSampler, pos, null, sqrtDistance, offset, startingY);
     }
 
-    private Pair<List<BlockState>, Integer> getSurfaceBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, Pair<CalcifiedRegion, Double> calcification, double sqrtDistance, double offset, int startingY) {
+    private Pair<List<BlockState>, ResourceKey<ConfiguredFeature<?, ?>>> getSurfaceBlockPattern(ChunkAccess chunk, ImprovedNoise noiseSampler, BlockPos.MutableBlockPos pos, Pair<CalcifiedRegion, Double> calcification, double sqrtDistance, double offset, int startingY) {
         ArrayList<BlockState> pattern = new ArrayList<>();
-        int patternOffset = 0;
+        ResourceKey<ConfiguredFeature<?, ?>> feature = null;
         double crackDelta = makeCracks(noiseSampler, pos.getX(), pos.getZ(), sqrtDistance, offset);
         boolean useCracks = crackDelta > 0;
-        if (calcification != null && calcification.getSecond() < 0.03f) {
-            pattern.add(MeadowBlockRegistry.CALCIFIED_COVERING.get().defaultBlockState().setValue(MultifaceBlock.getFaceProperty(Direction.DOWN), true));
-            patternOffset++;
+        if (calcification != null && calcification.getSecond() < 0.03f) { //calcification start
+            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING;
         }
-        if (calcification != null && calcification.getSecond() >= 0.03f) {
+        if (calcification != null && calcification.getSecond() >= 0.03f) { //calcification inside
             if (!useCracks) {
                 crackDelta = makeCracks(noiseSampler, pos.getX(), pos.getZ(), 0.025f);
             }
             double delta = calcification.getSecond();
 
             if (crackDelta >= 0f && crackDelta < 0.2f) {
-                pattern.add(MeadowBlockRegistry.CALCIFIED_COVERING.get().defaultBlockState().setValue(MultifaceBlock.getFaceProperty(Direction.DOWN), true));
-                patternOffset++;
+                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING;
             } else if ((crackDelta >= 0.2f && crackDelta < 0.4f) || delta < 0.04f) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState());
             } else if ((crackDelta >= 0.4f) || delta < 0.06f) {
@@ -729,7 +739,7 @@ public class MeadowGrovePiece extends StructurePiece {
             pattern.add(Blocks.STONE.defaultBlockState());
             pattern.add(Blocks.STONE.defaultBlockState());
         }
-        else {
+        else { //regular grass region
             if (useCracks) {
                 for (int i = 0; i < 3; i++) {
                     pattern.add(Blocks.STONE.defaultBlockState());
@@ -752,7 +762,7 @@ public class MeadowGrovePiece extends StructurePiece {
             }
             pattern.add(Blocks.STONE.defaultBlockState());
         }
-        return Pair.of(pattern, patternOffset);
+        return Pair.of(pattern, feature);
     }
 
     public double makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, double distance, double offset) {

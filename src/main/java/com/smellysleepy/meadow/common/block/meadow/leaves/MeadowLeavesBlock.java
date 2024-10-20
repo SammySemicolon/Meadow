@@ -17,17 +17,8 @@ public class MeadowLeavesBlock extends LeavesBlock {
 
     public static final Color ASPEN_LEAVES_COLOR = new Color(255, 192, 27);
 
-//    public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 4);
-
     public MeadowLeavesBlock(Properties properties) {
         super(properties);
-//        registerDefaultState(defaultBlockState().setValue(COLOR, 0));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-//        pBuilder.add(COLOR);
-        super.createBlockStateDefinition(pBuilder);
     }
 
     @Override

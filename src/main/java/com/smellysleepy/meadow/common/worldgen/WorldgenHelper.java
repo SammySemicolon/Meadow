@@ -109,7 +109,6 @@ public class WorldgenHelper {
         return pState.is(MeadowBlockTagRegistry.CALCIFICATION) || pState.is(BlockTags.MOSS_REPLACEABLE);
     }
 
-
     public static void updateLeaves(LevelAccessor pLevel, Set<BlockPos> logPositions) {
         List<Set<BlockPos>> list = Lists.newArrayList();
         for (int j = 0; j < 6; ++j) {

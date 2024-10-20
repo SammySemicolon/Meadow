@@ -29,6 +29,7 @@ public abstract class AbstractMeadowTreeFeature extends AbstractTreeFeature<Mead
     public AbstractMeadowTreeFeature() {
         super(MeadowTreeFeatureConfiguration.CODEC);
     }
+
     @Override
     public final boolean place(FeaturePlaceContext<MeadowTreeFeatureConfiguration> context) {
         WorldGenLevel level = context.level();
@@ -65,7 +66,6 @@ public abstract class AbstractMeadowTreeFeature extends AbstractTreeFeature<Mead
                     }
                 }
             }
-
 
             var hangingLeavesEntry = create(config.hangingLeaves.defaultBlockState()).build();
             var leavesLayer = filler.getLayer(LEAVES);
