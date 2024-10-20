@@ -217,10 +217,14 @@ public class MeadowGrovePiece extends StructurePiece {
         double sqrtDistance = Math.sqrt(distance);
         double delta = (distance - Mth.square(offset)) / Mth.square(radius - offset);
         double flatDelta = -(distance / Mth.square(radius - offset));
+        double horizontalShellDelta = Mth.clamp(delta / 0.2f, -1, 0);
 
         int height = getGroveHeight(noiseSampler, pos, localHeight, delta);
         int depth = getGroveDepth(noiseSampler, pos, localDepth, delta);
         int flatDepth = getGroveDepth(noiseSampler, pos, localDepth, flatDelta);
+
+        int shellHeight = getGroveHeight(noiseSampler, pos, localHeight, horizontalShellDelta);
+        int shellDepth = getGroveDepth(noiseSampler, pos, localDepth, horizontalShellDelta);
 
         int ceilingLimit = centerY + height;
         int surfaceLimit = centerY - depth;
@@ -294,12 +298,12 @@ public class MeadowGrovePiece extends StructurePiece {
         int ceilingPlacementHeight = ceilingLimit + ceilingCoverage;
         int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
 
-        int extraCeilingShellHeight = Math.min((height > 8 ? Mth.floor((height - 8) * 0.2f) : 0), 6);
-        int ceilingShellLimit = ceilingPlacementHeight + 6 - extraCeilingShellHeight;
+        int extraCeilingShellHeight = Math.min((height > 8 ? Mth.floor((height - 8) * 0.2f) : 0), 2);
+        int ceilingShellLimit = ceilingPlacementHeight + 2 - extraCeilingShellHeight;
         int ceilingShellStart = centerY + extraCeilingShellHeight;
 
         int extraSurfaceShellDepth = Math.min((depth > 6 ? Mth.floor((depth - 6) * 0.6f) : 0), 4);
-        int surfaceShellLimit = surfacePlacementDepth - 6 + extraSurfaceShellDepth;
+        int surfaceShellLimit = surfacePlacementDepth - 2 + extraSurfaceShellDepth;
         int surfaceShellStart = centerY - extraSurfaceShellDepth;
 
         double rampNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 75000, 0.01f) / 2;
@@ -308,6 +312,23 @@ public class MeadowGrovePiece extends StructurePiece {
         List<BlockState> rampBlockPattern = getRampBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, rampYLevel).getFirst();
 
         createShell(chunk, pos, unsafeBoundingBox, ceilingPatternBlock, blockX, blockZ, ceilingShellStart, ceilingShellLimit, surfaceShellStart, surfaceShellLimit);
+
+        if (shellHeight > 0) {
+            int horizontalShellLimit = centerY + shellHeight;
+            for (int y = centerY; y < horizontalShellLimit; y++) {
+                pos.set(blockX, y, blockZ);
+                unsafeBoundingBox.encapsulate(pos);
+                chunk.setBlockState(pos, Blocks.BLACK_WOOL.defaultBlockState(), true);
+            }
+        }
+        if (shellDepth > 0) {
+            int horizontalShellLimit = centerY - shellDepth;
+            for (int y = centerY; y > horizontalShellLimit; y--) {
+                pos.set(blockX, y, blockZ);
+                unsafeBoundingBox.encapsulate(pos);
+                chunk.setBlockState(pos, Blocks.GRAY_WOOL.defaultBlockState(), true);
+            }
+        }
 
         if (centerY < ceilingPlacementHeight) {
             for (int y = centerY; y < ceilingPlacementHeight; y++) { // ceiling
@@ -321,6 +342,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
+
         if (centerY > surfacePlacementDepth) {
             for (int y = centerY; y > surfacePlacementDepth; y--) { //surface
                 pos.set(blockX, y, blockZ);
