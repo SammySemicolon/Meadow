@@ -137,6 +137,9 @@ public class MeadowGrovePiece extends StructurePiece {
      catch (Exception exception) {
          float f = 0;
      }
+     if (true) {
+         return;
+     }
         for (Pair<BlockPos, ResourceLocation> pair : bufferedFeatures) {
             var pos = pair.getFirst();
             var location = pair.getSecond();
@@ -242,48 +245,48 @@ public class MeadowGrovePiece extends StructurePiece {
         boolean useLakeGrass = false;
         double lakeGrassDelta = 0;
 
-        if (lakeRegionOptional.isPresent()) {
-            var pair = lakeRegionOptional.get();
-            var lakeRegion = pair.getFirst();
-            double lakeDelta = pair.getSecond();
-            int terrainDepth = (int) (groveDepth * lakeRegion.getSurfaceLevel());
-            int waterDepth = (int) (groveDepth * lakeRegion.getWaterLevel());
-            int lakeDepth;
-            if (lakeDelta < 0.2f) {
-                lakeDepth = depth - Mth.floor(Easing.SINE_IN.ease(lakeDelta, 0, depth - terrainDepth, 0.2f));
-            } else {
-                double lakeCarverDepth = lakeRegion.getLakeDepth() * (waterDepth + flatDepth);
-                float carverDelta = (lakeDelta > 0.7f ? Easing.CUBIC_OUT : Easing.BACK_IN_OUT).ease((lakeDelta - 0.2f) / 0.8f, 0, 1);
-                lakeDepth = Mth.floor(Easing.SINE_OUT.ease(carverDelta, terrainDepth, lakeCarverDepth));
-            }
-            surfaceLimit = centerY - lakeDepth;
-
-            boolean isNearWater = lakeDelta >= 0.3f;
-            if (isNearWater) {
-                useLakeGrass = true;
-                lakeGrassDelta = (lakeDelta-0.3f) / 0.7f;
-            }
-            if (lakeDelta >= 0.5f && lakeDepth > waterDepth) {
-                placeWater = true;
-                waterDelta = (lakeDelta-0.5f)/0.5f;
-                waterStartingPoint = centerY - waterDepth;
-            }
-            if (calcifiedRegionOptional.isEmpty() || calcifiedRegionOptional.get().getSecond() < 0.03f) {
-                if (isNearWater) {
-                    Block block = Blocks.GRASS_BLOCK;
-                    if (lakeGrassDelta > 0.5f) {
-                        block = Blocks.STONE;
-                    } else if (lakeGrassDelta > 0.4f) {
-                        block = Blocks.GRAVEL;
-                    } else if (lakeGrassDelta > 0.3f && placeWater) {
-                        block = Blocks.DIRT;
-                    } else if (lakeGrassDelta < 0.1f) {
-                        block = Blocks.ROOTED_DIRT;
-                    }
-                    surfacePattern.set(0, block.defaultBlockState());
-                }
-            }
-        }
+//        if (lakeRegionOptional.isPresent()) {
+//            var pair = lakeRegionOptional.get();
+//            var lakeRegion = pair.getFirst();
+//            double lakeDelta = pair.getSecond();
+//            int terrainDepth = (int) (groveDepth * lakeRegion.getSurfaceLevel());
+//            int waterDepth = (int) (groveDepth * lakeRegion.getWaterLevel());
+//            int lakeDepth;
+//            if (lakeDelta < 0.2f) {
+//                lakeDepth = depth - Mth.floor(Easing.SINE_IN.ease(lakeDelta, 0, depth - terrainDepth, 0.2f));
+//            } else {
+//                double lakeCarverDepth = lakeRegion.getLakeDepth() * (waterDepth + flatDepth);
+//                float carverDelta = (lakeDelta > 0.7f ? Easing.CUBIC_OUT : Easing.BACK_IN_OUT).ease((lakeDelta - 0.2f) / 0.8f, 0, 1);
+//                lakeDepth = Mth.floor(Easing.SINE_OUT.ease(carverDelta, terrainDepth, lakeCarverDepth));
+//            }
+//            surfaceLimit = centerY - lakeDepth;
+//
+//            boolean isNearWater = lakeDelta >= 0.3f;
+//            if (isNearWater) {
+//                useLakeGrass = true;
+//                lakeGrassDelta = (lakeDelta-0.3f) / 0.7f;
+//            }
+//            if (lakeDelta >= 0.5f && lakeDepth > waterDepth) {
+//                placeWater = true;
+//                waterDelta = (lakeDelta-0.5f)/0.5f;
+//                waterStartingPoint = centerY - waterDepth;
+//            }
+//            if (calcifiedRegionOptional.isEmpty() || calcifiedRegionOptional.get().getSecond() < 0.03f) {
+//                if (isNearWater) {
+//                    Block block = Blocks.GRASS_BLOCK;
+//                    if (lakeGrassDelta > 0.5f) {
+//                        block = Blocks.STONE;
+//                    } else if (lakeGrassDelta > 0.4f) {
+//                        block = Blocks.GRAVEL;
+//                    } else if (lakeGrassDelta > 0.3f && placeWater) {
+//                        block = Blocks.DIRT;
+//                    } else if (lakeGrassDelta < 0.1f) {
+//                        block = Blocks.ROOTED_DIRT;
+//                    }
+//                    surfacePattern.set(0, block.defaultBlockState());
+//                }
+//            }
+//        }
 
         int ceilingCoverage = Mth.clamp(height < 2 ? 0 : Mth.floor((2 + height) * 2), 0, ceilingPattern.size() - 1);
         int surfaceCoverage = Mth.clamp(depth < 6 ? 0 : Mth.floor(depth / 2f), 0, surfacePattern.size() - 1);
@@ -291,13 +294,13 @@ public class MeadowGrovePiece extends StructurePiece {
         int ceilingPlacementHeight = ceilingLimit + ceilingCoverage;
         int surfacePlacementDepth = surfaceLimit - surfaceCoverage;
 
-        int ceilingShellOffset = (height > 8 ? Mth.floor((height - 8) * 0.2f) : 0);
-        int ceilingShellLimit = ceilingPlacementHeight + 6 - ceilingShellOffset;
-        int ceilingShellStart = centerY + ceilingShellOffset;
+        int extraCeilingShellHeight = Math.min((height > 8 ? Mth.floor((height - 8) * 0.2f) : 0), 6);
+        int ceilingShellLimit = ceilingPlacementHeight + 6 - extraCeilingShellHeight;
+        int ceilingShellStart = centerY + extraCeilingShellHeight;
 
-        int surfaceShellOffset = (depth > 6 ? Mth.floor((depth - 6) * 0.6f) : 0);
-        int surfaceShellLimit = surfacePlacementDepth - 6 + surfaceShellOffset;
-        int surfaceShellStart = centerY - surfaceShellOffset;
+        int extraSurfaceShellDepth = Math.min((depth > 6 ? Mth.floor((depth - 6) * 0.6f) : 0), 4);
+        int surfaceShellLimit = surfacePlacementDepth - 6 + extraSurfaceShellDepth;
+        int surfaceShellStart = centerY - extraSurfaceShellDepth;
 
         double rampNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 75000, 0.01f) / 2;
         int rampYLevel = centerY - flatDepth;
@@ -312,7 +315,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 unsafeBoundingBox.encapsulate(pos);
                 if (y >= ceilingLimit) {
                     int index = Mth.clamp(y - ceilingLimit, 0, Math.min(ceilingPattern.size(), ceilingCoverage));
-                    chunk.setBlockState(pos, ceilingPattern.get(index), true);
+                    chunk.setBlockState(pos, Blocks.YELLOW_WOOL.defaultBlockState(), true);
                     continue;
                 }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
@@ -348,7 +351,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 if (y <= surfaceLimit) {
                     int index = Mth.clamp(surfaceLimit - y, 0, Math.min(surfaceCoverage, surfacePattern.size()));
                     BlockState state = surfacePattern.get(index);
-                    chunk.setBlockState(pos, state, true);
+                    chunk.setBlockState(pos, Blocks.ORANGE_WOOL.defaultBlockState(), true);
                     continue;
                 }
 
@@ -359,7 +362,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
-        createRamps(chunk, noiseSampler, random, pos, rampBlockPattern, hasPearlflower, rampYLevel, blockX, blockZ, rampHeight, rampNoise, sqrtDistance, offset);
+//        createRamps(chunk, noiseSampler, random, pos, rampBlockPattern, hasPearlflower, rampYLevel, blockX, blockZ, rampHeight, rampNoise, sqrtDistance, offset);
         return Optional.empty();
     }
 
@@ -376,7 +379,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 }
                 continue;
             }
-            chunk.setBlockState(pos, ceilingPatternBlock, true);
+            chunk.setBlockState(pos, Blocks.RED_WOOL.defaultBlockState(), true);
         }
 
         cutoffCounter = 0;
@@ -390,7 +393,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 }
                 continue;
             }
-            chunk.setBlockState(pos, Blocks.STONE.defaultBlockState(), true);
+            chunk.setBlockState(pos, Blocks.CYAN_WOOL.defaultBlockState(), true);
         }
     }
 
