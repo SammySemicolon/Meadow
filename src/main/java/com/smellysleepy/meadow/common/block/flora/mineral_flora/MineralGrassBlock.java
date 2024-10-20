@@ -59,21 +59,8 @@ public class MineralGrassBlock extends Block implements BonemealableBlock {
             }
 
             if (offsetState.isAir()) {
-                Holder<ConfiguredFeature<?, ?>> holder = null;
-                if (pRandom.nextInt(8) == 0) {
-                    var pearlflowerOptional = configuredFeatures.getHolder(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER);
-                    if (pearlflowerOptional.isPresent()) {
-                        holder = pearlflowerOptional.get();
-                    }
-                } else {
-                    if (optional.isEmpty()) {
-                        continue;
-                    }
-
-                    holder = optional.get();
-                }
-                if (holder != null) {
-                    holder.value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, offset);
+                if (optional.isPresent()) {
+                    optional.get().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, offset);
                 }
             }
         }

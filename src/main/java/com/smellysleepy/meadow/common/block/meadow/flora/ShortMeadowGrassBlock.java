@@ -25,9 +25,9 @@ public class ShortMeadowGrassBlock extends TallGrassBlock {
 
     @Override
     public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        TallGrassBlock tallGrassBlock = MeadowBlockRegistry.MEDIUM_MEADOW_GRASS.get();
-        if (tallGrassBlock.defaultBlockState().canSurvive(pLevel, pPos)) {
-            pLevel.setBlock(pPos, copyWaterloggedFrom(pLevel, pPos, pState), 3);
+        var tallGrassState = MeadowBlockRegistry.MEDIUM_MEADOW_GRASS.get().defaultBlockState();
+        if (tallGrassState.canSurvive(pLevel, pPos)) {
+            pLevel.setBlock(pPos, copyWaterloggedFrom(pLevel, pPos, tallGrassState), 3);
         }
     }
 

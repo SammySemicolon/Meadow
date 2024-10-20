@@ -55,7 +55,7 @@ public class MeadowGrassBlock extends Block implements BonemealableBlock {
 
             if (offsetState.isAir()) {
                 Holder<ConfiguredFeature<?, ?>> holder = null;
-                if (pRandom.nextInt(8) == 0) {
+                if (pRandom.nextInt(24) == 0) {
                     var pearlflowerOptional = configuredFeatures.getHolder(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER);
                     if (pearlflowerOptional.isPresent()) {
                         holder = pearlflowerOptional.get();

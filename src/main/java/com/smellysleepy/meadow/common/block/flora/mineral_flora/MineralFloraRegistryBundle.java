@@ -57,8 +57,8 @@ public class MineralFloraRegistryBundle {
         floraBlock = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(grassProperties, tag));
         flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(floraProperties, tag));
         saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(floraProperties, feature, tag));
-        hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(leavesProperties, color));
-        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(hangingLeavesProperties, hangingLeavesBlock, color));
+        hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, color));
+        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(leavesProperties, hangingLeavesBlock, color));
 
         grassItem = register(prefix + "_grass_block", itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
         floraItem = register(prefix + "_flora", itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
