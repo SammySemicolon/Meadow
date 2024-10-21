@@ -47,14 +47,15 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .isValidSpawn(Blocks::ocelotOrParrot)
-                .isSuffocating(Blocks::never)
-                .isViewBlocking(Blocks::never)
-                .strength(0.6F)
-                .randomTicks()
                 .addTags(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
+                .isValidSpawn(Blocks::ocelotOrParrot)
+                .isViewBlocking(Blocks::never)
+                .isSuffocating(Blocks::never)
                 .mapColor(MapColor.GRASS)
-                .sound(SoundType.GRASS);
+                .sound(SoundType.GRASS)
+                .setCutoutRenderType()
+                .strength(0.6F)
+                .randomTicks();
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {

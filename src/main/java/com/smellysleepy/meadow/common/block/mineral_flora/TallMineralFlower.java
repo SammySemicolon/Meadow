@@ -1,17 +1,14 @@
-package com.smellysleepy.meadow.common.block.flora.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral_flora;
 
-import com.smellysleepy.meadow.common.block.flora.*;
-import com.smellysleepy.meadow.visual_effects.StrangeFloraParticleEffects;
+import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.*;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.phys.Vec3;
 
-public class TallMineralFlower extends AbstractTallStrangePlant {
+public class TallMineralFlower extends TallFlowerBlock {
 
     public final TagKey<Block> oreTag;
     public TallMineralFlower(Properties pProperties, TagKey<Block> oreTag) {
@@ -21,6 +18,6 @@ public class TallMineralFlower extends AbstractTallStrangePlant {
 
     @Override
     protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return super.mayPlaceOn(pState, pLevel, pPos) || pState.is(oreTag);
+        return pState.is(MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON) || pState.is(oreTag);
     }
 }

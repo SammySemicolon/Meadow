@@ -1,9 +1,99 @@
 {
   "variants": {
-    "half=lower": {
+    "half=lower,variant=0": {
       "model": "meadow:block/tall_meadow_grass_bottom"
     },
-    "half=upper": {
+    "half=lower,variant=1": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=10": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=11": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=12": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=13": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=14": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=15": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=2": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=3": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=4": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=5": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=6": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=7": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=8": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=lower,variant=9": {
+      "model": "meadow:block/tall_meadow_grass_bottom"
+    },
+    "half=upper,variant=0": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=1": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=10": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=11": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=12": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=13": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=14": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=15": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=2": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=3": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=4": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=5": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=6": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=7": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=8": {
+      "model": "meadow:block/tall_meadow_grass_top"
+    },
+    "half=upper,variant=9": {
       "model": "meadow:block/tall_meadow_grass_top"
     }
   }

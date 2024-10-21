@@ -4,7 +4,10 @@
     "to_place": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "meadow:short_meadow_grass"
+        "Name": "meadow:short_meadow_grass",
+        "Properties": {
+          "variant": "0"
+        }
       }
     }
   }

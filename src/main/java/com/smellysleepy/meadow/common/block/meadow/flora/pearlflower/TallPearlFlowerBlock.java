@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.flora.pearlflower;
+package com.smellysleepy.meadow.common.block.meadow.flora.pearlflower;
 
 import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;

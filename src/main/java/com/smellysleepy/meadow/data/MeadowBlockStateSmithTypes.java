@@ -2,11 +2,12 @@ package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
-import com.smellysleepy.meadow.common.block.flora.pearlflower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import net.minecraft.core.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.properties.*;
@@ -49,12 +50,20 @@ public class MeadowBlockStateSmithTypes {
         }
         builder.addModel();
     });
-//    public static BlockStateSmith<LeavesBlock> ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_0"), (block, provider) -> {
-//        String name = provider.getBlockName(block);
-//        Function<Integer, ModelFile> modelProvider = (i) ->
-//                provider.models().withExistingParent(name+"_"+i, new ResourceLocation("block/leaves")).texture("all", provider.getBlockTexture(name + "_" + i));
-//        provider.getVariantBuilder(block).forAllStates(s -> ConfiguredModel.builder().modelFile(modelProvider.apply(s.getValue(MeadowLeavesBlock.COLOR))).build());
-//    });
+
+    public static BlockStateSmith<Block> TINTED_CROSS_MODEL_BLOCK = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.CROSS_MODEL_ITEM, (block, provider) -> {
+        String name = provider.getBlockName(block);
+        provider.simpleBlock(block, provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_tinted_cross")).texture("cross", provider.getBlockTexture(name)));
+    });
+
+    public static BlockStateSmith<Block> TINTED_TALL_CROSS_MODEL_BLOCK = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_top"), (block, provider) -> {
+        String name = provider.getBlockName(block);
+        provider.getVariantBuilder(block).forAllStates(s -> {
+            final String affix = s.getValue(DoublePlantBlock.HALF).equals(DoubleBlockHalf.LOWER) ? "_bottom" : "_top";
+            final String affixedName = name + affix;
+            return ConfiguredModel.builder().modelFile(provider.models().withExistingParent(affixedName, MeadowMod.meadowModPath("block/templates/template_tinted_cross")).texture("cross", provider.getBlockTexture(affixedName))).build();
+        });
+    });
 
     public static BlockStateSmith<PearlFlowerBlock> SMALL_TALL_CROSS_MODEL_BLOCK = new BlockStateSmith<>(PearlFlowerBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_bottom"), (block, provider) -> {
         String name = provider.getBlockName(block);

@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.flora.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral_flora;
 
 import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.registry.common.MeadowBlockProperties;
@@ -13,7 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraftforge.registries.RegistryObject;
-import team.lodestar.lodestone.systems.block.LodestoneBlockProperties;
 
 import java.awt.*;
 

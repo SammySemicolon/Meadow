@@ -1,8 +1,7 @@
-package com.smellysleepy.meadow.common.block.flora.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral_flora;
 
-import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
+import com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -12,7 +11,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
@@ -23,6 +21,15 @@ public class MineralGrassBlock extends Block implements BonemealableBlock {
     public MineralGrassBlock(Properties pProperties, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature) {
         super(pProperties);
         this.bonemealFeature = bonemealFeature;
+    }
+
+    @Override
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (!MeadowGrassBlock.canBeGrass(pState, pLevel, pPos)) {
+            if (!pLevel.isAreaLoaded(pPos, 1))
+                return;
+            pLevel.setBlockAndUpdate(pPos, Blocks.DIRT.defaultBlockState());
+        }
     }
 
     @Override

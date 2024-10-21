@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "meadow:block/templates/template_tinted_cross",
   "textures": {
     "cross": "meadow:block/tall_meadow_grass_top"
   }

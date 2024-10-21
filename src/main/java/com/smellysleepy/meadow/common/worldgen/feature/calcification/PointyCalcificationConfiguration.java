@@ -2,14 +2,8 @@ package com.smellysleepy.meadow.common.worldgen.feature.calcification;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
-import com.smellysleepy.meadow.common.worldgen.feature.PearlFlowerConfiguration;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-
-import java.util.List;
 
 public class PointyCalcificationConfiguration implements FeatureConfiguration {
 

@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.flora.pearlflower;
+package com.smellysleepy.meadow.common.block.meadow.flora.pearlflower;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;

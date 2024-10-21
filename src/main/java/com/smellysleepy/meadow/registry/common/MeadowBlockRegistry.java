@@ -2,10 +2,11 @@ package com.smellysleepy.meadow.registry.common;
 
 import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
 import com.smellysleepy.meadow.common.block.calcification.CalcifiedPointedDripstoneBlock;
-import com.smellysleepy.meadow.common.block.flora.pearlflower.PearlFlowerBlock;
-import com.smellysleepy.meadow.common.block.flora.pearlflower.PearllampBlock;
-import com.smellysleepy.meadow.common.block.flora.pearlflower.PearllightBlock;
-import com.smellysleepy.meadow.common.block.flora.pearlflower.TallPearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.meadow.flora.grass.*;
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearllampBlock;
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearllightBlock;
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.TallPearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
@@ -13,6 +14,7 @@ import com.smellysleepy.meadow.common.worldgen.feature.tree.SimpleTreeGrower;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import net.minecraft.client.color.block.*;
 import net.minecraft.tags.*;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.api.distmarker.*;
 import net.minecraftforge.client.event.*;
@@ -35,9 +37,9 @@ public class MeadowBlockRegistry {
 
     public static final RegistryObject<Block> MEADOW_GRASS_BLOCK = BLOCKS.register("meadow_grass_block", () -> new MeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_BLOCK_PROPERTIES()));
 
-    public static final RegistryObject<TallMeadowGrassBlock> TALL_MEADOW_GRASS = BLOCKS.register("tall_meadow_grass", () -> new TallMeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
-    public static final RegistryObject<MediumMeadowGrassBlock> MEDIUM_MEADOW_GRASS = BLOCKS.register("medium_meadow_grass", () -> new MediumMeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
-    public static final RegistryObject<ShortMeadowGrassBlock> SHORT_MEADOW_GRASS = BLOCKS.register("short_meadow_grass", () -> new ShortMeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<Block> TALL_MEADOW_GRASS = BLOCKS.register("tall_meadow_grass", () -> new TallMeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<Block> MEDIUM_MEADOW_GRASS = BLOCKS.register("medium_meadow_grass", () -> new MediumMeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
+    public static final RegistryObject<Block> SHORT_MEADOW_GRASS = BLOCKS.register("short_meadow_grass", () -> new ShortMeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
 
     public static final RegistryObject<Block> PEARLLIGHT = BLOCKS.register("pearllight", () -> new PearllightBlock(MeadowBlockProperties.PEARLLIGHT_PROPERTIES()));
 
@@ -82,6 +84,17 @@ public class MeadowBlockRegistry {
         @SubscribeEvent
         public static void setBlockColors(RegisterColorHandlersEvent.Block event) {
             BlockColors blockColors = event.getBlockColors();
+
+            blockColors.register(
+                    (s, l, p, c) -> {
+                        int variant = s.getValue(MeadowGrassVariantHelper.VARIANT);
+                        float desaturation = 1f - variant * 0.015f;
+                        int red = 255;
+                        int notRed = Mth.floor(255 * desaturation);
+                        return red << 16 | notRed << 8 | red;
+                    }, MEADOW_GRASS_BLOCK.get(),
+                    SHORT_MEADOW_GRASS.get(), MEDIUM_MEADOW_GRASS.get(), TALL_MEADOW_GRASS.get());
+
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen.feature.patch;
 
+import com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -59,6 +60,7 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
                   }
                }
                if (plant.canSurvive(state, level, coveragePos)) {
+                  state = MeadowGrassVariantHelper.getStateForBushPlacement(level, coveragePos, state);
                   if (plant instanceof DoublePlantBlock) {
                      if (needsWater) {
                         if (!level.isWaterAt(coveragePos.above())) {
