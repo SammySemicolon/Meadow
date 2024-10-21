@@ -39,9 +39,6 @@ public class MeadowBlockRegistry {
     public static final RegistryObject<MediumMeadowGrassBlock> MEDIUM_MEADOW_GRASS = BLOCKS.register("medium_meadow_grass", () -> new MediumMeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
     public static final RegistryObject<ShortMeadowGrassBlock> SHORT_MEADOW_GRASS = BLOCKS.register("short_meadow_grass", () -> new ShortMeadowGrassBlock(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
 
-    public static final RegistryObject<Block> GRASSY_PEARLLIGHT = BLOCKS.register("grassy_pearllight", () -> new PearllightBlock(MeadowBlockProperties.PEARLLIGHT_PROPERTIES()));
-    public static final RegistryObject<Block> MARINE_PEARLLIGHT = BLOCKS.register("marine_pearllight", () -> new PearllightBlock(MeadowBlockProperties.PEARLLIGHT_PROPERTIES()));
-    public static final RegistryObject<Block> CALCIFIED_PEARLLIGHT = BLOCKS.register("calcified_pearllight", () -> new PearllightBlock(MeadowBlockProperties.PEARLLIGHT_PROPERTIES()));
     public static final RegistryObject<Block> PEARLLIGHT = BLOCKS.register("pearllight", () -> new PearllightBlock(MeadowBlockProperties.PEARLLIGHT_PROPERTIES()));
 
     public static final RegistryObject<Block> TALL_GRASSY_PEARLFLOWER = BLOCKS.register("tall_grassy_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.PEARLFLOWER_PROPERTIES()));

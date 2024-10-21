@@ -50,11 +50,8 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> SHORT_MEADOW_GRASS = register("short_meadow_grass", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), p));
 
     public static final RegistryObject<Item> PEARLLAMP = register("pearllamp", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PEARLLAMP.get(), p));
-
-    public static final RegistryObject<Item> GRASSY_PEARLLIGHT = register("grassy_pearllight", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.GRASSY_PEARLLIGHT.get(), p));
-    public static final RegistryObject<Item> MARINE_PEARLLIGHT = register("marine_pearllight", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MARINE_PEARLLIGHT.get(), p));
-    public static final RegistryObject<Item> CALCIFIED_PEARLLIGHT = register("calcified_pearllight", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_PEARLLIGHT.get(), p));
     public static final RegistryObject<Item> PEARLLIGHT = register("pearllight", MeadowItemProperties.DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PEARLLIGHT.get(), p));
+
 
     public static final RegistryObject<Item> PEARLFLOWER_BUD = register("pearlflower_bud", MeadowItemProperties.DEFAULT_PROPERTIES(), Item::new);
 
