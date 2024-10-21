@@ -122,6 +122,24 @@ public class MeadowBlockProperties {
                 .instabreak();
     }
 
+    public static LodestoneBlockProperties PEARLLIGHT_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .addTag(BlockTags.MINEABLE_WITH_HOE)
+                .mapColor(MapColor.COLOR_YELLOW)
+                .sound(SoundType.SHROOMLIGHT)
+                .strength(1.0F)
+                .lightLevel((state) -> 15);
+    }
+
+    public static LodestoneBlockProperties PEARLLAMP_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .mapColor(MapColor.COLOR_YELLOW)
+                .sound(SoundType.CHERRY_WOOD)
+                .strength(1.5F)
+                .lightLevel((state) -> 15);
+    }
+
     public static LodestoneBlockProperties MINERAL_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON)

@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.flora.pearl_flower;
+package com.smellysleepy.meadow.common.block.flora.pearlflower;
 
 import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;
@@ -6,7 +6,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -16,11 +17,11 @@ import net.minecraft.world.level.material.Fluids;
 
 import javax.annotation.Nullable;
 
-public class PearlFlowerBlock extends BushBlock implements SimpleWaterloggedBlock {
+public class TallPearlFlowerBlock extends TallFlowerBlock {
 
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public PearlFlowerBlock(Properties pProperties) {
+    public TallPearlFlowerBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     }
@@ -38,9 +39,13 @@ public class PearlFlowerBlock extends BushBlock implements SimpleWaterloggedBloc
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        BlockState state = super.getStateForPlacement(pContext);
+        if (state == null) {
+            return null;
+        }
         FluidState fluidstate = pContext.getLevel().getFluidState(pContext.getClickedPos());
         boolean flag = fluidstate.getType() == Fluids.WATER;
-        return super.getStateForPlacement(pContext).setValue(WATERLOGGED, flag);
+        return state.setValue(WATERLOGGED, flag);
     }
 
     @Override

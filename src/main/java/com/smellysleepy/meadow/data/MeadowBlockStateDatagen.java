@@ -2,8 +2,10 @@ package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.flora.mineral_flora.MineralFloraRegistryBundle;
-import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
-import com.smellysleepy.meadow.common.block.flora.pearl_flower.TallPearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.flora.pearlflower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.flora.pearlflower.PearllampBlock;
+import com.smellysleepy.meadow.common.block.flora.pearlflower.PearllightBlock;
+import com.smellysleepy.meadow.common.block.flora.pearlflower.TallPearlFlowerBlock;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.data.*;
 import net.minecraft.world.level.block.*;
@@ -39,6 +41,10 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         setTexturePath("pearlflower/");
         DataHelper.getAll(blocks, b -> b.get() instanceof TallPearlFlowerBlock).forEach(b -> BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, b));
         DataHelper.getAll(blocks, b -> b.get() instanceof PearlFlowerBlock).forEach(b -> MeadowBlockStateSmithTypes.SMALL_TALL_CROSS_MODEL_BLOCK.act(data, b));
+        setTexturePath("pearlflower/light/");
+        DataHelper.getAll(blocks, b -> b.get() instanceof PearllightBlock).forEach(b -> BlockStateSmithTypes.FULL_BLOCK.act(data, b));
+        DataHelper.getAll(blocks, b -> b.get() instanceof PearllampBlock).forEach(b -> BlockStateSmithTypes.AXIS_BLOCK.act(data, b));
+
 
         setTexturePath("aspen_wood/");
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LOG, MeadowBlockRegistry.CALCIFIED_ASPEN_LOG);
