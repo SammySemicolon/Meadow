@@ -1,10 +1,10 @@
 {
   "values": [
     "meadow:thin_calcified_aspen_log",
-    "meadow:partially_calcified_aspen_log",
-    "meadow:calcified_aspen_log",
     "meadow:aspen_log",
     "meadow:thin_aspen_log",
-    "meadow:thin_partially_calcified_aspen_log"
+    "meadow:thin_partially_calcified_aspen_log",
+    "meadow:partially_calcified_aspen_log",
+    "meadow:calcified_aspen_log"
   ]
 }

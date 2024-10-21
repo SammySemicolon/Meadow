@@ -1,17 +1,18 @@
 {
   "values": [
+    "meadow:pearllamp",
     "meadow:thin_calcified_aspen_log",
-    "meadow:aspen_boards",
-    "meadow:partially_calcified_aspen_log",
     "meadow:aspen_door",
     "meadow:heavy_aspen_boards",
-    "meadow:calcified_aspen_log",
     "meadow:aspen_trapdoor",
-    "meadow:solid_aspen_trapdoor",
     "meadow:aspen_log",
     "meadow:thin_aspen_log",
-    "meadow:aspen_planks",
     "meadow:thin_partially_calcified_aspen_log",
+    "meadow:aspen_boards",
+    "meadow:partially_calcified_aspen_log",
+    "meadow:calcified_aspen_log",
+    "meadow:solid_aspen_trapdoor",
+    "meadow:aspen_planks",
     "meadow:solid_aspen_door"
   ]
 }

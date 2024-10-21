@@ -2,7 +2,7 @@ package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
-import com.smellysleepy.meadow.common.block.flora.pearl_flower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.flora.pearlflower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import net.minecraft.core.*;
 import net.minecraft.resources.*;
