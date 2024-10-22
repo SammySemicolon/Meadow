@@ -1,6 +1,6 @@
-package com.smellysleepy.meadow.registry.common;
+package com.smellysleepy.meadow.registry.common.block;
 
-import com.smellysleepy.meadow.common.block.meadow.wood.ThinMeadowLogBlock;
+import com.smellysleepy.meadow.common.block.meadow.wood.NaturalThinMeadowLogBlock;
 import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
@@ -45,7 +45,7 @@ public class MeadowBlockProperties {
                 .sound(SoundType.GLOW_LICHEN);
     }
 
-    public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
+        public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
                 .isValidSpawn(Blocks::ocelotOrParrot)
@@ -79,9 +79,18 @@ public class MeadowBlockProperties {
                 .mapColor(MapColor.WOOD);
     }
 
+    public static LodestoneBlockProperties MEADOW_LOG_PROPERTIES() {
+        return MEADOW_WOOD_PROPERTIES()
+                .addTag(BlockTags.LOGS);
+    }
+
+    public static LodestoneBlockProperties STRIPPED_MEADOW_LOG_PROPERTIES() {
+        return MEADOW_LOG_PROPERTIES()
+                .addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    }
+
     public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .lightLevel(s -> s.getValue(ThinMeadowLogBlock.LEAVES).equals(ThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0)
                 .strength(1.25F, 4.0F)
                 .setCutoutRenderType()
                 .instrument(NoteBlockInstrument.BASS)
@@ -89,6 +98,21 @@ public class MeadowBlockProperties {
                 .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.CHERRY_WOOD)
                 .mapColor(MapColor.WOOD);
+    }
+
+    public static LodestoneBlockProperties THIN_MEADOW_LOG_PROPERTIES() {
+        return THIN_MEADOW_WOOD_PROPERTIES()
+                .addTag(BlockTags.LOGS);
+    }
+
+    public static LodestoneBlockProperties THIN_STRIPPED_MEADOW_LOG_PROPERTIES() {
+        return THIN_MEADOW_LOG_PROPERTIES()
+                .addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    }
+
+    public static LodestoneBlockProperties NATURAL_THIN_MEADOW_LOG_PROPERTIES() {
+        return THIN_MEADOW_WOOD_PROPERTIES()
+                .lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
     }
 
     public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {

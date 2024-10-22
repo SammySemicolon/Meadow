@@ -13,6 +13,8 @@ public class MeadowBlockTagRegistry {
     public static final TagKey<Block> MINERAL_FLORA_CAN_PLACE_ON = meadowTag("mineral_flora_can_place_on");
     public static final TagKey<Block> PEARLFLOWER_CAN_PLACE_ON = meadowTag("pearlflower_can_place_on");
 
+    public static final TagKey<Block> STRIPPED_LOGS = forgeTag("stripped_logs");
+
     private static TagKey<Block> modTag(String path) {
         return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), new ResourceLocation(path));
     }

@@ -33,6 +33,13 @@ public class MineralLeavesBlock extends LeavesBlock implements BonemealableBlock
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         super.animateTick(pState, pLevel, pPos, pRandom);
+        if (pRandom.nextInt(6) == 0) {
+            double posX = (double) pPos.getX() + 0.1f + pRandom.nextDouble() * 0.8f;
+            double posY = (double) pPos.getY() + 0.1f + pRandom.nextDouble() * 0.8f;
+            double posZ = (double) pPos.getZ() + 0.1f + pRandom.nextDouble() * 0.8f;
+            var dust = StrangeFloraParticleEffects.mineralFloraShine(pLevel, new Vec3(posX, posY, posZ));
+            dust.spawnParticles();
+        }
         if (pRandom.nextInt(10) == 0) {
             BlockPos blockpos = pPos.below();
             BlockState blockstate = pLevel.getBlockState(blockpos);

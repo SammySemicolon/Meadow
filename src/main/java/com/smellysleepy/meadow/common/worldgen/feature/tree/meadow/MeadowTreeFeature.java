@@ -55,7 +55,7 @@ public class MeadowTreeFeature extends AbstractMeadowTreeFeature {
         var rand = context.random();
         var logState = config.log.defaultBlockState();
         var calcifiedLogState = config.calcifiedLog.defaultBlockState();
-        var partiallyCalcifiedLogState = config.partiallyCalcifiedLog.defaultBlockState().trySetValue(PartiallyCalcifiedMeadowLogBlock.FACING, Direction.UP);
+        var partiallyCalcifiedLogState = config.partiallyCalcifiedLog.defaultBlockState().trySetValue(PartiallyCalcifiedMeadowLogBlock.AXIS, Direction.Axis.Y);
         int trunkHeight = getTrunkHeight(rand);
         int calcificationHeight = getCalcificationHeight(rand);
         var mutable = new BlockPos.MutableBlockPos().set(pos);

@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "axis=x,flipped=false": {
+      "model": "meadow:block/partially_calcified_aspen_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=true": {
+      "model": "meadow:block/partially_calcified_aspen_wood_flipped",
+      "x": 90,
+      "y": 270
+    },
+    "axis=y,flipped=false": {
+      "model": "meadow:block/partially_calcified_aspen_wood"
+    },
+    "axis=y,flipped=true": {
+      "model": "meadow:block/partially_calcified_aspen_wood_flipped",
+      "x": 180
+    },
+    "axis=z,flipped=false": {
+      "model": "meadow:block/partially_calcified_aspen_wood",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,flipped=true": {
+      "model": "meadow:block/partially_calcified_aspen_wood_flipped",
+      "x": 90
+    }
+  }
+}

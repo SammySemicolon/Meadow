@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.common.block.mineral_flora;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.registry.common.MeadowBlockProperties;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockProperties;
 import com.smellysleepy.meadow.registry.common.MeadowItemProperties;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -47,8 +47,8 @@ public class MineralFloraRegistryBundle {
         var grassBlockProperties = MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES();
         var grassProperties = MeadowBlockProperties.MINERAL_GRASS_PROPERTIES();
         var floraProperties = MeadowBlockProperties.MINERAL_FLORA_PROPERTIES();
-        var leavesProperties = MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES();
         var hangingLeavesProperties = MeadowBlockProperties.HANGING_MINERAL_LEAVES_PROPERTIES();
+        var leavesProperties = MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES();
         var itemProperties = MeadowItemProperties.DEFAULT_PROPERTIES();
         var foodProperties = new FoodProperties.Builder().nutrition(2).saturationMod(0.1f).fast().build();
 

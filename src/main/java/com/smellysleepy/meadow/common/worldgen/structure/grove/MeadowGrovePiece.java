@@ -733,7 +733,7 @@ public class MeadowGrovePiece extends StructurePiece {
         if (calcification != null && calcification.getSecond() < 0.03f) { //calcification start
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING;
         }
-        if (calcification != null && calcification.getSecond() >= 0.03f) { //calcification inside
+        else if (calcification != null && calcification.getSecond() >= 0.03f) { //calcification inside
             if (!useCracks) {
                 crackDelta = makeCracks(noiseSampler, pos.getX(), pos.getZ(), 0.025f);
             }

@@ -1,19 +1,134 @@
 {
   "variants": {
-    "leaves=large": {
+    "axis=x,flipped=false,leaves=large": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_large_leaves",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=false,leaves=medium": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_medium_leaves",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=false,leaves=none": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=false,leaves=small": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_small_leaves",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=false,leaves=top": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_top_leaves",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=true,leaves=large": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_large_leaves_flipped",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,flipped=true,leaves=medium": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_medium_leaves_flipped",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,flipped=true,leaves=none": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_flipped",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,flipped=true,leaves=small": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_small_leaves_flipped",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,flipped=true,leaves=top": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_top_leaves_flipped",
+      "x": 90,
+      "y": 270
+    },
+    "axis=y,flipped=false,leaves=large": {
       "model": "meadow:block/thin_partially_calcified_aspen_log_large_leaves"
     },
-    "leaves=medium": {
+    "axis=y,flipped=false,leaves=medium": {
       "model": "meadow:block/thin_partially_calcified_aspen_log_medium_leaves"
     },
-    "leaves=none": {
+    "axis=y,flipped=false,leaves=none": {
       "model": "meadow:block/thin_partially_calcified_aspen_log"
     },
-    "leaves=small": {
+    "axis=y,flipped=false,leaves=small": {
       "model": "meadow:block/thin_partially_calcified_aspen_log_small_leaves"
     },
-    "leaves=top": {
+    "axis=y,flipped=false,leaves=top": {
       "model": "meadow:block/thin_partially_calcified_aspen_log_top_leaves"
+    },
+    "axis=y,flipped=true,leaves=large": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_large_leaves_flipped",
+      "x": 180
+    },
+    "axis=y,flipped=true,leaves=medium": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_medium_leaves_flipped",
+      "x": 180
+    },
+    "axis=y,flipped=true,leaves=none": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_flipped",
+      "x": 180
+    },
+    "axis=y,flipped=true,leaves=small": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_small_leaves_flipped",
+      "x": 180
+    },
+    "axis=y,flipped=true,leaves=top": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_top_leaves_flipped",
+      "x": 180
+    },
+    "axis=z,flipped=false,leaves=large": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_large_leaves",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,flipped=false,leaves=medium": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_medium_leaves",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,flipped=false,leaves=none": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,flipped=false,leaves=small": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_small_leaves",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,flipped=false,leaves=top": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_top_leaves",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,flipped=true,leaves=large": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_large_leaves_flipped",
+      "x": 90
+    },
+    "axis=z,flipped=true,leaves=medium": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_medium_leaves_flipped",
+      "x": 90
+    },
+    "axis=z,flipped=true,leaves=none": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_flipped",
+      "x": 90
+    },
+    "axis=z,flipped=true,leaves=small": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_small_leaves_flipped",
+      "x": 90
+    },
+    "axis=z,flipped=true,leaves=top": {
+      "model": "meadow:block/thin_partially_calcified_aspen_log_top_leaves_flipped",
+      "x": 90
     }
   }
 }

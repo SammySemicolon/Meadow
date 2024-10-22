@@ -38,15 +38,12 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
          Set<BlockPos> covering = WorldgenHelper.fetchCoveringPositions(level, mutable, size);
          for (BlockPos blockPos : covering) {
             BlockPos coveragePos = blockPos.above();
-            if (!level.getBlockState(coveragePos).isAir()) {
-               continue;
-            }
             BlockState state = plant.defaultBlockState();
             boolean needsWater = state.hasProperty(BlockStateProperties.WATERLOGGED) || !state.getFluidState().isEmpty();
             boolean hasSpace = true;
             mutable = coveragePos.mutable();
             for (int j = 0; j < 4; j++) {
-               if (!level.getBlockState(mutable).canBeReplaced()) {
+               if ((needsWater && level.getFluidState(mutable).isEmpty()) || (!needsWater && !level.getBlockState(mutable).isAir())) {
                   hasSpace = false;
                   break;
                }
@@ -54,19 +51,9 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
             }
 
             if (hasSpace) {
-               if (needsWater) {
-                  if (!level.isWaterAt(coveragePos)) {
-                     continue;
-                  }
-               }
                if (plant.canSurvive(state, level, coveragePos)) {
                   state = MeadowGrassVariantHelper.getStateForBushPlacement(level, coveragePos, state);
                   if (plant instanceof DoublePlantBlock) {
-                     if (needsWater) {
-                        if (!level.isWaterAt(coveragePos.above())) {
-                           continue;
-                        }
-                     }
                      DoublePlantBlock.placeAt(level, state, coveragePos, 3);
                   } else {
                      level.setBlock(coveragePos, copyWaterloggedFrom(level, coveragePos, state), 3);
