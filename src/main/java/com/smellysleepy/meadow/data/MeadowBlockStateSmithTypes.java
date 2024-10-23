@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.data;
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
 import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.meadow.flora.wheat.AureateWheatCropBlock;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import net.minecraft.core.*;
 import net.minecraft.resources.*;
@@ -49,6 +50,22 @@ public class MeadowBlockStateSmithTypes {
 
         }
         builder.addModel();
+    });
+
+    public static BlockStateSmith<AureateWheatCropBlock> LAYERED_CROP_BLOCK = new BlockStateSmith<>(AureateWheatCropBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_uppermost"), (block, provider) -> {
+        String name = provider.getBlockName(block);
+
+        provider.getVariantBuilder(block)
+                .forAllStates(state -> {
+                    var layer = state.getValue(AureateWheatCropBlock.LAYER);
+                    String partName = name + "_" + layer;
+                    var model = provider.models().withExistingParent(partName, new ResourceLocation("block/crop"))
+                            .texture("crop", provider.getBlockTexture(partName));
+
+                    return ConfiguredModel.builder()
+                            .modelFile(model)
+                            .build();
+                });
     });
 
     public static BlockStateSmith<Block> TINTED_CROSS_MODEL_BLOCK = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.CROSS_MODEL_ITEM, (block, provider) -> {

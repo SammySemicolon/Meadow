@@ -45,7 +45,7 @@ public class MeadowBlockProperties {
                 .sound(SoundType.GLOW_LICHEN);
     }
 
-        public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
+    public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
                 .isValidSpawn(Blocks::ocelotOrParrot)
@@ -87,6 +87,17 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties STRIPPED_MEADOW_LOG_PROPERTIES() {
         return MEADOW_LOG_PROPERTIES()
                 .addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    }
+
+    public static LodestoneBlockProperties AUREATE_WHEAT_CROP_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .setCutoutRenderType()
+                .noCollission()
+                .noOcclusion()
+                .instabreak()
+                .offsetType(BlockBehaviour.OffsetType.XYZ)
+                .mapColor(MapColor.GRASS)
+                .sound(SoundType.GRASS);
     }
 
     public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
@@ -131,7 +142,7 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
         return ASPEN_LEAVES_PROPERTIES()
-                .lightLevel(s -> 4)
+                .lightLevel(s -> 3)
                 .noCollission();
     }
 

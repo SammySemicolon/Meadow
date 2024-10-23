@@ -68,6 +68,7 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
       return true;
    }
 
+   //TODO: move this to some sorta lodestone helper function
    public static BlockState copyWaterloggedFrom(LevelReader pLevel, BlockPos pPos, BlockState pState) {
       return pState.hasProperty(BlockStateProperties.WATERLOGGED) ? pState.setValue(BlockStateProperties.WATERLOGGED, pLevel.isWaterAt(pPos)) : pState;
    }
