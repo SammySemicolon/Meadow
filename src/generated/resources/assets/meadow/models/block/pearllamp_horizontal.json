@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "meadow:block/pearlflower/light/pearllamp_end",
+    "side": "meadow:block/pearlflower/light/pearllamp_side"
+  }
+}

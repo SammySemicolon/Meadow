@@ -70,7 +70,7 @@ public class SmallMeadowTreeFeature extends AbstractMeadowTreeFeature {
             if (i <= calcificationHeight) {
                 state = i == calcificationHeight ? partiallyCalcifiedLogState : calcifiedLogState;
             }
-            var entry = create(state.setValue(ThinMeadowLogBlock.LEAVES, MeadowLeavesType.values()[leafStateIndex]));
+            var entry = create(state.setValue(NaturalThinMeadowLogBlock.LEAVES, NaturalThinMeadowLogBlock.MeadowLeavesType.values()[leafStateIndex]));
             filler.getLayer(LOGS).put(logPos, entry);
             mutable.move(Direction.UP);
         }

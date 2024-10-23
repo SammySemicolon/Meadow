@@ -1,30 +1,30 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "meadow:block/partially_calcified_aspen_log_flipped",
-      "x": 180
-    },
-    "facing=east": {
+    "axis=x,flipped=false": {
       "model": "meadow:block/partially_calcified_aspen_log",
       "x": 90,
       "y": 90
     },
-    "facing=north": {
-      "model": "meadow:block/partially_calcified_aspen_log",
-      "x": 90
-    },
-    "facing=south": {
-      "model": "meadow:block/partially_calcified_aspen_log_flipped",
-      "x": 90,
-      "y": 180
-    },
-    "facing=up": {
-      "model": "meadow:block/partially_calcified_aspen_log"
-    },
-    "facing=west": {
+    "axis=x,flipped=true": {
       "model": "meadow:block/partially_calcified_aspen_log_flipped",
       "x": 90,
       "y": 270
+    },
+    "axis=y,flipped=false": {
+      "model": "meadow:block/partially_calcified_aspen_log"
+    },
+    "axis=y,flipped=true": {
+      "model": "meadow:block/partially_calcified_aspen_log_flipped",
+      "x": 180
+    },
+    "axis=z,flipped=false": {
+      "model": "meadow:block/partially_calcified_aspen_log",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,flipped=true": {
+      "model": "meadow:block/partially_calcified_aspen_log_flipped",
+      "x": 90
     }
   }
 }

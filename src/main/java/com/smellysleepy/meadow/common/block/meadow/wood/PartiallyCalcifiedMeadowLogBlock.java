@@ -6,21 +6,40 @@ import net.minecraft.world.item.context.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraftforge.common.*;
 import team.lodestar.lodestone.systems.block.*;
 
+import java.util.function.Supplier;
+
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS;
 
-public class PartiallyCalcifiedMeadowLogBlock extends LodestoneDirectionalBlock {
-    public PartiallyCalcifiedMeadowLogBlock(Properties p_49795_) {
-        super(p_49795_);
+public class PartiallyCalcifiedMeadowLogBlock extends MeadowLogBlock {
+
+    public static final BooleanProperty FLIPPED = BooleanProperty.create("flipped");
+
+    public PartiallyCalcifiedMeadowLogBlock(Properties properties, Supplier<Block> stripped) {
+        super(properties, stripped);
+        registerDefaultState(defaultBlockState().setValue(FLIPPED, false));
+    }
+
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        super.createBlockStateDefinition(pBuilder);
+        pBuilder.add(FLIPPED);
     }
 
     @Override
-    public @org.jetbrains.annotations.Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
-        if (toolAction.equals(ToolActions.AXE_STRIP)) {
-            return MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(FACING).getAxis());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction direction = context.getClickedFace();
+        if (context.getPlayer() == null || !context.getPlayer().isShiftKeyDown()) {
+            direction = direction.getOpposite();
         }
-        return super.getToolModifiedState(state, context, toolAction, simulate);
+        BlockState state = super.getStateForPlacement(context);
+        if (state != null) {
+            state = state.setValue(FLIPPED, direction.getAxisDirection().equals(Direction.AxisDirection.POSITIVE));
+        }
+        return state;
     }
 }

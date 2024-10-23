@@ -2,6 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.UnsafeBoundingBox;
+import com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.CalcifiedRegion;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.LakeRegion;
@@ -732,7 +733,7 @@ public class MeadowGrovePiece extends StructurePiece {
         if (calcification != null && calcification.getSecond() < 0.03f) { //calcification start
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING;
         }
-        if (calcification != null && calcification.getSecond() >= 0.03f) { //calcification inside
+        else if (calcification != null && calcification.getSecond() >= 0.03f) { //calcification inside
             if (!useCracks) {
                 crackDelta = makeCracks(noiseSampler, pos.getX(), pos.getZ(), 0.025f);
             }
@@ -754,7 +755,7 @@ public class MeadowGrovePiece extends StructurePiece {
                     pattern.add(Blocks.STONE.defaultBlockState());
                 }
             } else {
-                pattern.add(MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get().defaultBlockState());
+                pattern.add(MeadowGrassVariantHelper.getStateForPlacement(pos.setY(startingY), MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get().defaultBlockState()));
                 pattern.add(Blocks.DIRT.defaultBlockState());
                 pattern.add(Blocks.DIRT.defaultBlockState());
             }

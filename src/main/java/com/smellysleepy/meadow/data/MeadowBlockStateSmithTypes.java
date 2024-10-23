@@ -2,17 +2,18 @@ package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
-import com.smellysleepy.meadow.common.block.flora.pearlflower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import net.minecraft.core.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraftforge.client.model.generators.*;
-import team.lodestar.lodestone.systems.block.*;
 import team.lodestar.lodestone.systems.datagen.*;
+import team.lodestar.lodestone.systems.datagen.providers.LodestoneBlockStateProvider;
 import team.lodestar.lodestone.systems.datagen.statesmith.*;
 
 import java.util.function.Function;
@@ -49,12 +50,20 @@ public class MeadowBlockStateSmithTypes {
         }
         builder.addModel();
     });
-//    public static BlockStateSmith<LeavesBlock> ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_0"), (block, provider) -> {
-//        String name = provider.getBlockName(block);
-//        Function<Integer, ModelFile> modelProvider = (i) ->
-//                provider.models().withExistingParent(name+"_"+i, new ResourceLocation("block/leaves")).texture("all", provider.getBlockTexture(name + "_" + i));
-//        provider.getVariantBuilder(block).forAllStates(s -> ConfiguredModel.builder().modelFile(modelProvider.apply(s.getValue(MeadowLeavesBlock.COLOR))).build());
-//    });
+
+    public static BlockStateSmith<Block> TINTED_CROSS_MODEL_BLOCK = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.CROSS_MODEL_ITEM, (block, provider) -> {
+        String name = provider.getBlockName(block);
+        provider.simpleBlock(block, provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_tinted_cross")).texture("cross", provider.getBlockTexture(name)));
+    });
+
+    public static BlockStateSmith<Block> TINTED_TALL_CROSS_MODEL_BLOCK = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_top"), (block, provider) -> {
+        String name = provider.getBlockName(block);
+        provider.getVariantBuilder(block).forAllStates(s -> {
+            final String affix = s.getValue(DoublePlantBlock.HALF).equals(DoubleBlockHalf.LOWER) ? "_bottom" : "_top";
+            final String affixedName = name + affix;
+            return ConfiguredModel.builder().modelFile(provider.models().withExistingParent(affixedName, MeadowMod.meadowModPath("block/templates/template_tinted_cross")).texture("cross", provider.getBlockTexture(affixedName))).build();
+        });
+    });
 
     public static BlockStateSmith<PearlFlowerBlock> SMALL_TALL_CROSS_MODEL_BLOCK = new BlockStateSmith<>(PearlFlowerBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_bottom"), (block, provider) -> {
         String name = provider.getBlockName(block);
@@ -69,82 +78,104 @@ public class MeadowBlockStateSmithTypes {
     public static BlockStateSmith<ThinMeadowLogBlock> THIN_LOG_BLOCK = new BlockStateSmith<>(ThinMeadowLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
         String logName = name.replace("thin_", "");
-        boolean isPartiallyCalcified = logName.contains("partially_");
+        boolean isWood = !name.endsWith("_log");
+        if (isWood) {
+            logName = logName.replace("_wood", "_log");
+        }
         final ResourceLocation sideTexture = provider.getBlockTexture(logName);
-        final ResourceLocation topTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_calcified_", "") : logName) + "_top");
-        final ResourceLocation bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_", "") : logName) + "_top");
-        final ResourceLocation smallLeavesTexture = provider.getBlockTexture(name + "_small_leaves");
-        final ResourceLocation mediumLeavesTexture = provider.getBlockTexture(name + "_medium_leaves");
-        final ResourceLocation largeLeavesTexture = provider.getBlockTexture(name + "_large_leaves");
-        final ResourceLocation topLeavesTexture = provider.getBlockTexture("aspen_leaves");
-        final ResourceLocation hangingLeavesTexture = provider.getBlockTexture("thin_aspen_log_hanging_leaves");
-        ModelFile noLeaves = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_thin_log"))
+        final ResourceLocation endTexture = provider.getBlockTexture(logName + (isWood ? "" : "_top"));
+        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
-                .texture("top", topTexture)
-                .texture("bottom", bottomTexture);
-
-        ModelFile smallLeaves = provider.models().withExistingParent(name + "_small_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
-                .texture("side", sideTexture)
-                .texture("top", topTexture)
-                .texture("bottom", bottomTexture)
-                .texture("leaves", smallLeavesTexture);
-
-        ModelFile mediumLeaves = provider.models().withExistingParent(name + "_medium_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
-                .texture("side", sideTexture)
-                .texture("top", topTexture)
-                .texture("bottom", bottomTexture)
-                .texture("leaves", mediumLeavesTexture);
-
-        ModelFile largeLeaves = provider.models().withExistingParent(name + "_large_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
-                .texture("side", sideTexture)
-                .texture("top", topTexture)
-                .texture("bottom", bottomTexture)
-                .texture("leaves", largeLeavesTexture);
-
-        ModelFile topLeaves = provider.models().withExistingParent(name + "_top_leaves", MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves_top"))
-                .texture("side", sideTexture)
-                .texture("top", topTexture)
-                .texture("bottom", bottomTexture)
-                .texture("leaves", largeLeavesTexture)
-                .texture("leaves_block", topLeavesTexture)
-                .texture("hanging_leaves", hangingLeavesTexture);
-
-        provider.getVariantBuilder(block).forAllStates(s -> {
-            ModelFile modelFile = null;
-            switch (s.getValue(ThinMeadowLogBlock.LEAVES)) {
-                case NONE -> modelFile = noLeaves;
-                case SMALL -> modelFile = smallLeaves;
-                case MEDIUM -> modelFile = mediumLeaves;
-                case LARGE -> modelFile = largeLeaves;
-                case TOP -> modelFile = topLeaves;
+                .texture("top", endTexture)
+                .texture("bottom", endTexture);
+        provider.getVariantBuilder(block).forAllStates(state -> {
+            ConfiguredModel.Builder<?> builder = ConfiguredModel.builder().modelFile(model);
+            Direction.Axis value = state.getValue(ThinMeadowLogBlock.AXIS);
+            if (value.equals(Direction.Axis.X) || value.equals(Direction.Axis.Z)) {
+                builder.rotationX(90);
+                if (value.equals(Direction.Axis.X)) {
+                    builder.rotationY(90);
+                }
             }
-
-            return ConfiguredModel.builder().modelFile(modelFile).build();
+            return builder.build();
         });
-
     });
 
-    public static BlockStateSmith<LodestoneDirectionalBlock> DIRECTIONAL_LOG_BLOCK = new BlockStateSmith<>(LodestoneDirectionalBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+    public static BlockStateSmith<NaturalThinMeadowLogBlock> NATURAL_THIN_LOG_BLOCK = new BlockStateSmith<>(NaturalThinMeadowLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+        ModelFile[] thinLogModels = getThinLogModels(provider, block);
+        provider.getVariantBuilder(block).forAllStates(s -> {
+            ModelFile modelFile = null;
+            switch (s.getValue(NaturalThinMeadowLogBlock.LEAVES)) {
+                case NONE -> modelFile = thinLogModels[0];
+                case SMALL -> modelFile = thinLogModels[1];
+                case MEDIUM -> modelFile = thinLogModels[2];
+                case LARGE -> modelFile = thinLogModels[3];
+                case TOP -> modelFile = thinLogModels[4];
+            }
+            ConfiguredModel.Builder<?> builder = ConfiguredModel.builder().modelFile(modelFile);
+            Direction.Axis value = s.getValue(ThinMeadowLogBlock.AXIS);
+            if (value.equals(Direction.Axis.X) || value.equals(Direction.Axis.Z)) {
+                builder.rotationX(90);
+                if (value.equals(Direction.Axis.X)) {
+                    builder.rotationY(90);
+                }
+            }
+            return builder.build();
+        });
+    });
+
+    public static BlockStateSmith<PartiallyCalcifiedThinMeadowLogBlock> PARTIALLY_CALCIFIED_THIN_LOG_BLOCK = new BlockStateSmith<>(PartiallyCalcifiedThinMeadowLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+        ModelFile[] thinLogModels = getThinLogModels(provider, block);
+        ModelFile[] flippedThinLogModels = getThinLogModels(provider, block, true);
+        provider.getVariantBuilder(block).forAllStates(state -> {
+            var flipped = state.getValue(PartiallyCalcifiedThinMeadowLogBlock.FLIPPED);
+            var models = flipped ? flippedThinLogModels : thinLogModels;
+            ModelFile modelFile = null;
+            switch (state.getValue(NaturalThinMeadowLogBlock.LEAVES)) {
+                case NONE -> modelFile = models[0];
+                case SMALL -> modelFile = models[1];
+                case MEDIUM -> modelFile = models[2];
+                case LARGE -> modelFile = models[3];
+                case TOP -> modelFile = models[4];
+            }
+            var axis = state.getValue(PartiallyCalcifiedMeadowLogBlock.AXIS);
+            var direction = Direction.fromAxisAndDirection(axis, flipped ? Direction.AxisDirection.NEGATIVE : Direction.AxisDirection.POSITIVE);
+
+            final int rotationX = direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0;
+            final int rotationY = direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot()) + 180) % 360;
+
+            return ConfiguredModel.builder()
+                    .modelFile(modelFile)
+                    .rotationX(rotationX)
+                    .rotationY(rotationY)
+                    .build();
+        });
+    });
+
+    public static BlockStateSmith<PartiallyCalcifiedMeadowLogBlock> PARTIALLY_CALCIFIED_LOG_BLOCK = new BlockStateSmith<>(PartiallyCalcifiedMeadowLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
-        ResourceLocation side = provider.getBlockTexture(name);
-        ResourceLocation sideFlipped = provider.getBlockTexture(name + "_flipped");
-        ResourceLocation bottom = provider.getBlockTexture("calcified_aspen_log_top");
-        ResourceLocation top = provider.getBlockTexture("aspen_log_top");
+        boolean isWood = !name.endsWith("_log");
+        String logName = isWood ? name.replace("_wood", "_log") : name;
+        String affix = isWood ? "" : "_top";
+        ResourceLocation side = provider.getBlockTexture(logName);
+        ResourceLocation sideFlipped = provider.getBlockTexture(logName + "_flipped");
+        ResourceLocation bottom = provider.getBlockTexture("calcified_aspen_log" + affix);
+        ResourceLocation top = provider.getBlockTexture("aspen_log" + affix);
         ModelFile model = provider.models().cubeBottomTop(name, side, bottom, top);
         ModelFile flippedModel = provider.models().cubeBottomTop(name + "_flipped", sideFlipped, bottom, top);
 
         provider.getVariantBuilder(block)
                 .forAllStates(state -> {
-                    Direction direction = state.getValue(BlockStateProperties.FACING);
-                    Direction.AxisDirection axisForFlipped = Direction.AxisDirection.NEGATIVE;
-                    if (direction.getAxis().equals(Direction.Axis.Z)) {
-                        axisForFlipped = axisForFlipped.opposite();
-                    }
-                    ModelFile logModel = direction.getAxisDirection().equals(axisForFlipped) ? flippedModel : model;
+                    var flipped = state.getValue(PartiallyCalcifiedThinMeadowLogBlock.FLIPPED);
+                    ModelFile modelFile = flipped ? flippedModel : model;
+                    var axis = state.getValue(PartiallyCalcifiedMeadowLogBlock.AXIS);
+                    var direction = Direction.fromAxisAndDirection(axis, flipped ? Direction.AxisDirection.NEGATIVE : Direction.AxisDirection.POSITIVE);
+
                     final int rotationX = direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0;
                     final int rotationY = direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot()) + 180) % 360;
+
                     return ConfiguredModel.builder()
-                            .modelFile(logModel)
+                            .modelFile(modelFile)
                             .rotationX(rotationX)
                             .rotationY(rotationY)
                             .build();
@@ -215,4 +246,61 @@ public class MeadowBlockStateSmithTypes {
                             .build();
                 });
     });
+
+    public static ModelFile[] getThinLogModels(LodestoneBlockStateProvider provider, Block block) {
+        return getThinLogModels(provider, block, false);
+    }
+    public static ModelFile[] getThinLogModels(LodestoneBlockStateProvider provider, Block block, boolean flipped) {
+        var name = provider.getBlockName(block);
+        var leaves = name;
+        var logName = name.replace("thin_", "");
+        boolean isWood = !name.endsWith("_log");
+        if (isWood) {
+            logName = logName.replace("_wood", "_log");
+            leaves = "thin_" + logName;
+        }
+        var flippedAffix = flipped ? "_flipped" : "";
+        boolean isPartiallyCalcified = logName.contains("partially_");
+        var endAffix = isWood ? "" : "_top";
+        final ResourceLocation smallLeavesTexture = provider.getBlockTexture(leaves + "_small_leaves");
+        final ResourceLocation mediumLeavesTexture = provider.getBlockTexture(leaves + "_medium_leaves");
+        final ResourceLocation largeLeavesTexture = provider.getBlockTexture(leaves + "_large_leaves");
+
+        final ResourceLocation sideTexture = provider.getBlockTexture(logName + flippedAffix);
+        final ResourceLocation topTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_calcified_", "") : logName) + endAffix);
+        final ResourceLocation bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_", "") : logName) + endAffix);
+        final ResourceLocation topLeavesTexture = provider.getBlockTexture("aspen_leaves");
+        final ResourceLocation hangingLeavesTexture = provider.getBlockTexture("thin_aspen_log_hanging_leaves");
+        ModelFile noLeaves = provider.models().withExistingParent(name + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("bottom", bottomTexture);
+
+        ModelFile smallLeaves = provider.models().withExistingParent(name + "_small_leaves" + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("bottom", bottomTexture)
+                .texture("leaves", smallLeavesTexture);
+
+        ModelFile mediumLeaves = provider.models().withExistingParent(name + "_medium_leaves" + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("bottom", bottomTexture)
+                .texture("leaves", mediumLeavesTexture);
+
+        ModelFile largeLeaves = provider.models().withExistingParent(name + "_large_leaves" + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("bottom", bottomTexture)
+                .texture("leaves", largeLeavesTexture);
+
+        ModelFile topLeaves = provider.models().withExistingParent(name + "_top_leaves" + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves_top"))
+                .texture("side", sideTexture)
+                .texture("top", topTexture)
+                .texture("bottom", bottomTexture)
+                .texture("leaves", largeLeavesTexture)
+                .texture("leaves_block", topLeavesTexture)
+                .texture("hanging_leaves", hangingLeavesTexture);
+        return new ModelFile[]{noLeaves, smallLeaves, mediumLeaves, largeLeaves, topLeaves};
+    }
 }
