@@ -23,6 +23,8 @@ public class MineralFloraRegistryBundle {
 
     public final ResourceLocation id;
 
+    public final Block oreBlock;
+
     public final ResourceKey<ConfiguredFeature<?, ?>> configuredTreeFeature;
     public final ResourceKey<ConfiguredFeature<?, ?>> configuredFlowerFeature;
     public final ResourceKey<ConfiguredFeature<?, ?>> configuredNaturalPatchFeature;
@@ -49,9 +51,11 @@ public class MineralFloraRegistryBundle {
 
     public final RegistryObject<Item> fruitItem;
 
-    public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Color color, TagKey<Block> tag) {
+    public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Color color, Block oreBlock, TagKey<Block> tag) {
         this.id = id;
         var prefix = id.getPath();
+        this.oreBlock = oreBlock;
+
 
         configuredTreeFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree"));
         configuredFlowerFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_plant"));

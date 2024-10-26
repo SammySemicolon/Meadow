@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:amethyst_grass_block",
+    "foliage": "meadow:amethyst_flora",
+    "ore": "minecraft:amethyst_block",
+    "plant": "meadow:amethyst_flower"
+  }
+}

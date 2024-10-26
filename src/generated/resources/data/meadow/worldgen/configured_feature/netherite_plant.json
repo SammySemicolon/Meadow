@@ -1,0 +1,9 @@
+{
+  "type": "meadow:strange_plant",
+  "config": {
+    "block": "meadow:netherite_grass_block",
+    "foliage": "meadow:netherite_flora",
+    "ore": "minecraft:nether_gold_ore",
+    "plant": "meadow:netherite_flower"
+  }
+}

@@ -22,8 +22,8 @@ public class StrangePlantFeatureConfiguration implements FeatureConfiguration {
     public final Block block;
     public final Block ore;
 
-    public StrangePlantFeatureConfiguration(MineralFloraRegistryBundle bundle, Block ore) {
-        this(bundle.flowerBlock.get(), bundle.floraBlock.get(), bundle.grassBlock.get(), ore);
+    public StrangePlantFeatureConfiguration(MineralFloraRegistryBundle bundle) {
+        this(bundle.flowerBlock.get(), bundle.floraBlock.get(), bundle.grassBlock.get(), bundle.oreBlock);
     }
     public StrangePlantFeatureConfiguration(Block flower, Block grass, Block block, Block ore) {
         this.flower = flower;
