@@ -25,21 +25,20 @@ public class MeadowLangDatagen extends LanguageProvider {
         Set<RegistryObject<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
         Set<RegistryObject<Item>> items = new HashSet<>(MeadowItemRegistry.ITEMS.getEntries());
 
-        blocks.forEach(b ->
-        {
+        blocks.forEach(b -> {
             String name = b.get().getDescriptionId().replaceFirst("block\\.meadow\\.", "");
             name = DataHelper.toTitleCase(correctItemName(name), "_");
             add(b.get().getDescriptionId(), name);
         });
 
         DataHelper.takeAll(items, i -> i.get() instanceof BlockItem && !(i.get() instanceof ItemNameBlockItem));
-        items.forEach(i ->
-        {
+        items.forEach(i -> {
             String name = i.get().getDescriptionId().replaceFirst("item\\.meadow\\.", "");
             name = DataHelper.toTitleCase(correctItemName(name), "_");
             add(i.get().getDescriptionId(), name);
         });
-
+        add("itemGroup.meadow.meadow_grove", "Meadow: Hidden Grove");
+        add("itemGroup.meadow.mineral_flora", "Meadow: Mineralized Flora");
     }
 
     public String correctItemName(String name) {

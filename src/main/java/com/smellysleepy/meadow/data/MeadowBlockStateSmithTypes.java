@@ -175,7 +175,7 @@ public class MeadowBlockStateSmithTypes {
         String logName = isWood ? name.replace("_wood", "_log") : name;
         String affix = isWood ? "" : "_top";
         ResourceLocation side = provider.getBlockTexture(logName);
-        ResourceLocation sideFlipped = provider.getBlockTexture(logName + "_flipped");
+        ResourceLocation sideFlipped = provider.getBlockTexture(logName);// + "_flipped");
         ResourceLocation bottom = provider.getBlockTexture("calcified_aspen_log" + affix);
         ResourceLocation top = provider.getBlockTexture("aspen_log" + affix);
         ModelFile model = provider.models().cubeBottomTop(name, side, bottom, top);
@@ -283,7 +283,7 @@ public class MeadowBlockStateSmithTypes {
         final ResourceLocation mediumLeavesTexture = provider.getBlockTexture(leaves + "_medium_leaves");
         final ResourceLocation largeLeavesTexture = provider.getBlockTexture(leaves + "_large_leaves");
 
-        final ResourceLocation sideTexture = provider.getBlockTexture(logName + flippedAffix);
+        final ResourceLocation sideTexture = provider.getBlockTexture(logName);// + flippedAffix);
         final ResourceLocation topTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_calcified_", "") : logName) + endAffix);
         final ResourceLocation bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_", "") : logName) + endAffix);
         final ResourceLocation topLeavesTexture = provider.getBlockTexture("aspen_leaves");

@@ -47,7 +47,7 @@ public class MineralGrassBlock extends Block implements BonemealableBlock {
         BlockPos blockpos = pPos.above();
         BlockState blockstate = Blocks.GRASS.defaultBlockState();
         var configuredFeatures = pLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
-        var optional = configuredFeatures.getHolder(bonemealFeature);
+        var holder = configuredFeatures.getHolder(bonemealFeature);
 
         label49:
         for (int i = 0; i < 128; ++i) {
@@ -66,8 +66,8 @@ public class MineralGrassBlock extends Block implements BonemealableBlock {
             }
 
             if (offsetState.isAir()) {
-                if (optional.isPresent()) {
-                    optional.get().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, offset);
+                if (holder.isPresent()) {
+                    holder.get().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, offset);
                 }
             }
         }

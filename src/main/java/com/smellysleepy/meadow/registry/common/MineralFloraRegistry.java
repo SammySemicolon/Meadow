@@ -18,10 +18,10 @@ import java.util.Optional;
 
 public class MineralFloraRegistry {
 
-    public static final HashMap<ResourceLocation, MineralFloraRegistryBundle> MINERAL_FLORA = new HashMap<>();
+    public static final HashMap<ResourceLocation, MineralFloraRegistryBundle> MINERAL_FLORA_TYPES = new HashMap<>();
 
     public static final Codec<MineralFloraRegistryBundle> CODEC = ResourceLocation.CODEC.flatXmap(
-            key -> Optional.ofNullable(MINERAL_FLORA.get(key)).map(DataResult::success).orElseThrow(),
+            key -> Optional.ofNullable(MINERAL_FLORA_TYPES.get(key)).map(DataResult::success).orElseThrow(),
             bundle -> Optional.of(bundle.id).map(DataResult::success).orElseThrow());
 
     public static final MineralFloraRegistryBundle AMETHYST_FLORA = register("amethyst", new Color(254, 203, 230), Tags.Blocks.STORAGE_BLOCKS_AMETHYST);
@@ -48,7 +48,7 @@ public class MineralFloraRegistry {
 
     public static MineralFloraRegistryBundle register(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> key, Color color, TagKey<Block> tag) {
         var bundle = new MineralFloraRegistryBundle(id, key, color, tag);
-        MINERAL_FLORA.put(id, bundle);
+        MINERAL_FLORA_TYPES.put(id, bundle);
         return bundle;
     }
 }

@@ -5,7 +5,7 @@
     "hanging_leaves": "meadow:block/aspen_wood/thin_aspen_log_hanging_leaves",
     "leaves": "meadow:block/aspen_wood/thin_partially_calcified_aspen_log_large_leaves",
     "leaves_block": "meadow:block/aspen_wood/aspen_leaves",
-    "side": "meadow:block/aspen_wood/partially_calcified_aspen_log_flipped",
+    "side": "meadow:block/aspen_wood/partially_calcified_aspen_log",
     "top": "meadow:block/aspen_wood/aspen_log_top"
   }
 }

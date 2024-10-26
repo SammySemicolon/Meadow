@@ -20,6 +20,9 @@
   "block.meadow.aureate_wheat_test": "Aureate Wheat Test",
   "block.meadow.calcified_aspen_log": "Calcified Aspen Log",
   "block.meadow.calcified_aspen_wood": "Calcified Aspen Wood",
+  "block.meadow.calcified_bricks": "Calcified Bricks",
+  "block.meadow.calcified_bricks_slab": "Calcified Brick Slab",
+  "block.meadow.calcified_bricks_stairs": "Calcified Brick Stairs",
   "block.meadow.calcified_covering": "Calcified Covering",
   "block.meadow.calcified_dripstone": "Calcified Dripstone",
   "block.meadow.calcified_earth": "Calcified Earth",
@@ -35,6 +38,9 @@
   "block.meadow.copper_grass_block": "Copper Grass Block",
   "block.meadow.copper_leaves": "Copper Leaves",
   "block.meadow.copper_sapling": "Copper Sapling",
+  "block.meadow.developing_calcified_cobblestone": "Developing Calcified Cobblestone",
+  "block.meadow.developing_calcified_deepslate": "Developing Calcified Deepslate",
+  "block.meadow.developing_calcified_stone": "Developing Calcified Stone",
   "block.meadow.diamond_flora": "Diamond Flora",
   "block.meadow.diamond_flower": "Diamond Flower",
   "block.meadow.diamond_grass_block": "Diamond Grass Block",
@@ -63,6 +69,9 @@
   "block.meadow.hanging_lapis_leaves": "Hanging Lapis Leaves",
   "block.meadow.hanging_netherite_leaves": "Hanging Netherite Leaves",
   "block.meadow.hanging_redstone_leaves": "Hanging Redstone Leaves",
+  "block.meadow.heavy_calcified_bricks": "Heavy Calcified Bricks",
+  "block.meadow.heavy_calcified_bricks_slab": "Heavy Calcified Brick Slab",
+  "block.meadow.heavy_calcified_bricks_stairs": "Heavy Calcified Brick Stairs",
   "block.meadow.iron_flora": "Iron Flora",
   "block.meadow.iron_flower": "Iron Flower",
   "block.meadow.iron_grass_block": "Iron Grass Block",
@@ -120,5 +129,7 @@
   "item.meadow.lapis_fruit": "Lapis Fruit",
   "item.meadow.netherite_fruit": "Netherite Fruit",
   "item.meadow.pearlflower_bud": "Pearlflower Bud",
-  "item.meadow.redstone_fruit": "Redstone Fruit"
+  "item.meadow.redstone_fruit": "Redstone Fruit",
+  "itemGroup.meadow.meadow_grove": "Meadow: Hidden Grove",
+  "itemGroup.meadow.mineral_flora": "Meadow: Mineralized Flora"
 }

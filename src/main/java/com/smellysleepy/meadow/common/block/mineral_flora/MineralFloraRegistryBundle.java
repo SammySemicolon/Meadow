@@ -23,49 +23,74 @@ public class MineralFloraRegistryBundle {
 
     public final ResourceLocation id;
 
-    public final RegistryObject<Block> grassBlock;
-    public final RegistryObject<Block> floraBlock;
-    public final RegistryObject<Block> flowerBlock;
-    public final RegistryObject<Block> saplingBlock;
-    public final RegistryObject<Block> hangingLeavesBlock;
-    public final RegistryObject<Block> leavesBlock;
+    public final ResourceKey<ConfiguredFeature<?, ?>> configuredTreeFeature;
+    public final ResourceKey<ConfiguredFeature<?, ?>> configuredFlowerFeature;
+    public final ResourceKey<ConfiguredFeature<?, ?>> configuredNaturalPatchFeature;
+    public final ResourceKey<ConfiguredFeature<?, ?>> configuredGrassBonemealFeature;
+    public final ResourceKey<ConfiguredFeature<?, ?>> configuredLeavesBonemealFeature;
 
-    public final RegistryObject<Item> grassItem;
-    public final RegistryObject<Item> floraItem;
-    public final RegistryObject<Item> flowerItem;
-    public final RegistryObject<Item> saplingItem;
-    public final RegistryObject<Item> leavesItem;
-    public final RegistryObject<Item> hangingLeavesItem;
+    public final RegistryObject<Block> grassBlock;
+    public final RegistryObject<Item> grassBlockItem;
+
+    public final RegistryObject<Block> leavesBlock;
+    public final RegistryObject<Item> leavesBlockItem;
+
+    public final RegistryObject<Block> hangingLeavesBlock;
+    public final RegistryObject<Item> hangingLeavesBlockItem;
+
+    public final RegistryObject<Block> saplingBlock;
+    public final RegistryObject<Item> saplingBlockItem;
+
+    public final RegistryObject<Block> flowerBlock;
+    public final RegistryObject<Item> flowerBlockItem;
+
+    public final RegistryObject<Block> floraBlock;
+    public final RegistryObject<Item> floraBlockItem;
 
     public final RegistryObject<Item> fruitItem;
 
     public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Color color, TagKey<Block> tag) {
         this.id = id;
         var prefix = id.getPath();
+
+        configuredTreeFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree"));
+        configuredFlowerFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_plant"));
+        configuredNaturalPatchFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_patch"));
+        configuredGrassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_grass_bonemeal"));
+        configuredLeavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));
+
         var grassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_grass_bonemeal"));
+        var leavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));
 
         var grassBlockProperties = MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES();
         var grassProperties = MeadowBlockProperties.MINERAL_GRASS_PROPERTIES();
         var floraProperties = MeadowBlockProperties.MINERAL_FLORA_PROPERTIES();
         var hangingLeavesProperties = MeadowBlockProperties.HANGING_MINERAL_LEAVES_PROPERTIES();
         var leavesProperties = MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES();
-        var itemProperties = MeadowItemProperties.DEFAULT_PROPERTIES();
-        var foodProperties = new FoodProperties.Builder().nutrition(2).saturationMod(0.1f).fast().build();
+
+        var itemProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES();
+        var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(
+                new FoodProperties.Builder().nutrition(2).saturationMod(0.1f).fast().build()
+        );
 
         grassBlock = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(grassBlockProperties, grassBonemealFeature));
-        floraBlock = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(grassProperties, tag));
-        flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(floraProperties, tag));
-        saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(floraProperties, feature, tag));
+        grassBlockItem = register(prefix + "_grass_block", itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
+
+        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(leavesProperties, leavesBonemealFeature, color));
+        leavesBlockItem = register(prefix + "_leaves", itemProperties, (p) -> new BlockItem(leavesBlock.get(), p));
+
         hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, color));
-        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(leavesProperties, hangingLeavesBlock, color));
+        hangingLeavesBlockItem = register("hanging_" + prefix + "_leaves", itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
 
-        grassItem = register(prefix + "_grass_block", itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
-        floraItem = register(prefix + "_flora", itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
-        flowerItem = register(prefix + "_flower", itemProperties, (p) -> new BlockItem(flowerBlock.get(), p));
-        saplingItem = register(prefix + "_sapling", itemProperties, (p) -> new BlockItem(saplingBlock.get(), p));
-        leavesItem = register(prefix + "_leaves", itemProperties, (p) -> new BlockItem(leavesBlock.get(), p));
-        hangingLeavesItem = register("hanging_" + prefix + "_leaves", itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
+        saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(floraProperties, feature, tag));
+        saplingBlockItem = register(prefix + "_sapling", itemProperties, (p) -> new BlockItem(saplingBlock.get(), p));
 
-        fruitItem = register(prefix + "_fruit", itemProperties.food(foodProperties), Item::new);
+        flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(floraProperties, tag));
+        flowerBlockItem = register(prefix + "_flower", itemProperties, (p) -> new BlockItem(flowerBlock.get(), p));
+
+        floraBlock = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(grassProperties, tag));
+        floraBlockItem = register(prefix + "_flora", itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
+
+        fruitItem = register(prefix + "_fruit", fruitProperties, Item::new);
     }
 }

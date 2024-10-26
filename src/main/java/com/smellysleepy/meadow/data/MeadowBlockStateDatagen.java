@@ -37,7 +37,13 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         MeadowBlockStateSmithTypes.LAYERED_CROP_BLOCK.act(data, MeadowBlockRegistry.AUREATE_WHEAT_CROP);
 
         setTexturePath("calcification/");
-        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK);
+        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK,
+                MeadowBlockRegistry.CALCIFIED_BRICKS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS);
+        BlockStateSmithTypes.SLAB_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_SLAB, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_SLAB);
+        BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_STAIRS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS);
+
+        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.DEVELOPING_CALCIFIED_COBBLESTONE, MeadowBlockRegistry.DEVELOPING_CALCIFIED_STONE, MeadowBlockRegistry.DEVELOPING_CALCIFIED_DEEPSLATE);
+
         MeadowBlockStateSmithTypes.COVERING_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_COVERING);
         MeadowBlockStateSmithTypes.POINTED_DRIPSTONE_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_DRIPSTONE);
         MeadowBlockStateSmithTypes.GIANT_POINTED_DRIPSTONE_BLOCK.act(data, MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE);
@@ -75,7 +81,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_SAPLING, MeadowBlockRegistry.SMALL_ASPEN_SAPLING);
 
         setTexturePath("mineral_flora/");
-        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA.values()) {
+        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
             BlockStateSmithTypes.GRASS_BLOCK.act(data, bundle.grassBlock);
             BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, bundle.flowerBlock);
             BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.saplingBlock, bundle.floraBlock);

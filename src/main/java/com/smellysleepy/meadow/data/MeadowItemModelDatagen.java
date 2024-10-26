@@ -26,7 +26,7 @@ public class MeadowItemModelDatagen extends LodestoneItemModelProvider {
         items.removeIf(i -> i.get() instanceof BlockItem);
 
         setTexturePath("mineral_fruit/");
-        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA.values()) {
+        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
             ItemModelSmithTypes.GENERATED_ITEM.act(data, bundle.fruitItem);
         }
         setTexturePath("");

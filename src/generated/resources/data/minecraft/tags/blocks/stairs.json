@@ -1,5 +1,7 @@
 {
   "values": [
-    "meadow:aspen_planks_stairs"
+    "meadow:aspen_planks_stairs",
+    "meadow:heavy_calcified_bricks_stairs",
+    "meadow:calcified_bricks_stairs"
   ]
 }

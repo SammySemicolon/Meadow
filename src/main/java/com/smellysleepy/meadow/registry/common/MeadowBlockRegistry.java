@@ -37,13 +37,27 @@ public class MeadowBlockRegistry {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MEADOW);
 
-    //region Calcification
+    //region Natural Calcification
     public static final RegistryObject<Block> CALCIFIED_EARTH = BLOCKS.register("calcified_earth", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
     public static final RegistryObject<Block> CALCIFIED_ROCK = BLOCKS.register("calcified_rock", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
     public static final RegistryObject<CalcifiedCoveringBlock> CALCIFIED_COVERING = BLOCKS.register("calcified_covering", () -> new CalcifiedCoveringBlock(MeadowBlockProperties.CALCIFIED_COVERING_PROPERTIES()));
 
     public static final RegistryObject<Block> CALCIFIED_DRIPSTONE = BLOCKS.register("calcified_dripstone", () -> new CalcifiedPointedDripstoneBlock(MeadowBlockProperties.CALCIFIED_DRIPSTONE_BLOCK_PROPERTIES()));
     public static final RegistryObject<Block> GIANT_CALCIFIED_DRIPSTONE = BLOCKS.register("giant_calcified_dripstone", () -> new CalcifiedPointedDripstoneBlock(MeadowBlockProperties.CALCIFIED_DRIPSTONE_BLOCK_PROPERTIES()));
+    //endregion
+
+    public static final RegistryObject<Block> DEVELOPING_CALCIFIED_COBBLESTONE = BLOCKS.register("developing_calcified_cobblestone", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
+    public static final RegistryObject<Block> DEVELOPING_CALCIFIED_STONE = BLOCKS.register("developing_calcified_stone", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
+    public static final RegistryObject<Block> DEVELOPING_CALCIFIED_DEEPSLATE = BLOCKS.register("developing_calcified_deepslate", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
+
+    //region Calcified Blocks
+    public static final RegistryObject<Block> CALCIFIED_BRICKS = BLOCKS.register("calcified_bricks", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
+    public static final RegistryObject<Block> CALCIFIED_BRICKS_STAIRS = BLOCKS.register("calcified_bricks_stairs", () -> new StairBlock(() -> CALCIFIED_BRICKS.get().defaultBlockState(), MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(STAIRS)));
+    public static final RegistryObject<Block> CALCIFIED_BRICKS_SLAB = BLOCKS.register("calcified_bricks_slab", () -> new SlabBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(SLABS)));
+    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS = BLOCKS.register("heavy_calcified_bricks", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
+    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS_STAIRS = BLOCKS.register("heavy_calcified_bricks_stairs", () -> new StairBlock(() -> HEAVY_CALCIFIED_BRICKS.get().defaultBlockState(), MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(STAIRS)));
+    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS_SLAB = BLOCKS.register("heavy_calcified_bricks_slab", () -> new SlabBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(SLABS)));
+
     //endregion
 
     //region Aspen Wood
