@@ -8,6 +8,9 @@ import net.minecraftforge.registries.*;
 
 public class MeadowBlockTagRegistry {
 
+    public static final TagKey<Block> MEADOW_GROVE_IRREPLACEABLE = meadowTag("meadow_grove_irreplaceable");
+
+
     public static final TagKey<Block> CALCIFICATION = meadowTag("calcification");
     public static final TagKey<Block> CALCIFICATION_REPLACEABLE = meadowTag("calcification_replaceable");
 

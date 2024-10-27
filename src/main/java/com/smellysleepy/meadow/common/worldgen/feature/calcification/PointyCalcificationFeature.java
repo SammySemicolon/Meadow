@@ -27,11 +27,18 @@ public class PointyCalcificationFeature extends Feature<PointyCalcificationConfi
       boolean upwards = config.growsUpwards;
       var covering = upwards ? WorldgenHelper.fetchCoveringPositions(level, mutable, size) : WorldgenHelper.fetchHangingBlockPositions(level, mutable, size);
       var growDirection = upwards ? Direction.UP : Direction.DOWN;
+      mainLoop:
       for (BlockPos blockPos : covering) {
          int distance = mutable.setY(blockPos.getY()).distManhattan(blockPos);
          int height = random.nextIntBetweenInclusive(config.minHeight, config.maxHeight) - distance;
          if (height <= 0) {
             continue;
+         }
+         for (int i = 0; i < height; i++) {
+            mutable.move(growDirection);
+            if (!level.getBlockState(mutable).canBeReplaced()) {
+               continue mainLoop;
+            }
          }
          BlockPos stalagmiteStart = blockPos.relative(growDirection);
          BlockState state = config.stalagmiteProvider.getState(random, stalagmiteStart);

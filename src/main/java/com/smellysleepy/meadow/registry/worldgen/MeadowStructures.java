@@ -29,25 +29,6 @@ public class MeadowStructures {
                             Map.of(
                                     MobCategory.MONSTER,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
-                                    )),
-                                    MobCategory.CREATURE,
-                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
-                                    )),
-                                    MobCategory.AXOLOTLS,
-                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
-                                            new MobSpawnSettings.SpawnerData(EntityType.AXOLOTL, 5, 1, 2)
-                                    )),
-                                    MobCategory.UNDERGROUND_WATER_CREATURE,
-                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
-                                            new MobSpawnSettings.SpawnerData(EntityType.GLOW_SQUID, 10, 1, 2)
-                                    )),
-                                    MobCategory.WATER_CREATURE,
-                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
-
-                                    )),
-                                    MobCategory.WATER_AMBIENT,
-                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
-                                            new MobSpawnSettings.SpawnerData(EntityType.TROPICAL_FISH, 25, 2, 8)
                                     ))
                             ),
                             GenerationStep.Decoration.RAW_GENERATION, TerrainAdjustment.BURY)

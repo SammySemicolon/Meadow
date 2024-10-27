@@ -8,6 +8,7 @@ import com.smellysleepy.meadow.common.worldgen.structure.grove.area.CalcifiedReg
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.LakeRegion;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.SpecialMeadowRegion;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.tags.*;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;
 import net.minecraft.core.BlockPos;
@@ -368,6 +369,9 @@ public class MeadowGrovePiece extends StructurePiece {
                     chunk.setBlockState(pos, ceilingPattern.get(index), true);
                     continue;
                 }
+                if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
+                    continue;
+                }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
@@ -408,6 +412,9 @@ public class MeadowGrovePiece extends StructurePiece {
 
                 if (placeWater && y <= waterStartingPoint) {
                     chunk.setBlockState(pos, Blocks.WATER.defaultBlockState(), true);
+                    continue;
+                }
+                if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
                     continue;
                 }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);

@@ -23,8 +23,8 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties CALCIFIED_DRIPSTONE_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(0.5F, 4.0F)
-                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION)
+                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
                 .mapColor(MapColor.COLOR_BLUE)
                 .sound(SoundType.NETHERRACK)
                 .setCutoutRenderType();
@@ -47,6 +47,7 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
                 .isValidSpawn(Blocks::ocelotOrParrot)
                 .isViewBlocking(Blocks::never)
@@ -60,6 +61,7 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .setCutoutRenderType()
                 .noCollission()
                 .noOcclusion()
@@ -148,6 +150,8 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
+                .addTag(BlockTags.FLOWERS)
                 .offsetType(BlockBehaviour.OffsetType.XZ)
                 .mapColor(MapColor.TERRACOTTA_WHITE)
                 .sound(SoundType.FLOWERING_AZALEA)
@@ -156,6 +160,16 @@ public class MeadowBlockProperties {
                 .noCollission()
                 .noOcclusion()
                 .instabreak();
+    }
+
+    public static LodestoneBlockProperties SMALL_PEARLFLOWER_PROPERTIES() {
+        return PEARLFLOWER_PROPERTIES()
+                .addTag(BlockTags.SMALL_FLOWERS);
+    }
+
+    public static LodestoneBlockProperties TALL_PEARLFLOWER_PROPERTIES() {
+        return PEARLFLOWER_PROPERTIES()
+                .addTag(BlockTags.TALL_FLOWERS);
     }
 
     public static LodestoneBlockProperties PEARLLIGHT_PROPERTIES() {
@@ -178,6 +192,7 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .addTags(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON)
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
@@ -187,6 +202,7 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_FLORA_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .offsetType(BlockBehaviour.OffsetType.XZ)
                 .pushReaction(PushReaction.DESTROY)
                 .mapColor(MapColor.GRASS)
@@ -200,6 +216,7 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .offsetType(BlockBehaviour.OffsetType.XZ)
                 .pushReaction(PushReaction.DESTROY)
                 .mapColor(MapColor.GRASS)
@@ -213,6 +230,7 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_LEAVES_PROPERTIES() {
         return new LodestoneBlockProperties()
+                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .isValidSpawn(Blocks::ocelotOrParrot)
                 .sound(SoundType.CHERRY_LEAVES)
                 .isViewBlocking(Blocks::never)

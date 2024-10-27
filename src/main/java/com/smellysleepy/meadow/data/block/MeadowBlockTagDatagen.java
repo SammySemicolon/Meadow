@@ -39,7 +39,12 @@ public class MeadowBlockTagDatagen extends LodestoneBlockTagsProvider {
         tag(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON).addTag(BlockTags.MOSS_REPLACEABLE);
         tag(MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON).addTags(BlockTags.MOSS_REPLACEABLE, Tags.Blocks.ORES);
         tag(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON).addTags(BlockTags.LUSH_GROUND_REPLACEABLE);
-        
+
+
+        tag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE).addTags(
+                MeadowBlockTagRegistry.CALCIFICATION, BlockTags.FEATURES_CANNOT_REPLACE,
+                BlockTags.LOGS, BlockTags.LEAVES, BlockTags.FLOWERS, BlockTags.CORALS);
+
         addTagsFromBlockProperties(blocks.stream().map(RegistryObject::get).collect(Collectors.toList()));
     }
 }
