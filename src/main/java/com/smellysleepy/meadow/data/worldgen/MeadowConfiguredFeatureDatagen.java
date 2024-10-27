@@ -8,6 +8,7 @@ import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.MeadowTreeFea
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.*;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts.*;
 import com.smellysleepy.meadow.registry.common.*;
+import com.smellysleepy.meadow.registry.common.block.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.*;

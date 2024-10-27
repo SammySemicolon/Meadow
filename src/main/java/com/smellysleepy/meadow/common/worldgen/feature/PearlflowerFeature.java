@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen.feature;
 
-import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.LevelReader;

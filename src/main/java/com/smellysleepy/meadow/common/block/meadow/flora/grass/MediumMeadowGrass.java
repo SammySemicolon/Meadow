@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.block.meadow.flora.grass;
 
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import net.minecraft.core.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

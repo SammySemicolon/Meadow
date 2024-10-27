@@ -1,22 +1,15 @@
 package com.smellysleepy.meadow.common.worldgen.feature.calcification;
 
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
-import com.smellysleepy.meadow.common.worldgen.feature.patch.LayeredPatchConfiguration;
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DripstoneThickness;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-
-import java.util.Set;
 
 public class PointyCalcificationFeature extends Feature<PointyCalcificationConfiguration> {
    public PointyCalcificationFeature() {

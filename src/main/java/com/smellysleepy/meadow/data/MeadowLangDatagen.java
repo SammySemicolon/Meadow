@@ -1,13 +1,13 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
-import com.smellysleepy.meadow.registry.common.MeadowItemRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.RegistryObject;
 import team.lodestar.lodestone.helpers.DataHelper;
@@ -22,8 +22,11 @@ public class MeadowLangDatagen extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        Set<RegistryObject<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
-        Set<RegistryObject<Item>> items = new HashSet<>(MeadowItemRegistry.ITEMS.getEntries());
+        var blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
+        var items = new HashSet<>(MeadowItemRegistry.ITEMS.getEntries());
+
+        DataHelper.takeAll(blocks, i -> i.get() instanceof WallSignBlock);
+
 
         blocks.forEach(b -> {
             String name = b.get().getDescriptionId().replaceFirst("block\\.meadow\\.", "");

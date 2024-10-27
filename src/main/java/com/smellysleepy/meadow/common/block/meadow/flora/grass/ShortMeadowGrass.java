@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.common.block.meadow.flora.grass;
 
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
-import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

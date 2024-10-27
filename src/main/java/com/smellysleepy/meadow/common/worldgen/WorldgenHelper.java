@@ -1,8 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen;
 
 import com.google.common.collect.*;
-import com.mojang.datafixers.util.*;
-import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;

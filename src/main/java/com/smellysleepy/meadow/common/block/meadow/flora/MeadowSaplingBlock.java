@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.block.meadow.flora;
 
-import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;

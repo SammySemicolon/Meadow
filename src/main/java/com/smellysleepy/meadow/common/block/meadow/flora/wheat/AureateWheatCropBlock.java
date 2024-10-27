@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.block.meadow.flora.wheat;
 
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;

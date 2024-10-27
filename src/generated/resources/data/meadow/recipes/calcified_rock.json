@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    "Y": {
+      "item": "meadow:calcified_fragment"
+    }
+  },
+  "pattern": [
+    "XY",
+    "YX"
+  ],
+  "result": {
+    "count": 4,
+    "item": "meadow:calcified_rock"
+  },
+  "show_notification": true
+}

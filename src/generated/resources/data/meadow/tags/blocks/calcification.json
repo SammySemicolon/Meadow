@@ -1,6 +1,5 @@
 {
   "values": [
-    "meadow:developing_calcified_cobblestone",
     "meadow:calcified_earth",
     "meadow:giant_calcified_dripstone",
     "meadow:calcified_dripstone",
@@ -11,8 +10,6 @@
     "meadow:calcified_rock",
     "meadow:heavy_calcified_bricks_stairs",
     "meadow:heavy_calcified_bricks_slab",
-    "meadow:calcified_bricks_stairs",
-    "meadow:developing_calcified_deepslate",
-    "meadow:developing_calcified_stone"
+    "meadow:calcified_bricks_stairs"
   ]
 }

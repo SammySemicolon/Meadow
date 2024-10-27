@@ -2,16 +2,12 @@
   "type": "meadow:meadow_grove",
   "biomes": "#meadow:has_meadow_groves",
   "spawn_overrides": {
-    "ambient": {
-      "bounding_box": "full",
-      "spawns": []
-    },
     "axolotls": {
       "bounding_box": "full",
       "spawns": [
         {
           "type": "minecraft:axolotl",
-          "maxCount": 4,
+          "maxCount": 2,
           "minCount": 1,
           "weight": 5
         }
@@ -24,6 +20,17 @@
     "monster": {
       "bounding_box": "full",
       "spawns": []
+    },
+    "underground_water_creature": {
+      "bounding_box": "full",
+      "spawns": [
+        {
+          "type": "minecraft:glow_squid",
+          "maxCount": 2,
+          "minCount": 1,
+          "weight": 10
+        }
+      ]
     },
     "water_ambient": {
       "bounding_box": "full",
@@ -38,14 +45,7 @@
     },
     "water_creature": {
       "bounding_box": "full",
-      "spawns": [
-        {
-          "type": "minecraft:glow_squid",
-          "maxCount": 2,
-          "minCount": 1,
-          "weight": 10
-        }
-      ]
+      "spawns": []
     }
   },
   "step": "raw_generation",

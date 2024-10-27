@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

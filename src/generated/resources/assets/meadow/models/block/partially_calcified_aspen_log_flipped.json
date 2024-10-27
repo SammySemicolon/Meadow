@@ -2,7 +2,7 @@
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
     "bottom": "meadow:block/aspen_wood/calcified_aspen_log_top",
-    "side": "meadow:block/aspen_wood/partially_calcified_aspen_log",
+    "side": "meadow:block/aspen_wood/partially_calcified_aspen_log_flipped",
     "top": "meadow:block/aspen_wood/aspen_log_top"
   }
 }

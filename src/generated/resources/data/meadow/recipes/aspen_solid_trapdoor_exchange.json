@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "meadow:aspen_trapdoor"
+    }
+  ],
+  "result": {
+    "item": "meadow:solid_aspen_trapdoor"
+  }
+}

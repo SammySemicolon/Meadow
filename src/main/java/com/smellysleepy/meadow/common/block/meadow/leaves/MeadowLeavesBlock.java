@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.block.meadow.leaves;
 
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.visual_effects.*;
 import net.minecraft.core.*;
 import net.minecraft.server.level.ServerLevel;
@@ -8,8 +8,6 @@ import net.minecraft.util.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.*;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 

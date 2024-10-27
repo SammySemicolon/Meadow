@@ -1,9 +1,8 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral;
 
-import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;

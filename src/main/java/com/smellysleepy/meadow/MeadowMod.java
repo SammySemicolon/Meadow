@@ -9,8 +9,9 @@ import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.javafmlmod.*;
 import org.apache.logging.log4j.*;
 
-import static com.smellysleepy.meadow.registry.common.MeadowBlockRegistry.BLOCKS;
-import static com.smellysleepy.meadow.registry.common.MeadowItemRegistry.*;
+import static com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry.BLOCKS;
+import static com.smellysleepy.meadow.registry.common.MeadowEntityRegistry.ENTITY_TYPES;
+import static com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry.*;
 import static com.smellysleepy.meadow.registry.common.MeadowParticleRegistry.PARTICLES;
 import static com.smellysleepy.meadow.registry.worldgen.MeadowFeatureRegistry.*;
 import static com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes.STRUCTURE_PIECE_TYPES;
@@ -32,6 +33,7 @@ public class MeadowMod {
 
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
+        ENTITY_TYPES.register(modBus);
         FEATURE_TYPES.register(modBus);
         STRUCTURE_TYPES.register(modBus);
         STRUCTURE_PIECE_TYPES.register(modBus);

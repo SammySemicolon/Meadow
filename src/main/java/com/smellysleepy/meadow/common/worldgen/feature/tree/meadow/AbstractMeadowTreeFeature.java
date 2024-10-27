@@ -1,16 +1,12 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.meadow;
 
-import com.smellysleepy.meadow.common.block.calcification.CalcifiedCoveringBlock;
-import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.MultifaceBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 import java.util.HashSet;

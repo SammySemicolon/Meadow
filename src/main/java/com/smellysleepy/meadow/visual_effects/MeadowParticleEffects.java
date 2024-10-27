@@ -63,6 +63,7 @@ public class MeadowParticleEffects {
                 .setTransparencyData(transparencyData)
                 .setScaleData(scaleData)
                 .setLifetime(lifetime)
+                .setNaturalLighting()
                 .addTickActor(fall);
 
         return new ParticleEffectSpawner(level, pos, worldParticleBuilder);

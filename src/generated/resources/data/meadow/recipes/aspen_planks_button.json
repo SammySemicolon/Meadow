@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "tag": "meadow:aspen_planks"
+    }
+  ],
+  "result": {
+    "item": "meadow:aspen_planks_button"
+  }
+}

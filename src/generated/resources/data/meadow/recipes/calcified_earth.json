@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "item": "minecraft:dirt"
+    },
+    "Y": {
+      "item": "meadow:calcified_fragment"
+    }
+  },
+  "pattern": [
+    "XY",
+    "YX"
+  ],
+  "result": {
+    "count": 4,
+    "item": "meadow:calcified_earth"
+  },
+  "show_notification": true
+}

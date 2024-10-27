@@ -8,14 +8,13 @@
     "axis=x,flipped=true": {
       "model": "meadow:block/partially_calcified_aspen_log_flipped",
       "x": 90,
-      "y": 270
+      "y": 90
     },
     "axis=y,flipped=false": {
       "model": "meadow:block/partially_calcified_aspen_log"
     },
     "axis=y,flipped=true": {
-      "model": "meadow:block/partially_calcified_aspen_log_flipped",
-      "x": 180
+      "model": "meadow:block/partially_calcified_aspen_log_flipped"
     },
     "axis=z,flipped=false": {
       "model": "meadow:block/partially_calcified_aspen_log",
@@ -24,7 +23,8 @@
     },
     "axis=z,flipped=true": {
       "model": "meadow:block/partially_calcified_aspen_log_flipped",
-      "x": 90
+      "x": 90,
+      "y": 180
     }
   }
 }

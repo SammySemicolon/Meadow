@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.block.meadow.leaves;
 
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.visual_effects.MeadowParticleEffects;
 import net.minecraft.core.*;
 import net.minecraft.server.level.ServerLevel;

@@ -2,13 +2,12 @@ package com.smellysleepy.meadow.registry.worldgen;
 
 import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveStructure;
-import com.smellysleepy.meadow.registry.tags.MeadowBiomeTagRegistry;
+import com.smellysleepy.meadow.registry.common.tags.MeadowBiomeTagRegistry;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -36,7 +35,7 @@ public class MeadowStructures {
                                     )),
                                     MobCategory.AXOLOTLS,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
-                                            new MobSpawnSettings.SpawnerData(EntityType.AXOLOTL, 5, 1, 4)
+                                            new MobSpawnSettings.SpawnerData(EntityType.AXOLOTL, 5, 1, 2)
                                     )),
                                     MobCategory.UNDERGROUND_WATER_CREATURE,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(

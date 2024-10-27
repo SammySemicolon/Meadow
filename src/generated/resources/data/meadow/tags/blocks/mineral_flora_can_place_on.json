@@ -3,7 +3,6 @@
     "#minecraft:moss_replaceable",
     "#forge:ores",
     "meadow:coal_grass_block",
-    "meadow:developing_calcified_cobblestone",
     "meadow:meadow_grass_block",
     "meadow:calcified_earth",
     "meadow:netherite_grass_block",
@@ -21,8 +20,6 @@
     "meadow:amethyst_grass_block",
     "meadow:gold_grass_block",
     "meadow:calcified_bricks_stairs",
-    "meadow:developing_calcified_deepslate",
-    "meadow:diamond_grass_block",
-    "meadow:developing_calcified_stone"
+    "meadow:diamond_grass_block"
   ]
 }

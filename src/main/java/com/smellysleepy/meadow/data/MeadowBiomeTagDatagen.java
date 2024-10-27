@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.registry.tags.MeadowBiomeTagRegistry;
+import com.smellysleepy.meadow.registry.common.tags.MeadowBiomeTagRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;

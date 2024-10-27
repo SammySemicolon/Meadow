@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.block.meadow.flora.pearlflower;
 
-import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -27,7 +27,8 @@ public class PearlFlowerBlock extends BushBlock implements SimpleWaterloggedBloc
 
     @Override
     protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON) || super.mayPlaceOn(pState, pLevel, pPos);
+        final boolean b = pState.is(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON);
+        return b || super.mayPlaceOn(pState, pLevel, pPos);
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.CalcifiedRegion;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.LakeRegion;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.SpecialMeadowRegion;
-import com.smellysleepy.meadow.registry.common.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,6 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import net.minecraftforge.common.Tags;
-import team.lodestar.lodestone.helpers.*;
 import team.lodestar.lodestone.systems.easing.Easing;
 
 import javax.annotation.Nullable;
@@ -782,7 +781,7 @@ public class MeadowGrovePiece extends StructurePiece {
             }
             double delta = calcification.getSecond();
 
-            if (crackDelta >= 0f && crackDelta < 0.3f) {
+            if (crackDelta >= 0f && crackDelta < 0.5f) {
                 feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING;
             }
             if ((crackDelta >= 0.4f) || delta < 0.06f) {

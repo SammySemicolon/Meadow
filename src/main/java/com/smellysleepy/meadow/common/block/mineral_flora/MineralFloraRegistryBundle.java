@@ -16,8 +16,8 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.awt.*;
 
-import static com.smellysleepy.meadow.registry.common.MeadowBlockRegistry.BLOCKS;
-import static com.smellysleepy.meadow.registry.common.MeadowItemRegistry.register;
+import static com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry.BLOCKS;
+import static com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry.register;
 
 public class MineralFloraRegistryBundle {
 

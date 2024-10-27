@@ -1,10 +1,9 @@
 package com.smellysleepy.meadow.common.block.calcification;
 
-import com.smellysleepy.meadow.registry.common.MeadowItemRegistry;
+import com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry;
 import net.minecraft.core.*;
 import net.minecraft.server.level.*;
 import net.minecraft.util.*;
-import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
@@ -38,7 +37,7 @@ public class CalcifiedCoveringBlock extends MultifaceBlock implements Bonemealab
 
     @Override
     public boolean canBeReplaced(BlockState pState, BlockPlaceContext pUseContext) {
-        return !pUseContext.getItemInHand().is(MeadowItemRegistry.CALCIFIED_COVERING.get()) || super.canBeReplaced(pState, pUseContext);
+        return !pUseContext.getItemInHand().is(MeadowItemRegistry.CALCIFIED_FRAGMENT.get()) || super.canBeReplaced(pState, pUseContext);
     }
 
     @Override

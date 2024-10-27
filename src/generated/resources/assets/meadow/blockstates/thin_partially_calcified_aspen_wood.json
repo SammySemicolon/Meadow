@@ -28,27 +28,27 @@
     "axis=x,flipped=true,leaves=large": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_large_leaves_flipped",
       "x": 90,
-      "y": 270
+      "y": 90
     },
     "axis=x,flipped=true,leaves=medium": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_medium_leaves_flipped",
       "x": 90,
-      "y": 270
+      "y": 90
     },
     "axis=x,flipped=true,leaves=none": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_flipped",
       "x": 90,
-      "y": 270
+      "y": 90
     },
     "axis=x,flipped=true,leaves=small": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_small_leaves_flipped",
       "x": 90,
-      "y": 270
+      "y": 90
     },
     "axis=x,flipped=true,leaves=top": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_top_leaves_flipped",
       "x": 90,
-      "y": 270
+      "y": 90
     },
     "axis=y,flipped=false,leaves=large": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_large_leaves"
@@ -66,24 +66,19 @@
       "model": "meadow:block/thin_partially_calcified_aspen_wood_top_leaves"
     },
     "axis=y,flipped=true,leaves=large": {
-      "model": "meadow:block/thin_partially_calcified_aspen_wood_large_leaves_flipped",
-      "x": 180
+      "model": "meadow:block/thin_partially_calcified_aspen_wood_large_leaves_flipped"
     },
     "axis=y,flipped=true,leaves=medium": {
-      "model": "meadow:block/thin_partially_calcified_aspen_wood_medium_leaves_flipped",
-      "x": 180
+      "model": "meadow:block/thin_partially_calcified_aspen_wood_medium_leaves_flipped"
     },
     "axis=y,flipped=true,leaves=none": {
-      "model": "meadow:block/thin_partially_calcified_aspen_wood_flipped",
-      "x": 180
+      "model": "meadow:block/thin_partially_calcified_aspen_wood_flipped"
     },
     "axis=y,flipped=true,leaves=small": {
-      "model": "meadow:block/thin_partially_calcified_aspen_wood_small_leaves_flipped",
-      "x": 180
+      "model": "meadow:block/thin_partially_calcified_aspen_wood_small_leaves_flipped"
     },
     "axis=y,flipped=true,leaves=top": {
-      "model": "meadow:block/thin_partially_calcified_aspen_wood_top_leaves_flipped",
-      "x": 180
+      "model": "meadow:block/thin_partially_calcified_aspen_wood_top_leaves_flipped"
     },
     "axis=z,flipped=false,leaves=large": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_large_leaves",
@@ -112,23 +107,28 @@
     },
     "axis=z,flipped=true,leaves=large": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_large_leaves_flipped",
-      "x": 90
+      "x": 90,
+      "y": 180
     },
     "axis=z,flipped=true,leaves=medium": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_medium_leaves_flipped",
-      "x": 90
+      "x": 90,
+      "y": 180
     },
     "axis=z,flipped=true,leaves=none": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_flipped",
-      "x": 90
+      "x": 90,
+      "y": 180
     },
     "axis=z,flipped=true,leaves=small": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_small_leaves_flipped",
-      "x": 90
+      "x": 90,
+      "y": 180
     },
     "axis=z,flipped=true,leaves=top": {
       "model": "meadow:block/thin_partially_calcified_aspen_wood_top_leaves_flipped",
-      "x": 90
+      "x": 90,
+      "y": 180
     }
   }
 }

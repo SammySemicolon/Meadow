@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.registry.common;
 
 import com.smellysleepy.meadow.*;
+import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.network.chat.*;
 import net.minecraft.world.item.*;

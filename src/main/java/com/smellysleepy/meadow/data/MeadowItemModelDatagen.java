@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.data;
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.mineral_flora.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.registry.common.*;
+import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.data.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.data.*;
