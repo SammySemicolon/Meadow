@@ -162,7 +162,7 @@ public class MeadowConfiguredFeatureDatagen {
                                 .add(MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER.get().defaultBlockState(), 1)),
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                                 .add(MeadowBlockRegistry.PEARLFLOWER.get().defaultBlockState(), 3)
-                                .add(MeadowBlockRegistry.TALL_PEARLFLOWER.get().defaultBlockState(), 1)),
+                                .add(MeadowBlockRegistry.TALL_ROCKY_PEARLFLOWER.get().defaultBlockState(), 1)),
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                                 .add(MeadowBlockRegistry.MARINE_PEARLFLOWER.get().defaultBlockState(), 3)
                                 .add(MeadowBlockRegistry.TALL_MARINE_PEARLFLOWER.get().defaultBlockState(), 1)),
@@ -170,19 +170,30 @@ public class MeadowConfiguredFeatureDatagen {
                                 .add(MeadowBlockRegistry.CALCIFIED_PEARLFLOWER.get().defaultBlockState(), 3)
                                 .add(MeadowBlockRegistry.TALL_CALCIFIED_PEARLFLOWER.get().defaultBlockState(), 1)))));
 
+        var largeDripstoneStateProvider = new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                .add(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get().defaultBlockState(), 3)
+                .add(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get().defaultBlockState(), 1));
+        var smallDripstoneStateProvider = new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                .add(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get().defaultBlockState(), 5)
+                .add(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get().defaultBlockState(), 1));
+
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES, new ConfiguredFeature<>(MeadowFeatureRegistry.POINTY_CALCIFICATION.get(),
                 new PointyCalcificationConfiguration(
-                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
-                                .add(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get().defaultBlockState(), 3)
-                                .add(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get().defaultBlockState(), 1)),
-                        1, 3, 4, 6)));
-
+                        largeDripstoneStateProvider,
+                        true, 1, 3, 4, 6)));
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES, new ConfiguredFeature<>(MeadowFeatureRegistry.POINTY_CALCIFICATION.get(),
                 new PointyCalcificationConfiguration(
-                        new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
-                                .add(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get().defaultBlockState(), 5)
-                                .add(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get().defaultBlockState(), 1)),
-                        1, 2, 2, 4)));
+                        smallDripstoneStateProvider,
+                        true, 1, 2, 2, 4)));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALACTITES, new ConfiguredFeature<>(MeadowFeatureRegistry.POINTY_CALCIFICATION.get(),
+                new PointyCalcificationConfiguration(
+                        largeDripstoneStateProvider,
+                        false, 4, 8, 3, 8)));
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALACTITES, new ConfiguredFeature<>(MeadowFeatureRegistry.POINTY_CALCIFICATION.get(),
+                new PointyCalcificationConfiguration(
+                        smallDripstoneStateProvider,
+                        false, 2, 6, 2, 6)));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING, new ConfiguredFeature<>(Feature.MULTIFACE_GROWTH,
                 new MultifaceGrowthConfiguration(MeadowBlockRegistry.CALCIFIED_COVERING.get(), 20, true, true, true, 0.5F,

@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen;
 
 import com.google.common.collect.*;
+import com.mojang.datafixers.util.*;
 import com.smellysleepy.meadow.registry.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.*;
 import net.minecraft.tags.BlockTags;
@@ -24,11 +25,30 @@ public class WorldgenHelper {
     private static final PerlinSimplexNoise COVERING_NOISE = new PerlinSimplexNoise(new WorldgenRandom(new LegacyRandomSource(1234L)), ImmutableList.of(0));
 
     public static Set<BlockPos> fetchCoveringPositions(ServerLevelAccessor level, BlockPos center, int radius) {
-        return fetchCoveringPositions(level, center, radius, b->true);
+        return fetchCoveringPositions(level, center, radius,
+                p -> {
+                    BlockState state = level.getBlockState(p);
+                    if (state.canBeReplaced() || !state.isFaceSturdy(level, p, Direction.UP)) {
+                        return false;
+                    }
+                    return !level.getBlockState(p.below()).canBeReplaced() && level.getBlockState(p.above()).canBeReplaced();
+                },
+                false);
     }
-    public static Set<BlockPos> fetchCoveringPositions(ServerLevelAccessor level, BlockPos center, int radius, Predicate<BlockState> statePredicate) {
+    public static Set<BlockPos> fetchHangingBlockPositions(ServerLevelAccessor level, BlockPos center, int radius) {
+        return fetchCoveringPositions(level, center, radius,
+                p -> {
+                    BlockState state = level.getBlockState(p);
+                    if (state.canBeReplaced() || !state.isFaceSturdy(level, p, Direction.DOWN)) {
+                        BlockState above = level.getBlockState(p.above());
+                        return false;
+                    }
+                    return level.getBlockState(p.below()).canBeReplaced();
+                },
+                true);
+    }
+    public static Set<BlockPos> fetchCoveringPositions(ServerLevelAccessor level, BlockPos center, int radius, Predicate<BlockPos> statePredicate, boolean flipVerticalConditions) {
         Set<BlockPos> positions = new HashSet<>();
-
         int x = center.getX();
         int z = center.getZ();
         var mutable = new BlockPos.MutableBlockPos();
@@ -48,19 +68,12 @@ public class WorldgenHelper {
                 if (distance <= threshold) {
                     mutable.set(offsetX, center.getY(), offsetZ);
                     for (int k = 0; !level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
-                        mutable.move(Direction.UP);
+                        mutable.move(flipVerticalConditions ? Direction.DOWN : Direction.UP);
                     }
                     for (int k = 0; level.isStateAtPosition(mutable, BlockBehaviour.BlockStateBase::canBeReplaced) && k < verticalRange; ++k) {
-                        mutable.move(Direction.DOWN);
+                        mutable.move(flipVerticalConditions ? Direction.UP : Direction.DOWN);
                     }
-                    BlockState state = level.getBlockState(mutable);
-                    if (state.canBeReplaced() || !state.isFaceSturdy(level, mutable, Direction.UP)) {
-                        continue;
-                    }
-                    if (level.getBlockState(mutable.below()).canBeReplaced() || !level.getBlockState(mutable.above()).canBeReplaced()) {
-                        continue;
-                    }
-                    if (statePredicate.test(state)) {
+                    if (statePredicate.test(mutable)) {
                         positions.add(mutable.immutable());
                     }
                 }

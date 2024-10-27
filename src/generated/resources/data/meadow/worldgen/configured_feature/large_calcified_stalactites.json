@@ -1,11 +1,11 @@
 {
   "type": "meadow:pointy_calcification",
   "config": {
-    "growsUpwards": true,
-    "maxHeight": 6,
-    "maxSize": 3,
-    "minHeight": 4,
-    "minSize": 1,
+    "growsUpwards": false,
+    "maxHeight": 8,
+    "maxSize": 8,
+    "minHeight": 3,
+    "minSize": 4,
     "stalagmiteProvider": {
       "type": "minecraft:weighted_state_provider",
       "entries": [

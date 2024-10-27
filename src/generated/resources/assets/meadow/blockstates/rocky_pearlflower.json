@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "waterlogged=false": {
+      "model": "meadow:block/rocky_pearlflower"
+    },
+    "waterlogged=true": {
+      "model": "meadow:block/rocky_pearlflower"
+    }
+  }
+}

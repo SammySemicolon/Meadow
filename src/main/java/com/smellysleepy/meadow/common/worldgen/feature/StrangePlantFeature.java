@@ -52,8 +52,11 @@ public class StrangePlantFeature extends Feature<StrangePlantFeatureConfiguratio
         }
         mutable = pos.mutable();
         for (int i = 0; i < 4; i++) {
-            Set<BlockPos> foliageCovering = WorldgenHelper.fetchCoveringPositions(level, mutable, 3, b -> rand.nextFloat() < 0.4f);
+            Set<BlockPos> foliageCovering = WorldgenHelper.fetchCoveringPositions(level, mutable, 3);
             for (BlockPos blockPos : foliageCovering) {
+                if (rand.nextFloat() < 0.4f) {
+                    continue;
+                }
                 filler.getLayer(PLANTS).put(blockPos.above(), grassEntry);
             }
             int offset = 2 + i;

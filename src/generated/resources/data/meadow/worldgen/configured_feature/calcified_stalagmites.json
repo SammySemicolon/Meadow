@@ -1,6 +1,7 @@
 {
   "type": "meadow:pointy_calcification",
   "config": {
+    "growsUpwards": true,
     "maxHeight": 4,
     "maxSize": 2,
     "minHeight": 2,

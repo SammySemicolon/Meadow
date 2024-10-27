@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "meadow:block/pearlflower/tall_rocky_pearlflower_bottom"
+  }
+}

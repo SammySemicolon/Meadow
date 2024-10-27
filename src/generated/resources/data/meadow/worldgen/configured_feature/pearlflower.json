@@ -78,7 +78,7 @@
       "entries": [
         {
           "data": {
-            "Name": "meadow:pearlflower",
+            "Name": "meadow:rocky_pearlflower",
             "Properties": {
               "waterlogged": "false"
             }
@@ -87,7 +87,7 @@
         },
         {
           "data": {
-            "Name": "meadow:tall_pearlflower",
+            "Name": "meadow:tall_rocky_pearlflower",
             "Properties": {
               "half": "lower",
               "waterlogged": "false"

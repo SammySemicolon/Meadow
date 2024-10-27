@@ -26,5 +26,9 @@ public class MeadowConfiguredFeatureRegistry {
     //Calcification
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_LARGE_CALCIFIED_STALAGMITES = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("large_calcified_stalagmites"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_STALAGMITES = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_stalagmites"));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_LARGE_CALCIFIED_STALACTITES = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("large_calcified_stalactites"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_STALACTITES = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_stalactites"));
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_COVERING = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_covering"));
 }

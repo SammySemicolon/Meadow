@@ -34,16 +34,17 @@ public class MeadowStructures {
                                     MobCategory.CREATURE,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
                                     )),
-                                    MobCategory.AMBIENT,
-                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
-                                    )),
                                     MobCategory.AXOLOTLS,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
                                             new MobSpawnSettings.SpawnerData(EntityType.AXOLOTL, 5, 1, 4)
                                     )),
-                                    MobCategory.WATER_CREATURE,
+                                    MobCategory.UNDERGROUND_WATER_CREATURE,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
                                             new MobSpawnSettings.SpawnerData(EntityType.GLOW_SQUID, 10, 1, 2)
+                                    )),
+                                    MobCategory.WATER_CREATURE,
+                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
+
                                     )),
                                     MobCategory.WATER_AMBIENT,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
