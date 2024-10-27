@@ -31,4 +31,10 @@ public class MeadowConfiguredFeatureRegistry {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_STALACTITES = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_stalactites"));
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_COVERING = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_covering"));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_VEGETATION = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_vegetation"));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_EARTH_BONEMEAL = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_earth_bonemeal"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_CALCIFIED_ROCK_BONEMEAL = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("calcified_rock_bonemeal"));
+
 }

@@ -9,22 +9,30 @@ import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.*;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.block.*;
+import com.smellysleepy.meadow.registry.common.tags.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
-import net.minecraft.core.HolderSet;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
 import net.minecraft.data.worldgen.*;
+import net.minecraft.data.worldgen.features.*;
+import net.minecraft.data.worldgen.placement.*;
+import net.minecraft.tags.*;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.valueproviders.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
+import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.*;
 
 public class MeadowConfiguredFeatureDatagen {
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+        var holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
         addMineralFloraTree(context, MineralFloraRegistry.COAL_FLORA, List.of(
                 new StraightTrunkPart(7, 9),
                 new OffsetPart(0, -3, 0),
@@ -201,6 +209,29 @@ public class MeadowConfiguredFeatureDatagen {
                         HolderSet.direct(Block::builtInRegistryHolder,
                                 Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE, Blocks.DRIPSTONE_BLOCK, Blocks.CALCITE, Blocks.TUFF, Blocks.DEEPSLATE,
                                 Blocks.DIRT, MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get(), MeadowBlockRegistry.CALCIFIED_EARTH.get(), MeadowBlockRegistry.CALCIFIED_ROCK.get()))));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_VEGETATION, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(
+                new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                        .add(MeadowBlockRegistry.TALL_CALCIFIED_PEARLFLOWER.get().defaultBlockState(), 3)
+                        .add(MeadowBlockRegistry.CALCIFIED_PEARLFLOWER.get().defaultBlockState(), 6)
+                        .add(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get().defaultBlockState(), 8)
+                        .add(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get().defaultBlockState(), 12)
+                        .add(MeadowBlockRegistry.CALCIFIED_COVERING.get().defaultBlockState(), 40)))
+        ));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_EARTH_BONEMEAL, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(
+                MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE,
+                BlockStateProvider.simple(MeadowBlockRegistry.CALCIFIED_EARTH.get()),
+                PlacementUtils.inlinePlaced(holdergetter.getOrThrow(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_VEGETATION)),
+                CaveSurface.FLOOR, ConstantInt.of(1), 0.0F, 5, 0.6F, UniformInt.of(1, 2), 0.75F)));
+
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_ROCK_BONEMEAL, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(
+                MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE,
+                BlockStateProvider.simple(MeadowBlockRegistry.CALCIFIED_ROCK.get()),
+                PlacementUtils.inlinePlaced(holdergetter.getOrThrow(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_VEGETATION)),
+                CaveSurface.FLOOR, ConstantInt.of(1), 0.0F, 5, 0.6F, UniformInt.of(1, 2), 0.75F)));
+
+
     }
 
     private static void addMineralFloraTree(BootstapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora, List<MineralTreePart> parts) {

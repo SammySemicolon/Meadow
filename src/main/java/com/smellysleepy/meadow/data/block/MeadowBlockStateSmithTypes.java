@@ -179,7 +179,7 @@ public class MeadowBlockStateSmithTypes {
         ResourceLocation bottom = provider.getBlockTexture("calcified_aspen_log" + affix);
         ResourceLocation top = provider.getBlockTexture("aspen_log" + affix);
         ModelFile model = provider.models().cubeBottomTop(name, side, bottom, top);
-        ModelFile flippedModel = provider.models().cubeBottomTop(name + "_flipped", sideFlipped, bottom, top);
+        ModelFile flippedModel = provider.models().cubeBottomTop(name + "_flipped", sideFlipped, top, bottom);
 
         provider.getVariantBuilder(block)
                 .forAllStates(state -> {

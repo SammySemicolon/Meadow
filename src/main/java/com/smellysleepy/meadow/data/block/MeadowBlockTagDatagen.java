@@ -34,7 +34,7 @@ public class MeadowBlockTagDatagen extends LodestoneBlockTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         Set<RegistryObject<Block>> blocks = new HashSet<>(BLOCKS.getEntries());
 
-        tag(MeadowBlockTagRegistry.CALCIFICATION);
+        tag(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE).addTag(BlockTags.MOSS_REPLACEABLE);
 
         tag(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON).addTag(BlockTags.MOSS_REPLACEABLE);
         tag(MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON).addTags(BlockTags.MOSS_REPLACEABLE, Tags.Blocks.ORES);

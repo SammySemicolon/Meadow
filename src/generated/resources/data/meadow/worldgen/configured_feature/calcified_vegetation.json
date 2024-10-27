@@ -1,0 +1,66 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "meadow:tall_calcified_pearlflower",
+            "Properties": {
+              "half": "lower",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "meadow:calcified_pearlflower",
+            "Properties": {
+              "waterlogged": "false"
+            }
+          },
+          "weight": 6
+        },
+        {
+          "data": {
+            "Name": "meadow:giant_calcified_dripstone",
+            "Properties": {
+              "thickness": "tip",
+              "vertical_direction": "up",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 8
+        },
+        {
+          "data": {
+            "Name": "meadow:calcified_dripstone",
+            "Properties": {
+              "thickness": "tip",
+              "vertical_direction": "up",
+              "waterlogged": "false"
+            }
+          },
+          "weight": 12
+        },
+        {
+          "data": {
+            "Name": "meadow:calcified_covering",
+            "Properties": {
+              "down": "false",
+              "east": "false",
+              "north": "false",
+              "south": "false",
+              "up": "false",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          },
+          "weight": 40
+        }
+      ]
+    }
+  }
+}

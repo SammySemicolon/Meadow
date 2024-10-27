@@ -14,7 +14,7 @@ import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 
 import static com.smellysleepy.meadow.common.block.meadow.leaves.MeadowLeavesBlock.ASPEN_LEAVES_COLOR;
 
-public class HangingMeadowLeavesBlock extends LeavesBlock implements BonemealableBlock {
+public class HangingMeadowLeavesBlock extends LeavesBlock {
     protected static final VoxelShape SHAPE = Block.box(2.0D, 12.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
     public HangingMeadowLeavesBlock(Properties properties) {
@@ -63,20 +63,5 @@ public class HangingMeadowLeavesBlock extends LeavesBlock implements Bonemealabl
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
-    }
-
-    @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        return pLevel.getBlockState(pPos.below()).isAir();
-    }
-
-    @Override
-    public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        return true;
-    }
-
-    @Override
-    public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        pLevel.setBlock(pPos.below(), MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get().defaultBlockState(), 3);
     }
 }
