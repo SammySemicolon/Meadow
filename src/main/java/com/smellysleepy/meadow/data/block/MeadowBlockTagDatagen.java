@@ -43,7 +43,7 @@ public class MeadowBlockTagDatagen extends LodestoneBlockTagsProvider {
 
         tag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE).addTags(
                 MeadowBlockTagRegistry.CALCIFICATION, BlockTags.FEATURES_CANNOT_REPLACE,
-                BlockTags.LOGS, BlockTags.LEAVES, BlockTags.FLOWERS, BlockTags.CORALS);
+                BlockTags.LOGS, BlockTags.LEAVES, BlockTags.CAVE_VINES, BlockTags.FLOWERS, BlockTags.CORALS);
 
         addTagsFromBlockProperties(blocks.stream().map(RegistryObject::get).collect(Collectors.toList()));
     }

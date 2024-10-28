@@ -18,7 +18,9 @@ public class MeadowStructureSets {
     public static final Map<ResourceKey<StructureSet>, StructureSetFactory> STRUCTURE_SET_FACTORIES = new Reference2ObjectOpenHashMap<>();
 
     public static final ResourceKey<StructureSet> MEADOW_GROVE = register("meadow_grove", structureHolderGetter -> {
-        return new StructureSet(List.of(StructureSet.entry(structureHolderGetter.getOrThrow(MeadowStructures.MEADOW_GROVE))), new RandomSpreadStructurePlacement(24, 16, RandomSpreadType.TRIANGULAR, 546451665));
+        return new StructureSet(List.of(
+                StructureSet.entry(structureHolderGetter.getOrThrow(MeadowStructures.MEADOW_GROVE))),
+                new RandomSpreadStructurePlacement(24, 16, RandomSpreadType.TRIANGULAR, 546451665));
     });
     private static ResourceKey<StructureSet> register(String id, StructureSetFactory factory) {
         ResourceKey<StructureSet> structureSetResourceKey = ResourceKey.create(Registries.STRUCTURE_SET, MeadowMod.meadowModPath(id));

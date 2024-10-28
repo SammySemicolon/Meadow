@@ -34,6 +34,7 @@ public class StrangeFloraParticleEffects {
         }
         return mineralFloraShine(level, pos, options);
     }
+
     public static ParticleEffectSpawner mineralFloraShine(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 

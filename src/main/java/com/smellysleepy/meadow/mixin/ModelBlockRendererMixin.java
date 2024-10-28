@@ -26,7 +26,7 @@ public class ModelBlockRendererMixin {
             remap = false
     )
 
-    private int framedblocks$forceAmbientOcclusionOnLightEmittingFramedBlocks(BlockState state, BlockGetter level, BlockPos pos, Operation<Integer> original, @Local BakedModel model, @Local RenderType layer) {
+    private int meadow$forceAmbientOcclusionOnLightEmittingFramedBlocks(BlockState state, BlockGetter level, BlockPos pos, Operation<Integer> original, @Local BakedModel model, @Local RenderType layer) {
         Block block = state.getBlock();
         if (block instanceof PearllampBlock || block instanceof HangingMeadowLeavesBlock) {
             return 0;

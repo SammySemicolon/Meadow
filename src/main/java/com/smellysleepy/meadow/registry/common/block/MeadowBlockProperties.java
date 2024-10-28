@@ -49,6 +49,7 @@ public class MeadowBlockProperties {
         return new LodestoneBlockProperties()
                 .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
+                .addTag(BlockTags.MOSS_REPLACEABLE)
                 .isValidSpawn(Blocks::ocelotOrParrot)
                 .isViewBlocking(Blocks::never)
                 .isSuffocating(Blocks::never)

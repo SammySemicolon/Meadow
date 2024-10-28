@@ -74,7 +74,7 @@ public class MeadowBlockRegistry {
     public static final RegistryObject<Block> CALCIFIED_ASPEN_WOOD = BLOCKS.register("calcified_aspen_wood", () -> new CalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_LOG_PROPERTIES(), ASPEN_WOOD));
     public static final RegistryObject<Block> CALCIFIED_ASPEN_LOG = BLOCKS.register("calcified_aspen_log", () -> new CalcifiedMeadowLogBlock(MeadowBlockProperties.MEADOW_LOG_PROPERTIES(), ASPEN_LOG));
 
-    public static final RegistryObject<Block> ASPEN_PLANKS = BLOCKS.register("aspen_planks", () -> new Block(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES()));
+    public static final RegistryObject<Block> ASPEN_PLANKS = BLOCKS.register("aspen_planks", () -> new Block(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTags(PLANKS)));
     public static final RegistryObject<Block> ASPEN_PLANKS_STAIRS = BLOCKS.register("aspen_planks_stairs", () -> new StairBlock(() -> ASPEN_PLANKS.get().defaultBlockState(), MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTags(STAIRS, WOODEN_STAIRS)));
     public static final RegistryObject<Block> ASPEN_PLANKS_SLAB = BLOCKS.register("aspen_planks_slab", () -> new SlabBlock(MeadowBlockProperties.MEADOW_WOOD_PROPERTIES().addTags(SLABS, WOODEN_SLABS)));
 

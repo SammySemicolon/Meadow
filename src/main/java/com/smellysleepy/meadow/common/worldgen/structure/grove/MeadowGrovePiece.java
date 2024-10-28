@@ -132,11 +132,8 @@ public class MeadowGrovePiece extends StructurePiece {
 
     @Override
     public void postProcess(WorldGenLevel worldGenLevel, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
-        try {
-            carveGroveShape(this, worldGenLevel, randomSource, worldGenLevel.getChunk(chunkPos.x, chunkPos.z), chunkPos);
-        } catch (Exception exception) {
-            float f = 0;
-        }
+
+        carveGroveShape(this, worldGenLevel, randomSource, worldGenLevel.getChunk(chunkPos.x, chunkPos.z), chunkPos);
         for (Pair<BlockPos, ResourceLocation> pair : bufferedFeatures) {
             var pos = pair.getFirst();
             var location = pair.getSecond();
