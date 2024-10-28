@@ -1,4 +1,4 @@
-//package com.smellysleepy.meadow.client.model.entity;// Made with Blockbench 4.10.4
+//package com.smellysleepy.grassy.client.model.entity;// Made with Blockbench 4.10.4
 //// Exported for Minecraft version 1.17 or later with Mojang mappings
 //// Paste this class into your mod and generate all required imports
 //

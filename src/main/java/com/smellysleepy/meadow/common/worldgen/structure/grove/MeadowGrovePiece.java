@@ -43,9 +43,7 @@ import net.minecraftforge.common.Tags;
 import team.lodestar.lodestone.systems.easing.Easing;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class MeadowGrovePiece extends StructurePiece {
 
@@ -57,7 +55,7 @@ public class MeadowGrovePiece extends StructurePiece {
 
     public boolean hasGenerated;
 
-    public final List<Pair<BlockPos, ResourceLocation>> bufferedFeatures = new ArrayList<>();
+    public final HashMap<BlockPos, ResourceLocation> bufferedFeatures = new HashMap<>();
 
     protected MeadowGrovePiece(BlockPos groveCenter, List<SpecialMeadowRegion> specialRegions, int groveRadius, int groveHeight, int groveDepth, BoundingBox boundingBox) {
         super(MeadowStructurePieceTypes.MEADOW_GROVE.get(), 0, boundingBox);
@@ -94,7 +92,7 @@ public class MeadowGrovePiece extends StructurePiece {
             CompoundTag feature = features.getCompound("feature_"+i);
             BlockPos blockPos = NbtUtils.readBlockPos(feature.getCompound("featurePosition"));
             ResourceLocation resourceKeyId = new ResourceLocation(feature.getString("featureType"));
-            bufferedFeatures.add(Pair.of(blockPos, resourceKeyId));
+            bufferedFeatures.put(blockPos, resourceKeyId);
         }
     }
 
@@ -118,13 +116,14 @@ public class MeadowGrovePiece extends StructurePiece {
         CompoundTag featuresTag = new CompoundTag();
 
         featuresTag.putInt("count", bufferedFeatures.size());
-        for (int i = 0; i < bufferedFeatures.size(); i++) {
-            var bufferedFeature = bufferedFeatures.get(i);
+        int i = 0;
+        for (Map.Entry<BlockPos, ResourceLocation> entry : bufferedFeatures.entrySet()) {
             CompoundTag feature = new CompoundTag();
 
-            feature.put("featurePosition", NbtUtils.writeBlockPos(bufferedFeature.getFirst()));
-            feature.putString("featureType", bufferedFeature.getFirst().toString());
+            feature.put("featurePosition", NbtUtils.writeBlockPos(entry.getKey()));
+            feature.putString("featureType", entry.getValue().toString());
             featuresTag.put("feature_"+i, feature);
+            i++;
         }
         tag.put("features", featuresTag);
 
@@ -134,9 +133,9 @@ public class MeadowGrovePiece extends StructurePiece {
     public void postProcess(WorldGenLevel worldGenLevel, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
 
         carveGroveShape(this, worldGenLevel, randomSource, worldGenLevel.getChunk(chunkPos.x, chunkPos.z), chunkPos);
-        for (Pair<BlockPos, ResourceLocation> pair : bufferedFeatures) {
-            var pos = pair.getFirst();
-            var location = pair.getSecond();
+        for (Map.Entry<BlockPos, ResourceLocation> entry : bufferedFeatures.entrySet()) {
+            var pos = entry.getKey();
+            var location = entry.getValue();
             ResourceKey<ConfiguredFeature<?, ?>> key = ResourceKey.create(Registries.CONFIGURED_FEATURE, location);
             Holder<ConfiguredFeature<?, ?>> holder = worldGenLevel.registryAccess()
                     .registryOrThrow(Registries.CONFIGURED_FEATURE)
@@ -157,13 +156,13 @@ public class MeadowGrovePiece extends StructurePiece {
         int groveDepth = grovePiece.groveDepth;
 
         int pearlflowerCount = random.nextIntBetweenInclusive(2, 4);
-        List<Pair<Integer, Integer>> pearlflower = new ArrayList<>();
+        List<Pair<Integer, Integer>> pearlflowerPositions = new ArrayList<>();
 
         int step = 16 / pearlflowerCount;
         for (int i = 0; i < pearlflowerCount; i++) {
             int x = chunkPos.getBlockX(random.nextIntBetweenInclusive(i*step, (i+1)*step));
             int z = chunkPos.getBlockZ(random.nextIntBetweenInclusive(0, 16));
-            pearlflower.add(Pair.of(x, z));
+            pearlflowerPositions.add(Pair.of(x, z));
         }
 
         for (int x = 0; x < 16; x++) {
@@ -171,8 +170,14 @@ public class MeadowGrovePiece extends StructurePiece {
                 int blockX = chunkPos.getBlockX(x);
                 int blockZ = chunkPos.getBlockZ(z);
 
-                boolean hasPearlflower = pearlflower.stream().anyMatch(p -> p.getFirst().equals(blockX) && p.getSecond().equals(blockZ));
-
+                boolean hasPearlflower = false;
+                if (!pearlflowerPositions.isEmpty()) {
+                    var nextPearlflowerPosition = pearlflowerPositions.get(0);
+                    hasPearlflower = nextPearlflowerPosition.getFirst() == blockX && nextPearlflowerPosition.getSecond() == blockZ;
+                    if (hasPearlflower) {
+                        pearlflowerPositions.remove(0);
+                    }
+                }
                 mutableBlockPos.set(blockX, 0, blockZ);
 
                 double noise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.05f) * 0.5f;
@@ -358,7 +363,7 @@ public class MeadowGrovePiece extends StructurePiece {
                         feature = Pair.of(pos.immutable(), ceilingFeature);
                     }
                     if (feature != null) {
-                        bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
+                        addFeature(feature);
                     }
                 }
                 else if (y >= ceilingAirPocketEndPoint) {
@@ -367,6 +372,7 @@ public class MeadowGrovePiece extends StructurePiece {
                     continue;
                 }
                 if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
+                    chunk.setBlockState(pos, Blocks.GREEN_STAINED_GLASS.defaultBlockState(), true);
                     continue;
                 }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
@@ -396,7 +402,7 @@ public class MeadowGrovePiece extends StructurePiece {
                         }
                     }
                     if (feature != null) {
-                        bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
+                        addFeature(feature);
                     }
                 }
 
@@ -412,6 +418,7 @@ public class MeadowGrovePiece extends StructurePiece {
                     continue;
                 }
                 if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
+                    chunk.setBlockState(pos, Blocks.RED_STAINED_GLASS.defaultBlockState(), true);
                     continue;
                 }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
@@ -445,7 +452,7 @@ public class MeadowGrovePiece extends StructurePiece {
                     feature = createRampFeatures(random, pos);
                 }
                 if (feature != null) {
-                    bufferedFeatures.add(feature.mapSecond(ResourceKey::location));
+                    addFeature(feature);
                 }
             }
             for (int i = 0; i < rampHeight; i++) {
@@ -485,6 +492,10 @@ public class MeadowGrovePiece extends StructurePiece {
                 pos.set(blockX, yLevel + i, blockZ);
             }
         }
+    }
+
+    private void addFeature(Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> featureData) {
+        bufferedFeatures.put(featureData.getFirst(), featureData.getSecond().location());
     }
 
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos) {

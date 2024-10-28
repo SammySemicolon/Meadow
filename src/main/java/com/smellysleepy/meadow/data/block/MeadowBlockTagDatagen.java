@@ -37,13 +37,18 @@ public class MeadowBlockTagDatagen extends LodestoneBlockTagsProvider {
         tag(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE).addTag(BlockTags.MOSS_REPLACEABLE);
 
         tag(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON).addTag(BlockTags.MOSS_REPLACEABLE);
-        tag(MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON).addTags(BlockTags.MOSS_REPLACEABLE, Tags.Blocks.ORES);
-        tag(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON).addTags(BlockTags.LUSH_GROUND_REPLACEABLE);
+        tag(MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON).addTags(MeadowBlockTagRegistry.CALCIFICATION, BlockTags.MOSS_REPLACEABLE, Tags.Blocks.ORES);
 
+
+        tag(MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON).addTags(BlockTags.DIRT);
+        tag(MeadowBlockTagRegistry.MARINE_PEARLFLOWER_GENERATES_ON).add(Blocks.MOSS_BLOCK, Blocks.GRASS_BLOCK);
+        tag(MeadowBlockTagRegistry.ROCKY_PEARLFLOWER_GENERATES_ON).addTags(BlockTags.MOSS_REPLACEABLE).add(Blocks.COBBLESTONE);
+        tag(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON).addTags(
+                MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON, MeadowBlockTagRegistry.MARINE_PEARLFLOWER_GENERATES_ON,
+                MeadowBlockTagRegistry.CALCIFIED_PEARLFLOWER_GENERATES_ON, MeadowBlockTagRegistry.ROCKY_PEARLFLOWER_GENERATES_ON);
 
         tag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE).addTags(
-                MeadowBlockTagRegistry.CALCIFICATION, BlockTags.FEATURES_CANNOT_REPLACE,
-                BlockTags.LOGS, BlockTags.LEAVES, BlockTags.CAVE_VINES, BlockTags.FLOWERS, BlockTags.CORALS);
+                BlockTags.FEATURES_CANNOT_REPLACE, BlockTags.LOGS, BlockTags.LEAVES, BlockTags.CAVE_VINES, BlockTags.FLOWERS, BlockTags.CORALS);
 
         addTagsFromBlockProperties(blocks.stream().map(RegistryObject::get).collect(Collectors.toList()));
     }

@@ -130,6 +130,6 @@
   "item.meadow.netherite_fruit": "Netherite Fruit",
   "item.meadow.pearlflower_bud": "Pearlflower Bud",
   "item.meadow.redstone_fruit": "Redstone Fruit",
-  "itemGroup.meadow.meadow_grove": "Meadow: Hidden Grove",
-  "itemGroup.meadow.mineral_flora": "Meadow: Mineralized Flora"
+  "itemGroup.grassy.meadow_grove": "Meadow: Hidden Grove",
+  "itemGroup.grassy.mineral_flora": "Meadow: Mineralized Flora"
 }

@@ -14,7 +14,7 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties CALCIFIED_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(0.75F, 4.0F)
-                .addTags(MeadowBlockTagRegistry.CALCIFICATION, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
+                .addTags(MeadowBlockTagRegistry.CALCIFICATION, MeadowBlockTagRegistry.CALCIFIED_PEARLFLOWER_GENERATES_ON)
                 .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
                 .mapColor(MapColor.COLOR_BLUE)
                 .sound(SoundType.NETHERRACK);
@@ -39,17 +39,15 @@ public class MeadowBlockProperties {
                 .setCutoutRenderType()
                 .noCollission()
                 .noOcclusion()
-                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.MINEABLE_WITH_HOE)
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION)
+                .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.MINEABLE_WITH_HOE)
                 .mapColor(MapColor.COLOR_BLUE)
                 .sound(SoundType.GLOW_LICHEN);
     }
 
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
-                .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON, MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON)
-                .addTag(BlockTags.MOSS_REPLACEABLE)
+                .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
                 .isValidSpawn(Blocks::ocelotOrParrot)
                 .isViewBlocking(Blocks::never)
                 .isSuffocating(Blocks::never)
@@ -62,7 +60,6 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .setCutoutRenderType()
                 .noCollission()
                 .noOcclusion()
@@ -91,17 +88,17 @@ public class MeadowBlockProperties {
         return MEADOW_LOG_PROPERTIES()
                 .addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
     }
-
-    public static LodestoneBlockProperties AUREATE_WHEAT_CROP_PROPERTIES() {
-        return new LodestoneBlockProperties()
-                .setCutoutRenderType()
-                .noCollission()
-                .noOcclusion()
-                .instabreak()
-                .offsetType(BlockBehaviour.OffsetType.XYZ)
-                .mapColor(MapColor.GRASS)
-                .sound(SoundType.GRASS);
-    }
+//
+//    public static LodestoneBlockProperties AUREATE_WHEAT_CROP_PROPERTIES() {
+//        return new LodestoneBlockProperties()
+//                .setCutoutRenderType()
+//                .noCollission()
+//                .noOcclusion()
+//                .instabreak()
+//                .offsetType(BlockBehaviour.OffsetType.XYZ)
+//                .mapColor(MapColor.GRASS)
+//                .sound(SoundType.GRASS);
+//    }
 
     public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
@@ -151,7 +148,6 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .addTag(BlockTags.FLOWERS)
                 .offsetType(BlockBehaviour.OffsetType.XZ)
                 .mapColor(MapColor.TERRACOTTA_WHITE)
@@ -193,8 +189,7 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
-                .addTags(MeadowBlockTagRegistry.PEARLFLOWER_CAN_PLACE_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON)
+                .addTags(MeadowBlockTagRegistry.ROCKY_PEARLFLOWER_GENERATES_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON)
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
                 .randomTicks()
@@ -203,7 +198,6 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_FLORA_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .offsetType(BlockBehaviour.OffsetType.XZ)
                 .pushReaction(PushReaction.DESTROY)
                 .mapColor(MapColor.GRASS)
@@ -217,7 +211,6 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .offsetType(BlockBehaviour.OffsetType.XZ)
                 .pushReaction(PushReaction.DESTROY)
                 .mapColor(MapColor.GRASS)
@@ -231,7 +224,6 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MINERAL_LEAVES_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)
                 .isValidSpawn(Blocks::ocelotOrParrot)
                 .sound(SoundType.CHERRY_LEAVES)
                 .isViewBlocking(Blocks::never)

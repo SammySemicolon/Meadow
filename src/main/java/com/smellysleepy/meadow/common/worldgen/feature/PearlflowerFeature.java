@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.stateproviders.*;
 
 public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
 
@@ -22,19 +23,24 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
         var blockpos = context.origin();
 
         var below = worldgenlevel.getBlockState(blockpos.below());
-        var provider = config.meadow();
+        BlockStateProvider provider = null;
         boolean isWaterlogged = worldgenlevel.isWaterAt(blockpos);
-        if (below.is(MeadowBlockTagRegistry.CALCIFICATION)) {
-            provider = config.calcified();
-        }
-        else if ((below.is(BlockTags.BASE_STONE_OVERWORLD)) && !isWaterlogged){
-            provider = config.stone();
-        }
-        else if (below.is(BlockTags.MOSS_REPLACEABLE) || isWaterlogged) {
+
+        if (isWaterlogged || below.is(MeadowBlockTagRegistry.MARINE_PEARLFLOWER_GENERATES_ON)) {
             provider = config.marine();
         }
-
-
+        else if (below.is(MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)) {
+            provider = config.grassy();
+        }
+        else if (below.is(MeadowBlockTagRegistry.ROCKY_PEARLFLOWER_GENERATES_ON)) {
+            provider = config.rocky();
+        }
+        else if (below.is(MeadowBlockTagRegistry.CALCIFIED_PEARLFLOWER_GENERATES_ON)) {
+            provider = config.calcified();
+        }
+        if (provider == null) {
+            return false;
+        }
         var blockstate = provider.getState(context.random(), blockpos);
         if (blockstate.canSurvive(worldgenlevel, blockpos)) {
             if (!worldgenlevel.getBlockState(blockpos).canBeReplaced()) {

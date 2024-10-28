@@ -32,11 +32,13 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), itemTagsProvider);
 
+
         generator.addProvider(event.includeClient(), new MeadowLangDatagen(output));
 
         generator.addProvider(event.includeServer(), new MeadowRecipes(output));
 
         generator.addProvider(event.includeClient(), new MeadowBiomeTagDatagen(output, provider, helper));
+        generator.addProvider(event.includeServer(), new MeadowBlockLootTableDatagen(output));
 
         generator.addProvider(event.includeServer(), new MeadowWorldgenRegistryDatagen(output, provider));
     }
