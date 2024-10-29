@@ -3,13 +3,13 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "entries": [
+      "conditions": [
         {
-          "type": "minecraft:alternatives",
-          "children": [
+          "condition": "minecraft:any_of",
+          "terms": [
             {
-              "type": "minecraft:item",
-              "conditions": [
+              "condition": "minecraft:all_of",
+              "terms": [
                 {
                   "condition": "minecraft:any_of",
                   "terms": [
@@ -35,20 +35,99 @@
                       }
                     }
                   ]
+                },
+                {
+                  "condition": "minecraft:all_of",
+                  "terms": [
+                    {
+                      "block": "meadow:tall_meadow_grass",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "half": "upper"
+                      }
+                    },
+                    {
+                      "condition": "minecraft:location_check",
+                      "offsetY": -1,
+                      "predicate": {
+                        "block": {
+                          "blocks": [
+                            "meadow:tall_meadow_grass"
+                          ],
+                          "state": {
+                            "half": "lower"
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
-              ],
-              "name": "meadow:tall_meadow_grass"
+              ]
             },
             {
-              "type": "minecraft:item",
-              "conditions": [
+              "condition": "minecraft:all_of",
+              "terms": [
                 {
-                  "condition": "minecraft:survives_explosion"
+                  "condition": "minecraft:any_of",
+                  "terms": [
+                    {
+                      "condition": "minecraft:match_tool",
+                      "predicate": {
+                        "items": [
+                          "minecraft:shears"
+                        ]
+                      }
+                    },
+                    {
+                      "condition": "minecraft:match_tool",
+                      "predicate": {
+                        "enchantments": [
+                          {
+                            "enchantment": "minecraft:silk_touch",
+                            "levels": {
+                              "min": 1
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "condition": "minecraft:all_of",
+                  "terms": [
+                    {
+                      "block": "meadow:tall_meadow_grass",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "half": "lower"
+                      }
+                    },
+                    {
+                      "condition": "minecraft:location_check",
+                      "offsetY": 1,
+                      "predicate": {
+                        "block": {
+                          "blocks": [
+                            "meadow:tall_meadow_grass"
+                          ],
+                          "state": {
+                            "half": "upper"
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
-              ],
-              "name": "meadow:tall_meadow_grass"
+              ]
             }
           ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "meadow:tall_meadow_grass"
         }
       ],
       "rolls": 1.0

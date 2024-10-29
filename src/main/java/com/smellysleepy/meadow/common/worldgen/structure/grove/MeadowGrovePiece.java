@@ -155,45 +155,37 @@ public class MeadowGrovePiece extends StructurePiece {
         int groveHeight = grovePiece.groveHeight;
         int groveDepth = grovePiece.groveDepth;
 
-        int pearlflowerCount = random.nextIntBetweenInclusive(2, 4);
-        List<Pair<Integer, Integer>> pearlflowerPositions = new ArrayList<>();
+        int placedPearlFlowers = 0;
+        int pearlflowerCount = random.nextIntBetweenInclusive(2, 5);
+        int[] pearlflowerIndexes = new int[pearlflowerCount];
 
-        int step = 16 / pearlflowerCount;
+        int step = 256 / pearlflowerCount;
         for (int i = 0; i < pearlflowerCount; i++) {
-            int x = chunkPos.getBlockX(random.nextIntBetweenInclusive(i*step, (i+1)*step));
-            int z = chunkPos.getBlockZ(random.nextIntBetweenInclusive(0, 16));
-            pearlflowerPositions.add(Pair.of(x, z));
+            int min = step * i;
+            int max = step * (i + 1);
+            pearlflowerIndexes[i] = random.nextInt(min, max);
         }
+        for (int i = 0; i < 256; i++) {
+            int blockX = chunkPos.getBlockX(i%16);
+            int blockZ = chunkPos.getBlockZ(i/16);
 
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                int blockX = chunkPos.getBlockX(x);
-                int blockZ = chunkPos.getBlockZ(z);
+            boolean hasPearlflower = i == pearlflowerIndexes[placedPearlFlowers];
+            mutableBlockPos.set(blockX, 0, blockZ);
 
-                boolean hasPearlflower = false;
-                if (!pearlflowerPositions.isEmpty()) {
-                    var nextPearlflowerPosition = pearlflowerPositions.get(0);
-                    hasPearlflower = nextPearlflowerPosition.getFirst() == blockX && nextPearlflowerPosition.getSecond() == blockZ;
-                    if (hasPearlflower) {
-                        pearlflowerPositions.remove(0);
-                    }
-                }
-                mutableBlockPos.set(blockX, 0, blockZ);
+            double noise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.05f) * 0.5f;
+            double depthNoise = WorldgenHelper.getNoise(noiseSampler, blockZ, blockX, 100000, 0.025f) * 0.5f;
 
-                double noise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.05f) * 0.5f;
-                double depthNoise = WorldgenHelper.getNoise(noiseSampler, blockZ, blockX, 100000, 0.025f) * 0.5f;
+            double localRadius = (int) Mth.clampedLerp(groveRadius * 0.4, groveRadius, noise);
+            double localHeight = (int) Mth.clampedLerp(groveHeight * 0.5, groveHeight, noise);
+            double localDepth = (int) Mth.clampedLerp(groveDepth * 0.6, groveDepth, depthNoise);
 
-                double localRadius = (int) Mth.clampedLerp(groveRadius * 0.4, groveRadius, noise);
-                double localHeight = (int) Mth.clampedLerp(groveHeight * 0.5, groveHeight, noise);
-                double localDepth = (int) Mth.clampedLerp(groveDepth * 0.6, groveDepth, depthNoise);
+            int blendWidth = 48;
+            int rimSize = (int) (localRadius * 0.075);
 
-                int blendWidth = 48;
-                int rimSize = (int) (localRadius * 0.075);
+            grovePiece.buildGroveLayer(
+                    chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
+                    hasPearlflower, localRadius, localHeight, localDepth, blendWidth, rimSize, blockX, blockZ);
 
-                grovePiece.buildGroveLayer(
-                        chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
-                        hasPearlflower, localRadius, localHeight, localDepth, blendWidth, rimSize, blockX, blockZ);
-            }
         }
         if (unsafeBoundingBox.valid()) {
             grovePiece.boundingBox = unsafeBoundingBox.toBoundingBox();
