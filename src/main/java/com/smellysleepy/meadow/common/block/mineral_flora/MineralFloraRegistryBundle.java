@@ -74,7 +74,7 @@ public class MineralFloraRegistryBundle {
 
         var itemProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES();
         var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(
-                new FoodProperties.Builder().nutrition(2).saturationMod(0.1f).fast().build()
+                new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).build()
         );
 
         grassBlock = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(grassBlockProperties, grassBonemealFeature));

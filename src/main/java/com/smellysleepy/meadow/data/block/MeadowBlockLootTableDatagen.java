@@ -84,10 +84,11 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
             takeAll(blocks, b -> b.get().properties instanceof LodestoneBlockProperties && ((LodestoneBlockProperties) b.get().properties).getDatagenData().hasInheritedLootTable);
 
             for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
-                var leavesBlock = take(blocks, bundle.leavesBlock).get();
-
-                add(leavesBlock, createFruitLeavesDrops(leavesBlock, bundle.saplingBlock.get(), SAPLING_DROP_CHANCE, bundle.fruitItem.get(), FRUIT_DROP_CHANCE));
+                add(take(blocks, bundle.leavesBlock).get(), b -> createFruitLeavesDrops(b, bundle.saplingBlock.get(), SAPLING_DROP_CHANCE, bundle.fruitItem.get(), FRUIT_DROP_CHANCE));
+                add(take(blocks, bundle.hangingLeavesBlock).get(), b -> createConditionalDrop(b, HAS_SHEARS_OR_SILK_TOUCH));
             }
+            add(take(blocks, MeadowBlockRegistry.ASPEN_LEAVES).get(), b -> createLeavesDrops(b, MeadowBlockRegistry.ASPEN_SAPLING.get(), SAPLING_DROP_CHANCE));
+            add(take(blocks, MeadowBlockRegistry.HANGING_ASPEN_LEAVES).get(), b -> createConditionalDrop(b, HAS_SHEARS_OR_SILK_TOUCH));
 
             takeAll(blocks, b -> b.get() instanceof SaplingBlock).forEach(b -> add(b.get(), createSingleItemTable(b.get())));
 
