@@ -45,6 +45,104 @@ public class MeadowBlockProperties {
                 .sound(SoundType.GLOW_LICHEN);
     }
 
+    public static LodestoneBlockProperties CALCIFIED_WOOD_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(1.75F, 4.0F)
+                .instrument(NoteBlockInstrument.BASS)
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .sound(SoundType.NETHER_WOOD)
+                .mapColor(MapColor.WOOD);
+    }
+
+    public static LodestoneBlockProperties CALCIFIED_LOG_PROPERTIES() {
+        return CALCIFIED_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
+    }
+
+    public static LodestoneBlockProperties STRIPPED_CALCIFIED_LOG_PROPERTIES() {
+        return CALCIFIED_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    }
+
+    public static LodestoneBlockProperties THIN_CALCIFIED_WOOD_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(1.25F, 4.0F)
+                .setCutoutRenderType()
+                .instrument(NoteBlockInstrument.BASS)
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .pushReaction(PushReaction.DESTROY)
+                .sound(SoundType.CHERRY_WOOD)
+                .mapColor(MapColor.WOOD);
+    }
+
+    public static LodestoneBlockProperties THIN_CALCIFIED_LOG_PROPERTIES() {
+        return THIN_CALCIFIED_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
+    }
+
+    public static LodestoneBlockProperties THIN_STRIPPED_CALCIFIED_LOG_PROPERTIES() {
+        return THIN_CALCIFIED_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    }
+
+    public static LodestoneBlockProperties NATURAL_THIN_CALCIFIED_LOG_PROPERTIES() {
+        return THIN_CALCIFIED_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
+    }
+    
+    public static LodestoneBlockProperties MEADOW_WOOD_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(1.75F, 4.0F)
+                .instrument(NoteBlockInstrument.BASS)
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .sound(SoundType.CHERRY_WOOD)
+                .mapColor(MapColor.WOOD);
+    }
+
+    public static LodestoneBlockProperties MEADOW_LOG_PROPERTIES() {
+        return MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
+    }
+
+    public static LodestoneBlockProperties STRIPPED_MEADOW_LOG_PROPERTIES() {
+        return MEADOW_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    }
+
+    public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(1.25F, 4.0F)
+                .setCutoutRenderType()
+                .instrument(NoteBlockInstrument.BASS)
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .pushReaction(PushReaction.DESTROY)
+                .sound(SoundType.CHERRY_WOOD)
+                .mapColor(MapColor.WOOD);
+    }
+
+    public static LodestoneBlockProperties THIN_MEADOW_LOG_PROPERTIES() {
+        return THIN_MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
+    }
+
+    public static LodestoneBlockProperties THIN_STRIPPED_MEADOW_LOG_PROPERTIES() {
+        return THIN_MEADOW_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    }
+
+    public static LodestoneBlockProperties NATURAL_THIN_MEADOW_LOG_PROPERTIES() {
+        return THIN_MEADOW_WOOD_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
+    }
+
+    public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .isValidSpawn(Blocks::ocelotOrParrot)
+                .isViewBlocking(Blocks::never)
+                .isSuffocating(Blocks::never)
+                .setCutoutRenderType()
+                .strength(0.2F)
+                .randomTicks()
+                .noOcclusion()
+                .needsHoe()
+                .sound(SoundType.CHERRY_LEAVES)
+                .addTag(BlockTags.LEAVES);
+    }
+
+    public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
+        return ASPEN_LEAVES_PROPERTIES().lightLevel(s -> 3).noCollission();
+    }
+
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
@@ -70,82 +168,6 @@ public class MeadowBlockProperties {
                 .sound(SoundType.GRASS);
     }
 
-    public static LodestoneBlockProperties MEADOW_WOOD_PROPERTIES() {
-        return new LodestoneBlockProperties()
-                .strength(1.75F, 4.0F)
-                .instrument(NoteBlockInstrument.BASS)
-                .addTag(BlockTags.MINEABLE_WITH_AXE)
-                .sound(SoundType.CHERRY_WOOD)
-                .mapColor(MapColor.WOOD);
-    }
-
-    public static LodestoneBlockProperties MEADOW_LOG_PROPERTIES() {
-        return MEADOW_WOOD_PROPERTIES()
-                .addTag(BlockTags.LOGS);
-    }
-
-    public static LodestoneBlockProperties STRIPPED_MEADOW_LOG_PROPERTIES() {
-        return MEADOW_LOG_PROPERTIES()
-                .addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
-    }
-//
-//    public static LodestoneBlockProperties AUREATE_WHEAT_CROP_PROPERTIES() {
-//        return new LodestoneBlockProperties()
-//                .setCutoutRenderType()
-//                .noCollission()
-//                .noOcclusion()
-//                .instabreak()
-//                .offsetType(BlockBehaviour.OffsetType.XYZ)
-//                .mapColor(MapColor.GRASS)
-//                .sound(SoundType.GRASS);
-//    }
-
-    public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
-        return new LodestoneBlockProperties()
-                .strength(1.25F, 4.0F)
-                .setCutoutRenderType()
-                .instrument(NoteBlockInstrument.BASS)
-                .addTag(BlockTags.MINEABLE_WITH_AXE)
-                .pushReaction(PushReaction.DESTROY)
-                .sound(SoundType.CHERRY_WOOD)
-                .mapColor(MapColor.WOOD);
-    }
-
-    public static LodestoneBlockProperties THIN_MEADOW_LOG_PROPERTIES() {
-        return THIN_MEADOW_WOOD_PROPERTIES()
-                .addTag(BlockTags.LOGS);
-    }
-
-    public static LodestoneBlockProperties THIN_STRIPPED_MEADOW_LOG_PROPERTIES() {
-        return THIN_MEADOW_LOG_PROPERTIES()
-                .addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
-    }
-
-    public static LodestoneBlockProperties NATURAL_THIN_MEADOW_LOG_PROPERTIES() {
-        return THIN_MEADOW_WOOD_PROPERTIES()
-                .lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
-    }
-
-    public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {
-        return new LodestoneBlockProperties()
-                .isValidSpawn(Blocks::ocelotOrParrot)
-                .isViewBlocking(Blocks::never)
-                .isSuffocating(Blocks::never)
-                .setCutoutRenderType()
-                .strength(0.2F)
-                .randomTicks()
-                .noOcclusion()
-                .needsHoe()
-                .sound(SoundType.CHERRY_LEAVES)
-                .addTag(BlockTags.LEAVES);
-    }
-
-    public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
-        return ASPEN_LEAVES_PROPERTIES()
-                .lightLevel(s -> 3)
-                .noCollission();
-    }
-
     public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTag(BlockTags.FLOWERS)
@@ -160,13 +182,11 @@ public class MeadowBlockProperties {
     }
 
     public static LodestoneBlockProperties SMALL_PEARLFLOWER_PROPERTIES() {
-        return PEARLFLOWER_PROPERTIES()
-                .addTag(BlockTags.SMALL_FLOWERS);
+        return PEARLFLOWER_PROPERTIES().addTag(BlockTags.SMALL_FLOWERS);
     }
 
     public static LodestoneBlockProperties TALL_PEARLFLOWER_PROPERTIES() {
-        return PEARLFLOWER_PROPERTIES()
-                .addTag(BlockTags.TALL_FLOWERS);
+        return PEARLFLOWER_PROPERTIES().addTag(BlockTags.TALL_FLOWERS);
     }
 
     public static LodestoneBlockProperties PEARLLIGHT_PROPERTIES() {

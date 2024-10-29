@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "meadow:calcified_logs"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "meadow:calcified_planks"
+  }
+}

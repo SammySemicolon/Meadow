@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "tag": "meadow:calcified_planks"
+    }
+  ],
+  "result": {
+    "item": "meadow:calcified_planks_button"
+  }
+}

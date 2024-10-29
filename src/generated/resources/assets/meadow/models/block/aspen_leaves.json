@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/leaves",
   "textures": {
-    "all": "meadow:block/aspen_wood/aspen_leaves"
+    "all": "meadow:block/wood/aspen_leaves"
   }
 }

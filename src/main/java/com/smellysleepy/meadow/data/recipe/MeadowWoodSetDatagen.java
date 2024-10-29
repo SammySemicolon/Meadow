@@ -29,6 +29,7 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
             MeadowItemRegistry.THIN_ASPEN_LOG.get(), MeadowItemRegistry.THIN_ASPEN_WOOD.get(),
             MeadowItemRegistry.THIN_STRIPPED_ASPEN_LOG.get(), MeadowItemRegistry.THIN_STRIPPED_ASPEN_WOOD.get(),
             MeadowItemRegistry.ASPEN_PLANKS.get(), MeadowItemRegistry.ASPEN_PLANKS_STAIRS.get(), MeadowItemRegistry.ASPEN_PLANKS_SLAB.get(),
+            MeadowItemRegistry.HEAVY_ASPEN_PLANKS.get(), MeadowItemRegistry.HEAVY_ASPEN_PLANKS_STAIRS.get(), MeadowItemRegistry.HEAVY_ASPEN_PLANKS_SLAB.get(),
             MeadowItemRegistry.ASPEN_FENCE.get(), MeadowItemRegistry.ASPEN_FENCE_GATE.get(),
             MeadowItemRegistry.SOLID_ASPEN_DOOR.get(),MeadowItemRegistry.ASPEN_DOOR.get(),
             MeadowItemRegistry.SOLID_ASPEN_TRAPDOOR.get(), MeadowItemRegistry.ASPEN_TRAPDOOR.get(),
@@ -38,25 +39,44 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
             MeadowItemRegistry.ASPEN_BOAT.get()
     );
 
+    private static final MeadowDatagenWoodSet CALCIFIED = new MeadowDatagenWoodSet(
+            "calcified",
+            MeadowItemRegistry.CALCIFIED_LOG.get(), MeadowItemRegistry.CALCIFIED_WOOD.get(),
+            MeadowItemRegistry.STRIPPED_CALCIFIED_LOG.get(), MeadowItemRegistry.STRIPPED_CALCIFIED_WOOD.get(),
+            MeadowItemRegistry.THIN_CALCIFIED_LOG.get(), MeadowItemRegistry.THIN_CALCIFIED_WOOD.get(),
+            MeadowItemRegistry.THIN_STRIPPED_CALCIFIED_LOG.get(), MeadowItemRegistry.THIN_STRIPPED_CALCIFIED_WOOD.get(),
+            MeadowItemRegistry.CALCIFIED_PLANKS.get(), MeadowItemRegistry.CALCIFIED_PLANKS_STAIRS.get(), MeadowItemRegistry.CALCIFIED_PLANKS_SLAB.get(),
+            MeadowItemRegistry.HEAVY_CALCIFIED_PLANKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_PLANKS_STAIRS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_PLANKS_SLAB.get(),
+            MeadowItemRegistry.CALCIFIED_FENCE.get(), MeadowItemRegistry.CALCIFIED_FENCE_GATE.get(),
+            MeadowItemRegistry.SOLID_CALCIFIED_DOOR.get(),MeadowItemRegistry.CALCIFIED_DOOR.get(),
+            MeadowItemRegistry.SOLID_CALCIFIED_TRAPDOOR.get(), MeadowItemRegistry.CALCIFIED_TRAPDOOR.get(),
+            MeadowItemRegistry.CALCIFIED_BUTTON.get(), MeadowItemRegistry.CALCIFIED_PRESSURE_PLATE.get(),
+            MeadowItemRegistry.CALCIFIED_SIGN.get(), MeadowItemRegistry.CALCIFIED_SIGN.get(),
+            ItemTagRegistry.CALCIFIED_LOGS, ItemTagRegistry.THIN_CALCIFIED_LOGS, ItemTagRegistry.CALCIFIED_PLANKS, ItemTagRegistry.CALCIFIED_STAIRS, ItemTagRegistry.CALCIFIED_SLABS,
+            MeadowItemRegistry.CALCIFIED_BOAT.get()
+    );
+
     public static void addTags(MeadowItemTagDatagen provider) {
         addTags(provider, ASPEN);
+        addTags(provider, CALCIFIED);
     }
 
     public static void buildRecipes(Consumer<FinishedRecipe> consumer) {
         buildRecipes(consumer, ASPEN);
+        buildRecipes(consumer, CALCIFIED);
     }
 
     protected static void addTags(MeadowItemTagDatagen provider, MeadowDatagenWoodSet woodSet) {
         provider.tag(woodSet.logTag).add(woodSet.log, woodSet.wood, woodSet.strippedLog, woodSet.strippedWood);
         provider.tag(woodSet.thinLogTag).add(woodSet.thinLog, woodSet.thinWood, woodSet.thinStrippedLog, woodSet.thinStrippedWood);
         provider.tag(woodSet.planksTag).add(
-                woodSet.planks
+                woodSet.planks, woodSet.heavyPlanks
         );
         provider.tag(woodSet.stairsTag).add(
-                woodSet.planksStairs
+                woodSet.planksStairs, woodSet.heavyPlanksStairs
         );
         provider.tag(woodSet.slabsTag).add(
-                woodSet.planksSlab
+                woodSet.planksSlab, woodSet.heavyPlanksSlab
         );
 
         provider.safeCopy(MeadowBlockRegistry.BLOCKS, woodSet.logTag);
@@ -70,6 +90,9 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
 
         shapedSlab(consumer, woodSet.planksSlab, woodSet.planks);
         shapedStairs(consumer, woodSet.planksStairs, woodSet.planks);
+
+        shapedSlab(consumer, woodSet.heavyPlanksSlab, woodSet.heavyPlanks);
+        shapedStairs(consumer, woodSet.heavyPlanksStairs, woodSet.heavyPlanks);
 
         shapelessWood(consumer, woodSet.wood, woodSet.log);
         shapelessWood(consumer, woodSet.strippedWood, woodSet.strippedLog);
@@ -239,6 +262,8 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
             Item thinStrippedLog, Item thinStrippedWood,
 
             Item planks, Item planksStairs, Item planksSlab,
+
+            Item heavyPlanks, Item heavyPlanksStairs, Item heavyPlanksSlab,
 
             Item fence, Item fenceGate,
 

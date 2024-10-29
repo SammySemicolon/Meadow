@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "meadow:block/aspen_wood/aspen_sapling"
+    "layer0": "meadow:block/wood/aspen_sapling"
   }
 }

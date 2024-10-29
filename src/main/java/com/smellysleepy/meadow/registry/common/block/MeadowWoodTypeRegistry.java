@@ -13,8 +13,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class MeadowWoodTypeRegistry {
 
-    public static final WoodType ASPEN = WoodType.register(new WoodType("grassy:aspen", MeadowBlockSetTypes.ASPEN,
+    public static final WoodType ASPEN = WoodType.register(new WoodType("meadow:aspen", MeadowBlockSetTypes.ASPEN,
             SoundType.CHERRY_WOOD, SoundType.CHERRY_WOOD_HANGING_SIGN, SoundEvents.CHERRY_WOOD_FENCE_GATE_CLOSE, SoundEvents.CHERRY_WOOD_FENCE_GATE_OPEN));
+
+    public static final WoodType CALCIFIED = WoodType.register(new WoodType("meadow:calcified", MeadowBlockSetTypes.ASPEN,
+            SoundType.NETHER_WOOD, SoundType.NETHER_WOOD_HANGING_SIGN, SoundEvents.NETHER_WOOD_FENCE_GATE_CLOSE, SoundEvents.NETHER_WOOD_FENCE_GATE_OPEN));
 
     @Mod.EventBusSubscriber(modid= MeadowMod.MEADOW, bus= Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientOnly {

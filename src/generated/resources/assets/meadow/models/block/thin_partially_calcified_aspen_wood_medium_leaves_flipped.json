@@ -1,9 +1,9 @@
 {
   "parent": "meadow:block/templates/template_thin_log_with_leaves",
   "textures": {
-    "bottom": "meadow:block/aspen_wood/aspen_log",
-    "leaves": "meadow:block/aspen_wood/thin_partially_calcified_aspen_log_medium_leaves",
-    "side": "meadow:block/aspen_wood/partially_calcified_aspen_log_flipped",
-    "top": "meadow:block/aspen_wood/calcified_aspen_log"
+    "bottom": "meadow:block/wood/aspen/aspen_log",
+    "leaves": "meadow:block/wood/thin_partially_calcified_aspen_log_medium_leaves",
+    "side": "meadow:block/wood/partially_calcified_aspen_log_flipped",
+    "top": "meadow:block/wood/calcified/calcified_log"
   }
 }

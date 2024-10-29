@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "meadow:block/calcified_planks_slab"
+    },
+    "type=double": {
+      "model": "meadow:block/calcified_planks"
+    },
+    "type=top": {
+      "model": "meadow:block/calcified_planks_slab_top"
+    }
+  }
+}

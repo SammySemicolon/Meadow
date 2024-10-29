@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "meadow:calcified_trapdoor"
+    }
+  ],
+  "result": {
+    "item": "meadow:solid_calcified_trapdoor"
+  }
+}

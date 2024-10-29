@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "meadow:block/heavy_aspen_planks_slab"
+    },
+    "type=double": {
+      "model": "meadow:block/heavy_aspen_planks"
+    },
+    "type=top": {
+      "model": "meadow:block/heavy_aspen_planks_slab_top"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "meadow:block/wood/aspen/heavy_aspen_planks",
+    "side": "meadow:block/wood/aspen/heavy_aspen_planks",
+    "top": "meadow:block/wood/aspen/heavy_aspen_planks"
+  }
+}

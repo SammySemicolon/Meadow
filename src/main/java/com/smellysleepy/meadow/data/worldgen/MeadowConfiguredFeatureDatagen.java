@@ -117,7 +117,7 @@ public class MeadowConfiguredFeatureDatagen {
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
                 MeadowBlockRegistry.THIN_ASPEN_LOG.get(),
                 MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG.get(),
-                MeadowBlockRegistry.THIN_CALCIFIED_ASPEN_LOG.get(),
+                MeadowBlockRegistry.THIN_CALCIFIED_LOG.get(),
                 MeadowBlockRegistry.ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
         )));
@@ -126,7 +126,7 @@ public class MeadowConfiguredFeatureDatagen {
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
                 MeadowBlockRegistry.ASPEN_LOG.get(),
                 MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG.get(),
-                MeadowBlockRegistry.CALCIFIED_ASPEN_LOG.get(),
+                MeadowBlockRegistry.CALCIFIED_LOG.get(),
                 MeadowBlockRegistry.ASPEN_LEAVES.get(),
                 MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get()
         )));

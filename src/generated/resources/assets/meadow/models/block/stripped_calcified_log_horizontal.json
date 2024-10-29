@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "meadow:block/wood/calcified/stripped_calcified_log_top",
+    "side": "meadow:block/wood/calcified/stripped_calcified_log"
+  }
+}

@@ -176,8 +176,8 @@ public class MeadowBlockStateSmithTypes {
         String affix = isWood ? "" : "_top";
         ResourceLocation side = provider.getBlockTexture(logName);
         ResourceLocation sideFlipped = provider.getBlockTexture(logName + "_flipped");
-        ResourceLocation bottom = provider.getBlockTexture("calcified_aspen_log" + affix);
-        ResourceLocation top = provider.getBlockTexture("aspen_log" + affix);
+        ResourceLocation bottom = provider.getBlockTexture("calcified/calcified_log" + affix);
+        ResourceLocation top = provider.getBlockTexture("aspen/aspen_log" + affix);
         ModelFile model = provider.models().cubeBottomTop(name, side, bottom, top);
         ModelFile flippedModel = provider.models().cubeBottomTop(name + "_flipped", sideFlipped, top, bottom);
 
@@ -282,12 +282,14 @@ public class MeadowBlockStateSmithTypes {
         var smallLeavesTexture = provider.getBlockTexture(leaves + "_small_leaves");
         var mediumLeavesTexture = provider.getBlockTexture(leaves + "_medium_leaves");
         var largeLeavesTexture = provider.getBlockTexture(leaves + "_large_leaves");
+        var calcifiedLogPath = "calcified/" + logName.replace("partially_", "").replace("aspen_", "");
+        var aspenLogPath = "aspen/" + logName.replace("partially_calcified_", "");
 
         var sideTexture = provider.getBlockTexture(logName + flippedAffix);
-        var topTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_calcified_", "") : logName) + endAffix);
-        var bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_", "") : logName) + endAffix);
-        var topLeavesTexture = provider.getBlockTexture("aspen_leaves");
-        var hangingLeavesTexture = provider.getBlockTexture("thin_aspen_log_hanging_leaves");
+        var topTexture = provider.getBlockTexture((isPartiallyCalcified ? aspenLogPath : logName) + endAffix);
+        var bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? calcifiedLogPath : logName) + endAffix);
+        var topLeavesTexture = provider.getStaticBlockTexture("wood/aspen_leaves");
+        var hangingLeavesTexture = provider.getStaticBlockTexture("wood/hanging_aspen_leaves_0");
         if (flipped) {
             var cache = bottomTexture;
             bottomTexture = topTexture;

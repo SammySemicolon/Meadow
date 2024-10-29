@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right_open",
+  "textures": {
+    "bottom": "meadow:block/wood/calcified/solid_calcified_door_bottom",
+    "top": "meadow:block/wood/calcified/solid_calcified_door_top"
+  }
+}

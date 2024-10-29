@@ -19,11 +19,16 @@ public class MeadowEntityRegistry {
             () -> EntityType.Builder.<LodestoneBoatEntity>of((t, w) -> new LodestoneBoatEntity(t, w, MeadowItemRegistry.ASPEN_BOAT), MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10)
                     .build(MeadowMod.meadowModPath("aspen_boat").toString()));
 
+    public static final RegistryObject<EntityType<LodestoneBoatEntity>> CALCIFIED_BOAT = ENTITY_TYPES.register("calcified_boat",
+            () -> EntityType.Builder.<LodestoneBoatEntity>of((t, w) -> new LodestoneBoatEntity(t, w, MeadowItemRegistry.ASPEN_BOAT), MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10)
+                    .build(MeadowMod.meadowModPath("calcified_boat").toString()));
+
     @Mod.EventBusSubscriber(modid = MeadowMod.MEADOW, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientOnly {
         @SubscribeEvent
         public static void bindEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             EntityRenderers.register(MeadowEntityRegistry.ASPEN_BOAT.get(), (c) -> new LodestoneBoatRenderer(c, MeadowMod.meadowModPath("textures/entity/boat/aspen.png"), false));
+            EntityRenderers.register(MeadowEntityRegistry.CALCIFIED_BOAT.get(), (c) -> new LodestoneBoatRenderer(c, MeadowMod.meadowModPath("textures/entity/boat/aspen.png"), false));
         }
     }
 }

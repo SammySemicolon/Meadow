@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_fence_gate",
   "textures": {
-    "texture": "meadow:block/aspen_wood/aspen_planks"
+    "texture": "meadow:block/wood/aspen/aspen_planks"
   }
 }

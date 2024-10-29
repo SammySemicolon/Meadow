@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/door_bottom_left_open",
   "textures": {
-    "bottom": "meadow:block/aspen_wood/aspen_door_bottom",
-    "top": "meadow:block/aspen_wood/aspen_door_top"
+    "bottom": "meadow:block/wood/aspen/aspen_door_bottom",
+    "top": "meadow:block/wood/aspen/aspen_door_top"
   }
 }

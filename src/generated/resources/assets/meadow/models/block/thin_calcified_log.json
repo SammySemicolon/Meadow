@@ -1,0 +1,8 @@
+{
+  "parent": "meadow:block/templates/template_thin_log",
+  "textures": {
+    "bottom": "meadow:block/wood/calcified/calcified_log_top",
+    "side": "meadow:block/wood/calcified/calcified_log",
+    "top": "meadow:block/wood/calcified/calcified_log_top"
+  }
+}

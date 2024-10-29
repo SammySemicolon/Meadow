@@ -13,6 +13,12 @@ public class ItemTagRegistry {
     public static final TagKey<Item> ASPEN_SLABS = meadowTag("aspen_slabs");
     public static final TagKey<Item> ASPEN_STAIRS = meadowTag("aspen_stairs");
 
+    public static final TagKey<Item> CALCIFIED_LOGS = meadowTag("calcified_logs");
+    public static final TagKey<Item> THIN_CALCIFIED_LOGS = meadowTag("thin_calcified_logs");
+    public static final TagKey<Item> CALCIFIED_PLANKS = meadowTag("calcified_planks");
+    public static final TagKey<Item> CALCIFIED_SLABS = meadowTag("calcified_slabs");
+    public static final TagKey<Item> CALCIFIED_STAIRS = meadowTag("calcified_stairs");
+
     private static TagKey<Item> modTag(String path) {
         return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation(path));
     }

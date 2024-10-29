@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "meadow:block/aspen_wood/aspen_sapling"
+    "cross": "meadow:block/wood/aspen_sapling"
   }
 }

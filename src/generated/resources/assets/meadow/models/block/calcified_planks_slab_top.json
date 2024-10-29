@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "meadow:block/wood/calcified/calcified_planks",
+    "side": "meadow:block/wood/calcified/calcified_planks",
+    "top": "meadow:block/wood/calcified/calcified_planks"
+  }
+}

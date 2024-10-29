@@ -1,6 +1,6 @@
 {
   "parent": "meadow:block/templates/template_hanging_leaves",
   "textures": {
-    "hanging_leaves": "meadow:block/aspen_wood/hanging_aspen_leaves_0"
+    "hanging_leaves": "meadow:block/wood/hanging_aspen_leaves_0"
   }
 }

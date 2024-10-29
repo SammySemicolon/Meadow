@@ -2,6 +2,9 @@
   "values": [
     "meadow:calcified_bricks_slab",
     "meadow:aspen_planks_slab",
-    "meadow:heavy_calcified_bricks_slab"
+    "meadow:heavy_calcified_planks_slab",
+    "meadow:heavy_calcified_bricks_slab",
+    "meadow:heavy_aspen_planks_slab",
+    "meadow:calcified_planks_slab"
   ]
 }

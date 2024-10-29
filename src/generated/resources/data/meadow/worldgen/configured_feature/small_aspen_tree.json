@@ -1,7 +1,7 @@
 {
   "type": "meadow:small_aspen_tree",
   "config": {
-    "calcifiedLog": "meadow:thin_calcified_aspen_log",
+    "calcifiedLog": "meadow:thin_calcified_log",
     "hangingLeaves": "meadow:hanging_aspen_leaves",
     "leaves": "meadow:aspen_leaves",
     "log": "meadow:thin_aspen_log",

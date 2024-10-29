@@ -54,17 +54,15 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         DataHelper.getAll(blocks, b -> b.get() instanceof PearllightBlock).forEach(b -> BlockStateSmithTypes.FULL_BLOCK.act(data, b));
         DataHelper.getAll(blocks, b -> b.get() instanceof PearllampBlock).forEach(b -> BlockStateSmithTypes.AXIS_BLOCK.act(data, b));
 
-        setTexturePath("aspen_wood/");
-        BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.ASPEN_LOG, MeadowBlockRegistry.STRIPPED_ASPEN_LOG);
-        BlockStateSmithTypes.WOOD_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_ASPEN_WOOD, MeadowBlockRegistry.ASPEN_WOOD, MeadowBlockRegistry.STRIPPED_ASPEN_WOOD);
-        MeadowBlockStateSmithTypes.NATURAL_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.THIN_CALCIFIED_ASPEN_WOOD, MeadowBlockRegistry.THIN_ASPEN_LOG, MeadowBlockRegistry.THIN_ASPEN_WOOD);
-        MeadowBlockStateSmithTypes.PARTIALLY_CALCIFIED_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_WOOD);
+        setTexturePath("wood/aspen/");
+        BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LOG, MeadowBlockRegistry.STRIPPED_ASPEN_LOG);
+        BlockStateSmithTypes.WOOD_BLOCK.act(data, MeadowBlockRegistry.ASPEN_WOOD, MeadowBlockRegistry.STRIPPED_ASPEN_WOOD);
+        MeadowBlockStateSmithTypes.NATURAL_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_ASPEN_LOG, MeadowBlockRegistry.THIN_ASPEN_WOOD);
         MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_STRIPPED_ASPEN_LOG, MeadowBlockRegistry.THIN_STRIPPED_ASPEN_WOOD);
-        MeadowBlockStateSmithTypes.PARTIALLY_CALCIFIED_LOG_BLOCK.act(data, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_WOOD);
 
-        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS);
-        BlockStateSmithTypes.SLAB_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS_SLAB);
-        BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS_STAIRS);
+        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS, MeadowBlockRegistry.HEAVY_ASPEN_PLANKS);
+        BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS_STAIRS, MeadowBlockRegistry.HEAVY_ASPEN_PLANKS_STAIRS);
+        BlockStateSmithTypes.SLAB_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS_SLAB, MeadowBlockRegistry.HEAVY_ASPEN_PLANKS_SLAB);
 
         BlockStateSmithTypes.DOOR_BLOCK.act(data, MeadowBlockRegistry.ASPEN_DOOR, MeadowBlockRegistry.SOLID_ASPEN_DOOR);
         BlockStateSmithTypes.TRAPDOOR_BLOCK.act(data, MeadowBlockRegistry.ASPEN_TRAPDOOR, MeadowBlockRegistry.SOLID_ASPEN_TRAPDOOR);
@@ -76,9 +74,34 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.FENCE_GATE_BLOCK.act(data, MeadowBlockRegistry.ASPEN_FENCE_GATE);
         BlockStateSmithTypes.WOODEN_SIGN_BLOCK.act(data, MeadowBlockRegistry.ASPEN_SIGN, MeadowBlockRegistry.ASPEN_WALL_SIGN);
 
+        setTexturePath("wood/calcified/");
+        BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_LOG, MeadowBlockRegistry.STRIPPED_CALCIFIED_LOG);
+        BlockStateSmithTypes.WOOD_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_WOOD, MeadowBlockRegistry.STRIPPED_CALCIFIED_WOOD);
+        MeadowBlockStateSmithTypes.NATURAL_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_CALCIFIED_LOG, MeadowBlockRegistry.THIN_CALCIFIED_WOOD);
+        MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_STRIPPED_CALCIFIED_LOG, MeadowBlockRegistry.THIN_STRIPPED_CALCIFIED_WOOD);
+
+        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_PLANKS, MeadowBlockRegistry.HEAVY_CALCIFIED_PLANKS);
+        BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_PLANKS_STAIRS, MeadowBlockRegistry.HEAVY_CALCIFIED_PLANKS_STAIRS);
+        BlockStateSmithTypes.SLAB_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_PLANKS_SLAB, MeadowBlockRegistry.HEAVY_CALCIFIED_PLANKS_SLAB);
+
+        BlockStateSmithTypes.DOOR_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_DOOR, MeadowBlockRegistry.SOLID_CALCIFIED_DOOR);
+        BlockStateSmithTypes.TRAPDOOR_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_TRAPDOOR, MeadowBlockRegistry.SOLID_CALCIFIED_TRAPDOOR);
+
+        BlockStateSmithTypes.BUTTON_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BUTTON);
+        BlockStateSmithTypes.PRESSURE_PLATE_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_PRESSURE_PLATE);
+
+        BlockStateSmithTypes.FENCE_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_FENCE);
+        BlockStateSmithTypes.FENCE_GATE_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_FENCE_GATE);
+        BlockStateSmithTypes.WOODEN_SIGN_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_SIGN, MeadowBlockRegistry.CALCIFIED_WALL_SIGN);
+
+        setTexturePath("wood/");
+        MeadowBlockStateSmithTypes.PARTIALLY_CALCIFIED_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_WOOD);
+        MeadowBlockStateSmithTypes.PARTIALLY_CALCIFIED_LOG_BLOCK.act(data, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_WOOD);
+
         BlockStateSmithTypes.LEAVES_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LEAVES);
         MeadowBlockStateSmithTypes.HANGING_ASPEN_LEAVES.act(data, MeadowBlockRegistry.HANGING_ASPEN_LEAVES);
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_SAPLING, MeadowBlockRegistry.SMALL_ASPEN_SAPLING);
+
 
         setTexturePath("mineral_flora/");
         for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {

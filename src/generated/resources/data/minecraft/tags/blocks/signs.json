@@ -1,6 +1,8 @@
 {
   "values": [
+    "meadow:calcified_wall_sign",
     "meadow:aspen_sign",
-    "meadow:aspen_wall_sign"
+    "meadow:aspen_wall_sign",
+    "meadow:calcified_sign"
   ]
 }

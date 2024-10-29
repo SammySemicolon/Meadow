@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "meadow:block/wood/calcified/heavy_calcified_planks",
+    "side": "meadow:block/wood/calcified/heavy_calcified_planks",
+    "top": "meadow:block/wood/calcified/heavy_calcified_planks"
+  }
+}

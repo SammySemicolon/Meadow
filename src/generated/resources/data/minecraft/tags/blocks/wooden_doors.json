@@ -1,5 +1,7 @@
 {
   "values": [
+    "meadow:solid_calcified_door",
+    "meadow:calcified_door",
     "meadow:aspen_door",
     "meadow:solid_aspen_door"
   ]
