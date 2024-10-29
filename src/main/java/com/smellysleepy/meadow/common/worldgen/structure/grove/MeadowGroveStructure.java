@@ -2,9 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.area.CalcifiedRegion;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.area.LakeRegion;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.area.SpecialMeadowRegion;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.area.*;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructureTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;

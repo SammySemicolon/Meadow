@@ -84,8 +84,8 @@ public class MeadowBlockStateSmithTypes {
 
     public static BlockStateSmith<PearlFlowerBlock> SMALL_TALL_CROSS_MODEL_BLOCK = new BlockStateSmith<>(PearlFlowerBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_bottom"), (block, provider) -> {
         String name = provider.getBlockName(block);
-        final ResourceLocation bottomTexture = provider.getBlockTexture(name + "_bottom");
-        final ResourceLocation topTexture = provider.getBlockTexture(name + "_top");
+        var bottomTexture = provider.getBlockTexture(name + "_bottom");
+        var topTexture = provider.getBlockTexture(name + "_top");
         ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_tall_one_block_flower"))
                 .texture("bottom_cross", bottomTexture)
                 .texture("top_cross", topTexture);
@@ -99,8 +99,8 @@ public class MeadowBlockStateSmithTypes {
         if (isWood) {
             logName = logName.replace("_wood", "_log");
         }
-        final ResourceLocation sideTexture = provider.getBlockTexture(logName);
-        final ResourceLocation endTexture = provider.getBlockTexture(logName + (isWood ? "" : "_top"));
+        var sideTexture = provider.getBlockTexture(logName);
+        var endTexture = provider.getBlockTexture(logName + (isWood ? "" : "_top"));
         ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
                 .texture("top", endTexture)
@@ -279,15 +279,20 @@ public class MeadowBlockStateSmithTypes {
         var flippedAffix = flipped ? "_flipped" : "";
         boolean isPartiallyCalcified = logName.contains("partially_");
         var endAffix = isWood ? "" : "_top";
-        final ResourceLocation smallLeavesTexture = provider.getBlockTexture(leaves + "_small_leaves");
-        final ResourceLocation mediumLeavesTexture = provider.getBlockTexture(leaves + "_medium_leaves");
-        final ResourceLocation largeLeavesTexture = provider.getBlockTexture(leaves + "_large_leaves");
+        var smallLeavesTexture = provider.getBlockTexture(leaves + "_small_leaves");
+        var mediumLeavesTexture = provider.getBlockTexture(leaves + "_medium_leaves");
+        var largeLeavesTexture = provider.getBlockTexture(leaves + "_large_leaves");
 
-        final ResourceLocation sideTexture = provider.getBlockTexture(logName + flippedAffix);
-        final ResourceLocation topTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_calcified_", "") : logName) + endAffix);
-        final ResourceLocation bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_", "") : logName) + endAffix);
-        final ResourceLocation topLeavesTexture = provider.getBlockTexture("aspen_leaves");
-        final ResourceLocation hangingLeavesTexture = provider.getBlockTexture("thin_aspen_log_hanging_leaves");
+        var sideTexture = provider.getBlockTexture(logName + flippedAffix);
+        var topTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_calcified_", "") : logName) + endAffix);
+        var bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? logName.replace("partially_", "") : logName) + endAffix);
+        var topLeavesTexture = provider.getBlockTexture("aspen_leaves");
+        var hangingLeavesTexture = provider.getBlockTexture("thin_aspen_log_hanging_leaves");
+        if (flipped) {
+            var cache = bottomTexture;
+            bottomTexture = topTexture;
+            topTexture = cache;
+        }
         ModelFile noLeaves = provider.models().withExistingParent(name + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)

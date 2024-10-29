@@ -13,8 +13,6 @@ import team.lodestar.lodestone.systems.easing.Easing;
 
 public class CalcifiedRegion extends SpecialMeadowRegion {
 
-    public static final ResourceLocation TYPE = addType(MeadowMod.meadowModPath("calcification"), CalcifiedRegion::deserialize);
-
     private final ResourceKey<ConfiguredFeature<?, ?>> treeFeature;
     private final ResourceKey<ConfiguredFeature<?, ?>> plantFeature;
     private final ResourceKey<ConfiguredFeature<?, ?>> oreFeature;
@@ -29,7 +27,7 @@ public class CalcifiedRegion extends SpecialMeadowRegion {
                            ResourceKey<ConfiguredFeature<?, ?>> plantFeature,
                            ResourceKey<ConfiguredFeature<?, ?>> oreFeature,
                            ResourceKey<ConfiguredFeature<?, ?>> patchFeature) {
-        super(TYPE, direction, size);
+        super(MeadowRegionTypes.CALCIFICATION, direction, size);
         this.treeFeature = treeFeature;
         this.plantFeature = plantFeature;
         this.oreFeature = oreFeature;

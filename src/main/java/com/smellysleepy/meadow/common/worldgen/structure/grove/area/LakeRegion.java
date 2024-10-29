@@ -7,12 +7,11 @@ import net.minecraft.world.phys.Vec2;
 import team.lodestar.lodestone.systems.easing.Easing;
 
 public class LakeRegion extends SpecialMeadowRegion {
-    public static final ResourceLocation TYPE = addType(MeadowMod.meadowModPath("lake"), LakeRegion::deserialize);
 
     private final double lakeDepth;
     private final double surfaceLevel;
     public LakeRegion(Vec2 directionalOffset, double size, double lakeDepth, double surfaceLevel) {
-        super(TYPE, directionalOffset, size);
+        super(MeadowRegionTypes.LAKE, directionalOffset, size);
         this.lakeDepth = lakeDepth;
         this.surfaceLevel = surfaceLevel;
     }

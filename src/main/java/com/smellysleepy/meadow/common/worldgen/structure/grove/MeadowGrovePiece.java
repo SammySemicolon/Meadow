@@ -4,9 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.UnsafeBoundingBox;
 import com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.area.CalcifiedRegion;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.area.LakeRegion;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.area.SpecialMeadowRegion;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.area.*;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.common.tags.*;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
@@ -81,7 +79,7 @@ public class MeadowGrovePiece extends StructurePiece {
         for (int i = 0; i < regionCount; i++) {
             CompoundTag compound = regionsTag.getCompound("specialRegion_" + i);
             ResourceLocation type = ResourceLocation.tryParse(compound.getString("type"));
-            SpecialMeadowRegion region = SpecialMeadowRegion.DECODER.get(type).apply(compound);
+            SpecialMeadowRegion region = MeadowRegionTypes.DECODER.get(type).apply(compound);
             this.specialRegions.add(region);
         }
 
@@ -227,7 +225,7 @@ public class MeadowGrovePiece extends StructurePiece {
         double calcificationNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 25000, 0.02f) * 0.5f;
         var calcifiedRegionOptional = getClosestRegion(CalcifiedRegion.class, blockX, blockZ, calcificationNoise, radius);
 
-        double lakeNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 75000, 0.01f) * 0.5f;
+        double lakeNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 50000, 0.01f) * 0.5f;
         double relativeLakeRadius = radius * 0.7f + groveRadius * 0.3f;
         var lakeRegionOptional = getClosestRegion(LakeRegion.class, blockX, blockZ, lakeNoise, relativeLakeRadius);
 
