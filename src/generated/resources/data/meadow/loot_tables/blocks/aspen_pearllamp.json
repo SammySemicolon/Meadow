@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "meadow:pearllamp"
+          "name": "meadow:aspen_pearllamp"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "meadow:blocks/pearllamp"
+  "random_sequence": "meadow:blocks/aspen_pearllamp"
 }

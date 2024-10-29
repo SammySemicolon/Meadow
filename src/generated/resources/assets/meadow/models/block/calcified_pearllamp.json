@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "meadow:block/wood/calcified/calcified_pearllamp_end",
+    "side": "meadow:block/wood/calcified/calcified_pearllamp_side"
+  }
+}

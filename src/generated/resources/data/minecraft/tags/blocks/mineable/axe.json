@@ -2,7 +2,6 @@
   "values": [
     "meadow:solid_calcified_door",
     "meadow:calcified_planks_pressure_plate",
-    "meadow:pearllamp",
     "meadow:calcified_wall_sign",
     "meadow:solid_calcified_trapdoor",
     "meadow:stripped_aspen_wood",
@@ -19,6 +18,7 @@
     "meadow:stripped_calcified_wood",
     "meadow:calcified_planks_fence",
     "meadow:thin_calcified_wood",
+    "meadow:aspen_pearllamp",
     "meadow:aspen_trapdoor",
     "meadow:thin_stripped_aspen_log",
     "meadow:thin_aspen_wood",
@@ -28,6 +28,7 @@
     "meadow:thin_aspen_log",
     "meadow:thin_partially_calcified_aspen_log",
     "meadow:aspen_planks_slab",
+    "meadow:calcified_pearllamp",
     "meadow:aspen_wall_sign",
     "meadow:heavy_calcified_planks_slab",
     "meadow:aspen_planks_pressure_plate",

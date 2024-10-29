@@ -49,6 +49,7 @@ public class MeadowBlockProperties {
         return new LodestoneBlockProperties()
                 .strength(1.75F, 4.0F)
                 .instrument(NoteBlockInstrument.BASS)
+                .addTag(MeadowBlockTagRegistry.CALCIFICATION)
                 .addTag(BlockTags.MINEABLE_WITH_AXE)
                 .sound(SoundType.NETHER_WOOD)
                 .mapColor(MapColor.WOOD);
@@ -69,7 +70,7 @@ public class MeadowBlockProperties {
                 .instrument(NoteBlockInstrument.BASS)
                 .addTag(BlockTags.MINEABLE_WITH_AXE)
                 .pushReaction(PushReaction.DESTROY)
-                .sound(SoundType.CHERRY_WOOD)
+                .sound(SoundType.NETHER_WOOD)
                 .mapColor(MapColor.WOOD);
     }
 
@@ -85,7 +86,7 @@ public class MeadowBlockProperties {
         return THIN_CALCIFIED_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
     }
     
-    public static LodestoneBlockProperties MEADOW_WOOD_PROPERTIES() {
+    public static LodestoneBlockProperties ASPEN_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(1.75F, 4.0F)
                 .instrument(NoteBlockInstrument.BASS)
@@ -95,7 +96,7 @@ public class MeadowBlockProperties {
     }
 
     public static LodestoneBlockProperties MEADOW_LOG_PROPERTIES() {
-        return MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
+        return ASPEN_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
     }
 
     public static LodestoneBlockProperties STRIPPED_MEADOW_LOG_PROPERTIES() {
@@ -168,6 +169,10 @@ public class MeadowBlockProperties {
                 .sound(SoundType.GRASS);
     }
 
+    public static LodestoneBlockProperties ASPEN_SAPLING_PROPERTIES() {
+        return MEADOW_GRASS_PROPERTIES().addTag(BlockTags.SAPLINGS);
+    }
+
     public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTag(BlockTags.FLOWERS)
@@ -195,15 +200,6 @@ public class MeadowBlockProperties {
                 .mapColor(MapColor.COLOR_YELLOW)
                 .sound(SoundType.SHROOMLIGHT)
                 .strength(1.0F)
-                .lightLevel((state) -> 15);
-    }
-
-    public static LodestoneBlockProperties PEARLLAMP_PROPERTIES() {
-        return new LodestoneBlockProperties()
-                .addTag(BlockTags.MINEABLE_WITH_AXE)
-                .mapColor(MapColor.COLOR_YELLOW)
-                .sound(SoundType.CHERRY_WOOD)
-                .strength(1.5F)
                 .lightLevel((state) -> 15);
     }
 

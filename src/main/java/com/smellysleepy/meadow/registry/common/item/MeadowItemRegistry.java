@@ -31,9 +31,11 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> CALCIFIED_BRICKS = register("calcified_bricks", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_BRICKS.get(), p));
     public static final RegistryObject<Item> CALCIFIED_BRICKS_STAIRS = register("calcified_bricks_stairs", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_BRICKS_STAIRS.get(), p));
     public static final RegistryObject<Item> CALCIFIED_BRICKS_SLAB = register("calcified_bricks_slab", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_BRICKS_SLAB.get(), p));
+    public static final RegistryObject<Item> CALCIFIED_BRICKS_WALL = register("calcified_bricks_wall", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_BRICKS_WALL.get(), p));
     public static final RegistryObject<Item> HEAVY_CALCIFIED_BRICKS = register("heavy_calcified_bricks", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS.get(), p));
     public static final RegistryObject<Item> HEAVY_CALCIFIED_BRICKS_STAIRS = register("heavy_calcified_bricks_stairs", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS.get(), p));
     public static final RegistryObject<Item> HEAVY_CALCIFIED_BRICKS_SLAB = register("heavy_calcified_bricks_slab", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_SLAB.get(), p));
+    public static final RegistryObject<Item> HEAVY_CALCIFIED_BRICKS_WALL = register("heavy_calcified_bricks_wall", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_WALL.get(), p));
 
     public static final RegistryObject<Item> CALCIFIED_LOG = register("calcified_log", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_LOG.get(), p));
     public static final RegistryObject<Item> CALCIFIED_WOOD = register("calcified_wood", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_WOOD.get(), p));
@@ -67,12 +69,14 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> CALCIFIED_SIGN = register("calcified_sign", DEFAULT_PROPERTIES(), (p) -> new SignItem(p, MeadowBlockRegistry.CALCIFIED_SIGN.get(), MeadowBlockRegistry.CALCIFIED_WALL_SIGN.get()));
     public static final RegistryObject<Item> CALCIFIED_BOAT = register("calcified_boat", DEFAULT_PROPERTIES(), (p) -> new LodestoneBoatItem(p.stacksTo(1), MeadowEntityRegistry.CALCIFIED_BOAT));
 
+    public static final RegistryObject<Item> CALCIFIED_PEARLLAMP = register("calcified_pearllamp", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_PEARLLAMP.get(), p));
+
     public static final RegistryObject<Item> PARTIALLY_CALCIFIED_ASPEN_LOG = register("partially_calcified_aspen_log", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG.get(), p));
     public static final RegistryObject<Item> PARTIALLY_CALCIFIED_ASPEN_WOOD = register("partially_calcified_aspen_wood", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_WOOD.get(), p));
     public static final RegistryObject<Item> THIN_PARTIALLY_CALCIFIED_ASPEN_LOG = register("thin_partially_calcified_aspen_log", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG.get(), p));
     public static final RegistryObject<Item> THIN_PARTIALLY_CALCIFIED_ASPEN_WOOD = register("thin_partially_calcified_aspen_wood", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_WOOD.get(), p));
 
-    public static final RegistryObject<Item> PEARLLAMP = register("pearllamp", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PEARLLAMP.get(), p));
+    public static final RegistryObject<Item> ASPEN_PEARLLAMP = register("aspen_pearllamp", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_PEARLLAMP.get(), p));
 
     public static final RegistryObject<Item> ASPEN_LOG = register("aspen_log", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_LOG.get(), p));
     public static final RegistryObject<Item> ASPEN_WOOD = register("aspen_wood", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_WOOD.get(), p));

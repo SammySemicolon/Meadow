@@ -1,0 +1,22 @@
+{
+  "values": [
+    "meadow:stripped_aspen_wood",
+    "meadow:stripped_calcified_log",
+    "meadow:stripped_aspen_log",
+    "meadow:calcified_wood",
+    "meadow:partially_calcified_aspen_wood",
+    "meadow:aspen_wood",
+    "meadow:stripped_calcified_wood",
+    "meadow:thin_calcified_wood",
+    "meadow:thin_stripped_aspen_log",
+    "meadow:calcified_log",
+    "meadow:thin_partially_calcified_aspen_wood",
+    "meadow:aspen_log",
+    "meadow:thin_partially_calcified_aspen_log",
+    "meadow:thin_stripped_calcified_log",
+    "meadow:partially_calcified_aspen_log",
+    "meadow:thin_stripped_calcified_wood",
+    "meadow:thin_calcified_log",
+    "meadow:thin_stripped_aspen_wood"
+  ]
+}

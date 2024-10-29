@@ -7,7 +7,6 @@ import com.smellysleepy.meadow.registry.common.item.*;
 import com.smellysleepy.meadow.registry.common.tags.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.*;
@@ -35,7 +34,8 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
             MeadowItemRegistry.SOLID_ASPEN_TRAPDOOR.get(), MeadowItemRegistry.ASPEN_TRAPDOOR.get(),
             MeadowItemRegistry.ASPEN_BUTTON.get(), MeadowItemRegistry.ASPEN_PRESSURE_PLATE.get(),
             MeadowItemRegistry.ASPEN_SIGN.get(), MeadowItemRegistry.ASPEN_SIGN.get(),
-            ItemTagRegistry.ASPEN_LOGS, ItemTagRegistry.THIN_ASPEN_LOGS, ItemTagRegistry.ASPEN_PLANKS, ItemTagRegistry.ASPEN_STAIRS, ItemTagRegistry.ASPEN_SLABS,
+            MeadowItemRegistry.ASPEN_PEARLLAMP.get(),
+            MeadowItemTagRegistry.ASPEN_LOGS, MeadowItemTagRegistry.THIN_ASPEN_LOGS, MeadowItemTagRegistry.ASPEN_PLANKS, MeadowItemTagRegistry.ASPEN_STAIRS, MeadowItemTagRegistry.ASPEN_SLABS,
             MeadowItemRegistry.ASPEN_BOAT.get()
     );
 
@@ -52,7 +52,8 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
             MeadowItemRegistry.SOLID_CALCIFIED_TRAPDOOR.get(), MeadowItemRegistry.CALCIFIED_TRAPDOOR.get(),
             MeadowItemRegistry.CALCIFIED_BUTTON.get(), MeadowItemRegistry.CALCIFIED_PRESSURE_PLATE.get(),
             MeadowItemRegistry.CALCIFIED_SIGN.get(), MeadowItemRegistry.CALCIFIED_SIGN.get(),
-            ItemTagRegistry.CALCIFIED_LOGS, ItemTagRegistry.THIN_CALCIFIED_LOGS, ItemTagRegistry.CALCIFIED_PLANKS, ItemTagRegistry.CALCIFIED_STAIRS, ItemTagRegistry.CALCIFIED_SLABS,
+            MeadowItemRegistry.CALCIFIED_PEARLLAMP.get(),
+            MeadowItemTagRegistry.CALCIFIED_LOGS, MeadowItemTagRegistry.THIN_CALCIFIED_LOGS, MeadowItemTagRegistry.CALCIFIED_PLANKS, MeadowItemTagRegistry.CALCIFIED_STAIRS, MeadowItemTagRegistry.CALCIFIED_SLABS,
             MeadowItemRegistry.CALCIFIED_BOAT.get()
     );
 
@@ -114,6 +115,8 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
         shapedTrapdoor(consumer, woodSet.solidTrapdoor, woodSet.planksTag);
 
         shapedSign(consumer, woodSet.sign, woodSet.planksTag);
+
+        shapedPearllamp(consumer, woodSet.pearllamp, woodSet.logTag);
 
         trapdoorExchange(consumer, woodSet.solidDoor, woodSet.openDoor, woodSet.prefix + "_open_door_exchange");
         trapdoorExchange(consumer, woodSet.openDoor, woodSet.solidDoor, woodSet.prefix + "_solid_door_exchange");
@@ -232,6 +235,17 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
                 .save(recipeConsumer);
     }
 
+    private static void shapedPearllamp(Consumer<FinishedRecipe> recipeConsumer, ItemLike stairs, TagKey<Item> input) {
+        shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 1)
+                .define('X', input)
+                .define('Y', MeadowItemRegistry.PEARLLIGHT.get())
+                .pattern(" X ")
+                .pattern("XYX")
+                .pattern(" X ")
+                .unlockedBy("has_input", has(input))
+                .save(recipeConsumer);
+    }
+
     private static void shapedSign(Consumer<FinishedRecipe> recipeConsumer, ItemLike sign, TagKey<Item> input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, sign, 3)
                 .group("sign")
@@ -274,6 +288,8 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
             Item button, Item pressurePlate,
 
             Item sign, Item hangingSign,
+
+            Item pearllamp,
 
             TagKey<Item> logTag, TagKey<Item> thinLogTag, TagKey<Item> planksTag, TagKey<Item> stairsTag, TagKey<Item> slabsTag,
 

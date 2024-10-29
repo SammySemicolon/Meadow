@@ -6,7 +6,7 @@ import net.minecraft.tags.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.*;
 
-public class ItemTagRegistry {
+public class MeadowItemTagRegistry {
     public static final TagKey<Item> ASPEN_LOGS = meadowTag("aspen_logs");
     public static final TagKey<Item> THIN_ASPEN_LOGS = meadowTag("thin_aspen_logs");
     public static final TagKey<Item> ASPEN_PLANKS = meadowTag("aspen_planks");
@@ -18,6 +18,8 @@ public class ItemTagRegistry {
     public static final TagKey<Item> CALCIFIED_PLANKS = meadowTag("calcified_planks");
     public static final TagKey<Item> CALCIFIED_SLABS = meadowTag("calcified_slabs");
     public static final TagKey<Item> CALCIFIED_STAIRS = meadowTag("calcified_stairs");
+
+    public static final TagKey<Item> STRIPPED_LOGS = forgeTag("stripped_logs");
 
     private static TagKey<Item> modTag(String path) {
         return TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation(path));

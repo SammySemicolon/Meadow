@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "meadow:block/calcified_pearllamp_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "meadow:block/calcified_pearllamp"
+    },
+    "axis=z": {
+      "model": "meadow:block/calcified_pearllamp_horizontal",
+      "x": 90
+    }
+  }
+}
