@@ -55,6 +55,9 @@ public abstract class AbstractMeadowTreeFeature extends AbstractTreeFeature<Mead
                 filler.getLayer(COVERING).put(blockPos, calcifiedEarthEntry);
 
                 for (int i = 0; i < 4; i++) {
+                    if (rand.nextFloat() < 0.4f) {
+                        continue;
+                    }
                     Direction direction = Direction.from2DDataValue(i);
                     BlockPos offsetPos = blockPos.relative(direction);
                     if (level.getBlockState(offsetPos).isFaceSturdy(level, offsetPos, Direction.UP)) {
@@ -67,6 +70,9 @@ public abstract class AbstractMeadowTreeFeature extends AbstractTreeFeature<Mead
             var leavesLayer = filler.getLayer(LEAVES);
             Set<BlockPos> hangingLeavesPositions = new HashSet<>();
             for (Map.Entry<BlockPos, LodestoneBlockFiller.BlockStateEntry> leaves : leavesLayer.entrySet()) {
+                if (rand.nextFloat() < 0.6f) {
+                    continue;
+                }
                 BlockPos below = leaves.getKey().below();
                 if (!leavesLayer.containsKey(below)) {
                     hangingLeavesPositions.add(below);

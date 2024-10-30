@@ -362,7 +362,6 @@ public class MeadowGrovePiece extends StructurePiece {
                     continue;
                 }
                 if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
-                    chunk.setBlockState(pos, Blocks.GREEN_STAINED_GLASS.defaultBlockState(), true);
                     continue;
                 }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
@@ -408,7 +407,6 @@ public class MeadowGrovePiece extends StructurePiece {
                     continue;
                 }
                 if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
-                    chunk.setBlockState(pos, Blocks.RED_STAINED_GLASS.defaultBlockState(), true);
                     continue;
                 }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
@@ -777,7 +775,7 @@ public class MeadowGrovePiece extends StructurePiece {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
         double crackDelta = makeCracks(noiseSampler, pos.getX(), pos.getZ(), sqrtDistance, offset, 0.8f);
         boolean useCracks = crackDelta > 0;
-        if (calcification != null && calcification.getSecond() < 0.05f) { //calcification start
+        if (calcification != null && calcification.getSecond() < 0.04f) { //calcification start
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING;
         }
         if (calcification != null && calcification.getSecond() >= 0.03f) { //calcification inside
@@ -792,7 +790,7 @@ public class MeadowGrovePiece extends StructurePiece {
             if ((crackDelta >= 0.4f) || delta < 0.06f) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_ROCK.get().defaultBlockState());
             }
-            if ((crackDelta >= 0.2f && crackDelta < 0.6f) || delta < 0.04f) {
+            if (crackDelta >= 0.2f || delta < 0.04f) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState());
             }
             pattern.add(Blocks.STONE.defaultBlockState());
