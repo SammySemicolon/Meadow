@@ -787,10 +787,10 @@ public class MeadowGrovePiece extends StructurePiece {
             if (crackDelta >= 0f && crackDelta < 0.5f) {
                 feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_COVERING;
             }
-            if ((crackDelta >= 0.4f) || delta < 0.06f) {
+            if ((crackDelta >= 0.4f) || (delta >= 0.06f && delta < 0.08f)) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_ROCK.get().defaultBlockState());
             }
-            if (crackDelta >= 0.2f || delta < 0.04f) {
+            if (crackDelta >= 0.2f || (delta >= 0.04f && delta < 0.06f)) {
                 pattern.add(MeadowBlockRegistry.CALCIFIED_EARTH.get().defaultBlockState());
             }
             pattern.add(Blocks.STONE.defaultBlockState());

@@ -1,15 +1,22 @@
 package com.smellysleepy.meadow.client.model.entity;
 
+import com.google.common.collect.*;
 import com.smellysleepy.meadow.*;
+import com.smellysleepy.meadow.common.entity.*;
+import net.minecraft.client.*;
 import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.*;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.*;
 import net.minecraft.world.entity.*;
 
-public class MooMooModel<T extends Entity> extends QuadrupedModel<T> {
+public class MooMooModel<T extends MooMooCow> extends QuadrupedModel<T> {
+
+   protected final ModelPart tail;
 
    public MooMooModel(ModelPart pRoot) {
       super(pRoot, false, 10.0F, 4.0F, 2.0F, 2.0F, 24);
+      tail = pRoot.getChild("tail");
    }
 
    public static LayerDefinition createBodyLayer() {
@@ -37,14 +44,24 @@ public class MooMooModel<T extends Entity> extends QuadrupedModel<T> {
       partdefinition.addOrReplaceChild("right_front_leg", cubeListBuilder, PartPose.offset(-4.0F, 12.0F, -6.0F));
       partdefinition.addOrReplaceChild("left_front_leg", cubeListBuilder, PartPose.offset(4.0F, 12.0F, -6.0F));
 
-//		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(53, 23).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 7.0F, new CubeDeformation(0.0F))
-//		.texOffs(53, 17).addBox(-3.0F, 0.1F, 5.0F, 6.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 4.5F, 11.0F));
-//
+      partdefinition.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(53, 23).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 7.0F, new CubeDeformation(0.0F))
+              .texOffs(53, 17).addBox(-3.0F, 0.1F, 5.0F, 6.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 4.5F, 11.0F));
+
 
       return LayerDefinition.create(meshdefinition, 128, 128);
    }
 
-   public ModelPart getHead() {
-      return this.head;
+   @Override
+   protected Iterable<ModelPart> bodyParts() {
+      return ImmutableList.of(body, rightHindLeg, leftHindLeg, rightFrontLeg, leftFrontLeg, tail);
+   }
+
+   @Override
+   public void prepareMobModel(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+      super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
+      head.zRot = pEntity.getHeadRollAngle(pPartialTick);
+      tail.yRot = Mth.cos(pLimbSwing * 0.3F) * 0.7F * pLimbSwingAmount;
+      tail.zRot = Mth.cos(pLimbSwing * 0.5F) * 0.4F * pLimbSwingAmount;
+      tail.xRot = -1.1f + Mth.cos(pLimbSwing * 0.2F) * 1.8F * pLimbSwingAmount;
    }
 }
