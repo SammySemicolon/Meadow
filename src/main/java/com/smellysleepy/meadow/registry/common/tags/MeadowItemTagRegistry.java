@@ -19,6 +19,8 @@ public class MeadowItemTagRegistry {
     public static final TagKey<Item> CALCIFIED_SLABS = meadowTag("calcified_slabs");
     public static final TagKey<Item> CALCIFIED_STAIRS = meadowTag("calcified_stairs");
 
+    public static final TagKey<Item> MINERAL_FRUIT = meadowTag("mineral_fruit");
+
     public static final TagKey<Item> STRIPPED_LOGS = forgeTag("stripped_logs");
 
     private static TagKey<Item> modTag(String path) {
