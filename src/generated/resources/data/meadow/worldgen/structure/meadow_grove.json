@@ -2,6 +2,17 @@
   "type": "meadow:meadow_grove",
   "biomes": "#meadow:has_meadow_groves",
   "spawn_overrides": {
+    "creature": {
+      "bounding_box": "full",
+      "spawns": [
+        {
+          "type": "meadow:moo_moo",
+          "maxCount": 20,
+          "minCount": 10,
+          "weight": 2
+        }
+      ]
+    },
     "monster": {
       "bounding_box": "full",
       "spawns": []

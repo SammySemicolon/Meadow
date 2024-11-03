@@ -11,6 +11,7 @@ import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.SimpleTreeGrower;
 import com.smellysleepy.meadow.registry.common.*;
+import com.smellysleepy.meadow.registry.common.tags.*;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import net.minecraft.client.color.block.*;
 import net.minecraft.tags.*;
@@ -142,12 +143,12 @@ public class MeadowBlockRegistry {
 
     public static final RegistryObject<Block> PEARLLIGHT = BLOCKS.register("pearllight", () -> new PearllightBlock(MeadowBlockProperties.PEARLLIGHT_PROPERTIES()));
 
-    public static final RegistryObject<Block> TALL_GRASSY_PEARLFLOWER = BLOCKS.register("tall_grassy_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> TALL_GRASSY_PEARLFLOWER = BLOCKS.register("tall_grassy_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES().addTags(MeadowBlockTagRegistry.MOOMOO_EDIBLE)));
     public static final RegistryObject<Block> TALL_MARINE_PEARLFLOWER = BLOCKS.register("tall_marine_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> TALL_CALCIFIED_PEARLFLOWER = BLOCKS.register("tall_calcified_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> TALL_ROCKY_PEARLFLOWER = BLOCKS.register("tall_rocky_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
 
-    public static final RegistryObject<Block> GRASSY_PEARLFLOWER = BLOCKS.register("grassy_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> GRASSY_PEARLFLOWER = BLOCKS.register("grassy_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES().addTags(MeadowBlockTagRegistry.MOOMOO_EDIBLE)));
     public static final RegistryObject<Block> MARINE_PEARLFLOWER = BLOCKS.register("marine_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> CALCIFIED_PEARLFLOWER = BLOCKS.register("calcified_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> PEARLFLOWER = BLOCKS.register("rocky_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));

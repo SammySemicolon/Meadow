@@ -19,29 +19,36 @@ public class GoToPearlflowerGoal extends Goal {
     private int timeSinceTheJourneyBegan;
 
     public GoToPearlflowerGoal(MooMooCow cow) {
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
         this.cow = cow;
     }
 
     @Override
     public boolean canUse() {
-        return true;
+        return cow.theBeastHungers();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return objectOfInterest != null && !cow.hasRestriction() && theCowFeelLikeSniffingFlora() && !cow.closerThan(objectOfInterest, 2);
+        return objectOfInterest != null && !cow.hasRestriction() && cow.theBeastHungers() && !cow.closerThan(objectOfInterest, 1);
     }
 
     @Override
     public void start() {
         timeSinceTheJourneyBegan = 0;
-        BlockPos pearlflower = null;
+        BlockPos pearlflower = cow.findPearlFlower(16);
+        if (pearlflower != null) {
+            objectOfInterest = pearlflower;
+        }
+        else {
+            cow.pearlflowerTimer = 0;
+        }
     }
 
     @Override
     public void stop() {
         timeSinceTheJourneyBegan = 0;
+        objectOfInterest = null;
         cow.getNavigation().stop();
         cow.getNavigation().resetMaxVisitedNodesMultiplier();
     }
@@ -50,19 +57,19 @@ public class GoToPearlflowerGoal extends Goal {
     public void tick() {
         if (objectOfInterest != null) {
             timeSinceTheJourneyBegan++;
-            if (timeSinceTheJourneyBegan > adjustedTickDelay(600)) {
+            if (timeSinceTheJourneyBegan > adjustedTickDelay(1200)) {
                 objectOfInterest = null;
             } else if (!cow.getNavigation().isInProgress()) {
                 if (cow.isTooFarAway(objectOfInterest)) {
                     objectOfInterest = null;
-                } else {
+                }
+                else if (cow.closerThan(objectOfInterest, 3f)) {
+                    cow.pathfindDirectlyTowards(objectOfInterest);
+                }
+                else {
                     cow.pathfindRandomlyTowards(objectOfInterest);
                 }
             }
         }
-    }
-
-    private boolean theCowFeelLikeSniffingFlora() {
-        return cow.pearlflowerTimer > 2400;
     }
 }

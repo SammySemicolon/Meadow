@@ -116,6 +116,7 @@ public class MeadowItemRegistry {
 
     public static final RegistryObject<Item> PEARLLIGHT = register("pearllight", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PEARLLIGHT.get(), p));
     public static final RegistryObject<Item> PEARLFLOWER_BUD = register("pearlflower_bud", DEFAULT_PROPERTIES(), Item::new);
+    public static final RegistryObject<Item> CLUMP_OF_FUR = register("clump_of_fur", DEFAULT_PROPERTIES(), Item::new);
 
     public static final RegistryObject<Item> TALL_GRASSY_PEARLFLOWER = register("tall_grassy_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> GRASSY_PEARLFLOWER = register("grassy_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.GRASSY_PEARLFLOWER.get(), p));
