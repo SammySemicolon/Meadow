@@ -2,6 +2,7 @@ package com.smellysleepy.meadow.registry.worldgen;
 
 import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveStructure;
+import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.tags.MeadowBiomeTagRegistry;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.core.HolderSet;
@@ -27,6 +28,10 @@ public class MeadowStructures {
             new MeadowGroveStructure(
                     structure(structureFactoryBootstapContext.lookup(Registries.BIOME).getOrThrow(MeadowBiomeTagRegistry.HAS_MEADOW_GROVES),
                             Map.of(
+                                    MobCategory.CREATURE,
+                                    new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
+                                            new MobSpawnSettings.SpawnerData(MeadowEntityRegistry.MOO_MOO.get(), 2, 10, 20)
+                                    )),
                                     MobCategory.MONSTER,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
                                     ))

@@ -10,7 +10,6 @@ public class MeadowBlockTagRegistry {
 
     public static final TagKey<Block> MEADOW_GROVE_IRREPLACEABLE = meadowTag("meadow_grove_irreplaceable");
 
-
     public static final TagKey<Block> CALCIFICATION = meadowTag("calcification");
     public static final TagKey<Block> CALCIFICATION_REPLACEABLE = meadowTag("calcification_replaceable");
 
@@ -23,6 +22,8 @@ public class MeadowBlockTagRegistry {
     public static final TagKey<Block> MARINE_PEARLFLOWER_GENERATES_ON = meadowTag("marine_pearlflower_generates_on");
     public static final TagKey<Block> CALCIFIED_PEARLFLOWER_GENERATES_ON = meadowTag("calcified_pearlflower_generates_on");
     public static final TagKey<Block> ROCKY_PEARLFLOWER_GENERATES_ON = meadowTag("rocky_pearlflower_generates_on");
+
+    public static final TagKey<Block> MOOMOO_EDIBLE = meadowTag("moomoo_edible");
 
     public static final TagKey<Block> STRIPPED_LOGS = forgeTag("stripped_logs");
 
