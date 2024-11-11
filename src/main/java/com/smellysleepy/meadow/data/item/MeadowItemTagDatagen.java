@@ -2,11 +2,13 @@ package com.smellysleepy.meadow.data.item;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.data.recipe.*;
+import com.smellysleepy.meadow.registry.common.item.*;
 import com.smellysleepy.meadow.registry.common.tags.*;
 import net.minecraft.core.*;
 import net.minecraft.data.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.common.*;
 import net.minecraftforge.common.data.*;
 import team.lodestar.lodestone.systems.datagen.providers.*;
 
@@ -47,5 +49,7 @@ public class MeadowItemTagDatagen extends LodestoneItemTagsProvider {
         copy(BlockTags.DOORS, ItemTags.DOORS);
         copy(BlockTags.WALLS, ItemTags.WALLS);
         copy(BlockTags.LOGS, ItemTags.LOGS);
+
+        tag(Tags.Items.LEATHER).add(MeadowItemRegistry.CLUMP_OF_FUR.get());
     }
 }

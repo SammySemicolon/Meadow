@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.registry.common.block;
 
 import com.smellysleepy.meadow.common.block.meadow.wood.NaturalThinMeadowLogBlock;
+import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
@@ -123,7 +124,7 @@ public class MeadowBlockProperties {
     }
 
     public static LodestoneBlockProperties NATURAL_THIN_MEADOW_LOG_PROPERTIES() {
-        return THIN_MEADOW_WOOD_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
+        return THIN_MEADOW_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
     }
 
     public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {
@@ -147,7 +148,7 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
-                .isValidSpawn(Blocks::ocelotOrParrot)
+                .isValidSpawn(((pState, pLevel, pPos, pValue) -> pValue.equals(MeadowEntityRegistry.MOO_MOO.get())))
                 .isViewBlocking(Blocks::never)
                 .isSuffocating(Blocks::never)
                 .mapColor(MapColor.GRASS)

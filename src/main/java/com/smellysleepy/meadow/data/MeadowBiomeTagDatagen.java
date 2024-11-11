@@ -19,5 +19,6 @@ public class MeadowBiomeTagDatagen extends BiomeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(MeadowBiomeTagRegistry.HAS_MEADOW_GROVES).addTags(BiomeTags.HAS_VILLAGE_PLAINS, BiomeTags.HAS_VILLAGE_TAIGA, BiomeTags.IS_HILL, BiomeTags.IS_FOREST, BiomeTags.IS_SAVANNA, BiomeTags.HAS_ANCIENT_CITY);
+        tag(MeadowBiomeTagRegistry.HAS_MINERAL_TREES).addTags(BiomeTags.IS_OVERWORLD);
     }
 }

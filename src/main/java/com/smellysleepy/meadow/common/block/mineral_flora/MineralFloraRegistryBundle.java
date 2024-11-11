@@ -12,6 +12,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.awt.*;
@@ -30,6 +31,8 @@ public class MineralFloraRegistryBundle {
     public final ResourceKey<ConfiguredFeature<?, ?>> configuredNaturalPatchFeature;
     public final ResourceKey<ConfiguredFeature<?, ?>> configuredGrassBonemealFeature;
     public final ResourceKey<ConfiguredFeature<?, ?>> configuredLeavesBonemealFeature;
+
+    public final ResourceKey<PlacedFeature> placedTreeFeature;
 
     public final RegistryObject<Block> grassBlock;
     public final RegistryObject<Item> grassBlockItem;
@@ -56,12 +59,13 @@ public class MineralFloraRegistryBundle {
         var prefix = id.getPath();
         this.oreBlock = oreBlock;
 
-
         configuredTreeFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree"));
         configuredFlowerFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_plant"));
         configuredNaturalPatchFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_patch"));
         configuredGrassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_grass_bonemeal"));
         configuredLeavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));
+
+        placedTreeFeature = ResourceKey.create(Registries.PLACED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree"));
 
         var grassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_grass_bonemeal"));
         var leavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));

@@ -5,6 +5,7 @@ import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractTreeFeature;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.*;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -86,7 +87,7 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
         for (int i = 0; i < 3; i++) {
             BlockPos orePos = pos.offset(rand.nextInt(4), 0, rand.nextInt(4));
 
-            Set<BlockPos> oreCovering = WorldgenHelper.fetchCoveringPositions(level, orePos, 3);
+            Set<BlockPos> oreCovering = WorldgenHelper.fetchCoveringPositions(level, orePos, 2);
             for (BlockPos blockPos : oreCovering) {
                 filler.getLayer(COVERING).put(blockPos, oreEntry);
             }
@@ -100,9 +101,25 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
             }
         }
 
+        var logsLayer = filler.getLayer(LOGS);
+        Set<BlockPos> hangingLogPositions = new HashSet<>();
+        for (Map.Entry<BlockPos, BlockStateEntry> log : logsLayer.entrySet()) {
+            final BlockPos logPos = log.getKey();
+            if (logPos.getY() <= pos.getY()) {
+                final BlockPos below = logPos.below();
+                if (level.getBlockState(below).canBeReplaced()) {
+                    hangingLogPositions.add(below);
+                }
+            }
+        }
+        hangingLogPositions.forEach(p -> addDownwardsTrunkConnections(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState(), rand, level, filler, p));
+
         var leavesLayer = filler.getLayer(LEAVES);
         Set<BlockPos> hangingLeavesPositions = new HashSet<>();
         for (Map.Entry<BlockPos, BlockStateEntry> leaves : leavesLayer.entrySet()) {
+            if (rand.nextFloat() < 0.6f) {
+                continue;
+            }
             BlockPos below = leaves.getKey().below();
             if (!leavesLayer.containsKey(below)) {
                 hangingLeavesPositions.add(below);
@@ -207,5 +224,20 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
             }
         }
         return success;
+    }
+
+    public void addDownwardsTrunkConnections(BlockState state, RandomSource randomSource, WorldGenLevel level, LodestoneBlockFiller filler, BlockPos pos) {
+        var mutable = pos.mutable();
+        int max = 4 + randomSource.nextInt(3);
+        while (true) {
+            mutable.move(Direction.DOWN);
+            if (!canPlace(level, mutable)) {
+                return;
+            }
+            if (pos.getY()-mutable.getY() >= max) {
+                return;
+            }
+            filler.getLayer(LOGS).put(mutable.immutable(), create(state));
+        }
     }
 }

@@ -17,7 +17,9 @@ public class MeadowWorldgenRegistryDatagen extends DatapackBuiltinEntriesProvide
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.STRUCTURE, MeadowStructureDatagen::structureBootstrap)
             .add(Registries.STRUCTURE_SET, MeadowStructureDatagen::structureSetBootstrap)
-            .add(Registries.CONFIGURED_FEATURE, MeadowConfiguredFeatureDatagen::bootstrap);
+            .add(Registries.CONFIGURED_FEATURE, MeadowConfiguredFeatureDatagen::bootstrap)
+            .add(Registries.PLACED_FEATURE, MeadowPlacedFeatureDatagen::bootstrap)
+            .add(ForgeRegistries.Keys.BIOME_MODIFIERS, MeadowBiomeModifications::bootstrap);
 
     public MeadowWorldgenRegistryDatagen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of("minecraft", MeadowMod.MEADOW));

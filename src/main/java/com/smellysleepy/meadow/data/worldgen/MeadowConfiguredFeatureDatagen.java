@@ -95,6 +95,17 @@ public class MeadowConfiguredFeatureDatagen {
                 new LeafBlobPart(List.of(2, 3, 2))
         ));
 
+        addMineralFloraTree(context, MineralFloraRegistry.DIAMOND_FLORA, List.of(
+                new ThickStumpPart(List.of(1, 1)),
+                new StraightTrunkPart(10, 12),
+                new OffsetPart(0, -3, 0),
+                new LeafDiamondPart(List.of(2, 3, 4, 4, 4, 3, 2)),
+                new OffsetPart(0, -2, 0),
+                new SplitBranchesPart(2, 3, 3, 4, 3, 4),
+                new OffsetPart(0, -2, 0),
+                new LeafBlobPart(List.of(1, 2, 3, 3, 2, 1))
+        ));
+
         addMineralFloraTree(context, MineralFloraRegistry.EMERALD_FLORA, List.of(
                 new ThickStumpPart(List.of(1, 1)),
                 new StraightTrunkPart(10, 12),

@@ -47,6 +47,7 @@ public class ConvergingTrunkPart extends MineralTreePart {
         int directionOffset = random.nextInt(4);
         int step = random.nextIntBetweenInclusive(1, 2);
         int lowestHeight = maxHeight;
+        var entry = create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState());
         for (int i = 0; i < 4; i++) {
             Direction direction = Direction.from2DDataValue((i*step+directionOffset)%4);
             int trunkHeight = random.nextIntBetweenInclusive(minHeight, maxHeight);
@@ -63,7 +64,7 @@ public class ConvergingTrunkPart extends MineralTreePart {
                 if (!feature.canPlace(level, mutable)) {
                     return failure();
                 }
-                filler.getLayer(LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState()));
+                filler.getLayer(LOGS).put(mutable.immutable(), entry);
             }
         }
         return success(featurePos.above(lowestHeight));

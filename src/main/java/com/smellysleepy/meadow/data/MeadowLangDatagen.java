@@ -40,8 +40,10 @@ public class MeadowLangDatagen extends LanguageProvider {
             name = DataHelper.toTitleCase(correctItemName(name), "_");
             add(i.get().getDescriptionId(), name);
         });
-        add("itemGroup.grassy.meadow_grove", "Meadow: Hidden Grove");
-        add("itemGroup.grassy.mineral_flora", "Meadow: Mineralized Flora");
+        add("itemGroup.meadow.meadow_grove", "Meadow: Hidden Grove");
+        add("itemGroup.meadow.mineral_flora", "Meadow: Mineralized Flora");
+
+
     }
 
     public String correctItemName(String name) {

@@ -18,6 +18,6 @@
       "spawns": []
     }
   },
-  "step": "raw_generation",
+  "step": "underground_structures",
   "terrain_adaptation": "bury"
 }

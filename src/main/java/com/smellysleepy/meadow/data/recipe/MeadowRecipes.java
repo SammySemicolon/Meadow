@@ -18,5 +18,6 @@ public class MeadowRecipes extends VanillaRecipeProvider {
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         MeadowCraftingRecipes.buildRecipes(consumer);
+        new MeadowVanillaRecipeReplacements(pOutput).buildRecipes(consumer);
     }
 }

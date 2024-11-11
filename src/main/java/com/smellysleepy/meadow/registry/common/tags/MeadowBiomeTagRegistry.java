@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class MeadowBiomeTagRegistry {
 
     public static final TagKey<Biome> HAS_MEADOW_GROVES = meadowTag("has_meadow_groves");
+    public static final TagKey<Biome> HAS_MINERAL_TREES = meadowTag("has_mineral_trees");
 
     private static TagKey<Biome> modTag(String path) {
         return TagKey.create(ForgeRegistries.BIOMES.getRegistryKey(), new ResourceLocation(path));

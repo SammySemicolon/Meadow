@@ -1,0 +1,75 @@
+{
+  "type": "meadow:mineral_tree",
+  "config": {
+    "flora": "meadow:diamond_flora",
+    "grass": "meadow:diamond_grass_block",
+    "hangingLeaves": "meadow:hanging_diamond_leaves",
+    "leaves": "meadow:diamond_leaves",
+    "ore": "minecraft:diamond_ore",
+    "parts": [
+      {
+        "type": "meadow:thick_stump",
+        "sizes": [
+          1,
+          1
+        ]
+      },
+      {
+        "type": "meadow:straight_trunk",
+        "maxHeight": 12,
+        "minHeight": 10
+      },
+      {
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -3,
+        "zOffset": 0
+      },
+      {
+        "type": "meadow:leaf_diamond",
+        "leafSizes": [
+          2,
+          3,
+          4,
+          4,
+          4,
+          3,
+          2
+        ]
+      },
+      {
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -2,
+        "zOffset": 0
+      },
+      {
+        "type": "meadow:splitting_branches",
+        "maxCount": 4,
+        "maxHeight": 3,
+        "maxOffset": 4,
+        "minCount": 3,
+        "minHeight": 2,
+        "minOffset": 3
+      },
+      {
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -2,
+        "zOffset": 0
+      },
+      {
+        "type": "meadow:leaf_blob",
+        "leafSizes": [
+          1,
+          2,
+          3,
+          3,
+          2,
+          1
+        ]
+      }
+    ],
+    "sapling": "meadow:diamond_sapling"
+  }
+}

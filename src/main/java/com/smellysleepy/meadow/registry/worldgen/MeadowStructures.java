@@ -36,7 +36,7 @@ public class MeadowStructures {
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
                                     ))
                             ),
-                            GenerationStep.Decoration.RAW_GENERATION, TerrainAdjustment.BURY)
+                            GenerationStep.Decoration.UNDERGROUND_STRUCTURES, TerrainAdjustment.BURY)
             )
     );
     
