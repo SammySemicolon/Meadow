@@ -7,10 +7,12 @@
     }
   },
   "pattern": [
+    "#  ",
+    "## ",
     "###"
   ],
   "result": {
-    "count": 6,
+    "count": 4,
     "item": "meadow:calcified_bricks_stairs"
   },
   "show_notification": true

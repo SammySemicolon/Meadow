@@ -14,6 +14,7 @@ public class MeadowBlockTagRegistry {
     public static final TagKey<Block> CALCIFICATION_REPLACEABLE = meadowTag("calcification_replaceable");
 
     public static final TagKey<Block> MEADOW_GRASS_CAN_PLACE_ON = meadowTag("meadow_grass_can_place_on");
+    public static final TagKey<Block> ASPEN_SAPLING_CAN_PLACE_ON = meadowTag("meadow_sapling_can_place_on");
     public static final TagKey<Block> MINERAL_FLORA_CAN_PLACE_ON = meadowTag("mineral_flora_can_place_on");
 
     public static final TagKey<Block> PEARLFLOWER_CAN_PLACE_ON = meadowTag("pearlflower_can_place_on");

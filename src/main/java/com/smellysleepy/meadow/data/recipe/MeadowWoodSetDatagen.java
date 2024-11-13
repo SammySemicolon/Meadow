@@ -92,6 +92,8 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
         shapedSlab(consumer, woodSet.planksSlab, woodSet.planks);
         shapedStairs(consumer, woodSet.planksStairs, woodSet.planks);
 
+        shapedHeavyPlanks(consumer, woodSet.heavyPlanks, woodSet.planksSlab);
+
         shapedSlab(consumer, woodSet.heavyPlanksSlab, woodSet.heavyPlanks);
         shapedStairs(consumer, woodSet.heavyPlanksStairs, woodSet.heavyPlanks);
 
@@ -104,7 +106,6 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
         shapelessThinLog(consumer, woodSet.thinStrippedLog, woodSet.strippedLog);
         shapelessThinLog(consumer, woodSet.thinWood, woodSet.wood);
         shapelessThinLog(consumer, woodSet.thinStrippedWood, woodSet.strippedWood);
-
 
         shapelessButton(consumer, woodSet.button, woodSet.planksTag);
         shapedDoor(consumer, woodSet.solidDoor, woodSet.planksTag);
@@ -132,6 +133,16 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
                 .requires(input)
                 .unlockedBy("has_input", has(input))
                 .save(recipeConsumer, MeadowMod.meadowModPath(path));
+    }
+
+    private static void shapedHeavyPlanks(Consumer<FinishedRecipe> recipeConsumer, ItemLike output, ItemLike input) {
+        shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
+                .define('#', input)
+                .pattern("##")
+                .pattern("##")
+                .group("planks")
+                .unlockedBy("has_log", has(input))
+                .save(recipeConsumer);
     }
 
     private static void shapelessPlanks(Consumer<FinishedRecipe> recipeConsumer, ItemLike planks, TagKey<Item> input, int outputCount) {

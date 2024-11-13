@@ -84,11 +84,13 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
             takeAll(blocks, b -> b.get().properties instanceof LodestoneBlockProperties && ((LodestoneBlockProperties) b.get().properties).getDatagenData().hasInheritedLootTable);
 
             for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
+                add(take(blocks, bundle.grassBlock).get(), b -> createSingleItemTableWithSilkTouch(b, Items.DIRT));
                 add(take(blocks, bundle.leavesBlock).get(), b -> createFruitLeavesDrops(b, bundle.saplingBlock.get(), SAPLING_DROP_CHANCE, bundle.fruitItem.get(), FRUIT_DROP_CHANCE));
                 add(take(blocks, bundle.hangingLeavesBlock).get(), b -> createConditionalDrop(b, HAS_SHEARS_OR_SILK_TOUCH));
             }
-            add(take(blocks, MeadowBlockRegistry.ASPEN_LEAVES).get(), b -> createLeavesDrops(b, MeadowBlockRegistry.ASPEN_SAPLING.get(), SAPLING_DROP_CHANCE));
+            add(take(blocks, MeadowBlockRegistry.ASPEN_LEAVES).get(), b -> createAspenLeavesDrop(b, MeadowBlockRegistry.ASPEN_SAPLING.get(), MeadowBlockRegistry.SMALL_ASPEN_SAPLING.get(), SAPLING_DROP_CHANCE));
             add(take(blocks, MeadowBlockRegistry.HANGING_ASPEN_LEAVES).get(), b -> createConditionalDrop(b, HAS_SHEARS_OR_SILK_TOUCH));
+            add(take(blocks, MeadowBlockRegistry.MEADOW_GRASS_BLOCK).get(), b -> createSingleItemTableWithSilkTouch(b, Items.DIRT));
 
             takeAll(blocks, b -> b.get() instanceof SaplingBlock).forEach(b -> add(b.get(), createSingleItemTable(b.get())));
 
@@ -144,10 +146,19 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
             return createLeavesDrops(block, sapling, saplingChance)
                     .withPool(
                             LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                                    .add(LootItem.lootTableItem(fruit).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                    .add(LootItem.lootTableItem(fruit).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                                     .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
                                     .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, fruitChance))
 
+                    );
+        }
+
+        protected LootTable.Builder createAspenLeavesDrop(Block block, Block bigSapling, Block smallSapling, float[] saplingChance) {
+            return createLeavesDrops(block, bigSapling, saplingChance)
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                            .add(LootItem.lootTableItem(smallSapling))
+                            .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
+                            .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, saplingChance))
                     );
         }
 

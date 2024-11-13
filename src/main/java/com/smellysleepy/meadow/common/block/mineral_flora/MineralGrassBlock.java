@@ -8,28 +8,17 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
-public class MineralGrassBlock extends Block implements BonemealableBlock {
+public class MineralGrassBlock extends SpreadingSnowyDirtBlock implements BonemealableBlock {
 
     private final ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature;
 
     public MineralGrassBlock(Properties pProperties, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature) {
         super(pProperties);
         this.bonemealFeature = bonemealFeature;
-    }
-
-    @Override
-    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (!MeadowGrassBlock.canBeGrass(pState, pLevel, pPos)) {
-            if (!pLevel.isAreaLoaded(pPos, 1))
-                return;
-            pLevel.setBlockAndUpdate(pPos, Blocks.DIRT.defaultBlockState());
-        }
     }
 
     @Override

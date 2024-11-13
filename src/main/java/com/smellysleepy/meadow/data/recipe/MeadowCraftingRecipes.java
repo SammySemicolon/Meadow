@@ -41,23 +41,23 @@ public class MeadowCraftingRecipes implements IConditionBuilder {
                 .save(consumer);
 
         shapedTwoByTwo(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICK.get());
-        shapedStairs(consumer, MeadowItemRegistry.CALCIFIED_BRICKS_SLAB.get(), MeadowItemRegistry.CALCIFIED_BRICKS.get());
-        shapedSlab(consumer, MeadowItemRegistry.CALCIFIED_BRICKS_STAIRS.get(), MeadowItemRegistry.CALCIFIED_BRICKS.get());
+        shapedStairs(consumer, MeadowItemRegistry.CALCIFIED_BRICKS_STAIRS.get(), MeadowItemRegistry.CALCIFIED_BRICKS.get());
+        shapedSlab(consumer, MeadowItemRegistry.CALCIFIED_BRICKS_SLAB.get(), MeadowItemRegistry.CALCIFIED_BRICKS.get());
         shapedWall(consumer, MeadowItemRegistry.CALCIFIED_BRICKS_WALL.get(), MeadowItemRegistry.CALCIFIED_BRICKS.get());
 
-        shapedTwoByTwo(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICKS.get());
-        shapedStairs(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_SLAB.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get());
-        shapedSlab(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get());
+        shapedTwoByTwo(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get(), 3, MeadowItemRegistry.CALCIFIED_BRICKS_SLAB.get());
+        shapedStairs(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get());
+        shapedSlab(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_SLAB.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get());
         shapedWall(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_WALL.get(), MeadowItemRegistry.CALCIFIED_BRICKS.get());
 
-        stoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICKS_SLAB.get(), 2);
-        stoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICKS_STAIRS.get(), 1);
-        stoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICKS_WALL.get(), 1);
+        calcificationStoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICKS_SLAB.get(), 2);
+        calcificationStoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICKS_STAIRS.get(), 1);
+        calcificationStoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICKS_WALL.get(), 1);
 
-        stoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get(), 1);
-        stoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_SLAB.get(), 2);
-        stoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS.get(), 1);
-        stoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_WALL.get(), 1);
+        calcificationStoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get(), 1);
+        calcificationStoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_SLAB.get(), 2);
+        calcificationStoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS.get(), 1);
+        calcificationStoneCutting(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_WALL.get(), 1);
 
         stoneCutting(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_SLAB.get(), 2);
         stoneCutting(consumer, MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS.get(), MeadowItemRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS.get(), 1);
@@ -128,6 +128,14 @@ public class MeadowCraftingRecipes implements IConditionBuilder {
     private static void stoneCutting(Consumer<FinishedRecipe> recipeConsumer, ItemLike input, ItemLike output, int outputCount) {
         final ResourceLocation recipeID = getDefaultRecipeId(output).withSuffix("_stonecutting_from_" + getDefaultRecipeId(input).getPath());
         stonecutting(Ingredient.of(input), RecipeCategory.MISC, output, outputCount).unlockedBy("has_input", has(input)).save(recipeConsumer, recipeID);
+    }
+    private static void calcificationStoneCutting(Consumer<FinishedRecipe> recipeConsumer, ItemLike input, ItemLike output) {
+        calcificationStoneCutting(recipeConsumer, input, output, 1);
+    }
+    private static void calcificationStoneCutting(Consumer<FinishedRecipe> recipeConsumer, ItemLike input, ItemLike output, int outputCount) {
+        stoneCutting(recipeConsumer, input, output, outputCount);
+        stoneCutting(recipeConsumer, MeadowItemRegistry.CALCIFIED_EARTH.get(), output, outputCount);
+        stoneCutting(recipeConsumer, MeadowItemRegistry.CALCIFIED_ROCK.get(), output, outputCount);
     }
 
     protected static EnterBlockTrigger.TriggerInstance insideOf(Block pBlock) {

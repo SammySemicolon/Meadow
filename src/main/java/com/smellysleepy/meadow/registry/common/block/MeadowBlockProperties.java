@@ -148,6 +148,7 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
+                .addTags(BlockTags.DIRT)
                 .isValidSpawn(((pState, pLevel, pPos, pValue) -> pValue.equals(MeadowEntityRegistry.MOO_MOO.get())))
                 .isViewBlocking(Blocks::never)
                 .isSuffocating(Blocks::never)
@@ -171,7 +172,16 @@ public class MeadowBlockProperties {
     }
 
     public static LodestoneBlockProperties ASPEN_SAPLING_PROPERTIES() {
-        return MEADOW_GRASS_PROPERTIES().addTag(BlockTags.SAPLINGS);
+        return new LodestoneBlockProperties()
+                .setCutoutRenderType()
+                .noCollission()
+                .noOcclusion()
+                .instabreak()
+                .randomTicks()
+                .offsetType(BlockBehaviour.OffsetType.XZ)
+                .mapColor(MapColor.GRASS)
+                .sound(SoundType.GRASS)
+                .addTag(BlockTags.SAPLINGS);
     }
 
     public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {

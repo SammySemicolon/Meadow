@@ -11,9 +11,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -22,7 +20,7 @@ import net.minecraft.world.level.lighting.LightEngine;
 import static com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper.VARIANT;
 import static com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper.calcVariant;
 
-public class MeadowGrassBlock extends Block implements BonemealableBlock {
+public class MeadowGrassBlock extends SpreadingSnowyDirtBlock implements BonemealableBlock {
 
     public MeadowGrassBlock(Properties pProperties) {
         super(pProperties);
@@ -45,16 +43,6 @@ public class MeadowGrassBlock extends Block implements BonemealableBlock {
     }
 
     @Override
-    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (!canBeGrass(pState, pLevel, pPos)) {
-            if (!pLevel.isAreaLoaded(pPos, 1))
-                return;
-            pLevel.setBlockAndUpdate(pPos, Blocks.DIRT.defaultBlockState());
-        }
-    }
-
-
-    @Override
     public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         return pLevel.getBlockState(pPos.above()).isAir();
     }
@@ -75,7 +63,7 @@ public class MeadowGrassBlock extends Block implements BonemealableBlock {
         for(int i = 0; i < 128; ++i) {
             BlockPos offset = blockpos;
 
-            for(int j = 0; j < i / 16; ++j) {
+            for (int j = 0; j < i / 16; ++j) {
                 offset = offset.offset(pRandom.nextInt(3) - 1, (pRandom.nextInt(3) - 1) * pRandom.nextInt(3) / 2, pRandom.nextInt(3) - 1);
                 if (!pLevel.getBlockState(offset.below()).is(this) || pLevel.getBlockState(offset).isCollisionShapeFullBlock(pLevel, offset)) {
                     continue label49;
@@ -84,7 +72,7 @@ public class MeadowGrassBlock extends Block implements BonemealableBlock {
 
             BlockState offsetState = pLevel.getBlockState(offset);
             if (offsetState.is(blockstate.getBlock()) && pRandom.nextInt(10) == 0) {
-                ((BonemealableBlock)blockstate.getBlock()).performBonemeal(pLevel, pRandom, offset, offsetState);
+                ((BonemealableBlock) blockstate.getBlock()).performBonemeal(pLevel, pRandom, offset, offsetState);
             }
 
             if (offsetState.isAir()) {
@@ -105,18 +93,6 @@ public class MeadowGrassBlock extends Block implements BonemealableBlock {
                     holder.value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, offset);
                 }
             }
-        }
-
-    }
-
-    public static boolean canBeGrass(BlockState pState, LevelReader pLevelReader, BlockPos pPos) {
-        BlockPos blockpos = pPos.above();
-        BlockState blockstate = pLevelReader.getBlockState(blockpos);
-        if (blockstate.getFluidState().getAmount() == 8) {
-            return false;
-        } else {
-            int i = LightEngine.getLightBlockInto(pLevelReader, pState, pPos, blockstate, blockpos, Direction.UP, blockstate.getLightBlock(pLevelReader, blockpos));
-            return i < pLevelReader.getMaxLightLevel();
         }
     }
 }

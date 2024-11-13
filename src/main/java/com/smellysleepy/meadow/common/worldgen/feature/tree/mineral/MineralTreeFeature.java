@@ -84,8 +84,10 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
             filler.getLayer(COVERING).put(blockPos, coveringEntry);
         }
 
-        for (int i = 0; i < 3; i++) {
-            BlockPos orePos = pos.offset(rand.nextInt(4), 0, rand.nextInt(4));
+        for (int i = 0; i < 5; i++) {
+            final int xOffset = rand.nextInt(3) * (rand.nextBoolean() ? 1 : -1);
+            final int zOffset = rand.nextInt(3) * (rand.nextBoolean() ? 1 : -1);
+            BlockPos orePos = pos.offset(xOffset, 0, zOffset);
 
             Set<BlockPos> oreCovering = WorldgenHelper.fetchCoveringPositions(level, orePos, 2);
             for (BlockPos blockPos : oreCovering) {
@@ -108,7 +110,7 @@ public class MineralTreeFeature extends AbstractTreeFeature<MineralTreeFeatureCo
             if (logPos.getY() <= pos.getY()) {
                 final BlockPos below = logPos.below();
                 if (level.getBlockState(below).canBeReplaced()) {
-                    hangingLogPositions.add(below);
+                    hangingLogPositions.add(logPos);
                 }
             }
         }

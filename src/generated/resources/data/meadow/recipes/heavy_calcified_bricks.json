@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "#": {
-      "item": "meadow:calcified_bricks"
+      "item": "meadow:calcified_bricks_slab"
     }
   },
   "pattern": [
@@ -11,7 +11,7 @@
     "##"
   ],
   "result": {
-    "count": 4,
+    "count": 3,
     "item": "meadow:heavy_calcified_bricks"
   },
   "show_notification": true

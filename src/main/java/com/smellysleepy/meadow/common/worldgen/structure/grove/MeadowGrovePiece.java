@@ -153,20 +153,23 @@ public class MeadowGrovePiece extends StructurePiece {
         int groveDepth = grovePiece.groveDepth;
 
         int placedPearlFlowers = 0;
-        int pearlflowerCount = random.nextIntBetweenInclusive(2, 5);
+        int pearlflowerCount = random.nextInt(3, 6);
         int[] pearlflowerIndexes = new int[pearlflowerCount];
 
-        int step = 256 / pearlflowerCount;
+        float step = 256f / pearlflowerCount;
         for (int i = 0; i < pearlflowerCount; i++) {
-            int min = step * i;
-            int max = step * (i + 1);
-            pearlflowerIndexes[i] = random.nextInt(min, max);
+            int start = Mth.floor(step * i);
+            int stop = Mth.floor(step * (i+1));
+            pearlflowerIndexes[i] = random.nextInt(start, stop);
         }
         for (int i = 0; i < 256; i++) {
             int blockX = chunkPos.getBlockX(i%16);
             int blockZ = chunkPos.getBlockZ(i/16);
 
-            boolean hasPearlflower = i == pearlflowerIndexes[placedPearlFlowers];
+            boolean hasPearlflower = placedPearlFlowers < pearlflowerIndexes.length && i == pearlflowerIndexes[placedPearlFlowers];
+            if (hasPearlflower) {
+                placedPearlFlowers++;
+            }
             mutableBlockPos.set(blockX, 0, blockZ);
 
             double noise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.05f) * 0.5f;
@@ -360,9 +363,9 @@ public class MeadowGrovePiece extends StructurePiece {
                     chunk.setBlockState(pos, ceilingPattern.get(index), true);
                     continue;
                 }
-                if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
-                    continue;
-                }
+//                if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
+//                    continue;
+//                }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
@@ -405,9 +408,9 @@ public class MeadowGrovePiece extends StructurePiece {
                     chunk.setBlockState(pos, Blocks.WATER.defaultBlockState(), true);
                     continue;
                 }
-                if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
-                    continue;
-                }
+//                if (chunk.getBlockState(pos).is(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE)) {
+//                    continue;
+//                }
                 chunk.setBlockState(pos, Blocks.AIR.defaultBlockState(), true);
             }
         }
@@ -488,11 +491,11 @@ public class MeadowGrovePiece extends StructurePiece {
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
         float rand = randomSource.nextFloat();
-        if (rand < 0.02f) {
+        if (rand < 0.03f) {
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-        } else if (rand < 0.03f) {
+        } else if (rand < 0.04f) {
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
-        } else if (rand < 0.05f) {
+        } else if (rand < 0.06f) {
             feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH;
         }
         if (feature != null) {
@@ -505,15 +508,15 @@ public class MeadowGrovePiece extends StructurePiece {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
         double rand = randomSource.nextFloat() * delta;
 
-        if (rand < 0.005f) {
+        if (rand < 0.0025f) {
             feature = VegetationFeatures.FLOWER_DEFAULT;
-        } else if (rand < 0.01f) {
+        } else if (rand < 0.005f) {
             feature = VegetationFeatures.PATCH_GRASS;
-        } else if (rand < 0.0125f) {
+        } else if (rand < 0.01f) {
             feature = VegetationFeatures.PATCH_TALL_GRASS;
-        } else if (rand < 0.0175f) {
+        } else if (rand < 0.015f) {
             feature = VegetationFeatures.PATCH_SUGAR_CANE;
-        } else if (rand < 0.02f) {
+        } else if (rand < 0.0175f) {
             feature = TreeFeatures.AZALEA_TREE;
         } else if (rand < 0.03f) {
             feature = CaveFeatures.MOSS_VEGETATION;
@@ -576,14 +579,14 @@ public class MeadowGrovePiece extends StructurePiece {
             } else {
                 rand = randomSource.nextFloat();
                 if (featureTypeOffset > start && featureTypeOffset < midpoint) {
-                    if (rand < 0.03f) {
+                    if (rand < 0.05f) {
                         feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-                    } else if (rand < 0.04f) {
+                    } else if (rand < 0.06f) {
                         feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
                     }
                 }
                 if (featureTypeOffset >= midpoint && featureTypeOffset < end) {
-                    if (rand < 0.02f) {
+                    if (rand < 0.03f) {
                         feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
                     }
                 }
@@ -591,6 +594,9 @@ public class MeadowGrovePiece extends StructurePiece {
             }
             if (featureTypeOffset >= end) {
                 rand = randomSource.nextFloat();
+                if (rand < 0.001f) {
+                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
+                } else
                 if (rand < 0.005f) {
                     feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH;
                 } else if (rand < 0.0075f) {
