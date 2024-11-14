@@ -53,6 +53,7 @@ public class MineralFloraRegistryBundle {
     public final RegistryObject<Item> floraBlockItem;
 
     public final RegistryObject<Item> fruitItem;
+    public final RegistryObject<Item> candyItem;
 
     public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Color color, Block oreBlock, TagKey<Block> tag) {
         this.id = id;
@@ -80,6 +81,9 @@ public class MineralFloraRegistryBundle {
         var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(
                 new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).build()
         );
+        var candyProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(
+                new FoodProperties.Builder().nutrition(3).saturationMod(0.3f).build()
+        );
 
         grassBlock = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(grassBlockProperties, grassBonemealFeature));
         grassBlockItem = register(prefix + "_grass_block", itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
@@ -100,5 +104,6 @@ public class MineralFloraRegistryBundle {
         floraBlockItem = register(prefix + "_flora", itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
 
         fruitItem = register(prefix + "_fruit", fruitProperties, Item::new);
+        candyItem = register(prefix + "_fruity", candyProperties, Item::new);
     }
 }

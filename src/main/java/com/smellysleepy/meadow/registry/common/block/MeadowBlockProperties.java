@@ -149,6 +149,7 @@ public class MeadowBlockProperties {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
                 .addTags(BlockTags.DIRT)
+                .addTags(BlockTags.MINEABLE_WITH_SHOVEL)
                 .isValidSpawn(((pState, pLevel, pPos, pValue) -> pValue.equals(MeadowEntityRegistry.MOO_MOO.get())))
                 .isViewBlocking(Blocks::never)
                 .isSuffocating(Blocks::never)

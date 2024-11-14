@@ -29,6 +29,7 @@ public class MeadowItemModelDatagen extends LodestoneItemModelProvider {
         setTexturePath("mineral_fruit/");
         for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
             ItemModelSmithTypes.GENERATED_ITEM.act(data, bundle.fruitItem);
+            ItemModelSmithTypes.GENERATED_ITEM.act(data, bundle.candyItem);
         }
         setTexturePath("");
 
