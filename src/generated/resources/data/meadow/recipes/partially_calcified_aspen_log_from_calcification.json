@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "meadow:aspen_log"
+    },
+    {
+      "item": "meadow:calcified_fragment"
+    }
+  ],
+  "result": {
+    "item": "meadow:partially_calcified_aspen_log"
+  }
+}

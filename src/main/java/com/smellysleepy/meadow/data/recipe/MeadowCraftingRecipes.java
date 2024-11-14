@@ -2,6 +2,7 @@ package com.smellysleepy.meadow.data.recipe;
 
 import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.registries.*;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.*;
 import net.minecraft.tags.*;
@@ -15,6 +16,7 @@ import java.util.function.*;
 
 import static net.minecraft.data.recipes.RecipeBuilder.getDefaultRecipeId;
 import static net.minecraft.data.recipes.ShapedRecipeBuilder.shaped;
+import static net.minecraft.data.recipes.ShapelessRecipeBuilder.shapeless;
 import static net.minecraft.data.recipes.SimpleCookingRecipeBuilder.smelting;
 import static net.minecraft.data.recipes.SingleItemRecipeBuilder.stonecutting;
 
@@ -39,6 +41,21 @@ public class MeadowCraftingRecipes implements IConditionBuilder {
         smelting(Ingredient.of(MeadowItemRegistry.CALCIFIED_FRAGMENT.get()), RecipeCategory.MISC, MeadowItemRegistry.CALCIFIED_BRICK.get(), 0.1f, 200)
                 .unlockedBy("has_calcified_fragment", hasCalcifiedFragment)
                 .save(consumer);
+
+        shapelessCalcify(consumer, MeadowItemRegistry.CALCIFIED_LOG.get(), MeadowItemRegistry.ASPEN_LOG.get(), 2);
+        shapelessCalcify(consumer, MeadowItemRegistry.STRIPPED_CALCIFIED_LOG.get(), MeadowItemRegistry.STRIPPED_ASPEN_LOG.get(), 2);
+        shapelessCalcify(consumer, MeadowItemRegistry.THIN_CALCIFIED_LOG.get(), MeadowItemRegistry.THIN_ASPEN_LOG.get(), 2);
+        shapelessCalcify(consumer, MeadowItemRegistry.THIN_STRIPPED_CALCIFIED_LOG.get(), MeadowItemRegistry.THIN_STRIPPED_ASPEN_LOG.get(), 2);
+
+        shapelessCalcify(consumer, MeadowItemRegistry.CALCIFIED_WOOD.get(), MeadowItemRegistry.ASPEN_WOOD.get(), 2);
+        shapelessCalcify(consumer, MeadowItemRegistry.STRIPPED_CALCIFIED_WOOD.get(), MeadowItemRegistry.STRIPPED_ASPEN_WOOD.get(), 2);
+        shapelessCalcify(consumer, MeadowItemRegistry.THIN_CALCIFIED_WOOD.get(), MeadowItemRegistry.THIN_ASPEN_WOOD.get(), 2);
+        shapelessCalcify(consumer, MeadowItemRegistry.THIN_STRIPPED_CALCIFIED_WOOD.get(), MeadowItemRegistry.THIN_STRIPPED_ASPEN_WOOD.get(), 2);
+
+        shapelessCalcify(consumer, MeadowItemRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG.get(), MeadowItemRegistry.ASPEN_LOG.get(), 1);
+        shapelessCalcify(consumer, MeadowItemRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG.get(), MeadowItemRegistry.THIN_ASPEN_LOG.get(), 1);
+        shapelessCalcify(consumer, MeadowItemRegistry.PARTIALLY_CALCIFIED_ASPEN_WOOD.get(), MeadowItemRegistry.ASPEN_WOOD.get(), 1);
+        shapelessCalcify(consumer, MeadowItemRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_WOOD.get(), MeadowItemRegistry.THIN_ASPEN_WOOD.get(), 1);
 
         shapedTwoByTwo(consumer, MeadowItemRegistry.CALCIFIED_BRICKS.get(), MeadowItemRegistry.CALCIFIED_BRICK.get());
         shapedStairs(consumer, MeadowItemRegistry.CALCIFIED_BRICKS_STAIRS.get(), MeadowItemRegistry.CALCIFIED_BRICKS.get());
@@ -68,6 +85,18 @@ public class MeadowCraftingRecipes implements IConditionBuilder {
         shapedTwoByTwo(consumer, MeadowItemRegistry.PEARLLIGHT.get(), MeadowItemRegistry.PEARLFLOWER_BUD.get());
 
 
+    }
+
+    private static void shapelessCalcify(Consumer<FinishedRecipe> recipeConsumer, ItemLike output, ItemLike input) {
+        shapelessCalcify(recipeConsumer, output, input, 1);
+    }
+    private static void shapelessCalcify(Consumer<FinishedRecipe> recipeConsumer, ItemLike output, ItemLike input, int calcifiedFragmentCount) {
+        var recipeName = BuiltInRegistries.ITEM.getKey(output.asItem()).withSuffix("_from_calcification");
+        shapeless(RecipeCategory.BUILDING_BLOCKS, output, 1)
+                .requires(input)
+                .requires(MeadowItemRegistry.CALCIFIED_FRAGMENT.get(), calcifiedFragmentCount)
+                .unlockedBy("has_fragment", has(MeadowItemRegistry.CALCIFIED_FRAGMENT.get()))
+                .save(recipeConsumer, recipeName);
     }
 
     private static void shapedTwoByTwo(Consumer<FinishedRecipe> recipeConsumer, ItemLike output, ItemLike input) {
