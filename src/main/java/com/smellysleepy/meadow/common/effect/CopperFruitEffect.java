@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.common.effect;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.core.*;
 import net.minecraft.tags.*;
+import net.minecraft.world.*;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -30,15 +31,17 @@ public class CopperFruitEffect extends MobEffect {
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         var level = event.getLevel();
         if (!level.isClientSide()) {
-            var entity = event.getEntity();
-            if (entity.hasEffect(MeadowMobEffectRegistry.COPPER_FRUIT_EFFECT.get())) {
-                var pos = event.getPos();
-                var state = level.getBlockState(pos);
-                if (state.getBlock() instanceof WeatheringCopper copper) {
-                    copper.getNext(state).ifPresent(s -> {
-                        level.setBlock(pos, s, 3);
-                        entity.swing(event.getHand(), true);
-                    });
+            if (event.getHand().equals(InteractionHand.MAIN_HAND)) {
+                var entity = event.getEntity();
+                if (entity.hasEffect(MeadowMobEffectRegistry.COPPER_FRUIT_EFFECT.get())) {
+                    var pos = event.getPos();
+                    var state = level.getBlockState(pos);
+                    if (state.getBlock() instanceof WeatheringCopper copper) {
+                        copper.getNext(state).ifPresent(s -> {
+                            level.setBlock(pos, s, 3);
+                            entity.swing(event.getHand(), true);
+                        });
+                    }
                 }
             }
         }

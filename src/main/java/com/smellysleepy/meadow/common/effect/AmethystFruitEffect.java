@@ -20,7 +20,7 @@ public class AmethystFruitEffect extends MobEffect {
         var effect = MeadowMobEffectRegistry.DIAMOND_FRUIT_EFFECT.get();
         if (entity.hasEffect(effect)) {
             var instance = entity.getEffect(effect);
-            return entity.getRandom().nextFloat() < 0.2f + (instance.getAmplifier()) * 0.1f;
+            return entity.getRandom().nextFloat() < 0.4f + (instance.getAmplifier()) * 0.2f;
         }
         return false;
     }

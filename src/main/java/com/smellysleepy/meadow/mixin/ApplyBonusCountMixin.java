@@ -13,25 +13,19 @@ import org.spongepowered.asm.mixin.injection.*;
 @Mixin(ApplyBonusCount.class)
 public class ApplyBonusCountMixin {
 
-  @Shadow
-  @Final
-  Enchantment enchantment;
+    @Shadow
+    @Final
+    Enchantment enchantment;
 
-  @ModifyVariable(
-      at = @At(
-          value = "INVOKE_ASSIGN",
-          target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getItemEnchantmentLevel(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I"),
-      method = "run", ordinal = 2)
-  private int meadow$applyFortune(int enchantmentLevel, ItemStack stack, LootContext lootContext) {
+    @ModifyVariable(method = "run", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getItemEnchantmentLevel(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I"), ordinal = 2)
+    private int meadow$applyFortune(int enchantmentLevel, ItemStack stack, LootContext lootContext) {
+        if (this.enchantment == Enchantments.BLOCK_FORTUNE) {
+            Entity entity = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
 
-    if (this.enchantment == Enchantments.BLOCK_FORTUNE) {
-      Entity entity = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
-
-      if (entity instanceof LivingEntity livingEntity) {
-        return enchantmentLevel + DiamondFruitEffect.getFortuneBonus(livingEntity);
-      }
-    } else {
-      return enchantmentLevel;
+            if (entity instanceof LivingEntity livingEntity) {
+                return enchantmentLevel + DiamondFruitEffect.getFortuneBonus(livingEntity);
+            }
+        }
+        return enchantmentLevel;
     }
-  }
 }

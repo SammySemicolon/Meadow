@@ -1,5 +1,7 @@
 package com.smellysleepy.meadow.data.recipe;
 
+import com.smellysleepy.meadow.common.block.mineral_flora.*;
+import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.registries.*;
@@ -10,6 +12,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.common.*;
 import net.minecraftforge.common.crafting.conditions.*;
 
 import java.util.function.*;
@@ -24,6 +27,20 @@ public class MeadowCraftingRecipes implements IConditionBuilder {
 
     protected static void buildRecipes(Consumer<FinishedRecipe> consumer) {
         MeadowWoodSetDatagen.buildRecipes(consumer);
+
+        //region mineral flora
+
+
+        for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
+            shapeless(RecipeCategory.FOOD, bundle.candyItem.get(), 2)
+                    .requires(bundle.fruitItem.get())
+                    .requires(Items.PAPER)
+                    .requires(Items.SUGAR)
+                    .unlockedBy("has_fruit", has(bundle.fruitItem.get()))
+                    .save(consumer);
+        }
+
+        //endregion
 
         //region Calcification
         var hasCalcifiedFragment = has(MeadowItemRegistry.CALCIFIED_FRAGMENT.get());
