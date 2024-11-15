@@ -34,13 +34,16 @@ public class CopperFruitEffect extends MobEffect {
             if (event.getHand().equals(InteractionHand.MAIN_HAND)) {
                 var entity = event.getEntity();
                 if (entity.hasEffect(MeadowMobEffectRegistry.COPPER_FRUIT_EFFECT.get())) {
-                    var pos = event.getPos();
-                    var state = level.getBlockState(pos);
-                    if (state.getBlock() instanceof WeatheringCopper copper) {
-                        copper.getNext(state).ifPresent(s -> {
-                            level.setBlock(pos, s, 3);
-                            entity.swing(event.getHand(), true);
-                        });
+                    if (entity.getItemInHand(event.getHand()).isEmpty()) {
+                        var pos = event.getPos();
+                        var state = level.getBlockState(pos);
+                        if (state.getBlock() instanceof WeatheringCopper copper) {
+                            copper.getNext(state).ifPresent(s -> {
+                                level.setBlock(pos, s, 3);
+                                entity.swing(event.getHand(), true);
+                                event.setCanceled(true);
+                            });
+                        }
                     }
                 }
             }

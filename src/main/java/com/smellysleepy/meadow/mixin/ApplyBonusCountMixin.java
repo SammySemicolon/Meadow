@@ -9,6 +9,7 @@ import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.parameters.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(ApplyBonusCount.class)
 public class ApplyBonusCountMixin {
@@ -17,15 +18,22 @@ public class ApplyBonusCountMixin {
     @Final
     Enchantment enchantment;
 
-    @ModifyVariable(method = "run", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getItemEnchantmentLevel(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I"), ordinal = 2)
-    private int meadow$applyFortune(int enchantmentLevel, ItemStack stack, LootContext lootContext) {
+    @Unique
+    LootContext meadow$lootContext;
+
+    @Inject(method = "run", at = @At(value = "HEAD"))
+    private void run(ItemStack pStack, LootContext pContext, CallbackInfoReturnable<ItemStack> cir) {
+        meadow$lootContext = pContext;
+    }
+    @ModifyArg(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/functions/ApplyBonusCount$Formula;calculateNewCount(Lnet/minecraft/util/RandomSource;II)I"), index = 2)
+    private int meadow$applyFortune(int pEnchantmentLevel) {
         if (this.enchantment == Enchantments.BLOCK_FORTUNE) {
-            Entity entity = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
+            Entity entity = meadow$lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
 
             if (entity instanceof LivingEntity livingEntity) {
-                return enchantmentLevel + DiamondFruitEffect.getFortuneBonus(livingEntity);
+                return pEnchantmentLevel + DiamondFruitEffect.getFortuneBonus(livingEntity);
             }
         }
-        return enchantmentLevel;
+        return pEnchantmentLevel;
     }
 }

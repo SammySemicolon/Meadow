@@ -101,10 +101,10 @@ public class MineralFloraRegistryBundle {
         floraBlockItem = register(prefix + "_flora", itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
 
         var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(
-                new FoodProperties.Builder().nutrition(4).effect(() -> new MobEffectInstance(effectSupplier.get(), 1200, 0), 1f).saturationMod(0.4f).build()
+                new FoodProperties.Builder().nutrition(4).effect(() -> new MobEffectInstance(effectSupplier.get(), 1200, 0), 1f).saturationMod(0.4f).alwaysEat().build()
         );
         var candyProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(
-                new FoodProperties.Builder().nutrition(3).effect(() -> new MobEffectInstance(effectSupplier.get(), 300, 1), 1f).fast().saturationMod(0.3f).build()
+                new FoodProperties.Builder().nutrition(3).effect(() -> new MobEffectInstance(effectSupplier.get(), 300, 1), 1f).saturationMod(0.3f).fast().alwaysEat().build()
         );
 
         fruitItem = register(prefix + "_fruit", fruitProperties, Item::new);
