@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.material.*;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import team.lodestar.lodestone.systems.block.*;
 
 public class MeadowBlockProperties {
@@ -138,6 +139,7 @@ public class MeadowBlockProperties {
                 .noOcclusion()
                 .needsHoe()
                 .sound(SoundType.CHERRY_LEAVES)
+                .addTags(BlockTags.MINEABLE_WITH_HOE)
                 .addTag(BlockTags.LEAVES);
     }
 
@@ -218,6 +220,8 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties MINERAL_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.ROCKY_PEARLFLOWER_GENERATES_ON, MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON)
+                .addTags(BlockTags.MINEABLE_WITH_SHOVEL)
+                .addTags(BlockTags.DIRT)
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
                 .randomTicks()
@@ -257,6 +261,7 @@ public class MeadowBlockProperties {
                 .isViewBlocking(Blocks::never)
                 .isSuffocating(Blocks::never)
                 .addTag(BlockTags.LEAVES)
+                .addTags(BlockTags.MINEABLE_WITH_HOE)
                 .setCutoutRenderType()
                 .strength(0.2F)
                 .randomTicks()

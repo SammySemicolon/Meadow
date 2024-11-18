@@ -1,25 +1,17 @@
 {
   "values": [
+    "#meadow:calcification",
     "#minecraft:moss_replaceable",
     "#forge:ores",
     "meadow:coal_grass_block",
-    "meadow:meadow_grass_block",
-    "meadow:calcified_earth",
     "meadow:netherite_grass_block",
-    "meadow:heavy_calcified_bricks",
-    "meadow:calcified_bricks",
-    "meadow:calcified_bricks_slab",
     "meadow:emerald_grass_block",
     "meadow:redstone_grass_block",
     "meadow:copper_grass_block",
-    "meadow:calcified_rock",
-    "meadow:heavy_calcified_bricks_stairs",
-    "meadow:heavy_calcified_bricks_slab",
     "meadow:lapis_grass_block",
     "meadow:iron_grass_block",
     "meadow:amethyst_grass_block",
     "meadow:gold_grass_block",
-    "meadow:calcified_bricks_stairs",
     "meadow:diamond_grass_block"
   ]
 }

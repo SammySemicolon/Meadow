@@ -1,5 +1,15 @@
 {
   "values": [
-    "meadow:meadow_grass_block"
+    "meadow:coal_grass_block",
+    "meadow:meadow_grass_block",
+    "meadow:netherite_grass_block",
+    "meadow:emerald_grass_block",
+    "meadow:redstone_grass_block",
+    "meadow:copper_grass_block",
+    "meadow:lapis_grass_block",
+    "meadow:iron_grass_block",
+    "meadow:amethyst_grass_block",
+    "meadow:gold_grass_block",
+    "meadow:diamond_grass_block"
   ]
 }

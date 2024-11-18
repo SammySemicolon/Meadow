@@ -7,6 +7,7 @@ import com.smellysleepy.meadow.registry.common.MeadowItemProperties;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.food.FoodProperties;
@@ -91,10 +92,10 @@ public class MineralFloraRegistryBundle {
         hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, color));
         hangingLeavesBlockItem = register("hanging_" + prefix + "_leaves", itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
 
-        saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(floraProperties, feature, tag));
+        saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(floraProperties.addTag(BlockTags.SAPLINGS), feature, tag));
         saplingBlockItem = register(prefix + "_sapling", itemProperties, (p) -> new BlockItem(saplingBlock.get(), p));
 
-        flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(floraProperties, tag));
+        flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(floraProperties.addTag(BlockTags.TALL_FLOWERS), tag));
         flowerBlockItem = register(prefix + "_flower", itemProperties, (p) -> new BlockItem(flowerBlock.get(), p));
 
         floraBlock = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(grassProperties, tag));

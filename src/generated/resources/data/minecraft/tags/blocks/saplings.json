@@ -1,6 +1,26 @@
 {
   "values": [
+    "meadow:copper_flower",
     "meadow:aspen_sapling",
-    "meadow:small_aspen_sapling"
+    "meadow:netherite_flower",
+    "meadow:lapis_flower",
+    "meadow:emerald_flower",
+    "meadow:amethyst_sapling",
+    "meadow:coal_flower",
+    "meadow:diamond_sapling",
+    "meadow:iron_flower",
+    "meadow:gold_sapling",
+    "meadow:lapis_sapling",
+    "meadow:iron_sapling",
+    "meadow:redstone_flower",
+    "meadow:amethyst_flower",
+    "meadow:redstone_sapling",
+    "meadow:small_aspen_sapling",
+    "meadow:gold_flower",
+    "meadow:copper_sapling",
+    "meadow:emerald_sapling",
+    "meadow:netherite_sapling",
+    "meadow:diamond_flower",
+    "meadow:coal_sapling"
   ]
 }
