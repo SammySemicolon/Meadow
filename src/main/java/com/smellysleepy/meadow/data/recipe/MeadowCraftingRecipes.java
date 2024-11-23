@@ -38,6 +38,15 @@ public class MeadowCraftingRecipes implements IConditionBuilder {
                     .requires(Items.SUGAR)
                     .unlockedBy("has_fruit", has(bundle.fruitItem.get()))
                     .save(consumer);
+            shapeless(RecipeCategory.FOOD, bundle.pastryItem.get(), 2)
+                    .requires(bundle.fruitItem.get())
+                    .requires(bundle.fruitItem.get())
+                    .requires(Items.WHEAT)
+                    .requires(Items.WHEAT)
+                    .requires(Items.EGG)
+                    .requires(Items.SUGAR)
+                    .unlockedBy("has_fruit", has(bundle.fruitItem.get()))
+                    .save(consumer);
         }
 
         //endregion

@@ -2,6 +2,8 @@ package com.smellysleepy.meadow.mixin;
 
 import com.smellysleepy.meadow.common.effect.*;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.npc.WanderingTrader;
+import net.minecraft.world.entity.npc.WanderingTraderSpawner;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.storage.loot.*;
@@ -32,6 +34,12 @@ public class ApplyBonusCountMixin {
 
             if (entity instanceof LivingEntity livingEntity) {
                 return pEnchantmentLevel + DiamondFruitEffect.getFortuneBonus(livingEntity);
+            }
+        }
+        if (this.enchantment == Enchantments.MOB_LOOTING) {
+            Entity entity = meadow$lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
+            if (entity instanceof LivingEntity livingEntity) {
+                return pEnchantmentLevel + GoldFruitEffect.getLootingBonus(livingEntity);
             }
         }
         return pEnchantmentLevel;

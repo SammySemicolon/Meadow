@@ -59,6 +59,7 @@ public class MineralFloraRegistryBundle {
 
     public final RegistryObject<Item> fruitItem;
     public final RegistryObject<Item> candyItem;
+    public final RegistryObject<Item> pastryItem;
 
     public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Supplier<MobEffect> effectSupplier, Color color, Block oreBlock, TagKey<Block> tag) {
         this.id = id;
@@ -78,7 +79,8 @@ public class MineralFloraRegistryBundle {
 
         var grassBlockProperties = MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES();
         var grassProperties = MeadowBlockProperties.MINERAL_GRASS_PROPERTIES();
-        var floraProperties = MeadowBlockProperties.MINERAL_FLORA_PROPERTIES();
+        var saplingProperties = MeadowBlockProperties.MINERAL_SAPLING_PROPERTIES();
+        var flowerProperties = MeadowBlockProperties.MINERAL_FLOWER_PROPERTIES();
         var hangingLeavesProperties = MeadowBlockProperties.HANGING_MINERAL_LEAVES_PROPERTIES();
         var leavesProperties = MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES();
 
@@ -92,25 +94,27 @@ public class MineralFloraRegistryBundle {
         hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, color));
         hangingLeavesBlockItem = register("hanging_" + prefix + "_leaves", itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
 
-        saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(floraProperties.addTag(BlockTags.SAPLINGS), feature, tag));
+        saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(saplingProperties, feature, tag));
         saplingBlockItem = register(prefix + "_sapling", itemProperties, (p) -> new BlockItem(saplingBlock.get(), p));
 
-        flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(floraProperties.addTag(BlockTags.TALL_FLOWERS), tag));
+        flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(flowerProperties.addTag(BlockTags.TALL_FLOWERS), tag));
         flowerBlockItem = register(prefix + "_flower", itemProperties, (p) -> new BlockItem(flowerBlock.get(), p));
 
         floraBlock = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(grassProperties, tag));
         floraBlockItem = register(prefix + "_flora", itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
 
-        var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(
-                new FoodProperties.Builder().nutrition(4).effect(() -> new MobEffectInstance(effectSupplier.get(), 1200, 0), 1f).saturationMod(0.4f).alwaysEat().build()
+        var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES()
+                .food(new FoodProperties.Builder().nutrition(4).effect(() -> new MobEffectInstance(effectSupplier.get(), 1200, 0), 1f).saturationMod(0.4f).alwaysEat().build()
         );
-        var candyProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(
-                new FoodProperties.Builder().nutrition(3).effect(() -> new MobEffectInstance(effectSupplier.get(), 300, 1), 1f).saturationMod(0.3f).fast().alwaysEat().build()
+        var candyProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES()
+                .food(new FoodProperties.Builder().nutrition(3).effect(() -> new MobEffectInstance(effectSupplier.get(), 300, 1), 1f).saturationMod(0.3f).fast().alwaysEat().build()
+        );
+        var pastryProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES()
+                .food(new FoodProperties.Builder().nutrition(6).effect(() -> new MobEffectInstance(effectSupplier.get(), 3000, 0), 1f).saturationMod(0.45f).alwaysEat().build()
         );
 
         fruitItem = register(prefix + "_fruit", fruitProperties, Item::new);
         candyItem = register(prefix + "_candy", candyProperties, Item::new);
-
-
+        pastryItem = register(prefix + "_pastry", pastryProperties, Item::new);
     }
 }

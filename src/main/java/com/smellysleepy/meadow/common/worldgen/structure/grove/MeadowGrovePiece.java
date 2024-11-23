@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.UnsafeBoundingBox;
 import com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveFeatureDistribution.FeatureDataGetter;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.area.*;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.common.tags.*;
@@ -38,10 +39,13 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import net.minecraftforge.common.Tags;
+import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.easing.Easing;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class MeadowGrovePiece extends StructurePiece {
 
@@ -152,24 +156,55 @@ public class MeadowGrovePiece extends StructurePiece {
         int groveHeight = grovePiece.groveHeight;
         int groveDepth = grovePiece.groveDepth;
 
-        int placedPearlFlowers = 0;
         int pearlflowerCount = random.nextInt(3, 6);
-        int[] pearlflowerIndexes = new int[pearlflowerCount];
+        int smallTreeCount = random.nextInt(6, 12);
+        int largeTreeCount = random.nextInt(12, 24);
+        int largePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 1, 3);
+        int mediumPatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 1, 4);
+        int smallPatchCount = RandomHelper.randomBetween(random, Easing.SINE_OUT, 1, 5);
+        int coralCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 1, 4);
+        int mossCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 8, 24);
+        int azaleaTreeCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 8);
+        int sugarCaneCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 4, 8);
+        int lakeGrassCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 6);
+        int largeLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 4);
+        int mediumLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 2, 5);
+        int smallLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_OUT, 2, 6);
+        int largeStalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_IN, 2, 8);
+        int stalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 0, 4);
 
-        float step = 256f / pearlflowerCount;
-        for (int i = 0; i < pearlflowerCount; i++) {
-            int start = Mth.floor(step * i);
-            int stop = Mth.floor(step * (i+1));
-            pearlflowerIndexes[i] = random.nextInt(start, stop);
-        }
+        MeadowGroveFeatureDistribution featureDistribution = new MeadowGroveFeatureDistribution();
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, random, pearlflowerCount);
+
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, random, smallTreeCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, random, largeTreeCount);
+
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, random, largePatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH, random, mediumPatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH, random, smallPatchCount);
+
+        featureDistribution.addFeature(AquaticFeatures.WARM_OCEAN_VEGETATION, random, coralCount);
+        featureDistribution.addFeature(CaveFeatures.MOSS_VEGETATION, random, mossCount);
+        featureDistribution.addFeature(TreeFeatures.AZALEA_TREE, random, azaleaTreeCount);
+        featureDistribution.addFeature(VegetationFeatures.PATCH_SUGAR_CANE, random, sugarCaneCount);
+        featureDistribution.addFeature(VegetationFeatures.PATCH_TALL_GRASS, random, lakeGrassCount);
+        featureDistribution.addFeature(VegetationFeatures.PATCH_GRASS, random, lakeGrassCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_LAKE_PATCH, random, largeLakePatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_LAKE_PATCH, random, mediumLakePatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_LAKE_PATCH, random, smallLakePatchCount);
+
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES, random, largeStalagmiteCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES, random, stalagmiteCount);
+
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, random, largePatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH, random, mediumPatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH, random, smallPatchCount);
+
+        FeatureDataGetter featureGetter = new FeatureDataGetter(featureDistribution);
         for (int i = 0; i < 256; i++) {
             int blockX = chunkPos.getBlockX(i%16);
             int blockZ = chunkPos.getBlockZ(i/16);
 
-            boolean hasPearlflower = placedPearlFlowers < pearlflowerIndexes.length && i == pearlflowerIndexes[placedPearlFlowers];
-            if (hasPearlflower) {
-                placedPearlFlowers++;
-            }
             mutableBlockPos.set(blockX, 0, blockZ);
 
             double noise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.05f) * 0.5f;
@@ -184,8 +219,8 @@ public class MeadowGrovePiece extends StructurePiece {
 
             grovePiece.buildGroveLayer(
                     chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
-                    hasPearlflower, localRadius, localHeight, localDepth, blendWidth, rimSize, blockX, blockZ);
-
+                    featureGetter, localRadius, localHeight, localDepth, blendWidth, rimSize);
+            featureGetter.nextIndex();
         }
         if (unsafeBoundingBox.valid()) {
             grovePiece.boundingBox = unsafeBoundingBox.toBoundingBox();
@@ -194,7 +229,7 @@ public class MeadowGrovePiece extends StructurePiece {
 
 
     private Optional<Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>>> buildGroveLayer(ChunkAccess chunk, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockPos.MutableBlockPos pos, RandomSource random,
-                                                                                           boolean hasPearlflower, double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize, int blockX, int blockZ) {
+                                                                                           FeatureDataGetter featureGetter, double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize) {
 
         int centerY = groveCenter.getY();
         pos.setY(centerY);
@@ -225,13 +260,13 @@ public class MeadowGrovePiece extends StructurePiece {
         int shellDepth = getGroveDepth(noiseSampler, pos, localDepth, shellDelta) - bottomShellDepthOffset;
 
         double calcificationNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 25000, 0.02f) * 0.5f;
-        var calcifiedRegionOptional = getClosestRegion(CalcifiedRegion.class, blockX, blockZ, calcificationNoise, radius);
+        var calcifiedRegionOptional = getClosestRegion(CalcifiedRegion.class, pos.getX(), pos.getZ(), calcificationNoise, radius);
 
         double lakeNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 50000, 0.01f) * 0.5f;
         double relativeLakeRadius = radius * 0.7f + groveRadius * 0.3f;
-        var lakeRegionOptional = getClosestRegion(LakeRegion.class, blockX, blockZ, lakeNoise, relativeLakeRadius);
+        var lakeRegionOptional = getClosestRegion(LakeRegion.class, pos.getX(), pos.getZ(), lakeNoise, relativeLakeRadius);
 
-        var ceilingPatternBlock = chooseSediment(noiseSampler, blockX, ceilingAirPocketEndPoint, blockZ);
+        var ceilingPatternBlock = chooseSediment(noiseSampler, pos.getX(), ceilingAirPocketEndPoint, pos.getZ());
         var ceilingPatternData = getCeilingPattern(chunk, random, noiseSampler, ceilingPatternBlock, pos, sqrtDistance, offset, ceilingAirPocketEndPoint);
         var ceilingPattern = ceilingPatternData.getFirst();
         var ceilingFeature = ceilingPatternData.getSecond();
@@ -295,32 +330,32 @@ public class MeadowGrovePiece extends StructurePiece {
         int highestCeilingPoint = ceilingAirPocketEndPoint + ceilingHeight;
         int lowestSurfacePoint = surfaceAirPocketEndPoint - surfaceDepth;
 
-        double rampNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 75000, 0.01f) / 2;
+        double rampNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 75000, 0.01f) / 2;
         int rampStartingHeight = centerY - flatDepth;
         int rampHeight = Mth.ceil(flatDepth * Easing.QUINTIC_IN_OUT.clamped(rampNoise, 0.8f, 1.2f));
         List<BlockState> rampBlockPattern = getRampBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, rampStartingHeight).getFirst();
 
-        createHorizontalShell(chunk, pos, unsafeBoundingBox, blockX, blockZ, ceilingPattern, shellHeight, topShellStart, surfacePattern, shellDepth, bottomShellStart);
+        createHorizontalShell(chunk, pos, unsafeBoundingBox, ceilingPattern, shellHeight, topShellStart, surfacePattern, shellDepth, bottomShellStart);
 
-        carveOutShape(chunk, random, pos, unsafeBoundingBox, hasPearlflower, blockX, blockZ, centerY,
+        carveOutShape(chunk, random, pos, unsafeBoundingBox, featureGetter, centerY,
                 ceilingPattern, highestCeilingPoint, ceilingAirPocketEndPoint, ceilingHeight,
                 surfacePattern, lowestSurfacePoint, surfaceAirPocketEndPoint, surfaceDepth,
                 placeWater, waterDelta, useLakeGrass, lakeGrassDelta, waterStartingPoint,
                 calcifiedRegionOptional.orElse(null), surfaceFeature, ceilingFeature);
 
 
-        addRamps(chunk, noiseSampler, random, pos, rampBlockPattern, hasPearlflower, rampStartingHeight, blockX, blockZ, rampHeight, rampNoise, sqrtDistance, offset);
+        addRamps(chunk, noiseSampler, random, pos, rampBlockPattern, featureGetter, rampStartingHeight, pos.getX(), pos.getZ(), rampHeight, rampNoise, sqrtDistance, offset);
         return Optional.empty();
     }
 
-    private void createHorizontalShell(ChunkAccess chunk, BlockPos.MutableBlockPos pos, UnsafeBoundingBox unsafeBoundingBox, int blockX, int blockZ,
+    private void createHorizontalShell(ChunkAccess chunk, BlockPos.MutableBlockPos pos, UnsafeBoundingBox unsafeBoundingBox,
                                        List<BlockState> ceilingPattern, int shellHeight, int topShellStart,
                                        List<BlockState> surfacePattern, int shellDepth, int bottomShellStart) {
         //Top half of horizontal shell
         if (shellHeight > 0) {
             int horizontalShellEnd = topShellStart + shellHeight;
             for (int y = topShellStart; y < horizontalShellEnd; y++) {
-                pos.set(blockX, y, blockZ);
+                pos.setY(y);
                 unsafeBoundingBox.encapsulate(pos);
                 int index = Mth.clamp(y - topShellStart, 0, ceilingPattern.size()-1);
                 chunk.setBlockState(pos, ceilingPattern.get(index), true);
@@ -330,7 +365,7 @@ public class MeadowGrovePiece extends StructurePiece {
         if (shellDepth > 0) {
             int horizontalShellEnd = bottomShellStart - shellDepth;
             for (int y = bottomShellStart; y > horizontalShellEnd; y--) {
-                pos.set(blockX, y, blockZ);
+                pos.setY(y);
                 unsafeBoundingBox.encapsulate(pos);
                 int index = Mth.clamp(bottomShellStart - y, 0, surfacePattern.size()-1);
                 chunk.setBlockState(pos, surfacePattern.get(index), true);
@@ -338,8 +373,7 @@ public class MeadowGrovePiece extends StructurePiece {
         }
     }
 
-    private void carveOutShape(ChunkAccess chunk, RandomSource random, BlockPos.MutableBlockPos pos, UnsafeBoundingBox unsafeBoundingBox, boolean hasPearlflower,
-                               int blockX, int blockZ, int centerY,
+    private void carveOutShape(ChunkAccess chunk, RandomSource random, BlockPos.MutableBlockPos pos, UnsafeBoundingBox unsafeBoundingBox, FeatureDataGetter featureGetter, int centerY,
                                List<BlockState> ceilingPattern, int highestCeilingPoint, int ceilingAirPocketEndPoint, int ceilingHeight,
                                List<BlockState> surfacePattern, int lowestSurfacePoint, int surfaceAirPocketEndPoint, int surfaceDepth,
                                boolean placeWater, double waterDelta, boolean useLakeGrass, double lakeGrassDelta, int waterStartingPoint,
@@ -347,7 +381,7 @@ public class MeadowGrovePiece extends StructurePiece {
         //Ceiling Carver
         if (centerY < highestCeilingPoint) {
             for (int y = centerY; y < highestCeilingPoint; y++) {
-                pos.set(blockX, y, blockZ);
+                pos.setY(y);
                 unsafeBoundingBox.encapsulate(pos);
                 if (y == ceilingAirPocketEndPoint - 1) {
                     Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature = null;
@@ -372,7 +406,7 @@ public class MeadowGrovePiece extends StructurePiece {
         //Surface Carver
         if (centerY > lowestSurfacePoint) {
             for (int y = centerY; y > lowestSurfacePoint; y--) {
-                pos.set(blockX, y, blockZ);
+                pos.setY(y);
                 unsafeBoundingBox.encapsulate(pos);
 
                 if (y == surfaceAirPocketEndPoint + 1) {
@@ -380,16 +414,16 @@ public class MeadowGrovePiece extends StructurePiece {
                     if (surfaceFeature != null) {
                         feature = Pair.of(pos.immutable(), surfaceFeature);
                     }
-                    else if (hasPearlflower) {
+                    else if (featureGetter.test(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER)) {
                         feature = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER);
                     }
                     else {
                         if (placeWater) {
-                            feature = createWaterFeatures(random, pos, waterDelta);
+                            feature = createWaterFeatures(featureGetter, pos);
                         } else if (useLakeGrass) {
-                            feature = createLakeFeatures(random, pos, lakeGrassDelta);
+                            feature = createLakeFeatures(featureGetter, pos);
                         } else {
-                            feature = createSurfaceFeatures(random, pos, calcifiedRegion);
+                            feature = createSurfaceFeatures(featureGetter, pos, calcifiedRegion);
                         }
                     }
                     if (feature != null) {
@@ -416,7 +450,7 @@ public class MeadowGrovePiece extends StructurePiece {
         }
     }
 
-    private void addRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, RandomSource random, BlockPos.MutableBlockPos pos, List<BlockState> rampBlockPattern, boolean hasPearlflower, int yLevel, int blockX, int blockZ, int rampHeight, double noise, double sqrtDistance, double offset) {
+    private void addRamps(ChunkAccess chunk, ImprovedNoise noiseSampler, RandomSource random, BlockPos.MutableBlockPos pos, List<BlockState> rampBlockPattern, FeatureDataGetter featureGetter, int yLevel, int blockX, int blockZ, int rampHeight, double noise, double sqrtDistance, double offset) {
         boolean isAtEdge = sqrtDistance > offset * 0.95f;
         float noiseOffset = Easing.QUAD_OUT.clamped((sqrtDistance - offset * 0.6f) / (offset * 0.4f), 0, 0.3f);
         float topThreshold = 0.6f - noiseOffset;
@@ -435,11 +469,11 @@ public class MeadowGrovePiece extends StructurePiece {
             if (!isAtEdge) {
                 pos.set(blockX, rampTop + 1, blockZ);
                 Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature;
-                if (hasPearlflower) {
+                if (featureGetter.test(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER)) {
                     feature = Pair.of(pos.immutable(), MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER);
                 }
                 else {
-                    feature = createRampFeatures(random, pos);
+                    feature = createRampFeatures(featureGetter, pos);
                 }
                 if (feature != null) {
                     addFeature(feature);
@@ -488,119 +522,77 @@ public class MeadowGrovePiece extends StructurePiece {
         bufferedFeatures.put(featureData.getFirst(), featureData.getSecond().location());
     }
 
-    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos) {
-        ResourceKey<ConfiguredFeature<?, ?>> feature = null;
-        float rand = randomSource.nextFloat();
-        if (rand < 0.03f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-        } else if (rand < 0.04f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
-        } else if (rand < 0.06f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH;
-        }
+    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(FeatureDataGetter featureGetter, BlockPos.MutableBlockPos pos) {
+        ResourceKey<ConfiguredFeature<?, ?>> feature = featureGetter.choose(
+                MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE,
+                MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE,
+                MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH
+        );
         if (feature != null) {
             return Pair.of(pos.immutable(), feature);
         }
         return null;
     }
 
-    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createLakeFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, double delta) {
-        ResourceKey<ConfiguredFeature<?, ?>> feature = null;
-        double rand = randomSource.nextFloat() * delta;
-
-        if (rand < 0.0025f) {
-            feature = VegetationFeatures.FLOWER_DEFAULT;
-        } else if (rand < 0.005f) {
-            feature = VegetationFeatures.PATCH_GRASS;
-        } else if (rand < 0.01f) {
-            feature = VegetationFeatures.PATCH_TALL_GRASS;
-        } else if (rand < 0.015f) {
-            feature = VegetationFeatures.PATCH_SUGAR_CANE;
-        } else if (rand < 0.0175f) {
-            feature = TreeFeatures.AZALEA_TREE;
-        } else if (rand < 0.03f) {
-            feature = CaveFeatures.MOSS_VEGETATION;
-        }
+    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createLakeFeatures(FeatureDataGetter featureGetter, BlockPos.MutableBlockPos pos) {
+        ResourceKey<ConfiguredFeature<?, ?>> feature = featureGetter.choose(4,
+                CaveFeatures.MOSS_PATCH,
+                TreeFeatures.AZALEA_TREE,
+                VegetationFeatures.PATCH_SUGAR_CANE,
+                VegetationFeatures.PATCH_TALL_GRASS,
+                VegetationFeatures.PATCH_GRASS);
         if (feature != null) {
             return Pair.of(pos.immutable(), feature);
         }
         return null;
     }
-    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createWaterFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, double delta) {
-        ResourceKey<ConfiguredFeature<?, ?>> feature = null;
-        double rand = randomSource.nextFloat() * delta;
-        if (rand < 0.005f) {
-            feature = AquaticFeatures.WARM_OCEAN_VEGETATION;
-        } else if (rand < 0.015f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_LAKE_PATCH;
-        } else if (rand < 0.025f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_LAKE_PATCH;
-        } else if (rand < 0.035f) {
-            feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_LAKE_PATCH;
-        }
+    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createWaterFeatures(FeatureDataGetter featureGetter, BlockPos.MutableBlockPos pos) {
+        ResourceKey<ConfiguredFeature<?, ?>> feature = featureGetter.choose(10,
+                AquaticFeatures.WARM_OCEAN_VEGETATION,
+                MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_LAKE_PATCH,
+                MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_LAKE_PATCH,
+                MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_LAKE_PATCH
+        );
         if (feature != null) {
             return Pair.of(pos.immutable(), feature);
         }
         return null;
     }
 
-    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createSurfaceFeatures(RandomSource randomSource, BlockPos.MutableBlockPos pos, @Nullable Pair<CalcifiedRegion, Double> calcification) {
+    private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createSurfaceFeatures(FeatureDataGetter featureGetter, BlockPos.MutableBlockPos pos, @Nullable Pair<CalcifiedRegion, Double> calcification) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = null;
 
         if (calcification != null) {
             double delta = calcification.getSecond();
-            float rand = randomSource.nextFloat();
-            if (delta > 0.05f) {
-                if (rand < 0.01f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES;
-                } else if (rand < 0.03f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES;
-                }
-                else {
-                    feature = calcification.getFirst().chooseFeature(randomSource);
-                }
-            }
-            else {
-                if (rand < 0.02f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES;
-                } else if (rand < 0.05f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES;
-                }
-            }
+            int leniency = Mth.ceil(delta * 10);
+            feature = featureGetter.choose(leniency,
+                    MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES, MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES
+            );
         } else {
             int featureTypeOffset = groveCenter.getY() - pos.getY();
             float start = groveDepth * 0.3f;
             float midpoint = groveDepth * 0.5f;
             float end = groveDepth * 0.7f;
 
-            float rand = randomSource.nextFloat();
-            if (rand < 0.02f) {
-                feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH;
-            } else {
-                rand = randomSource.nextFloat();
+            feature = featureGetter.choose(
+                    MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH, MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH
+            );
+            if (feature == null) {
                 if (featureTypeOffset > start && featureTypeOffset < midpoint) {
-                    if (rand < 0.05f) {
-                        feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-                    } else if (rand < 0.06f) {
-                        feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
-                    }
+                    feature = featureGetter.choose(2,
+                            MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE
+                    );
                 }
-                if (featureTypeOffset >= midpoint && featureTypeOffset < end) {
-                    if (rand < 0.03f) {
-                        feature = MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE;
-                    }
+                else if (featureTypeOffset < end) {
+                    feature = featureGetter.choose(2,
+                            MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH);
                 }
-
-            }
-            if (featureTypeOffset >= end) {
-                rand = randomSource.nextFloat();
-                if (rand < 0.001f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE;
-                } else
-                if (rand < 0.005f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH;
-                } else if (rand < 0.0075f) {
-                    feature = MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH;
+                else if (featureTypeOffset >= end) {
+                    feature = featureGetter.choose(4,
+                            MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE,
+                            MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH,
+                            MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH
+                    );
                 }
             }
         }

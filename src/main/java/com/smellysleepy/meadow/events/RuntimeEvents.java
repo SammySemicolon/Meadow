@@ -19,9 +19,5 @@ public class RuntimeEvents {
         CopperFruitEffect.onRightClickBlock(event);
     }
 
-    @SubscribeEvent
-    public static void onPlayerBreakSpeed(PlayerEvent.BreakSpeed event) {
-        GoldFruitEffect.increaseDigSpeed(event);
-    }
 }
 
