@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "half=lower,waterlogged=false": {
+      "model": "meadow:block/tall_wilted_grassy_pearlflower_bottom"
+    },
+    "half=lower,waterlogged=true": {
+      "model": "meadow:block/tall_wilted_grassy_pearlflower_bottom"
+    },
+    "half=upper,waterlogged=false": {
+      "model": "meadow:block/tall_wilted_grassy_pearlflower_top"
+    },
+    "half=upper,waterlogged=true": {
+      "model": "meadow:block/tall_wilted_grassy_pearlflower_top"
+    }
+  }
+}

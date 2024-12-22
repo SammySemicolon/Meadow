@@ -3,7 +3,7 @@ package com.smellysleepy.meadow.registry.common;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.block.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.block.mineral.MineralFloraRegistryBundle;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

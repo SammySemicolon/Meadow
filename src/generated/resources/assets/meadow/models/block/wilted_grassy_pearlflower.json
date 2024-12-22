@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "meadow:block/pearlflower/wilted_grassy_pearlflower"
+  }
+}

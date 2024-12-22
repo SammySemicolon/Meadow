@@ -343,7 +343,6 @@ public class MeadowGrovePiece extends StructurePiece {
                 placeWater, waterDelta, useLakeGrass, lakeGrassDelta, waterStartingPoint,
                 calcifiedRegionOptional.orElse(null), surfaceFeature, ceilingFeature);
 
-
         addRamps(chunk, noiseSampler, random, pos, rampBlockPattern, featureGetter, rampStartingHeight, pos.getX(), pos.getZ(), rampHeight, rampNoise, sqrtDistance, offset);
         return Optional.empty();
     }
@@ -523,7 +522,7 @@ public class MeadowGrovePiece extends StructurePiece {
     }
 
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(FeatureDataGetter featureGetter, BlockPos.MutableBlockPos pos) {
-        ResourceKey<ConfiguredFeature<?, ?>> feature = featureGetter.choose(
+        ResourceKey<ConfiguredFeature<?, ?>> feature = featureGetter.choose(8,
                 MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE,
                 MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE,
                 MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH

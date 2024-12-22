@@ -1,0 +1,281 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:any_of",
+          "terms": [
+            {
+              "condition": "minecraft:all_of",
+              "terms": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "condition": "minecraft:any_of",
+                    "terms": [
+                      {
+                        "condition": "minecraft:match_tool",
+                        "predicate": {
+                          "items": [
+                            "minecraft:shears"
+                          ]
+                        }
+                      },
+                      {
+                        "condition": "minecraft:match_tool",
+                        "predicate": {
+                          "enchantments": [
+                            {
+                              "enchantment": "minecraft:silk_touch",
+                              "levels": {
+                                "min": 1
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "condition": "minecraft:all_of",
+                  "terms": [
+                    {
+                      "block": "meadow:tall_wilted_calcified_pearlflower",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "half": "upper"
+                      }
+                    },
+                    {
+                      "condition": "minecraft:location_check",
+                      "offsetY": -1,
+                      "predicate": {
+                        "block": {
+                          "blocks": [
+                            "meadow:tall_wilted_calcified_pearlflower"
+                          ],
+                          "state": {
+                            "half": "lower"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:all_of",
+              "terms": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "condition": "minecraft:any_of",
+                    "terms": [
+                      {
+                        "condition": "minecraft:match_tool",
+                        "predicate": {
+                          "items": [
+                            "minecraft:shears"
+                          ]
+                        }
+                      },
+                      {
+                        "condition": "minecraft:match_tool",
+                        "predicate": {
+                          "enchantments": [
+                            {
+                              "enchantment": "minecraft:silk_touch",
+                              "levels": {
+                                "min": 1
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "condition": "minecraft:all_of",
+                  "terms": [
+                    {
+                      "block": "meadow:tall_wilted_calcified_pearlflower",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "half": "lower"
+                      }
+                    },
+                    {
+                      "condition": "minecraft:location_check",
+                      "offsetY": 1,
+                      "predicate": {
+                        "block": {
+                          "blocks": [
+                            "meadow:tall_wilted_calcified_pearlflower"
+                          ],
+                          "state": {
+                            "half": "upper"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "meadow:pearlflower_bud"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": 3.0,
+          "function": "minecraft:set_count"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:any_of",
+          "terms": [
+            {
+              "condition": "minecraft:all_of",
+              "terms": [
+                {
+                  "condition": "minecraft:any_of",
+                  "terms": [
+                    {
+                      "condition": "minecraft:match_tool",
+                      "predicate": {
+                        "items": [
+                          "minecraft:shears"
+                        ]
+                      }
+                    },
+                    {
+                      "condition": "minecraft:match_tool",
+                      "predicate": {
+                        "enchantments": [
+                          {
+                            "enchantment": "minecraft:silk_touch",
+                            "levels": {
+                              "min": 1
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "condition": "minecraft:all_of",
+                  "terms": [
+                    {
+                      "block": "meadow:tall_wilted_calcified_pearlflower",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "half": "upper"
+                      }
+                    },
+                    {
+                      "condition": "minecraft:location_check",
+                      "offsetY": -1,
+                      "predicate": {
+                        "block": {
+                          "blocks": [
+                            "meadow:tall_wilted_calcified_pearlflower"
+                          ],
+                          "state": {
+                            "half": "lower"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "condition": "minecraft:all_of",
+              "terms": [
+                {
+                  "condition": "minecraft:any_of",
+                  "terms": [
+                    {
+                      "condition": "minecraft:match_tool",
+                      "predicate": {
+                        "items": [
+                          "minecraft:shears"
+                        ]
+                      }
+                    },
+                    {
+                      "condition": "minecraft:match_tool",
+                      "predicate": {
+                        "enchantments": [
+                          {
+                            "enchantment": "minecraft:silk_touch",
+                            "levels": {
+                              "min": 1
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "condition": "minecraft:all_of",
+                  "terms": [
+                    {
+                      "block": "meadow:tall_wilted_calcified_pearlflower",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "half": "lower"
+                      }
+                    },
+                    {
+                      "condition": "minecraft:location_check",
+                      "offsetY": 1,
+                      "predicate": {
+                        "block": {
+                          "blocks": [
+                            "meadow:tall_wilted_calcified_pearlflower"
+                          ],
+                          "state": {
+                            "half": "upper"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "meadow:tall_wilted_calcified_pearlflower"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "meadow:blocks/tall_wilted_calcified_pearlflower"
+}

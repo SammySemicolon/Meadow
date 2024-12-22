@@ -1,7 +1,6 @@
-package com.smellysleepy.meadow.common.block.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.effect.*;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockProperties;
 import com.smellysleepy.meadow.registry.common.MeadowItemProperties;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +20,6 @@ import net.minecraftforge.registries.RegistryObject;
 import java.awt.*;
 import java.util.function.*;
 
-import static com.smellysleepy.meadow.registry.common.MeadowMobEffectRegistry.EFFECTS;
 import static com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry.BLOCKS;
 import static com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry.register;
 

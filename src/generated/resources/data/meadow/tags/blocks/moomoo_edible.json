@@ -1,6 +1,20 @@
 {
   "values": [
+    "meadow:tall_rocky_pearlflower",
+    "meadow:tall_wilted_calcified_pearlflower",
+    "meadow:rocky_pearlflower",
+    "meadow:tall_wilted_rocky_pearlflower",
+    "meadow:wilted_calcified_pearlflower",
+    "meadow:tall_wilted_marine_pearlflower",
+    "meadow:wilted_grassy_pearlflower",
+    "meadow:marine_pearlflower",
+    "meadow:tall_marine_pearlflower",
+    "meadow:wilted_marine_pearlflower",
+    "meadow:calcified_pearlflower",
+    "meadow:tall_calcified_pearlflower",
     "meadow:grassy_pearlflower",
+    "meadow:tall_wilted_grassy_pearlflower",
+    "meadow:wilted_rocky_pearlflower",
     "meadow:tall_grassy_pearlflower"
   ]
 }

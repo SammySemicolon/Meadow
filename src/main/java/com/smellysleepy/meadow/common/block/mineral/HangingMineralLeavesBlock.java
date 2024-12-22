@@ -1,7 +1,6 @@
-package com.smellysleepy.meadow.common.block.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral;
 
 import com.smellysleepy.meadow.visual_effects.MeadowParticleEffects;
-import com.smellysleepy.meadow.visual_effects.StrangeFloraParticleEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;

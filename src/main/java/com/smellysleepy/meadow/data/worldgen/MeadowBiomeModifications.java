@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.data.worldgen;
 
 import com.smellysleepy.meadow.*;
-import com.smellysleepy.meadow.common.block.mineral_flora.*;
+import com.smellysleepy.meadow.common.block.mineral.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.tags.*;
 import net.minecraft.core.*;

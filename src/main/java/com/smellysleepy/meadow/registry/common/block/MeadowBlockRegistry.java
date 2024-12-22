@@ -2,16 +2,12 @@ package com.smellysleepy.meadow.registry.common.block;
 
 import com.smellysleepy.meadow.common.block.calcification.*;
 import com.smellysleepy.meadow.common.block.meadow.flora.grass.*;
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearlFlowerBlock;
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearllampBlock;
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearllightBlock;
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.TallPearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.*;
 import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.SimpleTreeGrower;
 import com.smellysleepy.meadow.registry.common.*;
-import com.smellysleepy.meadow.registry.common.tags.*;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import net.minecraft.client.color.block.*;
 import net.minecraft.tags.*;
@@ -143,17 +139,27 @@ public class MeadowBlockRegistry {
 
     public static final RegistryObject<Block> PEARLLIGHT = BLOCKS.register("pearllight", () -> new PearllightBlock(MeadowBlockProperties.PEARLLIGHT_PROPERTIES()));
 
-    public static final RegistryObject<Block> TALL_GRASSY_PEARLFLOWER = BLOCKS.register("tall_grassy_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES().addTags(MeadowBlockTagRegistry.MOOMOO_EDIBLE)));
+    public static final RegistryObject<Block> TALL_GRASSY_PEARLFLOWER = BLOCKS.register("tall_grassy_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> TALL_MARINE_PEARLFLOWER = BLOCKS.register("tall_marine_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> TALL_CALCIFIED_PEARLFLOWER = BLOCKS.register("tall_calcified_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> TALL_ROCKY_PEARLFLOWER = BLOCKS.register("tall_rocky_pearlflower", () -> new TallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
 
-    public static final RegistryObject<Block> GRASSY_PEARLFLOWER = BLOCKS.register("grassy_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES().addTags(MeadowBlockTagRegistry.MOOMOO_EDIBLE)));
+    public static final RegistryObject<Block> GRASSY_PEARLFLOWER = BLOCKS.register("grassy_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> MARINE_PEARLFLOWER = BLOCKS.register("marine_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
     public static final RegistryObject<Block> CALCIFIED_PEARLFLOWER = BLOCKS.register("calcified_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
-    public static final RegistryObject<Block> PEARLFLOWER = BLOCKS.register("rocky_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> ROCKY_PEARLFLOWER = BLOCKS.register("rocky_pearlflower", () -> new PearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
 
-//    public static final RegistryObject<Block> AUREATE_WHEAT_CROP = BLOCKS.register("aureate_wheat_test", () -> new AureateWheatCropBlock(MeadowBlockProperties.AUREATE_WHEAT_CROP_PROPERTIES()));
+    public static final RegistryObject<Block> TALL_WILTED_GRASSY_PEARLFLOWER = BLOCKS.register("tall_wilted_grassy_pearlflower", () -> new WiltedTallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> TALL_WILTED_MARINE_PEARLFLOWER = BLOCKS.register("tall_wilted_marine_pearlflower", () -> new WiltedTallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> TALL_WILTED_CALCIFIED_PEARLFLOWER = BLOCKS.register("tall_wilted_calcified_pearlflower", () -> new WiltedTallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> TALL_WILTED_ROCKY_PEARLFLOWER = BLOCKS.register("tall_wilted_rocky_pearlflower", () -> new WiltedTallPearlFlowerBlock(MeadowBlockProperties.TALL_PEARLFLOWER_PROPERTIES()));
+
+    public static final RegistryObject<Block> WILTED_GRASSY_PEARLFLOWER = BLOCKS.register("wilted_grassy_pearlflower", () -> new WiltedPearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> WILTED_MARINE_PEARLFLOWER = BLOCKS.register("wilted_marine_pearlflower", () -> new WiltedPearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> WILTED_CALCIFIED_PEARLFLOWER = BLOCKS.register("wilted_calcified_pearlflower", () -> new WiltedPearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
+    public static final RegistryObject<Block> WILTED_ROCKY_PEARLFLOWER = BLOCKS.register("wilted_rocky_pearlflower", () -> new WiltedPearlFlowerBlock(MeadowBlockProperties.SMALL_PEARLFLOWER_PROPERTIES()));
+
+    //    public static final RegistryObject<Block> AUREATE_WHEAT_CROP = BLOCKS.register("aureate_wheat_test", () -> new AureateWheatCropBlock(MeadowBlockProperties.AUREATE_WHEAT_CROP_PROPERTIES()));
     public static final RegistryObject<Block> TALL_MEADOW_GRASS = BLOCKS.register("tall_meadow_grass", () -> new TallMeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES())), MEDIUM_MEADOW_GRASS = BLOCKS.register("medium_meadow_grass", () -> new MediumMeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
     public static final RegistryObject<Block> SHORT_MEADOW_GRASS = BLOCKS.register("short_meadow_grass", () -> new ShortMeadowGrass(MeadowBlockProperties.MEADOW_GRASS_PROPERTIES()));
 

@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.data.worldgen;
 
-import com.smellysleepy.meadow.common.block.mineral_flora.*;
+import com.smellysleepy.meadow.common.block.mineral.*;
 import com.smellysleepy.meadow.common.worldgen.feature.*;
 import com.smellysleepy.meadow.common.worldgen.feature.calcification.PointyCalcificationConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.patch.LayeredPatchConfiguration;
@@ -14,9 +14,7 @@ import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.data.worldgen.*;
-import net.minecraft.data.worldgen.features.*;
 import net.minecraft.data.worldgen.placement.*;
-import net.minecraft.tags.*;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.*;
 import net.minecraft.world.level.block.*;
@@ -63,10 +61,10 @@ public class MeadowConfiguredFeatureDatagen {
 
         addMineralFloraTree(context, MineralFloraRegistry.COPPER_FLORA, List.of(
                 new StraightTrunkPart(3, 4),
-                new LeafBlobPart(List.of(3, 2)),
+                new LeafBlobPart(List.of(3, 2, 1)),
                 new ReturnPart(),
                 new SplitBranchesPart(2, 3, 2, 3, 3, 4),
-                new LeafBlobPart(List.of(3, 2))
+                new LeafBlobPart(List.of(2, 1))
         ));
 
         addMineralFloraTree(context, MineralFloraRegistry.IRON_FLORA, List.of(
@@ -89,10 +87,11 @@ public class MeadowConfiguredFeatureDatagen {
                 new SplitBranchesPart(1, 1, 2, 3, 1, 1),
                 new SplitBranchesPart(2, 3, 2, 3, 1, 1),
                 new StraightTrunkPart(4, 5),
-                new LeafBlobPart(List.of(2, 3, 4, 2)),
-                new OffsetPart(0, -3, 0),
+                new OffsetPart(0, -1, 0),
+                new LeafBlobPart(List.of(2, 3, 3, 2, 1)),
+                new OffsetPart(0, -2, 0),
                 new SplitBranchesPart(1, 2, 2, 3, 3, 4),
-                new LeafBlobPart(List.of(2, 3, 2))
+                new LeafBlobPart(List.of(2, 3, 3, 2))
         ));
 
         addMineralFloraTree(context, MineralFloraRegistry.DIAMOND_FLORA, List.of(
@@ -181,7 +180,7 @@ public class MeadowConfiguredFeatureDatagen {
                                 .add(MeadowBlockRegistry.GRASSY_PEARLFLOWER.get().defaultBlockState(), 3)
                                 .add(MeadowBlockRegistry.TALL_GRASSY_PEARLFLOWER.get().defaultBlockState(), 1)),
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
-                                .add(MeadowBlockRegistry.PEARLFLOWER.get().defaultBlockState(), 3)
+                                .add(MeadowBlockRegistry.ROCKY_PEARLFLOWER.get().defaultBlockState(), 3)
                                 .add(MeadowBlockRegistry.TALL_ROCKY_PEARLFLOWER.get().defaultBlockState(), 1)),
                         new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                                 .add(MeadowBlockRegistry.MARINE_PEARLFLOWER.get().defaultBlockState(), 3)

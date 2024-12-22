@@ -25,6 +25,7 @@ public class MeadowBlockTagRegistry {
     public static final TagKey<Block> ROCKY_PEARLFLOWER_GENERATES_ON = meadowTag("rocky_pearlflower_generates_on");
 
     public static final TagKey<Block> MOOMOO_EDIBLE = meadowTag("moomoo_edible");
+    public static final TagKey<Block> MOOMOO_CAN_SPAWN_ON = meadowTag("moomoo_can_spawn_on");
 
     public static final TagKey<Block> STRIPPED_LOGS = forgeTag("stripped_logs");
 

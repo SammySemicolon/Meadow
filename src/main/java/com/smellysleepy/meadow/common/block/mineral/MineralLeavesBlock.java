@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral;
 
 import com.smellysleepy.meadow.visual_effects.MeadowParticleEffects;
 import com.smellysleepy.meadow.visual_effects.StrangeFloraParticleEffects;
@@ -10,17 +10,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.RegistryObject;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 
 import java.awt.*;
-import java.util.function.Supplier;
 
 public class MineralLeavesBlock extends LeavesBlock implements BonemealableBlock {
 
