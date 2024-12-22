@@ -133,7 +133,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "meadow:pearlflower_bud"
+          "name": "minecraft:stick"
         }
       ],
       "functions": [

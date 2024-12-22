@@ -51,12 +51,8 @@ public class TallPearlFlowerBlock extends TallFlowerBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (stack.canPerformAction(ToolActions.SHEARS_HARVEST)) {
-            BlockPos bottom = pState.getValue(HALF).equals(DoubleBlockHalf.UPPER) ? pPos.below() : pPos;
-            TallPearlFlowerBlock wilted = PearlflowerReplacements.getBlockForExchange(this);
-            if (wilted != null) {
-                pLevel.setBlock(bottom, Blocks.AIR.defaultBlockState(), 3);
-                pLevel.setBlock(bottom.above(), Blocks.AIR.defaultBlockState(), 3);
-                DoublePlantBlock.placeAt(pLevel, wilted.defaultBlockState(), bottom, 3);
+            boolean success = PearlflowerReplacements.performExchange(this, pLevel, pPos, pState);
+            if (success) {
                 pLevel.playSound(null, pPos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             }

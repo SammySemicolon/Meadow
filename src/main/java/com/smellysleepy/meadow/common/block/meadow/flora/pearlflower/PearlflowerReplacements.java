@@ -1,15 +1,57 @@
 package com.smellysleepy.meadow.common.block.meadow.flora.pearlflower;
 
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.HashMap;
 
+import static net.minecraft.world.level.block.DoublePlantBlock.HALF;
+
 public class PearlflowerReplacements {
 
     protected static final HashMap<Block, Block> FLOWER_CONVERSION = new HashMap<>();
+
+    public static boolean performExchange(Block block, Level pLevel, BlockPos pPos, BlockState pState) {
+        if (block instanceof TallPearlFlowerBlock tallPearlFlowerBlock) {
+            return performExchange(tallPearlFlowerBlock, pLevel, pPos, pState);
+        }
+        if (block instanceof PearlFlowerBlock pearlFlowerBlock) {
+            return performExchange(pearlFlowerBlock, pLevel, pPos);
+        }
+        return false;
+    }
+    public static boolean performExchange(TallPearlFlowerBlock block, Level pLevel, BlockPos pPos, BlockState pState) {
+        BlockPos bottom = pState.getValue(HALF).equals(DoubleBlockHalf.UPPER) ? pPos.below() : pPos;
+        TallPearlFlowerBlock newFlower = PearlflowerReplacements.getBlockForExchange(block);
+        if (newFlower != null) {
+            pLevel.setBlock(bottom, Blocks.AIR.defaultBlockState(), 16);
+            pLevel.setBlock(bottom.above(), Blocks.AIR.defaultBlockState(), 16);
+            DoublePlantBlock.placeAt(pLevel, newFlower.defaultBlockState(), bottom, 3);
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean performExchange(PearlFlowerBlock block, Level pLevel, BlockPos pPos) {
+        PearlFlowerBlock newFlower = PearlflowerReplacements.getBlockForExchange(block);
+        if (newFlower != null) {
+            pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 16);
+            pLevel.setBlock(pPos, newFlower.defaultBlockState(), 3);
+            return true;
+        }
+        return false;
+    }
 
     public static TallPearlFlowerBlock getBlockForExchange(TallPearlFlowerBlock block) {
         setupConversions();

@@ -209,6 +209,14 @@ public class MeadowBlockProperties {
         return PEARLFLOWER_PROPERTIES().addTag(BlockTags.TALL_FLOWERS).addTags(MeadowBlockTagRegistry.MOOMOO_EDIBLE);
     }
 
+    public static LodestoneBlockProperties SMALL_WILTED_PEARLFLOWER_PROPERTIES() {
+        return PEARLFLOWER_PROPERTIES().addTag(BlockTags.SMALL_FLOWERS);
+    }
+
+    public static LodestoneBlockProperties TALL_WILTED_PEARLFLOWER_PROPERTIES() {
+        return PEARLFLOWER_PROPERTIES().addTag(BlockTags.TALL_FLOWERS);
+    }
+
     public static LodestoneBlockProperties PEARLLIGHT_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTag(BlockTags.MINEABLE_WITH_HOE)

@@ -191,7 +191,6 @@ public class MooMooCow extends Cow implements IForgeShearable {
         }
     }
 
-
     public void setIsCurious(boolean pIsInterested) {
         this.entityData.set(DATA_CURIOUS_ID, pIsInterested);
     }

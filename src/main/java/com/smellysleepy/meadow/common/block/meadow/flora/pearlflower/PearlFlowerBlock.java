@@ -42,9 +42,8 @@ public class PearlFlowerBlock extends BushBlock implements SimpleWaterloggedBloc
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (stack.canPerformAction(ToolActions.SHEARS_HARVEST)) {
-            PearlFlowerBlock wilted = PearlflowerReplacements.getBlockForExchange(this);
-            if (wilted != null) {
-                pLevel.setBlock(pPos, copyWaterloggedFrom(pLevel, pPos, wilted.defaultBlockState()), 2);
+            boolean success = PearlflowerReplacements.performExchange(this, pLevel, pPos);
+            if (success) {
                 pLevel.playSound(null, pPos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             }
