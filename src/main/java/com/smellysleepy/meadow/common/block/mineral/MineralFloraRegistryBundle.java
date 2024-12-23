@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraftforge.registries.RegistryObject;
+import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
 import java.util.function.*;
@@ -59,7 +60,7 @@ public class MineralFloraRegistryBundle {
     public final RegistryObject<Item> candyItem;
     public final RegistryObject<Item> pastryItem;
 
-    public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Supplier<MobEffect> effectSupplier, Color color, Block oreBlock, TagKey<Block> tag) {
+    public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, RegistryObject<LodestoneWorldParticleType> particleType, Supplier<MobEffect> effectSupplier, Color color, Block oreBlock, TagKey<Block> tag) {
         this.id = id;
         var prefix = id.getPath();
         this.oreBlock = oreBlock;
@@ -86,10 +87,10 @@ public class MineralFloraRegistryBundle {
         grassBlock = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(grassBlockProperties, grassBonemealFeature));
         grassBlockItem = register(prefix + "_grass_block", itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
 
-        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(leavesProperties, leavesBonemealFeature, color));
+        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(leavesProperties, particleType, leavesBonemealFeature, color));
         leavesBlockItem = register(prefix + "_leaves", itemProperties, (p) -> new BlockItem(leavesBlock.get(), p));
 
-        hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, color));
+        hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, particleType, color));
         hangingLeavesBlockItem = register("hanging_" + prefix + "_leaves", itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
 
         saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(saplingProperties, feature, tag));

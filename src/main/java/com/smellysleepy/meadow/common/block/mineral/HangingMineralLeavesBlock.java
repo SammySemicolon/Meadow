@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.common.block.mineral;
 
+import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
 import com.smellysleepy.meadow.visual_effects.MeadowParticleEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,16 +16,21 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.registries.RegistryObject;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
 
 public class HangingMineralLeavesBlock extends LeavesBlock {
+
     protected static final VoxelShape SHAPE = Block.box(2.0D, 12.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    private final RegistryObject<LodestoneWorldParticleType> particleType;
     public final Color color;
 
-    public HangingMineralLeavesBlock(Properties pProperties, Color color) {
+    public HangingMineralLeavesBlock(Properties pProperties, RegistryObject<LodestoneWorldParticleType> particleType,  Color color) {
         super(pProperties);
+        this.particleType = particleType;
         this.color = color;
     }
 
@@ -38,10 +44,8 @@ public class HangingMineralLeavesBlock extends LeavesBlock {
                 double posX = (double)pPos.getX() + pRandom.nextDouble();
                 double posY = (double)pPos.getY() - 0.05D;
                 double posZ = (double)pPos.getZ() + pRandom.nextDouble();
+                MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ), particleType.get()).spawnParticles();
 
-                var leaves = MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ));
-                leaves.getBuilder().setColorData(ColorParticleData.create(color).build());
-                leaves.spawnParticles();
             }
         }
     }

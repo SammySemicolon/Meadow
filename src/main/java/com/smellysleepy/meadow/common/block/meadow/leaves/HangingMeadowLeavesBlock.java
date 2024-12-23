@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.common.block.meadow.leaves;
 
+import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.visual_effects.MeadowParticleEffects;
 import net.minecraft.core.*;
@@ -32,9 +33,7 @@ public class HangingMeadowLeavesBlock extends LeavesBlock {
                 double posY = (double)pPos.getY() - 0.05D;
                 double posZ = (double)pPos.getZ() + pRandom.nextDouble();
 
-                var leaves = MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ));
-                leaves.getBuilder().setColorData(ColorParticleData.create(ASPEN_LEAVES_COLOR).build());
-                leaves.spawnParticles();
+                MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ), MeadowParticleRegistry.ASPEN_LEAVES.get()).spawnParticles();
             }
         }
     }

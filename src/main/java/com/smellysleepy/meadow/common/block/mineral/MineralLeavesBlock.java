@@ -15,17 +15,21 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.RegistryObject;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
 
 public class MineralLeavesBlock extends LeavesBlock implements BonemealableBlock {
 
     private final ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature;
+    private final RegistryObject<LodestoneWorldParticleType> particleType;
     public final Color color;
 
-    public MineralLeavesBlock(Properties pProperties, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature, Color color) {
+    public MineralLeavesBlock(Properties pProperties, RegistryObject<LodestoneWorldParticleType> particleType, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature, Color color) {
         super(pProperties);
+        this.particleType = particleType;
         this.bonemealFeature = bonemealFeature;
         this.color = color;
     }
@@ -47,10 +51,8 @@ public class MineralLeavesBlock extends LeavesBlock implements BonemealableBlock
                 double posX = (double) pPos.getX() + pRandom.nextDouble();
                 double posY = (double) pPos.getY() - 0.05D;
                 double posZ = (double) pPos.getZ() + pRandom.nextDouble();
+                MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ), particleType.get()).spawnParticles();
 
-                var leaves = MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ));
-                leaves.getBuilder().setColorData(ColorParticleData.create(color).build());
-                leaves.spawnParticles();
             }
         }
     }
