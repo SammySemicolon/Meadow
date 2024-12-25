@@ -28,7 +28,7 @@ public class MeadowParticleEffects {
     public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 
-        float scale = RandomHelper.randomBetween(rand, 0.075F, 0.1F);
+        float scale = RandomHelper.randomBetween(rand, 0.1F, 0.2F);
         int lifetime = RandomHelper.randomBetween(rand, 250, 300);
 
         var scaleData = GenericParticleData.create(scale, scale * 0.75f).build();
