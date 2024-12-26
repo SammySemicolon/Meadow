@@ -156,51 +156,11 @@ public class MeadowGrovePiece extends StructurePiece {
         int groveHeight = grovePiece.groveHeight;
         int groveDepth = grovePiece.groveDepth;
 
-        int pearlflowerCount = random.nextInt(3, 6);
-        int smallTreeCount = random.nextInt(6, 12);
-        int largeTreeCount = random.nextInt(12, 24);
-        int largePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 1, 3);
-        int mediumPatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 1, 4);
-        int smallPatchCount = RandomHelper.randomBetween(random, Easing.SINE_OUT, 1, 5);
-        int coralCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 1, 4);
-        int mossCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 8, 24);
-        int azaleaTreeCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 8);
-        int sugarCaneCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 4, 8);
-        int lakeGrassCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 6);
-        int largeLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 4);
-        int mediumLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 2, 5);
-        int smallLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_OUT, 2, 6);
-        int largeStalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_IN, 2, 8);
-        int stalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 0, 4);
+        var surfaceFeatureDistribution = MeadowGroveFeatureDistribution.makeDistribution(random);
+        var rampFeatureDistribution = MeadowGroveFeatureDistribution.makeDistribution(random);
 
-        MeadowGroveFeatureDistribution featureDistribution = new MeadowGroveFeatureDistribution();
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, random, pearlflowerCount);
-
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, random, smallTreeCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, random, largeTreeCount);
-
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, random, largePatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH, random, mediumPatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH, random, smallPatchCount);
-
-        featureDistribution.addFeature(AquaticFeatures.WARM_OCEAN_VEGETATION, random, coralCount);
-        featureDistribution.addFeature(CaveFeatures.MOSS_VEGETATION, random, mossCount);
-        featureDistribution.addFeature(TreeFeatures.AZALEA_TREE, random, azaleaTreeCount);
-        featureDistribution.addFeature(VegetationFeatures.PATCH_SUGAR_CANE, random, sugarCaneCount);
-        featureDistribution.addFeature(VegetationFeatures.PATCH_TALL_GRASS, random, lakeGrassCount);
-        featureDistribution.addFeature(VegetationFeatures.PATCH_GRASS, random, lakeGrassCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_LAKE_PATCH, random, largeLakePatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_LAKE_PATCH, random, mediumLakePatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_LAKE_PATCH, random, smallLakePatchCount);
-
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES, random, largeStalagmiteCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES, random, stalagmiteCount);
-
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, random, largePatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH, random, mediumPatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH, random, smallPatchCount);
-
-        FeatureDataGetter featureGetter = new FeatureDataGetter(featureDistribution);
+        FeatureDataGetter featureGetter = new FeatureDataGetter(surfaceFeatureDistribution);
+        FeatureDataGetter rampFeatureGetter = new FeatureDataGetter(rampFeatureDistribution);
         for (int i = 0; i < 256; i++) {
             int blockX = chunkPos.getBlockX(i%16);
             int blockZ = chunkPos.getBlockZ(i/16);
@@ -219,8 +179,9 @@ public class MeadowGrovePiece extends StructurePiece {
 
             grovePiece.buildGroveLayer(
                     chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
-                    featureGetter, localRadius, localHeight, localDepth, blendWidth, rimSize);
+                    featureGetter, rampFeatureGetter, localRadius, localHeight, localDepth, blendWidth, rimSize);
             featureGetter.nextIndex();
+            rampFeatureGetter.nextIndex();
         }
         if (unsafeBoundingBox.valid()) {
             grovePiece.boundingBox = unsafeBoundingBox.toBoundingBox();
@@ -229,7 +190,7 @@ public class MeadowGrovePiece extends StructurePiece {
 
 
     private Optional<Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>>> buildGroveLayer(ChunkAccess chunk, ImprovedNoise noiseSampler, UnsafeBoundingBox unsafeBoundingBox, BlockPos.MutableBlockPos pos, RandomSource random,
-                                                                                           FeatureDataGetter featureGetter, double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize) {
+                                                                                           FeatureDataGetter featureGetter, FeatureDataGetter rampFeatureGetter, double localRadius, double localHeight, double localDepth, int blendWidth, int rimSize) {
 
         int centerY = groveCenter.getY();
         pos.setY(centerY);
@@ -343,7 +304,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 placeWater, waterDelta, useLakeGrass, lakeGrassDelta, waterStartingPoint,
                 calcifiedRegionOptional.orElse(null), surfaceFeature, ceilingFeature);
 
-        addRamps(chunk, noiseSampler, random, pos, rampBlockPattern, featureGetter, rampStartingHeight, pos.getX(), pos.getZ(), rampHeight, rampNoise, sqrtDistance, offset);
+        addRamps(chunk, noiseSampler, random, pos, rampBlockPattern, rampFeatureGetter, rampStartingHeight, pos.getX(), pos.getZ(), rampHeight, rampNoise, sqrtDistance, offset);
         return Optional.empty();
     }
 
@@ -409,7 +370,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 unsafeBoundingBox.encapsulate(pos);
 
                 if (y == surfaceAirPocketEndPoint + 1) {
-                    Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature;
+                    Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> feature = null;
                     if (surfaceFeature != null) {
                         feature = Pair.of(pos.immutable(), surfaceFeature);
                     }

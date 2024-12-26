@@ -54,7 +54,9 @@ public class MooMooCow extends Cow implements IForgeShearable {
     }
 
     public static boolean checkMooMooSpawnRules(EntityType<? extends Animal> pAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
-        return pLevel.getBlockState(pPos.below()).is(MeadowBlockTagRegistry.MOOMOO_CAN_SPAWN_ON) && isBrightEnoughToSpawn(pLevel, pPos);
+        boolean brightEnoughToSpawn = isBrightEnoughToSpawn(pLevel, pPos);
+        boolean b = pLevel.getBlockState(pPos.below()).is(MeadowBlockTagRegistry.MOOMOO_CAN_SPAWN_ON);
+        return b && brightEnoughToSpawn;
     }
 
     @Override

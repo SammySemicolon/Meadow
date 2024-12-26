@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow.data.recipe;
 
+import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.common.block.mineral.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.item.*;
@@ -62,6 +63,11 @@ public class MeadowCraftingRecipes implements IConditionBuilder {
                 .define('Y', MeadowItemRegistry.CALCIFIED_FRAGMENT.get())
                 .pattern("XY").pattern("YX")
                 .unlockedBy("has_calcified_fragment", hasCalcifiedFragment).save(consumer);
+
+        shapeless(RecipeCategory.DECORATIONS, Items.BLUE_DYE, 1)
+                .requires(MeadowItemRegistry.CALCIFIED_FRAGMENT.get())
+                .unlockedBy("has_fragment", has(MeadowItemRegistry.CALCIFIED_FRAGMENT.get()))
+                .save(consumer, MeadowMod.meadowModPath("blue_dye_from_calcification"));
 
         smelting(Ingredient.of(MeadowItemRegistry.CALCIFIED_FRAGMENT.get()), RecipeCategory.MISC, MeadowItemRegistry.CALCIFIED_BRICK.get(), 0.1f, 200)
                 .unlockedBy("has_calcified_fragment", hasCalcifiedFragment)

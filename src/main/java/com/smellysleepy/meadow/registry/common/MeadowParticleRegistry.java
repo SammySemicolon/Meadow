@@ -12,7 +12,7 @@ public class MeadowParticleRegistry {
 
     public static RegistryObject<LodestoneWorldParticleType> SHINY_GLIMMER = PARTICLES.register("shiny_glimmer", LodestoneWorldParticleType::new);
 
-    public static RegistryObject<LodestoneWorldParticleType> ASPEN_LEAVES = PARTICLES.register("falling_leaves", LodestoneWorldParticleType::new);
+    public static RegistryObject<LodestoneWorldParticleType> ASPEN_LEAVES = PARTICLES.register("aspen_leaf", LodestoneWorldParticleType::new);
 
 
     public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
