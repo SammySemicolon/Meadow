@@ -1,11 +1,10 @@
 package com.smellysleepy.meadow.data;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.block.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.block.mineral.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.item.BlockItem;
@@ -17,7 +16,6 @@ import net.minecraftforge.registries.*;
 import team.lodestar.lodestone.helpers.DataHelper;
 
 import java.util.HashSet;
-import java.util.Set;
 import java.util.function.*;
 
 public class MeadowLangDatagen extends LanguageProvider {

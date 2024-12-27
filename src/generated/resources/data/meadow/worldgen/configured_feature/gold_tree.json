@@ -42,18 +42,25 @@
         "minHeight": 4
       },
       {
+        "type": "meadow:offset",
+        "xOffset": 0,
+        "yOffset": -1,
+        "zOffset": 0
+      },
+      {
         "type": "meadow:leaf_blob",
         "leafSizes": [
           2,
           3,
-          4,
-          2
+          3,
+          2,
+          1
         ]
       },
       {
         "type": "meadow:offset",
         "xOffset": 0,
-        "yOffset": -3,
+        "yOffset": -2,
         "zOffset": 0
       },
       {
@@ -69,6 +76,7 @@
         "type": "meadow:leaf_blob",
         "leafSizes": [
           2,
+          3,
           3,
           2
         ]

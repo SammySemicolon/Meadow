@@ -9,6 +9,7 @@ import net.minecraft.core.*;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.*;
 import net.minecraft.sounds.*;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -50,6 +51,12 @@ public class MooMooCow extends Cow implements IForgeShearable {
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.15)
                 .add(Attributes.ARMOR, 4.0);
+    }
+
+    public static boolean checkMooMooSpawnRules(EntityType<? extends Animal> pAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
+        boolean brightEnoughToSpawn = isBrightEnoughToSpawn(pLevel, pPos);
+        boolean b = pLevel.getBlockState(pPos.below()).is(MeadowBlockTagRegistry.MOOMOO_CAN_SPAWN_ON);
+        return b && brightEnoughToSpawn;
     }
 
     @Override
@@ -185,7 +192,6 @@ public class MooMooCow extends Cow implements IForgeShearable {
             this.navigation.moveTo(pos.x, pos.y, pos.z, 1.0D);
         }
     }
-
 
     public void setIsCurious(boolean pIsInterested) {
         this.entityData.set(DATA_CURIOUS_ID, pIsInterested);

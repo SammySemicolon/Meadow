@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.data.block;
 
 import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.*;
-import com.smellysleepy.meadow.common.block.mineral_flora.*;
+import com.smellysleepy.meadow.common.block.mineral.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.block.*;
 import com.smellysleepy.meadow.registry.common.item.*;
@@ -94,8 +94,10 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
 
             takeAll(blocks, b -> b.get() instanceof SaplingBlock).forEach(b -> add(b.get(), createSingleItemTable(b.get())));
 
-            takeAll(blocks, b -> b.get() instanceof TallPearlFlowerBlock).forEach(b -> add(b.get(), createTallPearlflowerDrop(b.get())));
-            takeAll(blocks, b -> b.get() instanceof PearlFlowerBlock).forEach(b -> add(b.get(), createPearlflowerDrop(b.get())));
+            takeAll(blocks, b -> b.get() instanceof WiltedTallPearlFlowerBlock).forEach(b -> add(b.get(), createTallPearlflowerDrop(b.get(), Items.STICK)));
+            takeAll(blocks, b -> b.get() instanceof WiltedPearlFlowerBlock).forEach(b -> add(b.get(), createPearlflowerDrop(b.get(), Items.STICK)));
+            takeAll(blocks, b -> b.get() instanceof TallPearlFlowerBlock).forEach(b -> add(b.get(), createTallPearlflowerDrop(b.get(), MeadowItemRegistry.PEARLFLOWER_BUD.get())));
+            takeAll(blocks, b -> b.get() instanceof PearlFlowerBlock).forEach(b -> add(b.get(), createPearlflowerDrop(b.get(), MeadowItemRegistry.PEARLFLOWER_BUD.get())));
 
             takeAll(blocks, b -> b.get() instanceof DoublePlantBlock).forEach(b -> add(b.get(), createTallPlantDrop(b.get())));
             takeAll(blocks, b -> b.get() instanceof BushBlock).forEach(b -> add(b.get(), createConditionalDrop(b.get(), HAS_SHEARS_OR_SILK_TOUCH)));
@@ -119,12 +121,12 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
                             )));
         }
 
-        protected LootTable.Builder createTallPearlflowerDrop(Block block) {
+        protected LootTable.Builder createTallPearlflowerDrop(Block block, Item drop) {
             var upperCondition = IS_UPPER_DOUBLE_PLANT.apply(block);
             var lowerCondition = IS_LOWER_DOUBLE_PLANT.apply(block);
 
             return LootTable.lootTable()
-                    .withPool(LootPool.lootPool().add(LootItem.lootTableItem(MeadowItemRegistry.PEARLFLOWER_BUD.get()))
+                    .withPool(LootPool.lootPool().add(LootItem.lootTableItem(drop))
                             .when(AnyOfCondition.anyOf(
                                     AllOfCondition.allOf(HAS_NO_SHEARS_OR_SILK_TOUCH, upperCondition),
                                     AllOfCondition.allOf(HAS_NO_SHEARS_OR_SILK_TOUCH, lowerCondition)
@@ -136,9 +138,9 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
                             )));
         }
 
-        protected LootTable.Builder createPearlflowerDrop(Block block) {
+        protected LootTable.Builder createPearlflowerDrop(Block block, Item drop) {
             return createSilkTouchOrShearsDispatchTable(block,
-                    LootItem.lootTableItem(MeadowItemRegistry.PEARLFLOWER_BUD.get())
+                    LootItem.lootTableItem(drop)
                             .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
         }
 

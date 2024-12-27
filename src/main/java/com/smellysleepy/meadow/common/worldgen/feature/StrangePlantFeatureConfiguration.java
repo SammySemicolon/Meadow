@@ -2,7 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.feature;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import com.smellysleepy.meadow.common.block.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.block.mineral.MineralFloraRegistryBundle;
 import net.minecraft.core.registries.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.levelgen.feature.configurations.*;

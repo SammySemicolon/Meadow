@@ -1,7 +1,8 @@
 package com.smellysleepy.meadow.data.block;
 
 import com.smellysleepy.meadow.*;
-import com.smellysleepy.meadow.common.block.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.WiltedPearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.mineral.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.TallPearlFlowerBlock;
 import com.smellysleepy.meadow.registry.common.*;
@@ -47,6 +48,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 
         setTexturePath("pearlflower/");
         DataHelper.getAll(blocks, b -> b.get() instanceof TallPearlFlowerBlock).forEach(b -> BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, b));
+        DataHelper.getAll(blocks, b -> b.get() instanceof WiltedPearlFlowerBlock).forEach(b -> BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, b));
         DataHelper.getAll(blocks, b -> b.get() instanceof PearlFlowerBlock).forEach(b -> MeadowBlockStateSmithTypes.SMALL_TALL_CROSS_MODEL_BLOCK.act(data, b));
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.PEARLLIGHT);
 

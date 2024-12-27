@@ -149,7 +149,8 @@ public class MeadowBlockProperties {
 
     public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
+                .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MOOMOO_CAN_SPAWN_ON)
+                .addTags(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
                 .addTags(BlockTags.DIRT)
                 .addTags(BlockTags.MINEABLE_WITH_SHOVEL)
                 .isValidSpawn(((pState, pLevel, pPos, pValue) -> pValue.equals(MeadowEntityRegistry.MOO_MOO.get())))
@@ -201,10 +202,18 @@ public class MeadowBlockProperties {
     }
 
     public static LodestoneBlockProperties SMALL_PEARLFLOWER_PROPERTIES() {
-        return PEARLFLOWER_PROPERTIES().addTag(BlockTags.SMALL_FLOWERS);
+        return PEARLFLOWER_PROPERTIES().addTag(BlockTags.SMALL_FLOWERS).addTags(MeadowBlockTagRegistry.MOOMOO_EDIBLE);
     }
 
     public static LodestoneBlockProperties TALL_PEARLFLOWER_PROPERTIES() {
+        return PEARLFLOWER_PROPERTIES().addTag(BlockTags.TALL_FLOWERS).addTags(MeadowBlockTagRegistry.MOOMOO_EDIBLE);
+    }
+
+    public static LodestoneBlockProperties SMALL_WILTED_PEARLFLOWER_PROPERTIES() {
+        return PEARLFLOWER_PROPERTIES().addTag(BlockTags.SMALL_FLOWERS);
+    }
+
+    public static LodestoneBlockProperties TALL_WILTED_PEARLFLOWER_PROPERTIES() {
         return PEARLFLOWER_PROPERTIES().addTag(BlockTags.TALL_FLOWERS);
     }
 

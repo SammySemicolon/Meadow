@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral;
 
 import com.smellysleepy.meadow.common.worldgen.feature.tree.SimpleTreeGrower;
 import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;

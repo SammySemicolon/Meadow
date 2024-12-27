@@ -5,8 +5,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearllampBlock;
 import com.smellysleepy.meadow.common.block.meadow.leaves.HangingMeadowLeavesBlock;
-import com.smellysleepy.meadow.common.block.meadow.leaves.MeadowLeavesBlock;
-import com.smellysleepy.meadow.common.block.mineral_flora.MineralLeavesBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.resources.model.BakedModel;

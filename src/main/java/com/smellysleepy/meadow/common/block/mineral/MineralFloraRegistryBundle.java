@@ -1,7 +1,7 @@
-package com.smellysleepy.meadow.common.block.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.effect.*;
+import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockProperties;
 import com.smellysleepy.meadow.registry.common.MeadowItemProperties;
 import net.minecraft.core.registries.Registries;
@@ -17,11 +17,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraftforge.registries.RegistryObject;
+import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
 import java.util.function.*;
 
-import static com.smellysleepy.meadow.registry.common.MeadowMobEffectRegistry.EFFECTS;
 import static com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry.BLOCKS;
 import static com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry.register;
 
@@ -38,6 +38,8 @@ public class MineralFloraRegistryBundle {
     public final ResourceKey<ConfiguredFeature<?, ?>> configuredLeavesBonemealFeature;
 
     public final ResourceKey<PlacedFeature> placedTreeFeature;
+
+    public final RegistryObject<LodestoneWorldParticleType> particle;
 
     public final RegistryObject<Block> grassBlock;
     public final RegistryObject<Item> grassBlockItem;
@@ -61,6 +63,7 @@ public class MineralFloraRegistryBundle {
     public final RegistryObject<Item> candyItem;
     public final RegistryObject<Item> pastryItem;
 
+
     public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Supplier<MobEffect> effectSupplier, Color color, Block oreBlock, TagKey<Block> tag) {
         this.id = id;
         var prefix = id.getPath();
@@ -73,6 +76,8 @@ public class MineralFloraRegistryBundle {
         configuredLeavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));
 
         placedTreeFeature = ResourceKey.create(Registries.PLACED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree"));
+
+        particle = MeadowParticleRegistry.PARTICLES.register(prefix + "_leaf", LodestoneWorldParticleType::new);
 
         var grassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_grass_bonemeal"));
         var leavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));
@@ -88,10 +93,10 @@ public class MineralFloraRegistryBundle {
         grassBlock = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(grassBlockProperties, grassBonemealFeature));
         grassBlockItem = register(prefix + "_grass_block", itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
 
-        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(leavesProperties, leavesBonemealFeature, color));
+        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(leavesProperties, particle, leavesBonemealFeature, color));
         leavesBlockItem = register(prefix + "_leaves", itemProperties, (p) -> new BlockItem(leavesBlock.get(), p));
 
-        hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, color));
+        hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, particle, color));
         hangingLeavesBlockItem = register("hanging_" + prefix + "_leaves", itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
 
         saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(saplingProperties, feature, tag));

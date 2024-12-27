@@ -1,8 +1,12 @@
 {
   "values": [
     "meadow:rocky_pearlflower",
+    "meadow:wilted_calcified_pearlflower",
+    "meadow:wilted_grassy_pearlflower",
     "meadow:marine_pearlflower",
+    "meadow:wilted_marine_pearlflower",
     "meadow:calcified_pearlflower",
-    "meadow:grassy_pearlflower"
+    "meadow:grassy_pearlflower",
+    "meadow:wilted_rocky_pearlflower"
   ]
 }

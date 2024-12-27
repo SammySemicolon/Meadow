@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.events;
 
 import com.smellysleepy.meadow.common.effect.*;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.eventbus.api.*;
@@ -18,6 +19,5 @@ public class RuntimeEvents {
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         CopperFruitEffect.onRightClickBlock(event);
     }
-
 }
 

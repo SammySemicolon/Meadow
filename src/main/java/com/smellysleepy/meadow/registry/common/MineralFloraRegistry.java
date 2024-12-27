@@ -3,7 +3,7 @@ package com.smellysleepy.meadow.registry.common;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.block.mineral_flora.MineralFloraRegistryBundle;
+import com.smellysleepy.meadow.common.block.mineral.MineralFloraRegistryBundle;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +12,8 @@ import net.minecraft.world.effect.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.RegistryObject;
+import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -44,7 +46,8 @@ public class MineralFloraRegistry {
     }
 
     public static MineralFloraRegistryBundle register(String prefix, Supplier<MobEffect> effect, Color color, Block ore, TagKey<Block> tag) {
-        return register(MeadowMod.meadowModPath(prefix), ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree")), effect, color, ore, tag);
+        return register(MeadowMod.meadowModPath(prefix), ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree")),
+                effect, color, ore, tag);
     }
 
     public static MineralFloraRegistryBundle register(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> key, Supplier<MobEffect> effect, Color color, Block ore, TagKey<Block> tag) {

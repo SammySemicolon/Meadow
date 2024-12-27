@@ -1,10 +1,12 @@
 package com.smellysleepy.meadow.common.entity.goal;
 
+import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearlflowerReplacements;
 import com.smellysleepy.meadow.common.entity.*;
 import com.smellysleepy.meadow.registry.common.tags.*;
 import net.minecraft.core.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.*;
 
 import java.util.*;
@@ -49,7 +51,9 @@ public class EatPearlFlowerGoal extends Goal {
             if (objectOfInterest != null) {
                 final BlockState blockState = level.getBlockState(objectOfInterest);
                 if (blockState.is(MeadowBlockTagRegistry.MOOMOO_EDIBLE)) {
+                    Block block = blockState.getBlock();
                     level.destroyBlock(objectOfInterest, false);
+                    PearlflowerReplacements.performExchange(block, level, objectOfInterest, blockState);
                     cow.ate();
                 }
             }

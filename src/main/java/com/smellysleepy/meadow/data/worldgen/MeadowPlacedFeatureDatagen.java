@@ -1,21 +1,16 @@
 package com.smellysleepy.meadow.data.worldgen;
 
 import com.google.common.collect.*;
-import com.smellysleepy.meadow.common.block.mineral_flora.*;
-import com.smellysleepy.meadow.common.worldgen.placement.*;
+import com.smellysleepy.meadow.common.block.mineral.*;
 import com.smellysleepy.meadow.registry.common.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.data.worldgen.*;
-import net.minecraft.data.worldgen.placement.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.blockpredicates.*;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.placement.*;
-import team.lodestar.lodestone.systems.worldgen.*;
-
-import java.util.*;
 
 public class MeadowPlacedFeatureDatagen {
 

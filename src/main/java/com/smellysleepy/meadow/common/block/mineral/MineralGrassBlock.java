@@ -1,6 +1,5 @@
-package com.smellysleepy.meadow.common.block.mineral_flora;
+package com.smellysleepy.meadow.common.block.mineral;
 
-import com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;

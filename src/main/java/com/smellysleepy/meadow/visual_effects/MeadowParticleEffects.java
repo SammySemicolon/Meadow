@@ -13,6 +13,7 @@ import team.lodestar.lodestone.systems.particle.render_types.*;
 import team.lodestar.lodestone.systems.particle.world.*;
 import team.lodestar.lodestone.systems.particle.world.behaviors.components.*;
 import team.lodestar.lodestone.systems.particle.world.options.*;
+import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
 import java.util.function.*;
@@ -21,13 +22,13 @@ import static net.minecraft.util.Mth.*;
 
 public class MeadowParticleEffects {
 
-    public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos) {
-        return fallingLeaves(level, pos, new WorldParticleOptions(MeadowParticleRegistry.FALLING_LEAVES).setBehavior(new SparkBehaviorComponent()));
+    public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos, LodestoneWorldParticleType particleType) {
+        return fallingLeaves(level, pos, new WorldParticleOptions(particleType).setBehavior(new SparkBehaviorComponent()));
     }
     public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 
-        float scale = RandomHelper.randomBetween(rand, 0.075F, 0.1F);
+        float scale = RandomHelper.randomBetween(rand, 0.1F, 0.2F);
         int lifetime = RandomHelper.randomBetween(rand, 250, 300);
 
         var scaleData = GenericParticleData.create(scale, scale * 0.75f).build();

@@ -124,8 +124,17 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> MARINE_PEARLFLOWER = register("marine_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MARINE_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> TALL_CALCIFIED_PEARLFLOWER = register("tall_calcified_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_CALCIFIED_PEARLFLOWER.get(), p));
     public static final RegistryObject<Item> CALCIFIED_PEARLFLOWER = register("calcified_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_PEARLFLOWER.get(), p));
-    public static final RegistryObject<Item> ROCKY_TALL_PEARLFLOWER = register("tall_rocky_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_ROCKY_PEARLFLOWER.get(), p));
-    public static final RegistryObject<Item> ROCKY_PEARLFLOWER = register("rocky_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> TALL_ROCKY_PEARLFLOWER = register("tall_rocky_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_ROCKY_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> ROCKY_PEARLFLOWER = register("rocky_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ROCKY_PEARLFLOWER.get(), p));
+
+    public static final RegistryObject<Item> TALL_WILTED_GRASSY_PEARLFLOWER = register("tall_wilted_grassy_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_WILTED_GRASSY_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> WILTED_GRASSY_PEARLFLOWER = register("wilted_grassy_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.WILTED_GRASSY_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> TALL_WILTED_MARINE_PEARLFLOWER = register("tall_wilted_marine_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_WILTED_MARINE_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> WILTED_MARINE_PEARLFLOWER = register("wilted_marine_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.WILTED_MARINE_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> TALL_WILTED_CALCIFIED_PEARLFLOWER = register("tall_wilted_calcified_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_WILTED_CALCIFIED_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> WILTED_CALCIFIED_PEARLFLOWER = register("wilted_calcified_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.WILTED_CALCIFIED_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> TALL_WILTED_ROCKY_PEARLFLOWER = register("tall_wilted_rocky_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_WILTED_ROCKY_PEARLFLOWER.get(), p));
+    public static final RegistryObject<Item> WILTED_ROCKY_PEARLFLOWER = register("wilted_rocky_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.WILTED_ROCKY_PEARLFLOWER.get(), p));
 
 //    public static final RegistryObject<Item> AUREATE_WHEAT_CROP = register("aureate_wheat_test", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.AUREATE_WHEAT_CROP.get(), p));
     public static final RegistryObject<Item> SHORT_MEADOW_GRASS = register("short_meadow_grass", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), p));
