@@ -1,8 +1,5 @@
 {
   "textures": [
-    "meadow:falling_leaves_0",
-    "meadow:falling_leaves_1",
-    "meadow:falling_leaves_2",
-    "meadow:falling_leaves_3"
+    "meadow:aspen_leaf"
   ]
 }
