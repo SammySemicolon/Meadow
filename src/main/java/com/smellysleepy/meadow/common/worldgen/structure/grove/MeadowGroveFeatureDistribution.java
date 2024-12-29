@@ -21,19 +21,21 @@ public class MeadowGroveFeatureDistribution extends HashMap<ResourceKey<Configur
 
     public static MeadowGroveFeatureDistribution makeDistribution(RandomSource random) {
         int pearlflowerCount = random.nextInt(3, 6);
-        int smallTreeCount = random.nextInt(6, 12);
+        int smallTreeCount = random.nextInt(4, 8);
         int largeTreeCount = random.nextInt(12, 24);
         int largePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 1, 3);
         int mediumPatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 1, 4);
         int smallPatchCount = RandomHelper.randomBetween(random, Easing.SINE_OUT, 1, 5);
+
         int coralCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 1, 4);
         int mossCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 8, 24);
-        int azaleaTreeCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 8);
+        int azaleaTreeCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 1, 4);
         int sugarCaneCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 4, 8);
         int lakeGrassCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 6);
         int largeLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN, 2, 4);
         int mediumLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_IN_OUT, 2, 5);
         int smallLakePatchCount = RandomHelper.randomBetween(random, Easing.SINE_OUT, 2, 6);
+
         int largeStalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_IN, 2, 8);
         int stalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 0, 4);
 

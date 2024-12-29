@@ -175,7 +175,7 @@ public class MeadowGrovePiece extends StructurePiece {
             double localDepth = (int) Mth.clampedLerp(groveDepth * 0.6, groveDepth, depthNoise);
 
             int blendWidth = 48;
-            int rimSize = (int) (localRadius * 0.075);
+            int rimSize = (int) (localRadius * 0.2);
 
             grovePiece.buildGroveLayer(
                     chunk, noiseSampler, unsafeBoundingBox, mutableBlockPos, random,
@@ -203,26 +203,19 @@ public class MeadowGrovePiece extends StructurePiece {
         double distance = pos.distSqr(groveCenter);
         double sqrtDistance = Math.sqrt(distance);
         double delta = (distance - Mth.square(offset)) / Mth.square(radius - offset);
-        double perimeterDelta = (sqrtDistance / radius);
         double flatDelta = -(distance / Mth.square(radius - offset));
-        double shellDelta = -1 + Math.pow(perimeterDelta*0.8f, 2);
-        if (perimeterDelta > 0.6f) {
-            shellDelta = Mth.lerp((perimeterDelta-0.6f)/0.4f, shellDelta, 1);
-        }
-
+        double shellDelta = Mth.clampedLerp(-1, 0, Math.pow((sqrtDistance / (offset+rimSize)) * (sqrtDistance / radius), 3f));
         int height = getGroveHeight(noiseSampler, pos, localHeight, delta);
         int depth = getGroveDepth(noiseSampler, pos, localDepth, delta);
         int flatDepth = getGroveDepth(noiseSampler, pos, localDepth, flatDelta);
         int ceilingAirPocketEndPoint = centerY + height;
         int surfaceAirPocketEndPoint = centerY - depth;
-
-        double shellOffset = Mth.clamp(shellDelta + 1, -1, 0);
-        int topShellHeightOffset = getGroveHeight(noiseSampler, pos, localHeight, shellOffset);
-        int bottomShellDepthOffset = getGroveDepth(noiseSampler, pos, localDepth, shellOffset);
-        int topShellStart = shellDelta > -1 ? centerY : centerY + topShellHeightOffset;
-        int bottomShellStart = shellDelta > -1 ? centerY : centerY - bottomShellDepthOffset;
-        int shellHeight = getGroveHeight(noiseSampler, pos, localHeight, shellDelta) - topShellHeightOffset;
-        int shellDepth = getGroveDepth(noiseSampler, pos, localDepth, shellDelta) - bottomShellDepthOffset;
+        if (delta > 0) {
+            flatDepth = 0;
+            shellDelta += delta*0.8f;
+        }
+        int shellHeight = getGroveHeight(noiseSampler, pos, localHeight, shellDelta);
+        int shellDepth = getGroveDepth(noiseSampler, pos, localDepth, shellDelta);
 
         double calcificationNoise = WorldgenHelper.getNoise(noiseSampler, pos.getX(), pos.getZ(), 25000, 0.02f) * 0.5f;
         var calcifiedRegionOptional = getClosestRegion(CalcifiedRegion.class, pos.getX(), pos.getZ(), calcificationNoise, radius);
@@ -246,6 +239,9 @@ public class MeadowGrovePiece extends StructurePiece {
         boolean useLakeGrass = false;
         double lakeGrassDelta = 0;
 
+        int ceilingHeight = height < 2 ? 0 : (int) Mth.clampedLerp(Mth.floor((2 + height) * 2), 5, height/10f);
+        int surfaceDepth = depth < 6 ? 0 : Mth.floor(depth / 2f);
+
         if (lakeRegionOptional.isPresent()) {
             var pair = lakeRegionOptional.get();
             var lakeRegion = pair.getFirst();
@@ -265,10 +261,7 @@ public class MeadowGrovePiece extends StructurePiece {
             if (lakeDelta > 0.8f) {
                 depthOffsetDelta = Easing.CUBIC_OUT.clamped((lakeDelta-0.8f)/0.2f, depthOffsetDelta, 0);
             }
-            depth += (int) Mth.lerp(depthOffsetDelta, 0, lakeDepth);
-            for (int i = 0; i < depthOffsetDelta*20; i++) {
-                surfacePattern.add(Blocks.RED_STAINED_GLASS.defaultBlockState());
-            }
+            surfaceDepth += (int) Mth.lerp(depthOffsetDelta, 6, 12) - lakeDepth/3;
             boolean isNearWater = lakeDelta >= 0.3f;
             if (isNearWater) {
                 useLakeGrass = true;
@@ -296,9 +289,6 @@ public class MeadowGrovePiece extends StructurePiece {
             }
         }
 
-        int ceilingHeight = Mth.clamp(height < 2 ? 0 : Mth.floor((2 + height) * 2), 0, ceilingPattern.size() - 1);
-        int surfaceDepth = Mth.clamp(depth < 6 ? 0 : Mth.floor(depth / 2f), 0, surfacePattern.size() - 1);
-
         int highestCeilingPoint = ceilingAirPocketEndPoint + ceilingHeight;
         int lowestSurfacePoint = surfaceAirPocketEndPoint - surfaceDepth;
 
@@ -307,7 +297,7 @@ public class MeadowGrovePiece extends StructurePiece {
         int rampHeight = Mth.ceil(flatDepth * Easing.QUINTIC_IN_OUT.clamped(rampNoise, 0.8f, 1.2f));
         List<BlockState> rampBlockPattern = getRampBlockPattern(chunk, noiseSampler, pos, sqrtDistance, offset, rampStartingHeight).getFirst();
 
-        createHorizontalShell(chunk, pos, unsafeBoundingBox, ceilingPattern, shellHeight, topShellStart, surfacePattern, shellDepth, bottomShellStart);
+        createHorizontalShell(chunk, pos, unsafeBoundingBox, shellDelta, ceilingPattern, shellHeight, centerY, surfacePattern, shellDepth, centerY);
 
         if (!pos.closerThan(groveCenter, offset)) {
             return Optional.empty();
@@ -317,12 +307,14 @@ public class MeadowGrovePiece extends StructurePiece {
                 surfacePattern, lowestSurfacePoint, surfaceAirPocketEndPoint, surfaceDepth,
                 placeWater, waterDelta, useLakeGrass, lakeGrassDelta, waterStartingPoint,
                 calcifiedRegionOptional.orElse(null), surfaceFeature, ceilingFeature);
-
+        if (!pos.closerThan(groveCenter, offset)) {
+            return Optional.empty();
+        }
         addRamps(chunk, noiseSampler, random, pos, rampBlockPattern, rampFeatureGetter, rampStartingHeight, pos.getX(), pos.getZ(), rampHeight, rampNoise, sqrtDistance, offset);
         return Optional.empty();
     }
 
-    private void createHorizontalShell(ChunkAccess chunk, BlockPos.MutableBlockPos pos, UnsafeBoundingBox unsafeBoundingBox,
+    private void createHorizontalShell(ChunkAccess chunk, BlockPos.MutableBlockPos pos, UnsafeBoundingBox unsafeBoundingBox, double shellDelta,
                                        List<BlockState> ceilingPattern, int shellHeight, int topShellStart,
                                        List<BlockState> surfacePattern, int shellDepth, int bottomShellStart) {
         //Top half of horizontal shell
@@ -332,9 +324,10 @@ public class MeadowGrovePiece extends StructurePiece {
                 pos.setY(y);
                 unsafeBoundingBox.encapsulate(pos);
                 int index = Mth.clamp(y - topShellStart, 0, ceilingPattern.size()-1);
-//                if (!chunk.getBlockState(pos).isAir()) {
-                    chunk.setBlockState(pos, Blocks.BLUE_STAINED_GLASS.defaultBlockState(), true);
-//                }
+                if (shellDelta > -0.3f && chunk.getBlockState(pos).isAir()) {
+                    continue;
+                }
+                chunk.setBlockState(pos, ceilingPattern.get(index), true);
             }
         }
         //Bottom half of horizontal shell
@@ -344,7 +337,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 pos.setY(y);
                 unsafeBoundingBox.encapsulate(pos);
                 int index = Mth.clamp(bottomShellStart - y, 0, surfacePattern.size()-1);
-                chunk.setBlockState(pos, Blocks.GREEN_STAINED_GLASS.defaultBlockState(), true);
+                chunk.setBlockState(pos, surfacePattern.get(index), true);
             }
         }
     }
