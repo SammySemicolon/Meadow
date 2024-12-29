@@ -197,14 +197,18 @@ public class MeadowGrovePiece extends StructurePiece {
         double shapeRadius = MeadowGroveShape.CIRCLE.distSqr(groveCenter, pos, localRadius);
         double radius = localRadius * shapeRadius;
         double offset = radius - blendWidth - rimSize;
-        if (!pos.closerThan(groveCenter, offset)) {
+        if (!pos.closerThan(groveCenter, radius)) {
             return Optional.empty();
         }
         double distance = pos.distSqr(groveCenter);
         double sqrtDistance = Math.sqrt(distance);
         double delta = (distance - Mth.square(offset)) / Mth.square(radius - offset);
+        double perimeterDelta = (sqrtDistance / radius);
         double flatDelta = -(distance / Mth.square(radius - offset));
-        double shellDelta = Mth.clamp(delta >= 0 ?(-delta*2) / 0.4f : delta / 0.3f, -2, 0);
+        double shellDelta = -1 + Math.pow(perimeterDelta*0.8f, 2);
+        if (perimeterDelta > 0.6f) {
+            shellDelta = Mth.lerp((perimeterDelta-0.6f)/0.4f, shellDelta, 1);
+        }
 
         int height = getGroveHeight(noiseSampler, pos, localHeight, delta);
         int depth = getGroveDepth(noiseSampler, pos, localDepth, delta);
@@ -257,7 +261,14 @@ public class MeadowGrovePiece extends StructurePiece {
                 lakeDepth = Mth.floor(Easing.SINE_OUT.ease(carverDelta, terrainDepth, lakeCarverDepth));
             }
             surfaceAirPocketEndPoint = centerY - lakeDepth;
-
+            float depthOffsetDelta = Easing.CUBIC_OUT.clamped(lakeDelta * 4f, 0, 1);
+            if (lakeDelta > 0.8f) {
+                depthOffsetDelta = Easing.CUBIC_OUT.clamped((lakeDelta-0.8f)/0.2f, depthOffsetDelta, 0);
+            }
+            depth += (int) Mth.lerp(depthOffsetDelta, 0, lakeDepth);
+            for (int i = 0; i < depthOffsetDelta*20; i++) {
+                surfacePattern.add(Blocks.RED_STAINED_GLASS.defaultBlockState());
+            }
             boolean isNearWater = lakeDelta >= 0.3f;
             if (isNearWater) {
                 useLakeGrass = true;
@@ -298,6 +309,9 @@ public class MeadowGrovePiece extends StructurePiece {
 
         createHorizontalShell(chunk, pos, unsafeBoundingBox, ceilingPattern, shellHeight, topShellStart, surfacePattern, shellDepth, bottomShellStart);
 
+        if (!pos.closerThan(groveCenter, offset)) {
+            return Optional.empty();
+        }
         carveOutShape(chunk, random, pos, unsafeBoundingBox, featureGetter, centerY,
                 ceilingPattern, highestCeilingPoint, ceilingAirPocketEndPoint, ceilingHeight,
                 surfacePattern, lowestSurfacePoint, surfaceAirPocketEndPoint, surfaceDepth,
@@ -318,7 +332,9 @@ public class MeadowGrovePiece extends StructurePiece {
                 pos.setY(y);
                 unsafeBoundingBox.encapsulate(pos);
                 int index = Mth.clamp(y - topShellStart, 0, ceilingPattern.size()-1);
-                chunk.setBlockState(pos, ceilingPattern.get(index), true);
+//                if (!chunk.getBlockState(pos).isAir()) {
+                    chunk.setBlockState(pos, Blocks.BLUE_STAINED_GLASS.defaultBlockState(), true);
+//                }
             }
         }
         //Bottom half of horizontal shell
@@ -328,7 +344,7 @@ public class MeadowGrovePiece extends StructurePiece {
                 pos.setY(y);
                 unsafeBoundingBox.encapsulate(pos);
                 int index = Mth.clamp(bottomShellStart - y, 0, surfacePattern.size()-1);
-                chunk.setBlockState(pos, surfacePattern.get(index), true);
+                chunk.setBlockState(pos, Blocks.GREEN_STAINED_GLASS.defaultBlockState(), true);
             }
         }
     }
