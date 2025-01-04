@@ -37,7 +37,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 //        MeadowBlockStateSmithTypes.LAYERED_CROP_BLOCK.act(data, MeadowBlockRegistry.AUREATE_WHEAT_CROP);
 
         setTexturePath("calcification/");
-        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK, MeadowBlockRegistry.CALCIFIED_BRICKS, MeadowBlockRegistry.CHISELED_CALCIFIED_BRICKS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS);
+        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK, MeadowBlockRegistry.CALCIFIED_BRICKS, MeadowBlockRegistry.CHISELED_CALCIFIED_BRICKS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS, MeadowBlockRegistry.HEAVY_CHISELED_CALCIFIED_BRICKS);
         BlockStateSmithTypes.SLAB_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_SLAB, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_SLAB);
         BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_STAIRS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS);
         BlockStateSmithTypes.WALL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_WALL, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_WALL);

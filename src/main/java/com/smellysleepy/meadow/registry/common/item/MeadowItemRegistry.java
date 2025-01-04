@@ -34,6 +34,7 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> CALCIFIED_BRICKS_SLAB = register("calcified_bricks_slab", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_BRICKS_SLAB.get(), p));
     public static final RegistryObject<Item> CALCIFIED_BRICKS_WALL = register("calcified_bricks_wall", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_BRICKS_WALL.get(), p));
     public static final RegistryObject<Item> HEAVY_CALCIFIED_BRICKS = register("heavy_calcified_bricks", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS.get(), p));
+    public static final RegistryObject<Item> HEAVY_CHISELED_CALCIFIED_BRICKS = register("heavy_chiseled_calcified_bricks", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CHISELED_CALCIFIED_BRICKS.get(), p));
     public static final RegistryObject<Item> HEAVY_CALCIFIED_BRICKS_STAIRS = register("heavy_calcified_bricks_stairs", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS.get(), p));
     public static final RegistryObject<Item> HEAVY_CALCIFIED_BRICKS_SLAB = register("heavy_calcified_bricks_slab", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_SLAB.get(), p));
     public static final RegistryObject<Item> HEAVY_CALCIFIED_BRICKS_WALL = register("heavy_calcified_bricks_wall", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_WALL.get(), p));
