@@ -23,6 +23,7 @@
     "meadow:gold_grass_block",
     "meadow:calcified_bricks_stairs",
     "meadow:calcified_bricks_wall",
-    "meadow:diamond_grass_block"
+    "meadow:diamond_grass_block",
+    "meadow:chiseled_calcified_bricks"
   ]
 }

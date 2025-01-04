@@ -33,6 +33,7 @@
     "meadow:calcified_bricks_wall",
     "meadow:calcified_planks_slab",
     "meadow:calcified_planks_stairs",
-    "meadow:calcified_sign"
+    "meadow:calcified_sign",
+    "meadow:chiseled_calcified_bricks"
   ]
 }

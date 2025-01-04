@@ -41,6 +41,7 @@ public class MeadowBlockRegistry {
 
     //region Calcified Blocks
     public static final RegistryObject<Block> CALCIFIED_BRICKS = BLOCKS.register("calcified_bricks", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
+    public static final RegistryObject<Block> CHISELED_CALCIFIED_BRICKS = BLOCKS.register("chiseled_calcified_bricks", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
     public static final RegistryObject<Block> CALCIFIED_BRICKS_STAIRS = BLOCKS.register("calcified_bricks_stairs", () -> new StairBlock(() -> CALCIFIED_BRICKS.get().defaultBlockState(), MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(STAIRS)));
     public static final RegistryObject<Block> CALCIFIED_BRICKS_SLAB = BLOCKS.register("calcified_bricks_slab", () -> new SlabBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(SLABS)));
     public static final RegistryObject<Block> CALCIFIED_BRICKS_WALL = BLOCKS.register("calcified_bricks_wall", () -> new WallBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(WALLS)));
