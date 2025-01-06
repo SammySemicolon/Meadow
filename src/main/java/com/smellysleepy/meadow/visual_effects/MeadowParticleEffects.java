@@ -9,6 +9,7 @@ import team.lodestar.lodestone.systems.particle.*;
 import team.lodestar.lodestone.systems.particle.builder.*;
 import team.lodestar.lodestone.systems.particle.data.*;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData;
 import team.lodestar.lodestone.systems.particle.render_types.*;
 import team.lodestar.lodestone.systems.particle.world.*;
 import team.lodestar.lodestone.systems.particle.world.behaviors.components.*;
@@ -66,6 +67,33 @@ public class MeadowParticleEffects {
                 .setLifetime(lifetime)
                 .setNaturalLighting()
                 .addTickActor(fall);
+
+        return new ParticleEffectSpawner(level, pos, worldParticleBuilder);
+    }
+    public static ParticleEffectSpawner pearlflowerShine(Level level, Vec3 pos, LodestoneWorldParticleType particleType) {
+        return pearlflowerShine(level, pos, new WorldParticleOptions(particleType));
+    }
+    public static ParticleEffectSpawner pearlflowerShine(Level level, Vec3 pos, WorldParticleOptions options) {
+        var rand = level.getRandom();
+
+        float scale = RandomHelper.randomBetween(rand, 0.075F, 0.15F);
+        int lifetime = RandomHelper.randomBetween(rand, 150, 200);
+
+        var scaleData = GenericParticleData.create(scale, scale * 0.75f).build();
+        var transparencyData = GenericParticleData.create(0f, 1f, 0.4f).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
+        var spinData = SpinParticleData.createRandomDirection(rand, 0f, 0.1f, 0f).randomSpinOffset(rand).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
+
+        var colorData = ColorParticleData.create(new Color(233, 195, 41), new Color(195, 118, 85)).build();
+        var worldParticleBuilder = WorldParticleBuilder.create(options)
+                .setDiscardFunction(SimpleParticleOptions.ParticleDiscardFunctionType.ENDING_CURVE_INVISIBLE)
+                .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.RANDOM_SPRITE)
+                .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                .setTransparencyData(transparencyData)
+                .setScaleData(scaleData)
+                .setColorData(colorData)
+                .setSpinData(spinData)
+                .setRandomMotion(0.002f, 0.005f)
+                .setLifetime(lifetime);
 
         return new ParticleEffectSpawner(level, pos, worldParticleBuilder);
     }

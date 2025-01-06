@@ -1,10 +1,14 @@
 package com.smellysleepy.meadow.common.block.meadow.flora.pearlflower;
 
+import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
 import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.visual_effects.MeadowParticleEffects;
+import com.smellysleepy.meadow.visual_effects.StrangeFloraParticleEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +26,10 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolActions;
+import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry;
+import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner;
 
 import javax.annotation.Nullable;
 
@@ -37,7 +44,16 @@ public class PearlFlowerBlock extends BushBlock implements SimpleWaterloggedBloc
         registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     }
 
-
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (pRandom.nextInt(10) == 0) {
+            double posX = (double) pPos.getX() + 0.3f + pRandom.nextDouble() * 0.7f;
+            double posY = (double) pPos.getY() + 0.6f + pRandom.nextDouble() * 0.2f;
+            double posZ = (double) pPos.getZ() + 0.3f + pRandom.nextDouble() * 0.7f;
+            ParticleEffectSpawner particles = MeadowParticleEffects.pearlflowerShine(pLevel, new Vec3(posX, posY, posZ), MeadowParticleRegistry.SHINY_GLIMMER.get());
+            particles.spawnParticles();
+        }
+    }
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);

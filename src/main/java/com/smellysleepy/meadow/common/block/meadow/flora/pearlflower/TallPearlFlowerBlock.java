@@ -1,15 +1,13 @@
 package com.smellysleepy.meadow.common.block.meadow.flora.pearlflower;
 
-import com.smellysleepy.meadow.common.block.meadow.wood.NaturalThinMeadowLogBlock;
-import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
+import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
 import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.visual_effects.MeadowParticleEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -19,8 +17,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -30,13 +26,11 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ForgeMod;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 
 public class TallPearlFlowerBlock extends TallFlowerBlock {
 
@@ -46,7 +40,19 @@ public class TallPearlFlowerBlock extends TallFlowerBlock {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     }
-
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (pState.getValue(HALF).equals(DoubleBlockHalf.UPPER)) {
+            return;
+        }
+        if (pRandom.nextInt(10) == 0) {
+            double posX = (double) pPos.getX() + 0.3f + pRandom.nextDouble() * 0.7f;
+            double posY = (double) pPos.getY() + 1.4f + pRandom.nextDouble() * 0.2f;
+            double posZ = (double) pPos.getZ() + 0.3f + pRandom.nextDouble() * 0.7f;
+            ParticleEffectSpawner particles = MeadowParticleEffects.pearlflowerShine(pLevel, new Vec3(posX, posY, posZ), MeadowParticleRegistry.SHINY_GLIMMER.get());
+            particles.spawnParticles();
+        }
+    }
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);

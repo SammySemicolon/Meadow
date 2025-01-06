@@ -198,6 +198,7 @@ public class MeadowBlockProperties {
                 .lightLevel(s -> 12)
                 .noCollission()
                 .noOcclusion()
+                .randomTicks()
                 .instabreak();
     }
 
