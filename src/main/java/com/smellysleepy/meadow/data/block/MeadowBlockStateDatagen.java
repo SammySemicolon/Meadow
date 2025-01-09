@@ -10,6 +10,7 @@ import com.smellysleepy.meadow.registry.common.block.*;
 import net.minecraft.data.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.*;
 import team.lodestar.lodestone.helpers.DataHelper;
@@ -37,7 +38,9 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 //        MeadowBlockStateSmithTypes.LAYERED_CROP_BLOCK.act(data, MeadowBlockRegistry.AUREATE_WHEAT_CROP);
 
         setTexturePath("calcification/");
-        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK, MeadowBlockRegistry.CALCIFIED_BRICKS, MeadowBlockRegistry.CHISELED_CALCIFIED_BRICKS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS, MeadowBlockRegistry.HEAVY_CHISELED_CALCIFIED_BRICKS);
+        BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_EARTH, MeadowBlockRegistry.CALCIFIED_ROCK, MeadowBlockRegistry.CALCIFIED_BRICKS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS);
+        BlockStateSmithTypes.DIRECTIONAL_BLOCK.act(data, MeadowBlockRegistry.HEAVY_CHISELED_CALCIFIED_BRICKS);
+        DIRECTIONAL_BOTTOM_TOP_BLOCK.act(data, MeadowBlockRegistry.CHISELED_CALCIFIED_BRICKS);
         BlockStateSmithTypes.SLAB_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_SLAB, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_SLAB);
         BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_STAIRS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS);
         BlockStateSmithTypes.WALL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_WALL, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_WALL);
@@ -115,6 +118,14 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         }
         setTexturePath("");
     }
+
+    //TODO: Move this to Lodestone
+    public static BlockStateSmith<Block> DIRECTIONAL_BOTTOM_TOP_BLOCK = new BlockStateSmith<>(Block.class, (block, provider) -> {
+        String name = provider.getBlockName(block);
+        ResourceLocation textureName = provider.getBlockTexture(name);
+        BlockModelBuilder directionalModel = provider.models().cubeBottomTop(name, textureName, provider.extend(textureName, "_bottom"), provider.extend(textureName, "_top"));
+        provider.directionalBlock(block, directionalModel);
+    });
 
     public ModelFile meadowGrassBlockModel(Block block) {
         String name = getBlockName(block);

@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
-    "all": "meadow:block/calcification/heavy_chiseled_calcified_bricks"
+    "end": "meadow:block/calcification/heavy_chiseled_calcified_bricks_top",
+    "side": "meadow:block/calcification/heavy_chiseled_calcified_bricks"
   }
 }
