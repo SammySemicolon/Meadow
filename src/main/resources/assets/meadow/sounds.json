@@ -1,0 +1,12 @@
+{
+  "calcification_motif": {
+    "sounds": [
+      "meadow:block/calcification/motif1",
+      "meadow:block/calcification/motif2",
+      "meadow:block/calcification/motif3",
+      "meadow:block/calcification/motif4",
+      "meadow:block/calcification/motif5",
+      "meadow:block/calcification/motif6"
+    ]
+  }
+}

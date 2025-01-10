@@ -7,7 +7,6 @@ import com.smellysleepy.meadow.common.block.meadow.flora.*;
 import com.smellysleepy.meadow.common.block.meadow.leaves.*;
 import com.smellysleepy.meadow.common.block.meadow.wood.*;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.SimpleTreeGrower;
-import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import net.minecraft.client.color.block.*;
 import net.minecraft.tags.*;
@@ -41,16 +40,16 @@ public class MeadowBlockRegistry {
     //endregion
 
     //region Calcified Blocks
-    public static final RegistryObject<Block> CALCIFIED_BRICKS = BLOCKS.register("calcified_bricks", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
-    public static final RegistryObject<Block> CHISELED_CALCIFIED_BRICKS = BLOCKS.register("chiseled_calcified_bricks", () -> new LodestoneDirectionalBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
-    public static final RegistryObject<Block> CALCIFIED_BRICKS_STAIRS = BLOCKS.register("calcified_bricks_stairs", () -> new StairBlock(() -> CALCIFIED_BRICKS.get().defaultBlockState(), MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(STAIRS)));
-    public static final RegistryObject<Block> CALCIFIED_BRICKS_SLAB = BLOCKS.register("calcified_bricks_slab", () -> new SlabBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(SLABS)));
-    public static final RegistryObject<Block> CALCIFIED_BRICKS_WALL = BLOCKS.register("calcified_bricks_wall", () -> new WallBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(WALLS)));
-    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS = BLOCKS.register("heavy_calcified_bricks", () -> new Block(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
-    public static final RegistryObject<Block> HEAVY_CHISELED_CALCIFIED_BRICKS = BLOCKS.register("heavy_chiseled_calcified_bricks", () -> new LodestoneDirectionalBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES()));
-    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS_STAIRS = BLOCKS.register("heavy_calcified_bricks_stairs", () -> new StairBlock(() -> HEAVY_CALCIFIED_BRICKS.get().defaultBlockState(), MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(STAIRS)));
-    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS_SLAB = BLOCKS.register("heavy_calcified_bricks_slab", () -> new SlabBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(SLABS)));
-    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS_WALL = BLOCKS.register("heavy_calcified_bricks_wall", () -> new WallBlock(MeadowBlockProperties.CALCIFIED_BLOCK_PROPERTIES().addTags(WALLS)));
+    public static final RegistryObject<Block> CALCIFIED_BRICKS = BLOCKS.register("calcified_bricks", () -> new Block(MeadowBlockProperties.CALCIFIED_BRICK_PROPERTIES()));
+    public static final RegistryObject<Block> CHISELED_CALCIFIED_BRICKS = BLOCKS.register("chiseled_calcified_bricks", () -> new LodestoneDirectionalBlock(MeadowBlockProperties.CALCIFIED_BRICK_PROPERTIES()));
+    public static final RegistryObject<Block> CALCIFIED_BRICKS_STAIRS = BLOCKS.register("calcified_bricks_stairs", () -> new StairBlock(() -> CALCIFIED_BRICKS.get().defaultBlockState(), MeadowBlockProperties.CALCIFIED_BRICK_PROPERTIES().addTags(STAIRS)));
+    public static final RegistryObject<Block> CALCIFIED_BRICKS_SLAB = BLOCKS.register("calcified_bricks_slab", () -> new SlabBlock(MeadowBlockProperties.CALCIFIED_BRICK_PROPERTIES().addTags(SLABS)));
+    public static final RegistryObject<Block> CALCIFIED_BRICKS_WALL = BLOCKS.register("calcified_bricks_wall", () -> new WallBlock(MeadowBlockProperties.CALCIFIED_BRICK_PROPERTIES().addTags(WALLS)));
+    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS = BLOCKS.register("heavy_calcified_bricks", () -> new Block(MeadowBlockProperties.HEAVY_CALCIFIED_BRICK_PROPERTIES()));
+    public static final RegistryObject<Block> HEAVY_CHISELED_CALCIFIED_BRICKS = BLOCKS.register("heavy_chiseled_calcified_bricks", () -> new LodestoneDirectionalBlock(MeadowBlockProperties.HEAVY_CALCIFIED_BRICK_PROPERTIES()));
+    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS_STAIRS = BLOCKS.register("heavy_calcified_bricks_stairs", () -> new StairBlock(() -> HEAVY_CALCIFIED_BRICKS.get().defaultBlockState(), MeadowBlockProperties.HEAVY_CALCIFIED_BRICK_PROPERTIES().addTags(STAIRS)));
+    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS_SLAB = BLOCKS.register("heavy_calcified_bricks_slab", () -> new SlabBlock(MeadowBlockProperties.HEAVY_CALCIFIED_BRICK_PROPERTIES().addTags(SLABS)));
+    public static final RegistryObject<Block> HEAVY_CALCIFIED_BRICKS_WALL = BLOCKS.register("heavy_calcified_bricks_wall", () -> new WallBlock(MeadowBlockProperties.HEAVY_CALCIFIED_BRICK_PROPERTIES().addTags(WALLS)));
 
     //endregion
 

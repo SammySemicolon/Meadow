@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.registry.common;
+package com.smellysleepy.meadow.registry.common.block;
 
 import net.minecraft.world.level.block.state.properties.*;
 

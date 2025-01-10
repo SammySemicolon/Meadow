@@ -1,5 +1,6 @@
-package com.smellysleepy.meadow.registry.common;
+package com.smellysleepy.meadow.registry.common.item;
 
+import com.smellysleepy.meadow.registry.common.MeadowCreativeTabRegistry;
 import net.minecraft.world.item.*;
 import team.lodestar.lodestone.systems.item.*;
 

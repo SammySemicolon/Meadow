@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.function.*;
 
 import static com.smellysleepy.meadow.MeadowMod.MEADOW;
-import static com.smellysleepy.meadow.registry.common.MeadowItemProperties.DEFAULT_PROPERTIES;
+import static com.smellysleepy.meadow.registry.common.item.MeadowItemProperties.DEFAULT_PROPERTIES;
 import static team.lodestar.lodestone.systems.item.LodestoneItemProperties.TAB_SORTING;
 
 public class MeadowItemRegistry {

@@ -10,6 +10,7 @@ import net.minecraftforge.fml.javafmlmod.*;
 import org.apache.logging.log4j.*;
 
 import static com.smellysleepy.meadow.registry.common.MeadowMobEffectRegistry.EFFECTS;
+import static com.smellysleepy.meadow.registry.common.MeadowSoundRegistry.SOUNDS;
 import static com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry.BLOCKS;
 import static com.smellysleepy.meadow.registry.common.MeadowEntityRegistry.ENTITY_TYPES;
 import static com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry.*;
@@ -32,6 +33,7 @@ public class MeadowMod {
         MineralTreePartTypes.init();
         MineralFloraRegistry.init();
 
+        SOUNDS.register(modBus);
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
         EFFECTS.register(modBus);

@@ -3,7 +3,7 @@ package com.smellysleepy.meadow.common.block.mineral;
 import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockProperties;
-import com.smellysleepy.meadow.registry.common.MeadowItemProperties;
+import com.smellysleepy.meadow.registry.common.item.MeadowItemProperties;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

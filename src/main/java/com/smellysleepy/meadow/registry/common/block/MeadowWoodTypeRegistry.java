@@ -1,7 +1,6 @@
 package com.smellysleepy.meadow.registry.common.block;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.registry.common.MeadowBlockSetTypes;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;

@@ -19,7 +19,20 @@ public class MeadowBlockProperties {
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION, MeadowBlockTagRegistry.CALCIFIED_PEARLFLOWER_GENERATES_ON)
                 .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
                 .mapColor(MapColor.COLOR_BLUE)
-                .sound(SoundType.NETHERRACK);
+                .sound(MeadowSoundRegistry.CALCIFIED_ROCK);
+    }
+
+    public static LodestoneBlockProperties CALCIFIED_BRICK_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(0.75F, 4.0F)
+                .addTags(MeadowBlockTagRegistry.CALCIFICATION)
+                .addTags(BlockTags.MINEABLE_WITH_PICKAXE)
+                .mapColor(MapColor.COLOR_BLUE)
+                .sound(MeadowSoundRegistry.CALCIFIED_BRICK);
+    }
+
+    public static LodestoneBlockProperties HEAVY_CALCIFIED_BRICK_PROPERTIES() {
+        return CALCIFIED_BRICK_PROPERTIES().sound(MeadowSoundRegistry.HEAVY_CALCIFIED_BRICK);
     }
 
     public static LodestoneBlockProperties CALCIFIED_DRIPSTONE_BLOCK_PROPERTIES() {
@@ -28,7 +41,7 @@ public class MeadowBlockProperties {
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION)
                 .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL)
                 .mapColor(MapColor.COLOR_BLUE)
-                .sound(SoundType.NETHERRACK)
+                .sound(MeadowSoundRegistry.CALCIFIED_ROCK)
                 .setCutoutRenderType();
     }
 
@@ -44,7 +57,7 @@ public class MeadowBlockProperties {
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION)
                 .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.MINEABLE_WITH_HOE)
                 .mapColor(MapColor.COLOR_BLUE)
-                .sound(SoundType.GLOW_LICHEN);
+                .sound(MeadowSoundRegistry.CALCIFIED_COVERING);
     }
 
     public static LodestoneBlockProperties CALCIFIED_WOOD_PROPERTIES() {
@@ -53,7 +66,7 @@ public class MeadowBlockProperties {
                 .instrument(NoteBlockInstrument.BASS)
                 .addTag(MeadowBlockTagRegistry.CALCIFICATION)
                 .addTag(BlockTags.MINEABLE_WITH_AXE)
-                .sound(SoundType.NETHER_WOOD)
+                .sound(MeadowSoundRegistry.CALCIFIED_WOOD)
                 .mapColor(MapColor.WOOD);
     }
 
@@ -72,7 +85,7 @@ public class MeadowBlockProperties {
                 .instrument(NoteBlockInstrument.BASS)
                 .addTag(BlockTags.MINEABLE_WITH_AXE)
                 .pushReaction(PushReaction.DESTROY)
-                .sound(SoundType.NETHER_WOOD)
+                .sound(MeadowSoundRegistry.CALCIFIED_WOOD)
                 .mapColor(MapColor.WOOD);
     }
 
@@ -87,7 +100,7 @@ public class MeadowBlockProperties {
     public static LodestoneBlockProperties NATURAL_THIN_CALCIFIED_LOG_PROPERTIES() {
         return THIN_CALCIFIED_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
     }
-    
+
     public static LodestoneBlockProperties ASPEN_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(1.75F, 4.0F)
@@ -250,9 +263,11 @@ public class MeadowBlockProperties {
                 .replaceable()
                 .instabreak();
     }
+
     public static LodestoneBlockProperties MINERAL_SAPLING_PROPERTIES() {
         return MINERAL_FLORA_PROPERTIES().addTag(BlockTags.SAPLINGS);
     }
+
     public static LodestoneBlockProperties MINERAL_FLOWER_PROPERTIES() {
         return MINERAL_FLORA_PROPERTIES().addTag(BlockTags.TALL_FLOWERS);
     }
