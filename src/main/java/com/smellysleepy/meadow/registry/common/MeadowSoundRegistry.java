@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -24,6 +25,7 @@ public class MeadowSoundRegistry {
     public static final SoundType CALCIFIED_COVERING = new CalcifiedSoundType(2f, 1.1f, ()->SoundEvents.GRASS_BREAK, ()->SoundEvents.VINE_STEP, ()->SoundEvents.GRASS_PLACE, ()->SoundEvents.GRASS_HIT, ()->SoundEvents.GRASS_FALL);
     public static final SoundType CALCIFIED_WOOD = new CalcifiedSoundType(1f, 0.8f, ()->SoundEvents.CHERRY_WOOD_BREAK, ()->SoundEvents.CHERRY_WOOD_STEP, ()->SoundEvents.CHERRY_WOOD_PLACE, ()->SoundEvents.CHERRY_WOOD_HIT, ()->SoundEvents.CHERRY_WOOD_FALL);
 
+    public static final SoundType ASPEN_WOOD = new ForgeSoundType(1f, 0.8f, ()->SoundEvents.CHERRY_WOOD_BREAK, ()->SoundEvents.CHERRY_WOOD_STEP, ()->SoundEvents.CHERRY_WOOD_PLACE, ()->SoundEvents.CHERRY_WOOD_HIT, ()->SoundEvents.CHERRY_WOOD_FALL);
 
     public static RegistryObject<SoundEvent> register(SoundEvent soundEvent) {
         return SOUNDS.register(soundEvent.getLocation().getPath(), () -> soundEvent);
