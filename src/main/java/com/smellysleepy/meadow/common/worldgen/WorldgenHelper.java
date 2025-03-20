@@ -58,10 +58,8 @@ public class WorldgenHelper {
             for (int j = -radius; j <= radius; j++) {
                 int offsetX = x + i;
                 int offsetZ = z + j;
-                float differenceX = x - offsetX;
-                float differenceZ = z - offsetZ;
-                float distance = Mth.sqrt(differenceX * differenceX + differenceZ * differenceZ);
-                double theta = Math.toDegrees(Math.atan2(differenceX, differenceZ)) * 0.01f;
+                float distance = Mth.sqrt(i * i + j * j);
+                double theta = Math.toDegrees(Math.atan2(i, j)) * 0.01f;
                 double noise = (COVERING_NOISE.getValue(x * 10000 + theta, z * 10000 + theta, true)+1)/2;
                 double threshold = Easing.SINE_IN_OUT.clamped(noise, 0.5f, 2) * radius * (limit-distance)/limit;
                 if (distance <= threshold) {
