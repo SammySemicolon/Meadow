@@ -37,18 +37,21 @@ public class StrangePlantFeature extends Feature<StrangePlantFeatureConfiguratio
             }
             mutable.move(Direction.UP);
         }
-        LodestoneBlockFiller filler = new LodestoneBlockFiller().addLayers(PLANTS, COVERING);
-        LodestoneBlockFiller.BlockStateEntry blockEntry = create(config.block.defaultBlockState()).setForcePlace().build();
-        LodestoneBlockFiller.BlockStateEntry oreEntry = create(config.ore.defaultBlockState()).setForcePlace().build();
-        LodestoneBlockFiller.BlockStateEntry grassEntry = create(config.grass.defaultBlockState()).setForcePlace().build();
+        var filler = new LodestoneBlockFiller().addLayers(PLANTS, COVERING);
+        var coveringLayer = filler.getLayer(COVERING);
+        var plantLayer = filler.getLayer(PLANTS);
+        var blockEntry = create(config.block.defaultBlockState()).setForcePlace().build();
+        var oreEntry = create(config.ore.defaultBlockState()).setForcePlace().build();
+        var grassEntry = create(config.grass.defaultBlockState()).setForcePlace().build();
+
         Set<BlockPos> covering = WorldgenHelper.fetchCoveringPositions(level, pos, 6);
         for (BlockPos blockPos : covering) {
-            filler.getLayer(COVERING).put(blockPos, blockEntry);
+            coveringLayer.put(blockPos, blockEntry);
         }
 
         Set<BlockPos> oreCovering = WorldgenHelper.fetchCoveringPositions(level, pos, 2);
         for (BlockPos blockPos : oreCovering) {
-            filler.getLayer(COVERING).put(blockPos, oreEntry);
+            coveringLayer.put(blockPos, oreEntry);
         }
         mutable = pos.mutable();
         for (int i = 0; i < 4; i++) {
@@ -57,18 +60,18 @@ public class StrangePlantFeature extends Feature<StrangePlantFeatureConfiguratio
                 if (rand.nextFloat() < 0.4f) {
                     continue;
                 }
-                filler.getLayer(PLANTS).put(blockPos.above(), grassEntry);
+                plantLayer.put(blockPos.above(), grassEntry);
             }
             int offset = 2 + i;
             mutable.move(rand.nextIntBetweenInclusive(-offset, offset), 0, rand.nextIntBetweenInclusive(-offset, offset));
         }
 
         if (plant.hasProperty(DoublePlantBlock.HALF)) {
-            filler.getLayer(PLANTS).put(pos, create(plant).setForcePlace());
-            filler.getLayer(PLANTS).put(pos.above(), create(plant.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)).setForcePlace());
+            plantLayer.put(pos, create(plant).setForcePlace());
+            plantLayer.put(pos.above(), create(plant.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)).setForcePlace());
         }
         else {
-            filler.getLayer(PLANTS).put(pos, create(plant).setForcePlace());
+            plantLayer.put(pos, create(plant).setForcePlace());
         }
 
         filler.fill(level);

@@ -102,7 +102,7 @@ public class MeadowGroveStructure extends Structure {
         return Optional.of(new Structure.GenerationStub(groveCenter, (b) -> createGrovePieces(context, b, levelHeightAccessor, groveCenter, specialRegions, groveRadius, groveHeight, groveDepth)));
     }
 
-    private static void createGrovePieces(GenerationContext context, StructurePiecesBuilder piecesBuilder, LevelHeightAccessor levelHeightAccessor, BlockPos groveCenter, List<SpecialMeadowRegion> specialRegions, int groveRadius, int groveHeight, int groveDepth) {
+    private void createGrovePieces(GenerationContext context, StructurePiecesBuilder piecesBuilder, LevelHeightAccessor levelHeightAccessor, BlockPos groveCenter, List<SpecialMeadowRegion> specialRegions, int groveRadius, int groveHeight, int groveDepth) {
         var chunkPos = context.chunkPos();
         int radius = SectionPos.blockToSectionCoord(groveRadius) + 1;
 
