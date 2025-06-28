@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.registry.worldgen;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveStructure;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.tags.MeadowBiomeTagRegistry;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
@@ -10,7 +10,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.WeightedRandomList;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;

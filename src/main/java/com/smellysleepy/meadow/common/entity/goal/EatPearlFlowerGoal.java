@@ -14,28 +14,30 @@ import java.util.*;
 public class EatPearlFlowerGoal extends Goal {
 
     private final MooMooCow cow;
+    private final Level level;
     private BlockPos objectOfInterest;
     private int eatAnimationTimer;
 
     public EatPearlFlowerGoal(MooMooCow cow) {
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
         this.cow = cow;
+        this.level = cow.level();
     }
 
     @Override
     public boolean canUse() {
         return cow.lastKnownPearlflowerPosition != null &&
-                cow.level().getBlockState(cow.lastKnownPearlflowerPosition).is(MeadowBlockTagRegistry.MOOMOO_EDIBLE) &&
-                !cow.hasRestriction() && cow.theBeastHungers() && cow.closerThan(cow.lastKnownPearlflowerPosition, 1.5f);
+                level.getBlockState(cow.lastKnownPearlflowerPosition).is(MeadowBlockTagRegistry.MOOMOO_EDIBLE) &&
+                !cow.hasRestriction() && cow.doesTheBeastHunger() && cow.closerThan(cow.lastKnownPearlflowerPosition, 1.5f);
     }
 
     @Override
     public void start() {
-        BlockPos pearlflower = cow.findPearlFlower(4);
+        BlockPos pearlflower = cow.findPearlFlower(level, 4);
         if (pearlflower != null) {
             eatAnimationTimer = adjustedTickDelay(40);
             objectOfInterest = pearlflower;
-            cow.level().broadcastEntityEvent(cow, (byte)10);
+            level.broadcastEntityEvent(cow, (byte)10);
             cow.getNavigation().stop();
         }
         else {

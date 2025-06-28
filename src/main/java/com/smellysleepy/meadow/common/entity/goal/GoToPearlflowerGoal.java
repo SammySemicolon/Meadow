@@ -1,42 +1,40 @@
 package com.smellysleepy.meadow.common.entity.goal;
 
-import com.google.common.collect.*;
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.*;
 import com.smellysleepy.meadow.common.entity.*;
-import com.smellysleepy.meadow.registry.common.tags.*;
 import net.minecraft.core.*;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.Level;
 
 import java.util.*;
+import java.util.logging.*;
 
 public class GoToPearlflowerGoal extends Goal {
 
     private final MooMooCow cow;
+    private final Level level;
     private BlockPos objectOfInterest;
     private int timeSinceTheJourneyBegan;
 
     public GoToPearlflowerGoal(MooMooCow cow) {
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
         this.cow = cow;
+        this.level = cow.level();
     }
 
     @Override
     public boolean canUse() {
-        return cow.theBeastHungers();
+        return cow.doesTheBeastHunger();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return objectOfInterest != null && !cow.hasRestriction() && cow.theBeastHungers() && !cow.closerThan(objectOfInterest, 1);
+        return objectOfInterest != null && !cow.hasRestriction() && cow.doesTheBeastHunger() && !cow.closerThan(objectOfInterest, 1);
     }
 
     @Override
     public void start() {
         timeSinceTheJourneyBegan = 0;
-        BlockPos pearlflower = cow.findPearlFlower(16);
+        BlockPos pearlflower = cow.findPearlFlower(level, 16);
         if (pearlflower != null) {
             objectOfInterest = pearlflower;
         }

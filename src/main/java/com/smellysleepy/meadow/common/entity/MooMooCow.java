@@ -9,7 +9,6 @@ import net.minecraft.core.*;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.*;
 import net.minecraft.sounds.*;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -128,7 +127,7 @@ public class MooMooCow extends Cow implements IForgeShearable {
     @Override
     public @NotNull List<ItemStack> onSheared(@Nullable Player player, @NotNull ItemStack item, Level level, BlockPos pos, int fortune) {
         setIsExtraFluffy(false);
-        level().playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
+        level.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
         this.gameEvent(GameEvent.SHEAR, player);
         return List.of(new ItemStack(MeadowItemRegistry.CLUMP_OF_FUR.get(), level.random.nextInt(2, 5)));
     }
@@ -221,12 +220,11 @@ public class MooMooCow extends Cow implements IForgeShearable {
         return !closerThan(pos, 32);
     }
 
-    public boolean theBeastHungers() {
+    public boolean doesTheBeastHunger() {
         return pearlflowerTimer > 100;
     }
     
-    public BlockPos findPearlFlower(int range) {
-        final Level level = level();
+    public BlockPos findPearlFlower(Level level, int range) {
         if (lastKnownPearlflowerPosition != null) {
             if (level.getBlockState(lastKnownPearlflowerPosition).is(MeadowBlockTagRegistry.MOOMOO_EDIBLE)) {
                 return lastKnownPearlflowerPosition;

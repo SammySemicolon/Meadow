@@ -194,6 +194,14 @@ public class WorldgenHelper {
         return noise / count;
     }
 
+    public static double getNoise(ImprovedNoise noiseSampler, BlockPos pos, float noiseFrequency) {
+        return getNoise(noiseSampler, pos.getX(), pos.getZ(), 0, noiseFrequency);
+    }
+
+    public static double getNoise(ImprovedNoise noiseSampler, BlockPos pos, int offset, float noiseFrequency) {
+        return getNoise(noiseSampler, pos.getX(), pos.getZ(), offset, noiseFrequency);
+    }
+
     public static double getNoise(ImprovedNoise noiseSampler, int blockX, int blockZ, float noiseFrequency) {
         return getNoise(noiseSampler, blockX, blockZ, 0, noiseFrequency);
     }
