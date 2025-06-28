@@ -45,7 +45,8 @@ public class MeadowGroveStructure extends Structure {
 //        int blockY = baseHeight - heightOffset;
         var groveCenter = new BlockPos(blockX, blockY, blockZ);
 
-        int groveRadius = random.nextIntBetweenInclusive(192, 256);
+        int groveRadius = 128;
+//        int groveRadius = random.nextIntBetweenInclusive(128, 256);
         int groveHeight = random.nextIntBetweenInclusive(32, 40);
         int groveDepth = random.nextIntBetweenInclusive(16, 20);
         var groveData = new MeadowGroveGenerationData(groveCenter, groveRadius, groveHeight, groveDepth);

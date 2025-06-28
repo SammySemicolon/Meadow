@@ -6,7 +6,7 @@ import com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVarian
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveFeatureDistribution.FeatureDataGetter;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.area.*;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.old.area.*;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowStructurePieceTypes;

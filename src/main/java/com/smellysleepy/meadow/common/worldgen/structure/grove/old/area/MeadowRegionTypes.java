@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.worldgen.structure.grove.area;
+package com.smellysleepy.meadow.common.worldgen.structure.grove.old.area;
 
 import com.smellysleepy.meadow.*;
 import net.minecraft.nbt.*;

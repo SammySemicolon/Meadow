@@ -1,6 +1,5 @@
-package com.smellysleepy.meadow.common.worldgen.structure.grove.area;
+package com.smellysleepy.meadow.common.worldgen.structure.grove.old.area;
 
-import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.common.worldgen.MineralFeatureDistribution;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;

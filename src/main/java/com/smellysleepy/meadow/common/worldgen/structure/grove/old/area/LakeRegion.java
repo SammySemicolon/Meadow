@@ -1,8 +1,6 @@
-package com.smellysleepy.meadow.common.worldgen.structure.grove.area;
+package com.smellysleepy.meadow.common.worldgen.structure.grove.old.area;
 
-import com.smellysleepy.meadow.MeadowMod;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
 import team.lodestar.lodestone.systems.easing.Easing;
 
