@@ -2,8 +2,8 @@ package com.smellysleepy.meadow.common.block.mineral;
 
 import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
-import com.smellysleepy.meadow.registry.common.block.MeadowBlockProperties;
-import com.smellysleepy.meadow.registry.common.item.MeadowItemProperties;
+import com.smellysleepy.meadow.registry.common.block.*;
+import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +23,6 @@ import java.awt.*;
 import java.util.function.*;
 
 import static com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry.BLOCKS;
-import static com.smellysleepy.meadow.registry.common.item.MeadowItemRegistry.register;
 
 public class MineralFloraRegistryBundle {
 
@@ -90,36 +89,56 @@ public class MineralFloraRegistryBundle {
         var leavesProperties = MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES();
 
         var itemProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES();
-        grassBlock = BLOCKS.register(prefix + "_grass_block", () -> new MineralGrassBlock(grassBlockProperties, grassBonemealFeature));
-        grassBlockItem = register(prefix + "_grass_block", itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
 
-        leavesBlock = BLOCKS.register(prefix + "_leaves", () -> new MineralLeavesBlock(leavesProperties, particle, leavesBonemealFeature, color));
-        leavesBlockItem = register(prefix + "_leaves", itemProperties, (p) -> new BlockItem(leavesBlock.get(), p));
+        String grassBlockName = prefix + "_grass_block";
+        String leavesName = prefix + "_leaves";
+        String hangingLeavesName = "hanging_" + prefix + "_leaves";
+        String saplingName = prefix + "_sapling";
+        String flowerName = prefix + "_flower";
+        String floraName = prefix + "_flora";
 
-        hangingLeavesBlock = BLOCKS.register("hanging_" + prefix + "_leaves", () -> new HangingMineralLeavesBlock(hangingLeavesProperties, particle, color));
-        hangingLeavesBlockItem = register("hanging_" + prefix + "_leaves", itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
+        String fruitName = prefix + "_fruit";
+        String candy = prefix + "_candy";
+        String pastry = prefix + "_pastry";
 
-        saplingBlock = BLOCKS.register(prefix + "_sapling", () -> new MineralSaplingBlock(saplingProperties, feature, tag));
-        saplingBlockItem = register(prefix + "_sapling", itemProperties, (p) -> new BlockItem(saplingBlock.get(), p));
+        grassBlock = registerBlock(grassBlockName, () -> new MineralGrassBlock(grassBlockProperties, grassBonemealFeature));
+        grassBlockItem = registerItem(grassBlockName, itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
 
-        flowerBlock = BLOCKS.register(prefix + "_flower", () -> new TallMineralFlower(flowerProperties.addTag(BlockTags.TALL_FLOWERS), tag));
-        flowerBlockItem = register(prefix + "_flower", itemProperties, (p) -> new BlockItem(flowerBlock.get(), p));
+        leavesBlock = registerBlock(leavesName, () -> new MineralLeavesBlock(leavesProperties, particle, leavesBonemealFeature, color));
+        leavesBlockItem = registerItem(leavesName, itemProperties, (p) -> new BlockItem(leavesBlock.get(), p));
 
-        floraBlock = BLOCKS.register(prefix + "_flora", () -> new MineralFloraPlant(grassProperties, tag));
-        floraBlockItem = register(prefix + "_flora", itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
+        hangingLeavesBlock = registerBlock(hangingLeavesName, () -> new HangingMineralLeavesBlock(hangingLeavesProperties, particle, color));
+        hangingLeavesBlockItem = registerItem(hangingLeavesName, itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
 
-        var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES()
-                .food(new FoodProperties.Builder().nutrition(4).effect(() -> new MobEffectInstance(effectSupplier.get(), 1200, 0), 1f).saturationMod(0.4f).alwaysEat().build()
+        saplingBlock = registerBlock(saplingName, () -> new MineralSaplingBlock(saplingProperties, feature, tag));
+        saplingBlockItem = registerItem(saplingName, itemProperties, (p) -> new BlockItem(saplingBlock.get(), p));
+
+        flowerBlock = registerBlock(flowerName, () -> new TallMineralFlower(flowerProperties.addTag(BlockTags.TALL_FLOWERS), tag));
+        flowerBlockItem = registerItem(flowerName, itemProperties, (p) -> new BlockItem(flowerBlock.get(), p));
+
+        floraBlock = registerBlock(floraName, () -> new MineralFloraPlant(grassProperties, tag));
+        floraBlockItem = registerItem(floraName, itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
+
+        var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(new FoodProperties.Builder().nutrition(4)
+                .effect(() -> new MobEffectInstance(effectSupplier.get(), 1200, 0), 1f).saturationMod(0.4f).alwaysEat().build()
         );
-        var candyProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES()
-                .food(new FoodProperties.Builder().nutrition(3).effect(() -> new MobEffectInstance(effectSupplier.get(), 300, 1), 1f).saturationMod(0.3f).fast().alwaysEat().build()
+        var candyProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(new FoodProperties.Builder().nutrition(3)
+                .effect(() -> new MobEffectInstance(effectSupplier.get(), 300, 1), 1f).saturationMod(0.3f).fast().alwaysEat().build()
         );
-        var pastryProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES()
-                .food(new FoodProperties.Builder().nutrition(6).effect(() -> new MobEffectInstance(effectSupplier.get(), 3000, 0), 1f).saturationMod(0.45f).alwaysEat().build()
+        var pastryProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(new FoodProperties.Builder().nutrition(6)
+                .effect(() -> new MobEffectInstance(effectSupplier.get(), 3000, 0), 1f).saturationMod(0.45f).alwaysEat().build()
         );
 
-        fruitItem = register(prefix + "_fruit", fruitProperties, Item::new);
-        candyItem = register(prefix + "_candy", candyProperties, Item::new);
-        pastryItem = register(prefix + "_pastry", pastryProperties, Item::new);
+        fruitItem = registerItem(fruitName, fruitProperties, Item::new);
+        candyItem = registerItem(candy, candyProperties, Item::new);
+        pastryItem = registerItem(pastry, pastryProperties, Item::new);
+    }
+
+    public <T extends Item> RegistryObject<T> registerItem(String name, Item.Properties properties, Function<Item.Properties, T> function) {
+        return MeadowItemRegistry.register(name, properties, function);
+    }
+
+    public <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> supplier) {
+        return BLOCKS.register(name, supplier);
     }
 }

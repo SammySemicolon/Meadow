@@ -2,13 +2,15 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.old.*;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.*;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.helper.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.core.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.*;
+import net.minecraft.world.level.levelgen.synth.*;
 import org.jetbrains.annotations.*;
 import team.lodestar.lodestone.helpers.*;
 import team.lodestar.lodestone.systems.easing.*;
@@ -49,20 +51,27 @@ public class MeadowGroveStructure extends Structure {
 //        int groveRadius = random.nextIntBetweenInclusive(128, 256);
         int groveHeight = random.nextIntBetweenInclusive(32, 40);
         int groveDepth = random.nextIntBetweenInclusive(16, 20);
-        var groveData = new MeadowGroveGenerationData(groveCenter, groveRadius, groveHeight, groveDepth);
-        return Optional.of(new Structure.GenerationStub(groveCenter, (b) -> createGrovePieces(context, b, levelHeightAccessor, groveData)));
+        float biomeSize = RandomHelper.randomBetween(random, Easing.CUBIC_IN_OUT, 0.01f, 0.03f);
+        List<MeadowGroveBiomeType> biomes = GroveBiomeHelper.pickBiomes(random);
+
+        var groveData = new MeadowGroveGenerationConfiguration(groveCenter, groveRadius, groveHeight, groveDepth, biomeSize, biomes);
+        return Optional.of(new Structure.GenerationStub(groveCenter, (b) -> createGrovePieces(b, context, groveData)));
     }
 
-    private void createGrovePieces(GenerationContext context, StructurePiecesBuilder piecesBuilder, LevelHeightAccessor levelHeightAccessor, MeadowGroveGenerationData groveData) {
+    private void createGrovePieces(StructurePiecesBuilder piecesBuilder, GenerationContext context, MeadowGroveGenerationConfiguration config) {
+        var noiseSampler = new ImprovedNoise(new XoroshiroRandomSource(context.seed()));
+        var levelHeightAccessor = context.heightAccessor();
         var chunkPos = context.chunkPos();
-        int radius = SectionPos.blockToSectionCoord(groveData.getGroveRadius()) + 1;
+        int radius = SectionPos.blockToSectionCoord(config.getGroveRadius()) + 1;
 
         for (int chunkX = -radius; chunkX <= radius; chunkX++) {
             for (int chunkZ = -radius; chunkZ <= radius; chunkZ++) {
-                int x = SectionPos.sectionToBlockCoord(chunkPos.x + chunkX);
-                int z = SectionPos.sectionToBlockCoord(chunkPos.z + chunkZ);
+                ChunkPos offsetChunkPos = new ChunkPos(chunkPos.x + chunkX, chunkPos.z + chunkZ);
+                int x = SectionPos.sectionToBlockCoord(offsetChunkPos.x);
+                int z = SectionPos.sectionToBlockCoord(offsetChunkPos.z);
                 var boundingBox = getChunkBoundingBox(levelHeightAccessor, x, z);
-                piecesBuilder.addPiece(new MeadowGrovePiece(groveData, boundingBox));
+                config.getGenerationData().compute(config, noiseSampler, offsetChunkPos);
+                piecesBuilder.addPiece(new MeadowGrovePiece(config, boundingBox));
             }
         }
     }
