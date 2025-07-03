@@ -17,7 +17,7 @@ public class GroveSizeHelper {
 
     public static int getVerticalSize(ImprovedNoise noiseSampler, BlockPos pos, Easing easing, float noiseFrequency, double localValue, double delta) {
         double depthNoise = WorldgenHelper.getNoise(noiseSampler, pos, 100000, noiseFrequency); // Random Noise based on position
-        double deltaScalar = easing.clamped(depthNoise / 2f, 0.7f, 1.4f); //Slight delta scaling based on noise
+        double deltaScalar = easing.clamped(depthNoise, 0.7f, 1.4f); //Slight delta scaling based on noise
         double carverDelta = 1 - delta * deltaScalar; //Carver delta based on distance from center and delta scaling, approaches 1 towards the end of the grove
         float expoOut = Easing.EXPO_OUT.clamped(carverDelta, 0, 1); // Main easing, falls off quickly towards the end of the grove
         float bounceInOut = Easing.BOUNCE_IN_OUT.clamped(carverDelta * 1.5f, 0, 1); // Bounce effect to add some organic feel to the height

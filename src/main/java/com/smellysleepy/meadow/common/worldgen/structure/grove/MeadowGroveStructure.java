@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.*;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.data.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.helper.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.core.*;
@@ -47,14 +48,15 @@ public class MeadowGroveStructure extends Structure {
 //        int blockY = baseHeight - heightOffset;
         var groveCenter = new BlockPos(blockX, blockY, blockZ);
 
-        int groveRadius = 128;
-//        int groveRadius = random.nextIntBetweenInclusive(128, 256);
+        List<MeadowGroveBiomeType> enabledBiomes = GroveBiomeHelper.pickBiomes(random);
+        int groveRadius = random.nextIntBetweenInclusive(128, 256);
         int groveHeight = random.nextIntBetweenInclusive(32, 40);
         int groveDepth = random.nextIntBetweenInclusive(16, 20);
         float biomeSize = RandomHelper.randomBetween(random, Easing.CUBIC_IN_OUT, 0.01f, 0.03f);
-        List<MeadowGroveBiomeType> biomes = GroveBiomeHelper.pickBiomes(random);
+        float inclineSize = RandomHelper.randomBetween(random, Easing.CUBIC_IN_OUT, 0.1f, 0.2f);
+        int averageInclineHeight = random.nextIntBetweenInclusive(8, 16);
 
-        var groveData = new MeadowGroveGenerationConfiguration(groveCenter, groveRadius, groveHeight, groveDepth, biomeSize, biomes);
+        var groveData = new MeadowGroveGenerationConfiguration(groveCenter, enabledBiomes, groveRadius, groveHeight, groveDepth, biomeSize, inclineSize, averageInclineHeight);
         return Optional.of(new Structure.GenerationStub(groveCenter, (b) -> createGrovePieces(b, context, groveData)));
     }
 
@@ -64,16 +66,19 @@ public class MeadowGroveStructure extends Structure {
         var chunkPos = context.chunkPos();
         int radius = SectionPos.blockToSectionCoord(config.getGroveRadius()) + 1;
 
+        MeadowGroveGenerationData generationData = config.getGenerationData();
         for (int chunkX = -radius; chunkX <= radius; chunkX++) {
             for (int chunkZ = -radius; chunkZ <= radius; chunkZ++) {
                 ChunkPos offsetChunkPos = new ChunkPos(chunkPos.x + chunkX, chunkPos.z + chunkZ);
                 int x = SectionPos.sectionToBlockCoord(offsetChunkPos.x);
                 int z = SectionPos.sectionToBlockCoord(offsetChunkPos.z);
                 var boundingBox = getChunkBoundingBox(levelHeightAccessor, x, z);
-                config.getGenerationData().compute(config, noiseSampler, offsetChunkPos);
+                generationData.compute(config, noiseSampler, offsetChunkPos);
                 piecesBuilder.addPiece(new MeadowGrovePiece(config, boundingBox));
             }
         }
+
+        generationData.propagate(config);
     }
 
     @Override

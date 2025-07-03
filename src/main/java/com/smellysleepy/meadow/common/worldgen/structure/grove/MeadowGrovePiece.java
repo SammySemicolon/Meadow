@@ -1,8 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
-import com.mojang.datafixers.util.*;
 import com.smellysleepy.meadow.*;
-import com.smellysleepy.meadow.common.worldgen.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.data.*;
 import com.smellysleepy.meadow.registry.worldgen.*;
@@ -12,12 +10,9 @@ import net.minecraft.util.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.chunk.*;
-import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.*;
-import net.minecraft.world.level.levelgen.synth.*;
 import org.jetbrains.annotations.*;
-import team.lodestar.lodestone.systems.easing.*;
 
 import java.util.*;
 
@@ -47,11 +42,11 @@ public class MeadowGrovePiece extends StructurePiece {
         BlockPos groveCenter = groveData.getGroveCenter();
         MeadowGroveGenerationData generationData = groveData.getGenerationData();
         for (DataEntry data : generationData.getData(chunkPos)) {
-            int blockX = data.blockX();
+            int blockX = data.getBlockX();
             int blockY = groveCenter.getY();
-            int blockZ = data.blockZ();
-            int height = data.height();
-            int depth = data.depth();
+            int blockZ = data.getBlockZ();
+            int height = data.getHeight();
+            int depth = data.getDepth();
             var biomeType = data.biomeType();
             double influence = data.biomeInfluence();
             if (height <= 0 && depth <= 0) {
@@ -72,10 +67,31 @@ public class MeadowGrovePiece extends StructurePiece {
                 throw new IllegalArgumentException("Unknown biome type: " + biomeType);
             }
             mutable.set(blockX, blockY, blockZ);
-            for (int j = 0; j < influence * 40; j++) {
-                level.setBlock(mutable, block.defaultBlockState(), 2);
-                mutable.move(Direction.UP, 1);
+
+            level.setBlock(mutable, block.defaultBlockState(), 2);
+
+            Optional<InclineData> optional = data.getInclineData();
+            if (optional.isPresent()) {
+                InclineData inclineData = optional.get();
+                int baseSize = inclineData.getBaseSize();
+                int overhangSize = inclineData.getOverhangSize();
+                int inclineHeight = inclineData.getInclineHeight();
+
+                mutable.move(Direction.UP, inclineHeight);
+                for (int i = 0; i < overhangSize; i++) {
+                    var overhangBlock = inclineData.isSource() ? block : Blocks.RED_STAINED_GLASS;
+                    level.setBlock(mutable, overhangBlock.defaultBlockState(), 2);
+                    mutable.move(Direction.DOWN);
+                }
+                mutable.setY(blockY);
+                for (int i = 0; i < baseSize; i++) {
+                    mutable.move(Direction.UP);
+                    var baseBlock = inclineData.isSource() ? block : Blocks.GREEN_STAINED_GLASS;
+                    level.setBlock(mutable, baseBlock.defaultBlockState(), 2);
+                }
             }
+
+
 //            for (int j = 0; j < height; j++) {
 //                mutable.move(Direction.UP);
 //                level.setBlock(mutable, Blocks.RED_STAINED_GLASS.defaultBlockState(), 2);

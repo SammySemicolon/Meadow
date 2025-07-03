@@ -38,10 +38,10 @@ public class GroveBiomeHelper {
     public static Pair<MeadowGroveBiomeType, Double> getBiomeType(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, int blockX, int blockZ, double delta) {
         if (delta >= 0.4f) {
             double startingDelta = 0.75f;
-            double calcificationCracks = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 25000, 0.35f) * 0.5f;
+            double threshold = 0.4f;
+            double calcificationCracks = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 25000, 0.35f);
             double abs = Math.abs(0.5f - calcificationCracks);
             double crackStrength = (0.3f - Math.min(abs, 0.3f)) / 0.3f;
-            double threshold = 0.4f;
             float calcificationDelta = Easing.CIRC_OUT.clamped((delta - startingDelta) / (1 - startingDelta), 0, 1);
             if (calcificationDelta > threshold) {
                 double gain = (calcificationDelta - threshold) * (delta - startingDelta) / (1 - startingDelta);
@@ -96,6 +96,10 @@ public class GroveBiomeHelper {
         float[] frequencyMultipliers = new float[]{
                 1f, 2.5f, 4f
         };
+        float totalWeight = 0;
+        for (float weight : layerWeights) {
+            totalWeight += weight;
+        }
         int biomeOffset = biomeType.getSeed();
         for (int j = 0; j < layerCount; j++) {
             int offset = biomeOffset * (j+1);
@@ -104,6 +108,6 @@ public class GroveBiomeHelper {
             double noiseLayer = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, offset, frequency);
             biomeNoise += noiseLayer * weight;
         }
-        return biomeNoise * 0.5f;
+        return biomeNoise / totalWeight;
     }
 }

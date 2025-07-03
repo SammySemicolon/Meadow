@@ -22,8 +22,9 @@ public class MeadowGroveGenerationData {
             Codec.unboundedMap(DataCoordinate.CODEC, Codec.list(DataEntry.CODEC)).fieldOf("byChunk").forGetter(data -> data.byChunk)
     ).apply(instance, MeadowGroveGenerationData::new));
 
-    public final ConcurrentHashMap<DataCoordinate, DataEntry> data = new ConcurrentHashMap<>();
-    public final ConcurrentHashMap<DataCoordinate, List<DataEntry>> byChunk = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<DataCoordinate, DataEntry> data = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<DataCoordinate, List<DataEntry>> byChunk = new ConcurrentHashMap<>();
+    private final ArrayList<DataEntry> entries = new ArrayList<>();
 
     public MeadowGroveGenerationData() {
     }
@@ -32,16 +33,27 @@ public class MeadowGroveGenerationData {
         this.data.putAll(data);
     }
 
+    public ArrayList<DataEntry> getEntries() {
+        return entries;
+    }
+
     public Map<DataCoordinate, DataEntry> getData() {
         return data;
     }
 
     public DataEntry getData(BlockPos pos) {
-        DataCoordinate key = new DataCoordinate(pos);
-        if (!data.containsKey(key)) {
-            throw new IllegalStateException("No data found for position: " + pos + ". This is a keter level disaster.");
+        return getData(new DataCoordinate(pos));
+    }
+
+    public DataEntry getData(DataCoordinate dataCoordinate) {
+        if (!data.containsKey(dataCoordinate)) {
+            throw new IllegalStateException("No data found for coordinate: " + dataCoordinate + ". This is a keter level disaster.");
         }
-        return data.get(key);
+        return data.get(dataCoordinate);
+    }
+
+    public boolean hasData(DataCoordinate dataCoordinate) {
+        return data.containsKey(dataCoordinate);
     }
 
     public List<DataEntry> getData(ChunkPos pos) {
@@ -57,6 +69,11 @@ public class MeadowGroveGenerationData {
         data.put(key, entry);
         DataCoordinate chunkCoordinate = key.asChunkCoordinate();
         byChunk.computeIfAbsent(chunkCoordinate, k -> new ArrayList<>()).add(entry);
+        entries.add(entry);
+    }
+
+    public void propagate(MeadowGroveGenerationConfiguration config) {
+        GroveInclineHelper.propagateInclineData(config);
     }
 
     public void compute(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, ChunkPos chunkPos) {
@@ -70,7 +87,7 @@ public class MeadowGroveGenerationData {
             int blockY = groveCenter.getY();
             int blockZ = chunkPos.getBlockZ(i / 16);
             mutable.set(blockX, blockY, blockZ);
-            double noise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.1f) * 0.5f;
+            double noise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.1f);
 
             int localRadius = (int) Mth.clampedLerp(groveRadius * 0.4f, groveRadius * 1.4f, noise);
             int localHeight = (int) Mth.clampedLerp(groveHeight * 0.5f, groveHeight, noise);
@@ -80,14 +97,15 @@ public class MeadowGroveGenerationData {
                 continue;
             }
             double distance = Math.sqrt(mutable.distSqr(groveCenter));
-            double delta = distance / (localRadius);
+            double delta = distance / localRadius;
             int height = GroveSizeHelper.getGroveHeight(noiseSampler, mutable, localHeight, delta);
             int depth = GroveSizeHelper.getGroveDepth(noiseSampler, mutable, localDepth, delta);
 
             Pair<MeadowGroveBiomeType, Double> biomeData = GroveBiomeHelper.getBiomeType(config, noiseSampler, blockX, blockZ, delta);
             MeadowGroveBiomeType biomeType = biomeData.getFirst();
             double biomeInfluence = biomeData.getSecond();
-            addData(mutable, new DataEntry(blockX, blockZ, height, depth, biomeType, biomeInfluence));
+            Optional<InclineData> inclineData = GroveInclineHelper.getInclineData(config, noiseSampler, blockX, blockZ, delta);
+            addData(mutable, new DataEntry(blockX, blockZ, biomeType, biomeInfluence, height, depth, inclineData.orElse(null)));
         }
     }
 }
