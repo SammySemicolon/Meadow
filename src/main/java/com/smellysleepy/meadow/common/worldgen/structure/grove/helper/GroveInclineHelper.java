@@ -4,6 +4,7 @@ import com.google.common.collect.*;
 import com.smellysleepy.meadow.common.worldgen.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.data.*;
+import it.unimi.dsi.fastutil.*;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.levelgen.synth.*;
@@ -53,7 +54,6 @@ public class GroveInclineHelper {
             double delta = 1 - i / (float)range;
             for (DataCoordinate dataCoordinate : set) {
                 for (int j = 0; j < 4; j++) {
-                    steps++;
                     Direction direction = Direction.from2DDataValue(j);
                     DataCoordinate newCoordinate = dataCoordinate.move(direction);
                     if (set.contains(newCoordinate) || set1.contains(newCoordinate)) {
@@ -69,7 +69,14 @@ public class GroveInclineHelper {
                         if (targetIncline == null) {
                             targetIncline = target.setInclineData(InclineData.propagation(sourceIncline));
                         }
-                        targetIncline.applyPropagation(sourceIncline, delta);
+                        int hash = Objects.hash(blockX, blockZ);
+                        float rate = Mth.lerp((Mth.sin(hash % 6.28f) + 1) * 0.5f, 0.7f, 1.3f);
+                        int offsetX = blockX - newCoordinate.x();
+                        int offsetZ = blockZ - newCoordinate.z();
+                        double angle = hash + Math.atan2(offsetZ, offsetX);
+
+                        double offsetDelta = Mth.lerp((Math.sin(angle * rate) + 1) * 0.5f, 0.6f, 1.4f) * delta;
+                        targetIncline.applyPropagation(sourceIncline, offsetDelta);
                     }
                     set1.add(newCoordinate);
                 }
@@ -77,18 +84,75 @@ public class GroveInclineHelper {
         }
     }
 
+    /**
+     * Propagates incline data outwards within a limited radius.
+     * Newly made incline data has reduced intensity.
+     * When multiple propagations affect the same coordinate,
+     */
+    public static void expandLoneIncline(MeadowGroveGenerationConfiguration config, int blockX, int blockZ) {
+        DataCoordinate start = new DataCoordinate(blockX, blockZ);
+
+        MeadowGroveGenerationData generationData = config.getGenerationData();
+        DataEntry source = generationData.getData(start);
+        InclineData sourceIncline = source.getInclineData().orElseThrow();
+        int range = sourceIncline.getPropagationRange();
+        List<Set<DataCoordinate>> list = Lists.newArrayList();
+        for (int j = 0; j < range; ++j) {
+            list.add(Sets.newHashSet());
+        }
+
+        list.get(0).add(start);
+
+        for (int i = 1; i < range; ++i) {
+            Set<DataCoordinate> set = list.get(i - 1);
+            Set<DataCoordinate> set1 = list.get(i);
+            double delta = 1 - i / (float)range;
+            for (DataCoordinate dataCoordinate : set) {
+                for (int j = 0; j < 4; j++) {
+                    Direction direction = Direction.from2DDataValue(j);
+                    DataCoordinate newCoordinate = dataCoordinate.move(direction);
+                    if (set.contains(newCoordinate) || set1.contains(newCoordinate)) {
+                        continue;
+                    }
+
+                    if (generationData.hasData(newCoordinate)) {
+                        DataEntry target = generationData.getData(newCoordinate);
+                        InclineData targetIncline = target.getInclineData().orElse(null);
+                        if (targetIncline != null && targetIncline.isSource()) {
+                            continue;
+                        }
+                        if (targetIncline == null) {
+                            targetIncline = target.setInclineData(InclineData.propagation(sourceIncline));
+                        }
+                        int hash = Objects.hash(blockX, blockZ);
+                        float rate = Mth.lerp((Mth.sin(hash % 6.28f) + 1) * 0.5f, 0.7f, 1.3f);
+                        int offsetX = blockX - newCoordinate.x();
+                        int offsetZ = blockZ - newCoordinate.z();
+                        double angle = hash + Math.atan2(offsetZ, offsetX);
+
+                        double offsetDelta = Mth.lerp((Math.sin(angle * rate) + 1) * 0.5f, 0.6f, 1.4f) * delta;
+                        targetIncline.applyPropagation(sourceIncline, offsetDelta);
+                    }
+                    set1.add(newCoordinate);
+                }
+            }
+        }
+    }
+    public static void notifyNeighboringInclines(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, int blockX, int blockZ, double delta) {
+
+    }
+
     public static Optional<InclineData> getInclineData(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, int blockX, int blockZ, double delta) {
         double startingDelta = 0.3f;
         if (delta >= startingDelta) {
             double offsetDelta = (delta - startingDelta) / (1 - startingDelta);
-            double threshold = Mth.lerp(offsetDelta, 0.4f, 0.2f);
+            double threshold = Mth.lerp(offsetDelta, 0.45f, 0.25f);
             double inclineNoise = getInclineNoise(config, noiseSampler, blockX, blockZ);
             double inclineDelta = Easing.QUAD_IN.clamped(inclineNoise, 0, 1);
             if (inclineDelta >= threshold) {
                 double heightNoise = getInclineNoise(noiseSampler, blockX, blockZ, 0.05f, 25000);
-                int averageHeight = config.getAverageInclineHeight();
-                double minimumHeight = averageHeight * Mth.lerp(offsetDelta, 0.3f, 0.8f);
-                double maximumHeight = averageHeight * Mth.lerp(offsetDelta, 0.8f, 1.6f);
+                double minimumHeight = config.getMinimumInclineHeight() * Mth.lerp(offsetDelta, 0.8f, 1.2f);
+                double maximumHeight = config.getMaximumInclineHeight() * Mth.lerp(offsetDelta, 0.4f, 1.8f);
                 int inclineHeight = Mth.ceil(Mth.lerp(heightNoise, minimumHeight, maximumHeight));
                 double inclineIntensity = (inclineDelta - threshold) / (1 - threshold) * 10f;
                 InclineData inclineData = InclineData.source(inclineHeight, Math.min(inclineIntensity, 1));

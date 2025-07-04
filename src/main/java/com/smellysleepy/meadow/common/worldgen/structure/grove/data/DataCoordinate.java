@@ -31,4 +31,16 @@ public record DataCoordinate(int x, int z) {
     public DataCoordinate move(int dx, int dz) {
         return new DataCoordinate(x+dx, z+dz);
     }
+
+    public Direction getDirectionTo(DataCoordinate dataCoordinate) {
+        int xOffset = (dataCoordinate.x - x);
+        int zOffset = (dataCoordinate.z - z);
+        if (xOffset == 0) {
+            return zOffset > 0 ? Direction.SOUTH : Direction.NORTH;
+        }
+        if (zOffset == 0) {
+            return xOffset > 0 ? Direction.EAST : Direction.WEST;
+        }
+        throw new IllegalArgumentException("Tried to compare non-aligned coordinates");
+    }
 }

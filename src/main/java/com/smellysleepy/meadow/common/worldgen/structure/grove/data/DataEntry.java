@@ -16,8 +16,10 @@ public final class DataEntry {
             Codec.DOUBLE.fieldOf("biomeInfluence").forGetter(DataEntry::biomeInfluence),
             Codec.INT.fieldOf("height").forGetter(DataEntry::getHeight),
             Codec.INT.fieldOf("depth").forGetter(DataEntry::getDepth),
+            Codec.INT.fieldOf("openHeight").forGetter(DataEntry::getHeight),
+            Codec.INT.fieldOf("openDepth").forGetter(DataEntry::getDepth),
             InclineData.OPTIONAL.fieldOf("inclineData").forGetter(DataEntry::getInclineData)
-    ).apply(instance, (x, z, biomeType, biomeInfluence, height, depth, inclineData) -> new DataEntry(x, z, biomeType, biomeInfluence, height, depth, inclineData.orElse(null))));
+    ).apply(instance, (x, z, biomeType, biomeInfluence, height, depth, openHeight, openDepth, inclineData) -> new DataEntry(x, z, biomeType, biomeInfluence, height, depth, openHeight, openDepth, inclineData.orElse(null))));
 
     private final int blockX;
     private final int blockZ;
@@ -27,9 +29,11 @@ public final class DataEntry {
 
     private int height;
     private int depth;
+    private int openHeight;
+    private int openDepth;
     private InclineData inclineData;
 
-    public DataEntry(int blockX, int blockZ, MeadowGroveBiomeType biomeType, double biomeInfluence, int height, int depth, @Nullable InclineData inclineData) {
+    public DataEntry(int blockX, int blockZ, MeadowGroveBiomeType biomeType, double biomeInfluence, int height, int depth, int openHeight, int openDepth, @Nullable InclineData inclineData) {
         this.blockX = blockX;
         this.blockZ = blockZ;
         this.dataCoordinate = new DataCoordinate(blockX, blockZ);
@@ -37,6 +41,8 @@ public final class DataEntry {
         this.biomeInfluence = biomeInfluence;
         this.height = height;
         this.depth = depth;
+        this.openHeight = openHeight;
+        this.openDepth = openDepth;
         this.inclineData = inclineData;
     }
 
@@ -58,6 +64,14 @@ public final class DataEntry {
 
     public int getDepth() {
         return depth;
+    }
+
+    public int getOpenHeight() {
+        return openHeight;
+    }
+
+    public int getOpenDepth() {
+        return openDepth;
     }
 
     public Optional<InclineData> getInclineData() {

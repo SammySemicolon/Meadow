@@ -23,7 +23,8 @@ public class MeadowGroveGenerationConfiguration {
             Codec.INT.fieldOf("groveDepth").forGetter(MeadowGroveGenerationConfiguration::getGroveDepth),
             Codec.FLOAT.fieldOf("biomeSize").forGetter(MeadowGroveGenerationConfiguration::getBiomeSize),
             Codec.FLOAT.fieldOf("inclineSize").forGetter(MeadowGroveGenerationConfiguration::getInclineSize),
-            Codec.INT.fieldOf("averageInclineHeight").forGetter(MeadowGroveGenerationConfiguration::getAverageInclineHeight)
+            Codec.INT.fieldOf("minimumInclineHeight").forGetter(MeadowGroveGenerationConfiguration::getMinimumInclineHeight),
+            Codec.INT.fieldOf("maximumInclineHeight").forGetter(MeadowGroveGenerationConfiguration::getMaximumInclineHeight)
     ).apply(instance, MeadowGroveGenerationConfiguration::new));
 
     private final BlockPos groveCenter;
@@ -32,7 +33,8 @@ public class MeadowGroveGenerationConfiguration {
     private final int groveDepth;
 
     private final float inclineSize;
-    private final int averageInclineHeight;
+    private final int minimumInclineHeight;
+    private final int maximumInclineHeight;
 
     private final float biomeSize;
     private final List<MeadowGroveBiomeType> enabledBiomes;
@@ -41,13 +43,14 @@ public class MeadowGroveGenerationConfiguration {
     private final MeadowGroveGenerationData generationData;
 
     public MeadowGroveGenerationConfiguration(MeadowGroveGenerationData generationData, List<MeadowGroveBiomeType> enabledBiomes, BlockPos groveCenter, int groveRadius, int groveHeight, int groveDepth,
-                                              float biomeSize, float inclineSize, int averageInclineHeight) {
+                                              float biomeSize, float inclineSize, int minimumInclineHeight, int maximumInclineHeight) {
         this.groveCenter = groveCenter;
         this.groveRadius = groveRadius;
         this.groveHeight = groveHeight;
         this.groveDepth = groveDepth;
         this.inclineSize = inclineSize;
-        this.averageInclineHeight = averageInclineHeight;
+        this.minimumInclineHeight = minimumInclineHeight;
+        this.maximumInclineHeight = maximumInclineHeight;
         this.biomeSize = biomeSize;
         this.enabledBiomes = enabledBiomes;
         this.naturalBiomes = enabledBiomes.stream().filter(MeadowGroveBiomeType::spawnsNaturally).toList();
@@ -55,8 +58,8 @@ public class MeadowGroveGenerationConfiguration {
     }
 
     public MeadowGroveGenerationConfiguration(BlockPos groveCenter, List<MeadowGroveBiomeType> enabledBiomes, int groveRadius, int groveHeight, int groveDepth,
-                                              float biomeSize, float inclineSize, int averageInclineHeight) {
-        this(new MeadowGroveGenerationData(), enabledBiomes, groveCenter, groveRadius, groveHeight, groveDepth, biomeSize, inclineSize, averageInclineHeight);
+                                              float biomeSize, float inclineSize, int minimumInclineHeight, int maximumInclineHeight) {
+        this(new MeadowGroveGenerationData(), enabledBiomes, groveCenter, groveRadius, groveHeight, groveDepth, biomeSize, inclineSize, minimumInclineHeight, maximumInclineHeight);
     }
 
     public BlockPos getGroveCenter() {
@@ -79,8 +82,12 @@ public class MeadowGroveGenerationConfiguration {
         return inclineSize;
     }
 
-    public int getAverageInclineHeight() {
-        return averageInclineHeight;
+    public int getMinimumInclineHeight() {
+        return minimumInclineHeight;
+    }
+
+    public int getMaximumInclineHeight() {
+        return maximumInclineHeight;
     }
 
     public float getBiomeSize() {

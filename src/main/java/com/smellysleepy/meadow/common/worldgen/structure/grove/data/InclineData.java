@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove.data;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import com.smellysleepy.meadow.move_to_lodestone_later.*;
+import net.minecraft.core.*;
 import net.minecraft.util.*;
 import team.lodestar.lodestone.systems.easing.*;
 
@@ -21,10 +22,15 @@ public class InclineData {
     public static final Codec<Optional<InclineData>> OPTIONAL = CodecHelper.optionalCodec(InclineData.CODEC);
 
     private final boolean isSource; //Source inclines are always fully tall and propagate outwards
+
     private final int inclineHeight; //Height determines how high above the grove's ground the incline's peak is located
     private double inclineIntensity; //Intensity propagates outwards and is used to calculate overhangSize and baseSize
+
     private int overhangSize; //Overhang size determines how tall the peak is
     private int baseSize; //Base size determines how tall the incline's base is, connecting it to the rest of the terrain
+
+    private final boolean[] neighboringInclines = new boolean[4]; //Tracks which neighboring inclines this incline has. Sources only consider other sources
+    private int neighboringInclineCounter;
 
     public InclineData(boolean isSource, int inclineHeight, double inclineIntensity, int overhangSize, int baseSize) {
         this.isSource = isSource;
@@ -68,16 +74,33 @@ public class InclineData {
         return inclineIntensity;
     }
 
+    public int getNeighborCount() {
+        return neighboringInclineCounter;
+    }
+
     public int getPropagationRange() {
         return Mth.floor(Mth.lerp(getPropagationStrength(), 4, 12));
     }
 
     public double getPropagationStrength() {
         double value = getInclineIntensity();
-        if (value < 0.3f) {
+        if (value < 0.3f) { //By artificially increasing the propagation strength at low values we aim to make smaller clumps of source inclines look good
             value = 0.8f;
         }
         return value;
+    }
+
+    public void addNeighbor(InclineData neighboringData, DataCoordinate inclineCoordinate, DataCoordinate neighborCoordinate) {
+        if (isSource() & !neighboringData.isSource()) {
+            return;
+        }
+        Direction directionTo = inclineCoordinate.getDirectionTo(neighborCoordinate);
+        int index = directionTo.get2DDataValue();
+        if (neighboringInclines[index]) {
+            return;
+        }
+        neighboringInclines[index] = true;
+        neighboringInclineCounter++;
     }
 
     public void applyPropagation(InclineData sourceIncline, double delta) {

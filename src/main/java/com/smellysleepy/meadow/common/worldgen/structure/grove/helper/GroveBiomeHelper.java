@@ -94,7 +94,7 @@ public class GroveBiomeHelper {
                 0.5f, 0.3f, 0.2f
         };
         float[] frequencyMultipliers = new float[]{
-                1f, 2.5f, 4f
+                1f, 1.75f, 3f
         };
         float totalWeight = 0;
         for (float weight : layerWeights) {

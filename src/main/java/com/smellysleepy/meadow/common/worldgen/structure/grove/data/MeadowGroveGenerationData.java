@@ -100,12 +100,14 @@ public class MeadowGroveGenerationData {
             double delta = distance / localRadius;
             int height = GroveSizeHelper.getGroveHeight(noiseSampler, mutable, localHeight, delta);
             int depth = GroveSizeHelper.getGroveDepth(noiseSampler, mutable, localDepth, delta);
+            int openHeight = Mth.floor(Math.max(height - localHeight * 0.3f, 0));
+            int openDepth = Mth.floor(Math.max(depth - localDepth * 0.3f, 0));
 
             Pair<MeadowGroveBiomeType, Double> biomeData = GroveBiomeHelper.getBiomeType(config, noiseSampler, blockX, blockZ, delta);
             MeadowGroveBiomeType biomeType = biomeData.getFirst();
             double biomeInfluence = biomeData.getSecond();
             Optional<InclineData> inclineData = GroveInclineHelper.getInclineData(config, noiseSampler, blockX, blockZ, delta);
-            addData(mutable, new DataEntry(blockX, blockZ, biomeType, biomeInfluence, height, depth, inclineData.orElse(null)));
+            addData(mutable, new DataEntry(blockX, blockZ, biomeType, biomeInfluence, height, depth, openHeight, openDepth, inclineData.orElse(null)));
         }
     }
 }

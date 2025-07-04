@@ -47,6 +47,8 @@ public class MeadowGrovePiece extends StructurePiece {
             int blockZ = data.getBlockZ();
             int height = data.getHeight();
             int depth = data.getDepth();
+            int openHeight = data.getOpenHeight();
+            int openDepth = data.getOpenDepth();
             var biomeType = data.biomeType();
             double influence = data.biomeInfluence();
             if (height <= 0 && depth <= 0) {
@@ -68,39 +70,40 @@ public class MeadowGrovePiece extends StructurePiece {
             }
             mutable.set(blockX, blockY, blockZ);
 
-            level.setBlock(mutable, block.defaultBlockState(), 2);
-
             Optional<InclineData> optional = data.getInclineData();
             if (optional.isPresent()) {
                 InclineData inclineData = optional.get();
                 int baseSize = inclineData.getBaseSize();
                 int overhangSize = inclineData.getOverhangSize();
-                int inclineHeight = inclineData.getInclineHeight();
+                int inclineHeight = inclineData.getInclineHeight() + Mth.floor(openDepth * 0.8f);
 
+                mutable.move(Direction.DOWN, openDepth);
                 mutable.move(Direction.UP, inclineHeight);
                 for (int i = 0; i < overhangSize; i++) {
-                    var overhangBlock = inclineData.isSource() ? block : Blocks.RED_STAINED_GLASS;
-                    level.setBlock(mutable, overhangBlock.defaultBlockState(), 2);
+                    level.setBlock(mutable, block.defaultBlockState(), 2);
                     mutable.move(Direction.DOWN);
                 }
-                mutable.setY(blockY);
+                mutable.setY(blockY - openDepth);
                 for (int i = 0; i < baseSize; i++) {
                     mutable.move(Direction.UP);
-                    var baseBlock = inclineData.isSource() ? block : Blocks.GREEN_STAINED_GLASS;
-                    level.setBlock(mutable, baseBlock.defaultBlockState(), 2);
+                    level.setBlock(mutable, block.defaultBlockState(), 2);
                 }
             }
 
-
-//            for (int j = 0; j < height; j++) {
-//                mutable.move(Direction.UP);
-//                level.setBlock(mutable, Blocks.RED_STAINED_GLASS.defaultBlockState(), 2);
-//            }
-//            mutable.setY(blockY);
-//            for (int j = 0; j < depth; j++) {
-//                level.setBlock(mutable, Blocks.GREEN_STAINED_GLASS.defaultBlockState(), 2);
-//                mutable.move(Direction.DOWN);
-//            }
+            mutable.setY(blockY);
+            for (int j = 0; j < height; j++) {
+                mutable.move(Direction.UP);
+                if (j >= openHeight) {
+                    level.setBlock(mutable, block.defaultBlockState(), 2);
+                }
+            }
+            mutable.setY(blockY);
+            for (int j = 0; j <= depth; j++) {
+                if (j >= openDepth) {
+                    level.setBlock(mutable, block.defaultBlockState(), 2);
+                }
+                mutable.move(Direction.DOWN);
+            }
         }
     }
 }

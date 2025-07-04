@@ -50,13 +50,14 @@ public class MeadowGroveStructure extends Structure {
 
         List<MeadowGroveBiomeType> enabledBiomes = GroveBiomeHelper.pickBiomes(random);
         int groveRadius = random.nextIntBetweenInclusive(128, 256);
-        int groveHeight = random.nextIntBetweenInclusive(32, 40);
+        int groveHeight = random.nextIntBetweenInclusive(40, 56);
         int groveDepth = random.nextIntBetweenInclusive(16, 20);
         float biomeSize = RandomHelper.randomBetween(random, Easing.CUBIC_IN_OUT, 0.01f, 0.03f);
         float inclineSize = RandomHelper.randomBetween(random, Easing.CUBIC_IN_OUT, 0.1f, 0.2f);
-        int averageInclineHeight = random.nextIntBetweenInclusive(8, 16);
+        int minimumInclineHeight = RandomHelper.randomBetween(random, Easing.CUBIC_IN_OUT, 4, 8);
+        int maximumInclineHeight = RandomHelper.randomBetween(random, Easing.CUBIC_IN_OUT, 12, 24);
 
-        var groveData = new MeadowGroveGenerationConfiguration(groveCenter, enabledBiomes, groveRadius, groveHeight, groveDepth, biomeSize, inclineSize, averageInclineHeight);
+        var groveData = new MeadowGroveGenerationConfiguration(groveCenter, enabledBiomes, groveRadius, groveHeight, groveDepth, biomeSize, inclineSize, minimumInclineHeight, maximumInclineHeight);
         return Optional.of(new Structure.GenerationStub(groveCenter, (b) -> createGrovePieces(b, context, groveData)));
     }
 
