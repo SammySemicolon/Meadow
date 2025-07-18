@@ -43,14 +43,14 @@ public class MeadowGrovePiece extends StructurePiece {
         MeadowGroveGenerationData generationData = groveData.getGenerationData();
         for (DataEntry data : generationData.getData(chunkPos)) {
             int blockX = data.getBlockX();
-            int blockY = groveCenter.getY();
+            int blockY = groveCenter.getY() + data.getCenterOffset();
             int blockZ = data.getBlockZ();
+            var biomeType = data.biomeType();
+            double biomeInfluence = data.biomeInfluence();
             int height = data.getHeight();
             int depth = data.getDepth();
             int openHeight = data.getOpenHeight();
             int openDepth = data.getOpenDepth();
-            var biomeType = data.biomeType();
-            double influence = data.biomeInfluence();
             if (height <= 0 && depth <= 0) {
                 continue;
             }

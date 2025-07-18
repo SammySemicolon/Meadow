@@ -14,8 +14,6 @@ import java.util.*;
 
 public class GroveInclineHelper {
 
-    public static int steps;
-
     /**
      * Iterates through every currently present incline data and propagates it outwards.
      */
@@ -32,7 +30,7 @@ public class GroveInclineHelper {
     /**
      * Propagates incline data outwards within a limited radius.
      * Newly made incline data has reduced intensity.
-     * When multiple propagations affect the same coordinate,
+     * When multiple propagations affect the same coordinate, the greater intensity value always takes priority
      */
     public static void propagateInclineData(MeadowGroveGenerationConfiguration config, int blockX, int blockZ) {
         DataCoordinate start = new DataCoordinate(blockX, blockZ);
@@ -62,6 +60,9 @@ public class GroveInclineHelper {
 
                     if (generationData.hasData(newCoordinate)) {
                         DataEntry target = generationData.getData(newCoordinate);
+                        if (!target.isOpen()) {
+                            continue;
+                        }
                         InclineData targetIncline = target.getInclineData().orElse(null);
                         if (targetIncline != null && targetIncline.isSource()) {
                             continue;
@@ -85,59 +86,36 @@ public class GroveInclineHelper {
     }
 
     /**
-     * Propagates incline data outwards within a limited radius.
-     * Newly made incline data has reduced intensity.
-     * When multiple propagations affect the same coordinate,
+     * Iterates through every currently present incline data and updates information about it's neighboring inclines
      */
-    public static void expandLoneIncline(MeadowGroveGenerationConfiguration config, int blockX, int blockZ) {
-        DataCoordinate start = new DataCoordinate(blockX, blockZ);
-
-        MeadowGroveGenerationData generationData = config.getGenerationData();
-        DataEntry source = generationData.getData(start);
-        InclineData sourceIncline = source.getInclineData().orElseThrow();
-        int range = sourceIncline.getPropagationRange();
-        List<Set<DataCoordinate>> list = Lists.newArrayList();
-        for (int j = 0; j < range; ++j) {
-            list.add(Sets.newHashSet());
-        }
-
-        list.get(0).add(start);
-
-        for (int i = 1; i < range; ++i) {
-            Set<DataCoordinate> set = list.get(i - 1);
-            Set<DataCoordinate> set1 = list.get(i);
-            double delta = 1 - i / (float)range;
-            for (DataCoordinate dataCoordinate : set) {
-                for (int j = 0; j < 4; j++) {
-                    Direction direction = Direction.from2DDataValue(j);
-                    DataCoordinate newCoordinate = dataCoordinate.move(direction);
-                    if (set.contains(newCoordinate) || set1.contains(newCoordinate)) {
-                        continue;
-                    }
-
-                    if (generationData.hasData(newCoordinate)) {
-                        DataEntry target = generationData.getData(newCoordinate);
-                        InclineData targetIncline = target.getInclineData().orElse(null);
-                        if (targetIncline != null && targetIncline.isSource()) {
-                            continue;
-                        }
-                        if (targetIncline == null) {
-                            targetIncline = target.setInclineData(InclineData.propagation(sourceIncline));
-                        }
-                        int hash = Objects.hash(blockX, blockZ);
-                        float rate = Mth.lerp((Mth.sin(hash % 6.28f) + 1) * 0.5f, 0.7f, 1.3f);
-                        int offsetX = blockX - newCoordinate.x();
-                        int offsetZ = blockZ - newCoordinate.z();
-                        double angle = hash + Math.atan2(offsetZ, offsetX);
-
-                        double offsetDelta = Mth.lerp((Math.sin(angle * rate) + 1) * 0.5f, 0.6f, 1.4f) * delta;
-                        targetIncline.applyPropagation(sourceIncline, offsetDelta);
-                    }
-                    set1.add(newCoordinate);
+    public static void countNeighbors(MeadowGroveGenerationConfiguration config) {
+        MeadowGroveGenerationData data = config.getGenerationData();
+        for (DataEntry entry : data.getEntries()) {
+            var inclineOptional = entry.getInclineData();
+            if (inclineOptional.isEmpty()) {
+                continue;
+            }
+            var position = entry.getDataCoordinate();
+            var inclineData = inclineOptional.get();
+            for (int i = 0; i < 4; i++) {
+                var direction = Direction.from2DDataValue(i);
+                var neighborPosition = position.move(direction);
+                if (!data.hasData(neighborPosition)) {
+                    continue;
                 }
+                var neighboringIncline = data.getData(neighborPosition).getInclineData();
+                if (neighboringIncline.isEmpty()) {
+                    continue;
+                }
+                inclineData.checkNeighbor(neighboringIncline.get(), position, neighborPosition);
             }
         }
     }
+
+    public static void expandLonelyInclines(MeadowGroveGenerationConfiguration config, int blockX, int blockZ) {
+
+    }
+
     public static void notifyNeighboringInclines(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, int blockX, int blockZ, double delta) {
 
     }

@@ -90,12 +90,12 @@ public class InclineData {
         return value;
     }
 
-    public void addNeighbor(InclineData neighboringData, DataCoordinate inclineCoordinate, DataCoordinate neighborCoordinate) {
-        if (isSource() & !neighboringData.isSource()) {
+    public void checkNeighbor(InclineData neighboringData, DataCoordinate inclineCoordinate, DataCoordinate neighborCoordinate) {
+        if (isSource() != neighboringData.isSource()) {
             return;
         }
-        Direction directionTo = inclineCoordinate.getDirectionTo(neighborCoordinate);
-        int index = directionTo.get2DDataValue();
+        var direction = inclineCoordinate.getDirectionTo(neighborCoordinate);
+        int index = direction.get2DDataValue();
         if (neighboringInclines[index]) {
             return;
         }
@@ -139,5 +139,4 @@ public class InclineData {
                 "baseSize=" + baseSize + ", " +
                 "inclineIntensity=" + inclineIntensity + ']';
     }
-
 }

@@ -74,6 +74,7 @@ public class MeadowGroveGenerationData {
 
     public void propagate(MeadowGroveGenerationConfiguration config) {
         GroveInclineHelper.propagateInclineData(config);
+        GroveInclineHelper.countNeighbors(config);
     }
 
     public void compute(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, ChunkPos chunkPos) {
@@ -90,24 +91,63 @@ public class MeadowGroveGenerationData {
             double noise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.1f);
 
             int localRadius = (int) Mth.clampedLerp(groveRadius * 0.4f, groveRadius * 1.4f, noise);
-            int localHeight = (int) Mth.clampedLerp(groveHeight * 0.5f, groveHeight, noise);
+            int localHeight = (int) Mth.clampedLerp(groveHeight * 0.6f, groveHeight, noise);
             int localDepth = (int) Mth.clampedLerp(groveDepth * 0.6f, groveDepth, noise);
 
             if (!mutable.closerThan(groveCenter, localRadius)) {
                 continue;
             }
             double distance = Math.sqrt(mutable.distSqr(groveCenter));
-            double delta = distance / localRadius;
-            int height = GroveSizeHelper.getGroveHeight(noiseSampler, mutable, localHeight, delta);
-            int depth = GroveSizeHelper.getGroveDepth(noiseSampler, mutable, localDepth, delta);
-            int openHeight = Mth.floor(Math.max(height - localHeight * 0.3f, 0));
-            int openDepth = Mth.floor(Math.max(depth - localDepth * 0.3f, 0));
+            double delta = distance / groveRadius;
+            if (delta > 0.6f) {
+                //We reduce some of the erratic nature the grove has when nearing the outer area by removing the variation in distance variation
+                //This helps keep the terrain connected and create less lone areas
+                localRadius = (int) Mth.lerp((delta - 0.6f) / 0.4f, localRadius, groveRadius);
+            }
+            double localDelta = distance / localRadius;
 
-            Pair<MeadowGroveBiomeType, Double> biomeData = GroveBiomeHelper.getBiomeType(config, noiseSampler, blockX, blockZ, delta);
-            MeadowGroveBiomeType biomeType = biomeData.getFirst();
+            double offsetNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.2f);
+            int centerOffset = (int) Mth.lerp(offsetNoise, -2, 2);
+            int height = GroveSizeHelper.getGroveHeight(noiseSampler, mutable, localHeight, localDelta);
+            int depth = GroveSizeHelper.getGroveDepth(noiseSampler, mutable, localDepth, localDelta);
+            float upperOpeningSize = localHeight * 0.3f;
+            float lowerOpeningSize = localDepth * 0.3f;
+            int openHeight = Mth.floor(Math.max(height - upperOpeningSize, 0));
+            int openDepth = Mth.floor(Math.max(depth - lowerOpeningSize, 0));
+
+            if (delta < 0.7f) {
+                //We gently fuse the opening from both ends
+                if (openHeight > 0 || openDepth > 0) {
+                    if (openHeight < upperOpeningSize && openDepth < lowerOpeningSize) {
+                        float upperDelta = openHeight / upperOpeningSize;
+                        float lowerDelta = openDepth / lowerOpeningSize;
+                        openHeight = Mth.floor(openHeight * lowerDelta);
+                        openDepth = Mth.floor(openDepth * upperDelta);
+                    }
+                }
+            } else {
+                //Once the terrain is far out enough, we take on a much more aggressive approach to fusing the air pockets
+                if (openHeight == 0) {
+                    openDepth = 0;
+                } else if (openDepth == 0) {
+                    openHeight = 0;
+                }
+            }
+
+            boolean isOpen = openHeight > 0 && openDepth > 0;
+
+            var biomeData = GroveBiomeHelper.getBiomeType(config, noiseSampler, blockX, blockZ, localDelta);
+            var biomeType = biomeData.getFirst();
             double biomeInfluence = biomeData.getSecond();
-            Optional<InclineData> inclineData = GroveInclineHelper.getInclineData(config, noiseSampler, blockX, blockZ, delta);
-            addData(mutable, new DataEntry(blockX, blockZ, biomeType, biomeInfluence, height, depth, openHeight, openDepth, inclineData.orElse(null)));
+            Optional<InclineData> inclineData;
+            if (isOpen) {
+                inclineData = GroveInclineHelper.getInclineData(config, noiseSampler, blockX, blockZ, localDelta);
+            }
+            else {
+                inclineData = Optional.empty();
+            }
+
+            addData(mutable, new DataEntry(blockX, blockZ, biomeType, biomeInfluence, centerOffset, height, depth, openHeight, openDepth, inclineData.orElse(null)));
         }
     }
 }

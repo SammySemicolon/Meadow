@@ -14,18 +14,20 @@ public final class DataEntry {
             Codec.INT.fieldOf("z").forGetter(DataEntry::getBlockZ),
             MeadowGroveBiomeType.CODEC.fieldOf("biomeType").forGetter(DataEntry::biomeType),
             Codec.DOUBLE.fieldOf("biomeInfluence").forGetter(DataEntry::biomeInfluence),
+            Codec.INT.fieldOf("centerOffset").forGetter(DataEntry::getCenterOffset),
             Codec.INT.fieldOf("height").forGetter(DataEntry::getHeight),
             Codec.INT.fieldOf("depth").forGetter(DataEntry::getDepth),
-            Codec.INT.fieldOf("openHeight").forGetter(DataEntry::getHeight),
-            Codec.INT.fieldOf("openDepth").forGetter(DataEntry::getDepth),
+            Codec.INT.fieldOf("openHeight").forGetter(DataEntry::getOpenHeight),
+            Codec.INT.fieldOf("openDepth").forGetter(DataEntry::getOpenDepth),
             InclineData.OPTIONAL.fieldOf("inclineData").forGetter(DataEntry::getInclineData)
-    ).apply(instance, (x, z, biomeType, biomeInfluence, height, depth, openHeight, openDepth, inclineData) -> new DataEntry(x, z, biomeType, biomeInfluence, height, depth, openHeight, openDepth, inclineData.orElse(null))));
+    ).apply(instance, (x, z, biomeType, biomeInfluence, centerOffset, height, depth, openHeight, openDepth, inclineData) -> new DataEntry(x, z, biomeType, biomeInfluence, centerOffset, height, depth, openHeight, openDepth, inclineData.orElse(null))));
 
     private final int blockX;
     private final int blockZ;
     private final DataCoordinate dataCoordinate;
     private final MeadowGroveBiomeType biomeType;
     private final double biomeInfluence;
+    private final int centerOffset;
 
     private int height;
     private int depth;
@@ -33,12 +35,13 @@ public final class DataEntry {
     private int openDepth;
     private InclineData inclineData;
 
-    public DataEntry(int blockX, int blockZ, MeadowGroveBiomeType biomeType, double biomeInfluence, int height, int depth, int openHeight, int openDepth, @Nullable InclineData inclineData) {
+    public DataEntry(int blockX, int blockZ, MeadowGroveBiomeType biomeType, double biomeInfluence, int centerOffset, int height, int depth, int openHeight, int openDepth, @Nullable InclineData inclineData) {
         this.blockX = blockX;
         this.blockZ = blockZ;
         this.dataCoordinate = new DataCoordinate(blockX, blockZ);
         this.biomeType = biomeType;
         this.biomeInfluence = biomeInfluence;
+        this.centerOffset = centerOffset;
         this.height = height;
         this.depth = depth;
         this.openHeight = openHeight;
@@ -58,6 +61,18 @@ public final class DataEntry {
         return dataCoordinate;
     }
 
+    public MeadowGroveBiomeType biomeType() {
+        return biomeType;
+    }
+
+    public double biomeInfluence() {
+        return biomeInfluence;
+    }
+
+    public int getCenterOffset() {
+        return centerOffset;
+    }
+
     public int getHeight() {
         return height;
     }
@@ -74,24 +89,12 @@ public final class DataEntry {
         return openDepth;
     }
 
+    public boolean isOpen() {
+        return openHeight > 0 && openDepth > 0;
+    }
+
     public Optional<InclineData> getInclineData() {
         return Optional.ofNullable(inclineData);
-    }
-
-    public MeadowGroveBiomeType biomeType() {
-        return biomeType;
-    }
-
-    public double biomeInfluence() {
-        return biomeInfluence;
-    }
-
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 
     public InclineData setInclineData(InclineData inclineData) {

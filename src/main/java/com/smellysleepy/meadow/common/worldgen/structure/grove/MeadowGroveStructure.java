@@ -87,7 +87,6 @@ public class MeadowGroveStructure extends Structure {
         return MeadowStructureTypes.MEADOW_GROVE.get();
     }
 
-
     public BoundingBox getChunkBoundingBox(LevelHeightAccessor level, int x, int z) {
         var chunkStartPos = new BlockPos(x, 0, z);
         int minHeight = level.getMinBuildHeight();
