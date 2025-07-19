@@ -37,23 +37,23 @@ public class GroveBiomeHelper {
 
     public static Pair<MeadowGroveBiomeType, Double> getBiomeType(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, int blockX, int blockZ, double delta) {
         if (delta >= 0.4f) {
-            double startingDelta = 0.75f;
-            double threshold = 0.4f;
-            double calcificationCracks = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 25000, 0.35f);
-            double abs = Math.abs(0.5f - calcificationCracks);
-            double crackStrength = (0.3f - Math.min(abs, 0.3f)) / 0.3f;
-            float calcificationDelta = Easing.CIRC_OUT.clamped((delta - startingDelta) / (1 - startingDelta), 0, 1);
+            double startingDelta = 0.5f;
+            double threshold = 0.3f;
+            float calcificationDelta = Easing.EXPO_OUT.clamped((delta - startingDelta) / (1 - startingDelta), 0, 1);
             if (calcificationDelta > threshold) {
                 double gain = (calcificationDelta - threshold) * (delta - startingDelta) / (1 - startingDelta);
-                return Pair.of(MeadowGroveBiomeType.CAVERNOUS_CALCIFICATION, gain);
+                return Pair.of(MeadowGroveBiomeTypes.WILD_CALCIFICATION, gain);
             }
             else {
+                double calcificationCracks = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 25000, 0.35f);
+                double abs = Math.abs(0.5f - calcificationCracks);
+                double crackStrength = (0.3f - Math.min(abs, 0.3f)) / 0.3f;
                 startingDelta -= crackStrength * 0.1f;
                 threshold -= crackStrength * 0.2f;
-                calcificationDelta = Easing.CIRC_OUT.clamped((delta - startingDelta) / (1 - startingDelta), 0, 1);
+                calcificationDelta = Easing.EXPO_OUT.clamped((delta - startingDelta) / (1 - startingDelta), 0, 1);
                 if (calcificationDelta > threshold && crackStrength > 0.5f) {
                     double gain = (calcificationDelta - threshold) * (crackStrength - 0.5f) * 2;
-                    return Pair.of(MeadowGroveBiomeType.CALCIFIED_OUTSKIRTS, gain);
+                    return Pair.of(MeadowGroveBiomeTypes.BLOOMING_CALCIFICATION, gain);
                 }
             }
         }

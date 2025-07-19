@@ -1,14 +1,16 @@
 package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.smellysleepy.meadow.*;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.data.*;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.feature.GroveFeatureProvider;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.feature.PlacedGroveFeatures;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.core.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.*;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.*;
@@ -41,6 +43,10 @@ public class MeadowGrovePiece extends StructurePiece {
 
         BlockPos groveCenter = groveData.getGroveCenter();
         MeadowGroveGenerationData generationData = groveData.getGenerationData();
+
+//        GroveFeatureProvider featureProvider = biomeType.createSurfaceFeatures(random);
+
+
         for (DataEntry data : generationData.getData(chunkPos)) {
             int blockX = data.getBlockX();
             int blockY = groveCenter.getY() + data.getCenterOffset();
@@ -54,53 +60,50 @@ public class MeadowGrovePiece extends StructurePiece {
             if (height <= 0 && depth <= 0) {
                 continue;
             }
-            Block block;
-            if (biomeType == MeadowGroveBiomeType.MEADOW_FOREST) {
-                block = Blocks.YELLOW_WOOL;
-            } else if (biomeType == MeadowGroveBiomeType.ROCKY_HILLS) {
-                block = Blocks.COBBLESTONE;
-            } else if (biomeType == MeadowGroveBiomeType.FUNGUS_SHELVES) {
-                block = Blocks.MUSHROOM_STEM;
-            } else if (biomeType == MeadowGroveBiomeType.CALCIFIED_OUTSKIRTS) {
-                block = Blocks.BLUE_WOOL;
-            } else if (biomeType == MeadowGroveBiomeType.CAVERNOUS_CALCIFICATION) {
-                block = Blocks.PURPLE_WOOL;
-            } else {
-                throw new IllegalArgumentException("Unknown biome type: " + biomeType);
-            }
+            int filledHeight = height - openHeight;
+            int filledDepth = depth - openDepth;
+            BlockState ceilingState = Blocks.STONE.defaultBlockState();
+            BlockState surfaceState = biomeType.getSurfaceBlock();
+
             mutable.set(blockX, blockY, blockZ);
 
             Optional<InclineData> optional = data.getInclineData();
             if (optional.isPresent()) {
                 InclineData inclineData = optional.get();
-                int baseSize = inclineData.getBaseSize();
+                int foundationSize = inclineData.getBaseSize();
                 int overhangSize = inclineData.getOverhangSize();
                 int inclineHeight = inclineData.getInclineHeight() + Mth.floor(openDepth * 0.8f);
 
                 mutable.move(Direction.DOWN, openDepth);
                 mutable.move(Direction.UP, inclineHeight);
                 for (int i = 0; i < overhangSize; i++) {
-                    level.setBlock(mutable, block.defaultBlockState(), 2);
+                    float delta = i / (float)overhangSize;
+                    BlockState state = biomeType.getSurfaceBlock(delta);
+                    level.setBlock(mutable, state, 2);
                     mutable.move(Direction.DOWN);
                 }
                 mutable.setY(blockY - openDepth);
-                for (int i = 0; i < baseSize; i++) {
+                for (int i = 0; i < foundationSize; i++) {
                     mutable.move(Direction.UP);
-                    level.setBlock(mutable, block.defaultBlockState(), 2);
+                    float delta = 1 - (i / (float)foundationSize);
+                    BlockState state = biomeType.getSurfaceBlock(delta);
+                    level.setBlock(mutable, state, 2);
                 }
             }
 
             mutable.setY(blockY);
-            for (int j = 0; j < height; j++) {
+            for (int i = 0; i < height; i++) {
                 mutable.move(Direction.UP);
-                if (j >= openHeight) {
-                    level.setBlock(mutable, block.defaultBlockState(), 2);
+                if (i >= openHeight) {
+                    level.setBlock(mutable, ceilingState, 2);
                 }
             }
             mutable.setY(blockY);
-            for (int j = 0; j <= depth; j++) {
-                if (j >= openDepth) {
-                    level.setBlock(mutable, block.defaultBlockState(), 2);
+            for (int i = 0; i <= depth; i++) {
+                if (i >= openDepth) {
+                    float delta = (i-openDepth) / (float)filledDepth;
+                    BlockState state = biomeType.getSurfaceBlock(delta);
+                    level.setBlock(mutable, state, 2);
                 }
                 mutable.move(Direction.DOWN);
             }

@@ -1,5 +1,6 @@
 package com.smellysleepy.meadow;
 
+import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.MeadowGroveBiomeTypes;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.resources.*;
@@ -32,7 +33,7 @@ public class MeadowMod {
 
         MineralTreePartTypes.init();
         MineralFloraRegistry.init();
-
+        MeadowGroveBiomeTypes.init();
         SOUNDS.register(modBus);
         BLOCKS.register(modBus);
         ITEMS.register(modBus);

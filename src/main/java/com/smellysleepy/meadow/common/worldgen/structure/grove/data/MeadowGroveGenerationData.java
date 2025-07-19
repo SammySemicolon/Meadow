@@ -106,8 +106,8 @@ public class MeadowGroveGenerationData {
             }
             double localDelta = distance / localRadius;
 
-            double offsetNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.2f);
-            int centerOffset = (int) Mth.lerp(offsetNoise, -2, 2);
+            double offsetNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 0.08f);
+            int centerOffset = (int) Mth.lerp(offsetNoise, -4, 4);
             int height = GroveSizeHelper.getGroveHeight(noiseSampler, mutable, localHeight, localDelta);
             int depth = GroveSizeHelper.getGroveDepth(noiseSampler, mutable, localDepth, localDelta);
             float upperOpeningSize = localHeight * 0.3f;
@@ -136,12 +136,12 @@ public class MeadowGroveGenerationData {
 
             boolean isOpen = openHeight > 0 && openDepth > 0;
 
-            var biomeData = GroveBiomeHelper.getBiomeType(config, noiseSampler, blockX, blockZ, localDelta);
+            var biomeData = GroveBiomeHelper.getBiomeType(config, noiseSampler, blockX, blockZ, delta);
             var biomeType = biomeData.getFirst();
             double biomeInfluence = biomeData.getSecond();
             Optional<InclineData> inclineData;
             if (isOpen) {
-                inclineData = GroveInclineHelper.getInclineData(config, noiseSampler, blockX, blockZ, localDelta);
+                inclineData = GroveInclineHelper.getInclineData(config, noiseSampler, blockX, blockZ, delta);
             }
             else {
                 inclineData = Optional.empty();
