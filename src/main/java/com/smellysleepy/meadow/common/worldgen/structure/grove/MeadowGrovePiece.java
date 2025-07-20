@@ -2,8 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.data.*;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.feature.GroveFeatureProvider;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.feature.PlacedGroveFeatures;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.feature.GroveFeaturePlacementCache;
 import com.smellysleepy.meadow.registry.worldgen.*;
 import net.minecraft.core.*;
 import net.minecraft.nbt.*;
@@ -12,8 +11,10 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.*;
+import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.*;
+import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -43,9 +44,10 @@ public class MeadowGrovePiece extends StructurePiece {
 
         BlockPos groveCenter = groveData.getGroveCenter();
         MeadowGroveGenerationData generationData = groveData.getGenerationData();
+        GroveFeaturePlacementCache surfaceFeatures = new GroveFeaturePlacementCache();
+        GroveFeaturePlacementCache inclineFeatures = new GroveFeaturePlacementCache();
 
-//        GroveFeatureProvider featureProvider = biomeType.createSurfaceFeatures(random);
-
+        var noiseSampler = new ImprovedNoise(new XoroshiroRandomSource(level.getSeed()));
 
         for (DataEntry data : generationData.getData(chunkPos)) {
             int blockX = data.getBlockX();
@@ -63,7 +65,7 @@ public class MeadowGrovePiece extends StructurePiece {
             int filledHeight = height - openHeight;
             int filledDepth = depth - openDepth;
             BlockState ceilingState = Blocks.STONE.defaultBlockState();
-            BlockState surfaceState = biomeType.getSurfaceBlock();
+            BlockState surfaceState = biomeType.getSurfaceBlock(data, noiseSampler);
 
             mutable.set(blockX, blockY, blockZ);
 
@@ -78,15 +80,18 @@ public class MeadowGrovePiece extends StructurePiece {
                 mutable.move(Direction.UP, inclineHeight);
                 for (int i = 0; i < overhangSize; i++) {
                     float delta = i / (float)overhangSize;
-                    BlockState state = biomeType.getSurfaceBlock(delta);
+                    BlockState state = biomeType.getSurfaceBlock(data, noiseSampler, delta);
                     level.setBlock(mutable, state, 2);
+                    if (i == 0) {
+                        inclineFeatures.addPosition(data, mutable.above());
+                    }
                     mutable.move(Direction.DOWN);
                 }
                 mutable.setY(blockY - openDepth);
                 for (int i = 0; i < foundationSize; i++) {
                     mutable.move(Direction.UP);
                     float delta = 1 - (i / (float)foundationSize);
-                    BlockState state = biomeType.getSurfaceBlock(delta);
+                    BlockState state = biomeType.getSurfaceBlock(data, noiseSampler, delta);
                     level.setBlock(mutable, state, 2);
                 }
             }
@@ -102,11 +107,18 @@ public class MeadowGrovePiece extends StructurePiece {
             for (int i = 0; i <= depth; i++) {
                 if (i >= openDepth) {
                     float delta = (i-openDepth) / (float)filledDepth;
-                    BlockState state = biomeType.getSurfaceBlock(delta);
+                    BlockState state = biomeType.getSurfaceBlock(data, noiseSampler, delta);
                     level.setBlock(mutable, state, 2);
+                    if (data.isOpen() && i == openDepth) {
+                        surfaceFeatures.addPosition(data, mutable.above());
+                    }
                 }
                 mutable.move(Direction.DOWN);
             }
         }
+
+        surfaceFeatures.generateFeatures(level, generator, generationData, chunkPos, random);
+        inclineFeatures.generateFeatures(level, generator, generationData, chunkPos, random);
     }
+
 }

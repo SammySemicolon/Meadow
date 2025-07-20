@@ -1,10 +1,12 @@
 package com.smellysleepy.meadow.common.worldgen.structure.grove.biome;
 
 import com.mojang.serialization.*;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.data.DataEntry;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.feature.GroveFeatureProvider;
 import net.minecraft.resources.*;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 
 import java.util.*;
 
@@ -29,18 +31,24 @@ public abstract class MeadowGroveBiomeType {
         BIOME_TYPES.put(id, this);
     }
 
-    public final BlockState getSurfaceBlock(float depth) {
+    public final BlockState getSurfaceBlock(DataEntry data, ImprovedNoise noiseSampler, float depth) {
         if (depth == 0) {
-            return getSurfaceBlock();
+            return getSurfaceBlock(data, noiseSampler);
         }
         return getSurfaceLayerBlock(depth);
     }
 
-    public abstract BlockState getSurfaceBlock();
+    public abstract BlockState getSurfaceBlock(DataEntry data, ImprovedNoise noiseSampler);
 
     public abstract BlockState getSurfaceLayerBlock(float depth);
 
-    public abstract GroveFeatureProvider createSurfaceFeatures(RandomSource random);
+    public GroveFeatureProvider createSurfaceFeatures(RandomSource random) {
+        GroveFeatureProvider.GroveFeatureProviderBuilder builder = GroveFeatureProvider.create(this);
+        createSurfaceFeatures(random, builder);
+        return builder.build();
+    }
+
+    protected abstract void createSurfaceFeatures(RandomSource random, GroveFeatureProvider.GroveFeatureProviderBuilder builder);
 
     public ResourceLocation getId() {
         return id;

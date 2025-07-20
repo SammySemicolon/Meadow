@@ -20,6 +20,10 @@ public record DataCoordinate(int x, int z) {
         this(pos.x, pos.z);
     }
 
+    public DataCoordinate(ChunkPos pos, int offsetIndex) {
+        this(pos.getBlockX(offsetIndex % 16), pos.getBlockZ(offsetIndex / 16));
+    }
+
     public DataCoordinate asChunkCoordinate() {
         return new DataCoordinate(x >> 4, z >> 4);
     }

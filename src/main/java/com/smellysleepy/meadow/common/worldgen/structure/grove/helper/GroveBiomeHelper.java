@@ -16,7 +16,7 @@ public class GroveBiomeHelper {
     public static List<MeadowGroveBiomeType> pickBiomes(RandomSource randomSource) {
         List<MeadowGroveBiomeType> biomes = new ArrayList<>();
         List<MeadowGroveBiomeType> naturalBiomes = new ArrayList<>(MeadowGroveBiomeType.BIOME_TYPES.values().stream().filter(MeadowGroveBiomeType::spawnsNaturally).toList());
-        int biomeCount = RandomHelper.randomBetween(randomSource, Easing.CUBIC_IN_OUT, 2, 4);
+        int biomeCount = RandomHelper.randomBetween(randomSource, Easing.CUBIC_IN_OUT, 1, 3);
 
         for (int i = 0; i < biomeCount; i++) {
             float totalWeight = naturalBiomes.stream().map(MeadowGroveBiomeType::getWeight).reduce(0f, Float::sum);
@@ -91,10 +91,10 @@ public class GroveBiomeHelper {
         double biomeNoise = 0;
         int layerCount = 3;
         float[] layerWeights = new float[]{
-                0.5f, 0.3f, 0.2f
+                0.6f, 0.2f, 0.2f
         };
         float[] frequencyMultipliers = new float[]{
-                1f, 1.75f, 3f
+                1f, 1.25f, 1.5f
         };
         float totalWeight = 0;
         for (float weight : layerWeights) {
@@ -102,10 +102,9 @@ public class GroveBiomeHelper {
         }
         int biomeOffset = biomeType.getSeed();
         for (int j = 0; j < layerCount; j++) {
-            int offset = biomeOffset * (j+1);
             float frequency = config.getBiomeSize() * frequencyMultipliers[j];
             float weight = layerWeights[j];
-            double noiseLayer = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, offset, frequency);
+            double noiseLayer = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, biomeOffset, frequency);
             biomeNoise += noiseLayer * weight;
         }
         return biomeNoise / totalWeight;
