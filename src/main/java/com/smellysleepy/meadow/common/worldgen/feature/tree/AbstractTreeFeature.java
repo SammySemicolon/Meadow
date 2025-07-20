@@ -20,6 +20,6 @@ public abstract class AbstractTreeFeature<FC extends FeatureConfiguration> exten
         }
         BlockState state = level.getBlockState(pos);
         final Block block = state.getBlock();
-        return block instanceof MeadowSaplingBlock || level.isEmptyBlock(pos) || state.canBeReplaced();
+        return block instanceof AspenSaplingBlock || level.isEmptyBlock(pos) || state.canBeReplaced();
     }
 }

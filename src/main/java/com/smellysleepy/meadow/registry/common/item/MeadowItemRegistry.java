@@ -139,10 +139,10 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> WILTED_ROCKY_PEARLFLOWER = register("wilted_rocky_pearlflower", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.WILTED_ROCKY_PEARLFLOWER.get(), p));
 
 //    public static final RegistryObject<Item> AUREATE_WHEAT_CROP = register("aureate_wheat_test", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.AUREATE_WHEAT_CROP.get(), p));
-    public static final RegistryObject<Item> SHORT_MEADOW_GRASS = register("short_meadow_grass", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SHORT_MEADOW_GRASS.get(), p));
-    public static final RegistryObject<Item> MEDIUM_MEADOW_GRASS = register("medium_meadow_grass", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEDIUM_MEADOW_GRASS.get(), p));
-    public static final RegistryObject<Item> TALL_MEADOW_GRASS = register("tall_meadow_grass", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_MEADOW_GRASS.get(), p));
-    public static final RegistryObject<Item> MEADOW_GRASS_BLOCK = register("meadow_grass_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get(), p));
+    public static final RegistryObject<Item> SHORT_ASPEN_GRASS = register("short_aspen_grass", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SHORT_ASPEN_GRASS.get(), p));
+    public static final RegistryObject<Item> MEDIUM_ASPEN_GRASS = register("medium_aspen_grass", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.MEDIUM_ASPEN_GRASS.get(), p));
+    public static final RegistryObject<Item> TALL_ASPEN_GRASS = register("tall_aspen_grass", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_ASPEN_GRASS.get(), p));
+    public static final RegistryObject<Item> ASPEN_GRASS_BLOCK = register("aspen_grass_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_GRASS_BLOCK.get(), p));
 
 
     public static <T extends Item> RegistryObject<T> register(String name, Item.Properties properties, Function<Item.Properties, T> function) {

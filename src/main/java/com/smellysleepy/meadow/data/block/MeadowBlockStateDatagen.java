@@ -31,9 +31,9 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         Set<Supplier<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
         AbstractBlockStateSmith.StateSmithData data = new AbstractBlockStateSmith.StateSmithData(this, blocks::remove);
 
-        BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::varyingRotationBlock, this::meadowGrassBlockModel, MeadowBlockRegistry.MEADOW_GRASS_BLOCK);
-        MeadowBlockStateSmithTypes.TINTED_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_MEADOW_GRASS, MeadowBlockRegistry.MEDIUM_MEADOW_GRASS);
-        MeadowBlockStateSmithTypes.TINTED_TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_MEADOW_GRASS);
+        BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::varyingRotationBlock, this::meadowGrassBlockModel, MeadowBlockRegistry.ASPEN_GRASS_BLOCK);
+        MeadowBlockStateSmithTypes.TINTED_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_ASPEN_GRASS, MeadowBlockRegistry.MEDIUM_ASPEN_GRASS);
+        MeadowBlockStateSmithTypes.TINTED_TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_ASPEN_GRASS);
 
 //        MeadowBlockStateSmithTypes.LAYERED_CROP_BLOCK.act(data, MeadowBlockRegistry.AUREATE_WHEAT_CROP);
 

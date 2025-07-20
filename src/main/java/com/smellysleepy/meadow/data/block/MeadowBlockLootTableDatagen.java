@@ -90,7 +90,7 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
             }
             add(take(blocks, MeadowBlockRegistry.ASPEN_LEAVES).get(), b -> createAspenLeavesDrop(b, MeadowBlockRegistry.ASPEN_SAPLING.get(), MeadowBlockRegistry.SMALL_ASPEN_SAPLING.get(), SAPLING_DROP_CHANCE));
             add(take(blocks, MeadowBlockRegistry.HANGING_ASPEN_LEAVES).get(), b -> createConditionalDrop(b, HAS_SHEARS_OR_SILK_TOUCH));
-            add(take(blocks, MeadowBlockRegistry.MEADOW_GRASS_BLOCK).get(), b -> createSingleItemTableWithSilkTouch(b, Items.DIRT));
+            add(take(blocks, MeadowBlockRegistry.ASPEN_GRASS_BLOCK).get(), b -> createSingleItemTableWithSilkTouch(b, Items.DIRT));
 
             takeAll(blocks, b -> b.get() instanceof SaplingBlock).forEach(b -> add(b.get(), createSingleItemTable(b.get())));
 

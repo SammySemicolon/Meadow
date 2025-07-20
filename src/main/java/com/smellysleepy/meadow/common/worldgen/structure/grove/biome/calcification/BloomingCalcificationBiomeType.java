@@ -41,9 +41,13 @@ public class BloomingCalcificationBiomeType extends MeadowGroveBiomeType {
         int largeStalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_IN, 2, 8);
         int stalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 0, 4);
 
+        int vegetationCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 2, 4);
+
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, pearlflowerCount);
 
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES, largeStalagmiteCount);
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES, stalagmiteCount);
+
+        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_VEGETATION, vegetationCount);
     }
 }

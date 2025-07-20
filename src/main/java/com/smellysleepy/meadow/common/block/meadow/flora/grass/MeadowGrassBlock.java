@@ -15,10 +15,8 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.lighting.LightEngine;
 
 import static com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper.VARIANT;
-import static com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper.calcVariant;
 
 public class MeadowGrassBlock extends SpreadingSnowyDirtBlock implements BonemealableBlock {
 
@@ -57,7 +55,7 @@ public class MeadowGrassBlock extends SpreadingSnowyDirtBlock implements Bonemea
         BlockPos blockpos = pPos.above();
         BlockState blockstate = Blocks.GRASS.defaultBlockState();
         var configuredFeatures = pLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
-        var optional = configuredFeatures.getHolder(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_GRASS_BONEMEAL);
+        var optional = configuredFeatures.getHolder(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_GRASS_BONEMEAL);
 
         label49:
         for(int i = 0; i < 128; ++i) {

@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.material.*;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import team.lodestar.lodestone.systems.block.*;
 
 public class MeadowBlockProperties {
@@ -110,15 +109,15 @@ public class MeadowBlockProperties {
                 .mapColor(MapColor.WOOD);
     }
 
-    public static LodestoneBlockProperties MEADOW_LOG_PROPERTIES() {
+    public static LodestoneBlockProperties ASPEN_LOG_PROPERTIES() {
         return ASPEN_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
     }
 
-    public static LodestoneBlockProperties STRIPPED_MEADOW_LOG_PROPERTIES() {
-        return MEADOW_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    public static LodestoneBlockProperties STRIPPED_ASPEN_LOG_PROPERTIES() {
+        return ASPEN_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
     }
 
-    public static LodestoneBlockProperties THIN_MEADOW_WOOD_PROPERTIES() {
+    public static LodestoneBlockProperties THIN_ASPEN_WOOD_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .strength(1.25F, 4.0F)
                 .setCutoutRenderType()
@@ -129,16 +128,16 @@ public class MeadowBlockProperties {
                 .mapColor(MapColor.WOOD);
     }
 
-    public static LodestoneBlockProperties THIN_MEADOW_LOG_PROPERTIES() {
-        return THIN_MEADOW_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
+    public static LodestoneBlockProperties THIN_ASPEN_LOG_PROPERTIES() {
+        return THIN_ASPEN_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
     }
 
-    public static LodestoneBlockProperties THIN_STRIPPED_MEADOW_LOG_PROPERTIES() {
-        return THIN_MEADOW_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+    public static LodestoneBlockProperties THIN_STRIPPED_ASPEN_LOG_PROPERTIES() {
+        return THIN_ASPEN_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
     }
 
-    public static LodestoneBlockProperties NATURAL_THIN_MEADOW_LOG_PROPERTIES() {
-        return THIN_MEADOW_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
+    public static LodestoneBlockProperties NATURAL_THIN_ASPEN_LOG_PROPERTIES() {
+        return THIN_ASPEN_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
     }
 
     public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {
@@ -160,10 +159,10 @@ public class MeadowBlockProperties {
         return ASPEN_LEAVES_PROPERTIES().lightLevel(s -> 3).noCollission();
     }
 
-    public static LodestoneBlockProperties MEADOW_GRASS_BLOCK_PROPERTIES() {
+    public static LodestoneBlockProperties ASPEN_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MOOMOO_CAN_SPAWN_ON)
-                .addTags(MeadowBlockTagRegistry.MEADOW_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
+                .addTags(MeadowBlockTagRegistry.ASPEN_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
                 .addTags(BlockTags.DIRT)
                 .addTags(BlockTags.MINEABLE_WITH_SHOVEL)
                 .isValidSpawn(((pState, pLevel, pPos, pValue) -> pValue.equals(MeadowEntityRegistry.MOO_MOO.get())))
@@ -176,7 +175,7 @@ public class MeadowBlockProperties {
                 .randomTicks();
     }
 
-    public static LodestoneBlockProperties MEADOW_GRASS_PROPERTIES() {
+    public static LodestoneBlockProperties ASPEN_GRASS_PROPERTIES() {
         return new LodestoneBlockProperties()
                 .setCutoutRenderType()
                 .noCollission()

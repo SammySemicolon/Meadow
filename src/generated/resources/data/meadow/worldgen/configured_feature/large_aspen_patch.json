@@ -1,0 +1,17 @@
+{
+  "type": "meadow:layered_patch",
+  "config": {
+    "patchSizes": [
+      3,
+      6,
+      9,
+      4
+    ],
+    "plants": [
+      "meadow:short_aspen_grass",
+      "meadow:tall_aspen_grass",
+      "meadow:medium_aspen_grass",
+      "meadow:short_aspen_grass"
+    ]
+  }
+}

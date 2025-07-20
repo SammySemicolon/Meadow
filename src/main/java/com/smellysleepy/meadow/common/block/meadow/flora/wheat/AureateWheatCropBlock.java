@@ -122,7 +122,7 @@ public class AureateWheatCropBlock extends BushBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get()) || pState.is(BlockTags.DIRT) || super.mayPlaceOn(pState, pLevel, pPos);
+        return pState.is(MeadowBlockRegistry.ASPEN_GRASS_BLOCK.get()) || pState.is(BlockTags.DIRT) || super.mayPlaceOn(pState, pLevel, pPos);
     }
     @Override
     public long getSeed(BlockState pState, BlockPos pPos) {

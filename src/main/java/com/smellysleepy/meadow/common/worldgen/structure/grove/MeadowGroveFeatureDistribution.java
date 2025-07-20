@@ -14,7 +14,6 @@ import team.lodestar.lodestone.systems.easing.Easing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 public class MeadowGroveFeatureDistribution extends HashMap<ResourceKey<ConfiguredFeature<?, ?>>, MeadowGroveFeatureDistribution.FeatureDistributionData> {
@@ -45,9 +44,9 @@ public class MeadowGroveFeatureDistribution extends HashMap<ResourceKey<Configur
         featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, random, smallTreeCount);
         featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, random, largeTreeCount);
 
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, random, largePatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH, random, mediumPatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH, random, smallPatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_ASPEN_PATCH, random, largePatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_PATCH, random, mediumPatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_PATCH, random, smallPatchCount);
 
         featureDistribution.addFeature(AquaticFeatures.WARM_OCEAN_VEGETATION, random, coralCount);
         featureDistribution.addFeature(CaveFeatures.MOSS_VEGETATION, random, mossCount);
@@ -62,9 +61,9 @@ public class MeadowGroveFeatureDistribution extends HashMap<ResourceKey<Configur
         featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES, random, largeStalagmiteCount);
         featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES, random, stalagmiteCount);
 
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, random, largePatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH, random, mediumPatchCount);
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH, random, smallPatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_ASPEN_PATCH, random, largePatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_PATCH, random, mediumPatchCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_PATCH, random, smallPatchCount);
         return featureDistribution;
     }
 

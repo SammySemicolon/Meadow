@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/grass_block",
-  "textures": {
-    "overlay": "meadow:block/meadow_grass_block_overlay",
-    "side": "meadow:block/meadow_grass_block",
-    "top": "meadow:block/meadow_grass_block_top"
-  }
-}

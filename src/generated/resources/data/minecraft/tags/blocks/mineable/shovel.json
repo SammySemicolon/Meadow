@@ -1,30 +1,20 @@
 {
   "values": [
     "meadow:coal_grass_block",
-    "meadow:meadow_grass_block",
-    "meadow:heavy_calcified_bricks_wall",
     "meadow:calcified_earth",
     "meadow:giant_calcified_dripstone",
     "meadow:calcified_dripstone",
     "meadow:netherite_grass_block",
-    "meadow:heavy_calcified_bricks",
-    "meadow:calcified_bricks",
-    "meadow:calcified_bricks_slab",
     "meadow:emerald_grass_block",
     "meadow:calcified_covering",
     "meadow:redstone_grass_block",
     "meadow:copper_grass_block",
     "meadow:calcified_rock",
-    "meadow:heavy_calcified_bricks_stairs",
-    "meadow:heavy_calcified_bricks_slab",
     "meadow:lapis_grass_block",
     "meadow:iron_grass_block",
     "meadow:amethyst_grass_block",
     "meadow:gold_grass_block",
-    "meadow:calcified_bricks_stairs",
-    "meadow:calcified_bricks_wall",
-    "meadow:heavy_chiseled_calcified_bricks",
-    "meadow:diamond_grass_block",
-    "meadow:chiseled_calcified_bricks"
+    "meadow:aspen_grass_block",
+    "meadow:diamond_grass_block"
   ]
 }

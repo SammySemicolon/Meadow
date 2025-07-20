@@ -1,0 +1,6 @@
+{
+  "parent": "meadow:block/templates/template_tinted_cross",
+  "textures": {
+    "cross": "meadow:block/short_aspen_grass"
+  }
+}

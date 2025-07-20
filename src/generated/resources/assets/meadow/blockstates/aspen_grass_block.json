@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "meadow:block/aspen_grass_block"
+      },
+      {
+        "model": "meadow:block/aspen_grass_block",
+        "y": 90
+      },
+      {
+        "model": "meadow:block/aspen_grass_block",
+        "y": 180
+      },
+      {
+        "model": "meadow:block/aspen_grass_block",
+        "y": 270
+      }
+    ]
+  }
+}

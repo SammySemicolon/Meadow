@@ -20,7 +20,7 @@ public class AspenForestBiomeType extends MeadowGroveBiomeType {
 
     @Override
     public BlockState getSurfaceBlock(DataEntry data, ImprovedNoise noiseSampler) {
-        return MeadowBlockRegistry.MEADOW_GRASS_BLOCK.get().defaultBlockState();
+        return MeadowBlockRegistry.ASPEN_GRASS_BLOCK.get().defaultBlockState();
     }
 
     @Override
@@ -48,9 +48,9 @@ public class AspenForestBiomeType extends MeadowGroveBiomeType {
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, smallTreeCount);
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, largeTreeCount);
 
-        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_PATCH, largePatchCount);
-        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_MEADOW_PATCH, mediumPatchCount);
-        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_MEADOW_PATCH, smallPatchCount);
+        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_ASPEN_PATCH, largePatchCount);
+        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_PATCH, mediumPatchCount);
+        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_PATCH, smallPatchCount);
 
         builder.addFeature(MiscOverworldFeatures.SPRING_WATER, springWaterCount);
 

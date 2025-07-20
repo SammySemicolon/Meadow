@@ -40,7 +40,13 @@ public class WildCalcificationBiomeType extends MeadowGroveBiomeType {
     public void createSurfaceFeatures(RandomSource random, GroveFeatureProvider.GroveFeatureProviderBuilder builder) {
         int largeStalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_IN, 8, 16);
         int stalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 6, 12);
+
+        int vegetationCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 4, 8);
+
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_CALCIFIED_STALAGMITES, largeStalagmiteCount);
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_STALAGMITES, stalagmiteCount);
+
+        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_VEGETATION, vegetationCount);
+
     }
 }

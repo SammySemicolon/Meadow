@@ -5,8 +5,9 @@ import com.smellysleepy.meadow.common.worldgen.feature.PearlflowerFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.StrangePlantFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.calcification.PointyCalcificationFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.patch.LayeredPatchFeature;
-import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.MeadowTreeFeature;
-import com.smellysleepy.meadow.common.worldgen.feature.tree.meadow.SmallMeadowTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.aspen.AspenTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.aspen.SmallAspenTreeFeature;
+import com.smellysleepy.meadow.common.worldgen.feature.tree.fungi.ChanterelleFungusFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraftforge.registries.*;
@@ -15,8 +16,10 @@ public class MeadowFeatureRegistry {
 
     public static final DeferredRegister<Feature<?>> FEATURE_TYPES = DeferredRegister.create(ForgeRegistries.FEATURES, MeadowMod.MEADOW);
 
-    public static final RegistryObject<SmallMeadowTreeFeature> SMALL_ASPEN_TREE = FEATURE_TYPES.register("small_aspen_tree", SmallMeadowTreeFeature::new);
-    public static final RegistryObject<MeadowTreeFeature> ASPEN_TREE = FEATURE_TYPES.register("aspen_tree", MeadowTreeFeature::new);
+    public static final RegistryObject<SmallAspenTreeFeature> SMALL_ASPEN_TREE = FEATURE_TYPES.register("small_aspen_tree", SmallAspenTreeFeature::new);
+    public static final RegistryObject<AspenTreeFeature> ASPEN_TREE = FEATURE_TYPES.register("aspen_tree", AspenTreeFeature::new);
+
+    public static final RegistryObject<ChanterelleFungusFeature> CHANTERELLE_FUNGUS_TREE = FEATURE_TYPES.register("chanterelle_fungus_tree", ChanterelleFungusFeature::new);
 
     public static final RegistryObject<MineralTreeFeature> MINERAL_TREE = FEATURE_TYPES.register("mineral_tree", MineralTreeFeature::new);
 

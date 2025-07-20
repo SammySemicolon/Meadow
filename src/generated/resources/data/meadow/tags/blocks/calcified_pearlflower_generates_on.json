@@ -1,16 +1,6 @@
 {
   "values": [
-    "meadow:heavy_calcified_bricks_wall",
     "meadow:calcified_earth",
-    "meadow:heavy_calcified_bricks",
-    "meadow:calcified_bricks",
-    "meadow:calcified_bricks_slab",
-    "meadow:calcified_rock",
-    "meadow:heavy_calcified_bricks_stairs",
-    "meadow:heavy_calcified_bricks_slab",
-    "meadow:calcified_bricks_stairs",
-    "meadow:calcified_bricks_wall",
-    "meadow:heavy_chiseled_calcified_bricks",
-    "meadow:chiseled_calcified_bricks"
+    "meadow:calcified_rock"
   ]
 }
