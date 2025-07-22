@@ -42,10 +42,10 @@ public class FungalGrowthConfiguredFeatureDatagen {
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CHANTERELLE_FUNGUS_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.CHANTERELLE_FUNGUS_TREE.get(), new ChanterelleFungusFeatureConfiguration(
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
-                Blocks.MUSHROOM_STEM,
+                MeadowBlockRegistry.CHANTERELLE_STEM_BLOCK.get(),
                 MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_WOOD.get(),
                 MeadowBlockRegistry.CALCIFIED_WOOD.get(),
-                Blocks.BROWN_MUSHROOM_BLOCK
+                MeadowBlockRegistry.CHANTERELLE_CROWN_BLOCK.get()
         )));
     }
 }

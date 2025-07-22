@@ -2,7 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.common.block.meadow.wood.MeadowLogBlock;
+import com.smellysleepy.meadow.common.block.wood.AspenLogBlock;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
@@ -70,7 +70,7 @@ public class SplitBranchesPart extends MineralTreePart {
                 if (!feature.canPlace(level, mutable)) {
                     return failure();
                 }
-                filler.getLayer(MineralTreeFeature.LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(MeadowLogBlock.AXIS, direction.getAxis())));
+                filler.getLayer(MineralTreeFeature.LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(AspenLogBlock.AXIS, direction.getAxis())));
             }
             boolean success = feature.makeStraightTrunk(level, filler, mutable, trunkHeight);
             if (!success) {

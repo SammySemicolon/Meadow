@@ -2,7 +2,7 @@ package com.smellysleepy.meadow.common.worldgen.structure.grove.old;
 
 import com.mojang.datafixers.util.Pair;
 import com.smellysleepy.meadow.UnsafeBoundingBox;
-import com.smellysleepy.meadow.common.block.meadow.flora.grass.MeadowGrassVariantHelper;
+import com.smellysleepy.meadow.common.block.aspen.AspenGrassVariantHelper;
 import com.smellysleepy.meadow.common.worldgen.WorldgenHelper;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.MeadowGroveFeatureDistribution.FeatureDataGetter;
@@ -765,7 +765,7 @@ public class OldMeadowGrovePiece extends StructurePiece {
                     pattern.add(Blocks.STONE.defaultBlockState());
                 }
             } else {
-                pattern.add(MeadowGrassVariantHelper.getStateForPlacement(pos.setY(startingY), MeadowBlockRegistry.ASPEN_GRASS_BLOCK.get().defaultBlockState()));
+                pattern.add(AspenGrassVariantHelper.getStateForPlacement(pos.setY(startingY), MeadowBlockRegistry.ASPEN_GRASS_BLOCK.get().defaultBlockState()));
                 pattern.add(Blocks.DIRT.defaultBlockState());
                 pattern.add(Blocks.DIRT.defaultBlockState());
             }

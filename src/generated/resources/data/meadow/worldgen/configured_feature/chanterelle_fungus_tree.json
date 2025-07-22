@@ -2,8 +2,8 @@
   "type": "meadow:chanterelle_fungus_tree",
   "config": {
     "calcifiedLog": "meadow:calcified_wood",
-    "fungalCrown": "minecraft:brown_mushroom_block",
-    "log": "minecraft:mushroom_stem",
+    "fungalCrown": "meadow:chanterelle_crown_block",
+    "log": "meadow:chanterelle_stem_block",
     "partiallyCalcifiedLog": "meadow:partially_calcified_aspen_wood",
     "sapling": "meadow:aspen_sapling"
   }

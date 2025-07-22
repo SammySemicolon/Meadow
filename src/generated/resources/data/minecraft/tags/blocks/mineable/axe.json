@@ -1,6 +1,7 @@
 {
   "values": [
     "meadow:solid_calcified_door",
+    "meadow:chanterelle_crown_block",
     "meadow:calcified_planks_pressure_plate",
     "meadow:calcified_wall_sign",
     "meadow:solid_calcified_trapdoor",
@@ -40,6 +41,7 @@
     "meadow:heavy_aspen_planks_stairs",
     "meadow:calcified_planks_fence_gate",
     "meadow:calcified_planks_button",
+    "meadow:chanterelle_stem_block",
     "meadow:partially_calcified_aspen_log",
     "meadow:thin_stripped_calcified_wood",
     "meadow:calcified_planks",

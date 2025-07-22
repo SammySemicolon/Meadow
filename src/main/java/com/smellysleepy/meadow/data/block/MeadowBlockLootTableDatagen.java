@@ -1,6 +1,9 @@
 package com.smellysleepy.meadow.data.block;
 
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.*;
+import com.smellysleepy.meadow.common.block.pearlflower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.pearlflower.TallPearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.pearlflower.wilted.WiltedPearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.pearlflower.wilted.WiltedTallPearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.mineral.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.block.*;

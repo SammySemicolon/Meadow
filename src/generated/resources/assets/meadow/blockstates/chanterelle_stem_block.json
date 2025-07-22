@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "layer=bottom": {
+      "model": "meadow:block/chanterelle_stem_block_bottom"
+    },
+    "layer=middle": {
+      "model": "meadow:block/chanterelle_stem_block_middle"
+    },
+    "layer=top": {
+      "model": "meadow:block/chanterelle_stem_block_top"
+    }
+  }
+}

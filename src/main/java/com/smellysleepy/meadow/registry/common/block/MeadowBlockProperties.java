@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.registry.common.block;
 
-import com.smellysleepy.meadow.common.block.meadow.wood.NaturalThinMeadowLogBlock;
+import com.smellysleepy.meadow.common.block.wood.NaturalThinAspenLogBlock;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import net.minecraft.tags.*;
@@ -97,7 +97,7 @@ public class MeadowBlockProperties {
     }
 
     public static LodestoneBlockProperties NATURAL_THIN_CALCIFIED_LOG_PROPERTIES() {
-        return THIN_CALCIFIED_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
+        return THIN_CALCIFIED_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinAspenLogBlock.LEAVES).equals(NaturalThinAspenLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
     }
 
     public static LodestoneBlockProperties ASPEN_WOOD_PROPERTIES() {
@@ -137,7 +137,7 @@ public class MeadowBlockProperties {
     }
 
     public static LodestoneBlockProperties NATURAL_THIN_ASPEN_LOG_PROPERTIES() {
-        return THIN_ASPEN_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinMeadowLogBlock.LEAVES).equals(NaturalThinMeadowLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
+        return THIN_ASPEN_LOG_PROPERTIES().lightLevel(s -> s.getValue(NaturalThinAspenLogBlock.LEAVES).equals(NaturalThinAspenLogBlock.MeadowLeavesType.TOP) ? 2 : 0);
     }
 
     public static LodestoneBlockProperties ASPEN_LEAVES_PROPERTIES() {
@@ -198,6 +198,26 @@ public class MeadowBlockProperties {
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
                 .addTag(BlockTags.SAPLINGS);
+    }
+
+    public static LodestoneBlockProperties CHANTERELLE_STEM_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(0.5F, 4.0F)
+                .instrument(NoteBlockInstrument.BASS)
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .pushReaction(PushReaction.DESTROY)
+                .sound(SoundType.NETHER_WOOD)
+                .mapColor(MapColor.WOOD);
+    }
+
+    public static LodestoneBlockProperties CHANTERELLE_CROWN_PROPERTIES() {
+        return new LodestoneBlockProperties()
+                .strength(2F, 4.0F)
+                .instrument(NoteBlockInstrument.BASS)
+                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .pushReaction(PushReaction.DESTROY)
+                .sound(SoundType.NETHER_WOOD)
+                .mapColor(MapColor.WOOD);
     }
 
     public static LodestoneBlockProperties PEARLFLOWER_PROPERTIES() {

@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.fungi;
 
-import com.smellysleepy.meadow.common.block.meadow.wood.PartiallyCalcifiedMeadowLogBlock;
+import com.smellysleepy.meadow.common.block.fungi.ChanterelleMushroomStemBlock;
+import com.smellysleepy.meadow.common.block.wood.PartiallyCalcifiedAspenLogBlock;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractCalcifiedTreeFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +22,7 @@ public class ChanterelleFungusFeature extends AbstractCalcifiedTreeFeature<Chant
     }
 
     private int getTrunkHeight(RandomSource random) {
-        return Mth.nextInt(random, 8, 16);
+        return Mth.nextInt(random, 8, 12);
     }
 
     private int getCalcificationHeight(RandomSource random) {
@@ -43,7 +44,7 @@ public class ChanterelleFungusFeature extends AbstractCalcifiedTreeFeature<Chant
         var rand = context.random();
         var fungusStemState = config.getLog().defaultBlockState();
         var calcifiedLogState = config.getCalcifiedLog().defaultBlockState();
-        var calcifiedFungusStemState = config.getPartiallyCalcifiedLog().defaultBlockState().trySetValue(PartiallyCalcifiedMeadowLogBlock.AXIS, Direction.Axis.Y);
+        var calcifiedFungusStemState = config.getPartiallyCalcifiedLog().defaultBlockState().trySetValue(PartiallyCalcifiedAspenLogBlock.AXIS, Direction.Axis.Y);
         int trunkHeight = getTrunkHeight(rand);
         int calcificationHeight = getCalcificationHeight(rand);
         var mutable = new BlockPos.MutableBlockPos().set(pos);
@@ -55,6 +56,16 @@ public class ChanterelleFungusFeature extends AbstractCalcifiedTreeFeature<Chant
             var state = fungusStemState;
             if (i <= calcificationHeight) {
                 state = i == calcificationHeight ? calcifiedFungusStemState : calcifiedLogState;
+            }
+            else {
+                var layer = ChanterelleMushroomStemBlock.ChanterelleLayer.MIDDLE;
+                if (i == calcificationHeight +1) {
+                    layer = ChanterelleMushroomStemBlock.ChanterelleLayer.BOTTOM;
+                }
+                else if (i == trunkHeight) {
+                    layer = ChanterelleMushroomStemBlock.ChanterelleLayer.TOP;
+                }
+                state = state.trySetValue(ChanterelleMushroomStemBlock.LAYER, layer);
             }
             filler.getLayer(LOGS).put(mutable.immutable(), create(state));
             mutable.move(Direction.UP);
@@ -76,21 +87,7 @@ public class ChanterelleFungusFeature extends AbstractCalcifiedTreeFeature<Chant
         }
 
         BlockStateEntry crownEntry = create(config.fungalCrown.defaultBlockState()).build();
-        return makeFungalCrown(level, filler, crownEntry, mutable.set(pos).move(Direction.UP, trunkHeight-2));
-    }
-
-    public boolean makeFungalCrown(WorldGenLevel level, LodestoneBlockFiller filler, BlockStateEntry leavesEntry, BlockPos pos) {
-        int[] fungiLayerSizes = new int[]{4, 5, 6};
-        var mutable = pos.mutable();
-
-        for (int i = 0; i < 3; i++) {
-            mutable.move(Direction.UP);
-            boolean success = makeFungusSlice(level, filler.getLayer(LEAVES), mutable, fungiLayerSizes[i], leavesEntry);
-            if (!success) {
-                return false;
-            }
-        }
-        return true;
+        return makeFungusSlice(level, filler.getLayer(LEAVES), mutable.set(pos).move(Direction.UP), 5, crownEntry);
     }
 
     public boolean makeFungusSlice(WorldGenLevel level, LodestoneBlockFillerLayer layer, BlockPos pos, int layerSize, BlockStateEntry entry) {

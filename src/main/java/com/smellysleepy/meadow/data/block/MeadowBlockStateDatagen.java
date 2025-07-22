@@ -1,10 +1,13 @@
 package com.smellysleepy.meadow.data.block;
 
 import com.smellysleepy.meadow.*;
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.WiltedPearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.pearlflower.wilted.WiltedPearlFlowerBlock;
 import com.smellysleepy.meadow.common.block.mineral.MineralFloraRegistryBundle;
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.PearlFlowerBlock;
-import com.smellysleepy.meadow.common.block.meadow.flora.pearlflower.TallPearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.pearlflower.PearlFlowerBlock;
+import com.smellysleepy.meadow.common.block.pearlflower.TallPearlFlowerBlock;
+import com.smellysleepy.meadow.data.block.smith.CalcificationBlockStateSmithTypes;
+import com.smellysleepy.meadow.data.block.smith.FloraBlockStateSmithTypes;
+import com.smellysleepy.meadow.data.block.smith.TreeBlockStateSmithTypes;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.block.*;
 import net.minecraft.data.*;
@@ -32,8 +35,8 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         AbstractBlockStateSmith.StateSmithData data = new AbstractBlockStateSmith.StateSmithData(this, blocks::remove);
 
         BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::varyingRotationBlock, this::meadowGrassBlockModel, MeadowBlockRegistry.ASPEN_GRASS_BLOCK);
-        MeadowBlockStateSmithTypes.TINTED_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_ASPEN_GRASS, MeadowBlockRegistry.MEDIUM_ASPEN_GRASS);
-        MeadowBlockStateSmithTypes.TINTED_TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_ASPEN_GRASS);
+        FloraBlockStateSmithTypes.TINTED_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.SHORT_ASPEN_GRASS, MeadowBlockRegistry.MEDIUM_ASPEN_GRASS);
+        FloraBlockStateSmithTypes.TINTED_TALL_CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.TALL_ASPEN_GRASS);
 
 //        MeadowBlockStateSmithTypes.LAYERED_CROP_BLOCK.act(data, MeadowBlockRegistry.AUREATE_WHEAT_CROP);
 
@@ -45,21 +48,21 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_STAIRS, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_STAIRS);
         BlockStateSmithTypes.WALL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_BRICKS_WALL, MeadowBlockRegistry.HEAVY_CALCIFIED_BRICKS_WALL);
 
-        MeadowBlockStateSmithTypes.COVERING_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_COVERING);
-        MeadowBlockStateSmithTypes.POINTED_DRIPSTONE_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_DRIPSTONE);
-        MeadowBlockStateSmithTypes.GIANT_POINTED_DRIPSTONE_BLOCK.act(data, MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE);
+        CalcificationBlockStateSmithTypes.COVERING_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_COVERING);
+        CalcificationBlockStateSmithTypes.POINTED_DRIPSTONE_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_DRIPSTONE);
+        CalcificationBlockStateSmithTypes.GIANT_POINTED_DRIPSTONE_BLOCK.act(data, MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE);
 
         setTexturePath("pearlflower/");
         DataHelper.getAll(blocks, b -> b.get() instanceof TallPearlFlowerBlock).forEach(b -> BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, b));
         DataHelper.getAll(blocks, b -> b.get() instanceof WiltedPearlFlowerBlock).forEach(b -> BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, b));
-        DataHelper.getAll(blocks, b -> b.get() instanceof PearlFlowerBlock).forEach(b -> MeadowBlockStateSmithTypes.SMALL_TALL_CROSS_MODEL_BLOCK.act(data, b));
+        DataHelper.getAll(blocks, b -> b.get() instanceof PearlFlowerBlock).forEach(b -> FloraBlockStateSmithTypes.SMALL_TALL_CROSS_MODEL_BLOCK.act(data, b));
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.PEARLLIGHT);
 
         setTexturePath("wood/aspen/");
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LOG, MeadowBlockRegistry.STRIPPED_ASPEN_LOG);
         BlockStateSmithTypes.WOOD_BLOCK.act(data, MeadowBlockRegistry.ASPEN_WOOD, MeadowBlockRegistry.STRIPPED_ASPEN_WOOD);
-        MeadowBlockStateSmithTypes.NATURAL_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_ASPEN_LOG, MeadowBlockRegistry.THIN_ASPEN_WOOD);
-        MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_STRIPPED_ASPEN_LOG, MeadowBlockRegistry.THIN_STRIPPED_ASPEN_WOOD);
+        TreeBlockStateSmithTypes.NATURAL_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_ASPEN_LOG, MeadowBlockRegistry.THIN_ASPEN_WOOD);
+        TreeBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_STRIPPED_ASPEN_LOG, MeadowBlockRegistry.THIN_STRIPPED_ASPEN_WOOD);
 
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS, MeadowBlockRegistry.HEAVY_ASPEN_PLANKS);
         BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.ASPEN_PLANKS_STAIRS, MeadowBlockRegistry.HEAVY_ASPEN_PLANKS_STAIRS);
@@ -80,8 +83,8 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         setTexturePath("wood/calcified/");
         BlockStateSmithTypes.LOG_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_LOG, MeadowBlockRegistry.STRIPPED_CALCIFIED_LOG);
         BlockStateSmithTypes.WOOD_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_WOOD, MeadowBlockRegistry.STRIPPED_CALCIFIED_WOOD);
-        MeadowBlockStateSmithTypes.NATURAL_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_CALCIFIED_LOG, MeadowBlockRegistry.THIN_CALCIFIED_WOOD);
-        MeadowBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_STRIPPED_CALCIFIED_LOG, MeadowBlockRegistry.THIN_STRIPPED_CALCIFIED_WOOD);
+        TreeBlockStateSmithTypes.NATURAL_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_CALCIFIED_LOG, MeadowBlockRegistry.THIN_CALCIFIED_WOOD);
+        TreeBlockStateSmithTypes.THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_STRIPPED_CALCIFIED_LOG, MeadowBlockRegistry.THIN_STRIPPED_CALCIFIED_WOOD);
 
         BlockStateSmithTypes.FULL_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_PLANKS, MeadowBlockRegistry.HEAVY_CALCIFIED_PLANKS);
         BlockStateSmithTypes.STAIRS_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_PLANKS_STAIRS, MeadowBlockRegistry.HEAVY_CALCIFIED_PLANKS_STAIRS);
@@ -100,13 +103,16 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
         BlockStateSmithTypes.AXIS_BLOCK.act(data, MeadowBlockRegistry.CALCIFIED_PEARLLAMP);
 
         setTexturePath("wood/");
-        MeadowBlockStateSmithTypes.PARTIALLY_CALCIFIED_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_WOOD);
-        MeadowBlockStateSmithTypes.PARTIALLY_CALCIFIED_LOG_BLOCK.act(data, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_WOOD);
+        TreeBlockStateSmithTypes.PARTIALLY_CALCIFIED_THIN_LOG_BLOCK.act(data, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_WOOD);
+        TreeBlockStateSmithTypes.PARTIALLY_CALCIFIED_LOG_BLOCK.act(data, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_LOG, MeadowBlockRegistry.PARTIALLY_CALCIFIED_ASPEN_WOOD);
 
         BlockStateSmithTypes.LEAVES_BLOCK.act(data, MeadowBlockRegistry.ASPEN_LEAVES);
-        MeadowBlockStateSmithTypes.HANGING_ASPEN_LEAVES.act(data, MeadowBlockRegistry.HANGING_ASPEN_LEAVES);
+        TreeBlockStateSmithTypes.HANGING_ASPEN_LEAVES.act(data, MeadowBlockRegistry.HANGING_ASPEN_LEAVES);
         BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, MeadowBlockRegistry.ASPEN_SAPLING, MeadowBlockRegistry.SMALL_ASPEN_SAPLING);
 
+        setTexturePath("mushroom/");
+        TreeBlockStateSmithTypes.CHANTERELLE_STEM_BLOCK.act(data, MeadowBlockRegistry.CHANTERELLE_STEM_BLOCK);
+        TreeBlockStateSmithTypes.CHANTERELLE_CROWN_BLOCK.act(data, MeadowBlockRegistry.CHANTERELLE_CROWN_BLOCK);
 
         setTexturePath("mineral_flora/");
         for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
@@ -114,7 +120,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
             BlockStateSmithTypes.TALL_CROSS_MODEL_BLOCK.act(data, bundle.flowerBlock);
             BlockStateSmithTypes.CROSS_MODEL_BLOCK.act(data, bundle.saplingBlock, bundle.floraBlock);
             BlockStateSmithTypes.LEAVES_BLOCK.act(data, bundle.leavesBlock);
-            MeadowBlockStateSmithTypes.HANGING_LEAVES.act(data, bundle.hangingLeavesBlock);
+            TreeBlockStateSmithTypes.HANGING_LEAVES.act(data, bundle.hangingLeavesBlock);
         }
         setTexturePath("");
     }

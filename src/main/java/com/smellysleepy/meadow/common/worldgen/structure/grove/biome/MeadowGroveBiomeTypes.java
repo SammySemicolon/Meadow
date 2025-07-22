@@ -9,9 +9,9 @@ public class MeadowGroveBiomeTypes {
 
     public static final MeadowGroveBiomeType MEADOW_FOREST = create("meadow_forest").build(AspenForestBiomeType::new);
     public static final MeadowGroveBiomeType ROCKY_HILLS = create("rocky_hills").build(RockyHillsBiomeType::new);
-    public static final MeadowGroveBiomeType FUNGAL_SHELVES = create("fungal_shelves").setWeight(0.8f).build(FungalShelvesBiomeType::new);
+    public static final MeadowGroveBiomeType FUNGAL_SHELVES = create("fungal_shelves").setWeight(0.8f).build(FungalGrowthBiomeType::new);
 
-    public static final MeadowGroveBiomeType BLOOMING_CALCIFICATION = create("blooming_calcification").setWeight(0.2f).build(BloomingCalcificationBiomeType::new);
+    public static final MeadowGroveBiomeType BLOOMING_CALCIFICATION = create("blooming_calcification").spawnsNaturally(false).setWeight(0.2f).build(BloomingCalcificationBiomeType::new);
     public static final MeadowGroveBiomeType WILD_CALCIFICATION = create("wild_calcification").spawnsNaturally(false).build(WildCalcificationBiomeType::new);
 
     public static void init() {
