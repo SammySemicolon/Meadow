@@ -13,8 +13,8 @@ import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.easing.Easing;
 
-public class BloomingCalcificationBiomeType extends MeadowGroveBiomeType {
-    public BloomingCalcificationBiomeType(ResourceLocation id, boolean spawnsNaturally, float weight) {
+public class CreepingCalcificationBiomeType extends MeadowGroveBiomeType {
+    public CreepingCalcificationBiomeType(ResourceLocation id, boolean spawnsNaturally, float weight) {
         super(id, spawnsNaturally, weight);
     }
 
@@ -36,12 +36,12 @@ public class BloomingCalcificationBiomeType extends MeadowGroveBiomeType {
 
     @Override
     public void createSurfaceFeatures(RandomSource random, GroveFeatureProvider.GroveFeatureProviderBuilder builder) {
-        int pearlflowerCount = random.nextInt(2, 5);
+        int pearlflowerCount = random.nextInt(4, 8);
 
-        int largeStalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_IN, 2, 8);
-        int stalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 0, 4);
+        int largeStalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_IN, 4, 10);
+        int stalagmiteCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 6, 12);
 
-        int vegetationCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 2, 4);
+        int vegetationCount = RandomHelper.randomBetween(random, Easing.QUAD_OUT, 6, 12);
 
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, pearlflowerCount);
 

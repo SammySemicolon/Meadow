@@ -1,18 +1,18 @@
 package com.smellysleepy.meadow.common.worldgen.structure.grove.biome;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.calcification.BloomingCalcificationBiomeType;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.calcification.WildCalcificationBiomeType;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.calcification.CreepingCalcificationBiomeType;
+import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.calcification.DeepCalcificationBiomeType;
 import net.minecraft.resources.ResourceLocation;
 
 public class MeadowGroveBiomeTypes {
 
     public static final MeadowGroveBiomeType MEADOW_FOREST = create("meadow_forest").build(AspenForestBiomeType::new);
-    public static final MeadowGroveBiomeType ROCKY_HILLS = create("rocky_hills").build(RockyHillsBiomeType::new);
-    public static final MeadowGroveBiomeType FUNGAL_SHELVES = create("fungal_shelves").setWeight(0.8f).build(FungalGrowthBiomeType::new);
+    public static final MeadowGroveBiomeType FUNGAL_SHELVES = create("fungal_shelves").setWeight(0.85f).build(FungalGrowthBiomeType::new);
+    public static final MeadowGroveBiomeType ROCKY_HILLS = create("rocky_hills").setWeight(0.7f).build(RockyHillsBiomeType::new);
 
-    public static final MeadowGroveBiomeType BLOOMING_CALCIFICATION = create("blooming_calcification").spawnsNaturally(false).setWeight(0.2f).build(BloomingCalcificationBiomeType::new);
-    public static final MeadowGroveBiomeType WILD_CALCIFICATION = create("wild_calcification").spawnsNaturally(false).build(WildCalcificationBiomeType::new);
+    public static final MeadowGroveBiomeType CREEPING_CALCIFICATION = create("creeping_calcification").spawnsNaturally(false).build(CreepingCalcificationBiomeType::new);
+    public static final MeadowGroveBiomeType DEEP_CALCIFICATION = create("deep_calcification").spawnsNaturally(false).build(DeepCalcificationBiomeType::new);
 
     public static void init() {
 

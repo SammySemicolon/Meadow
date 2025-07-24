@@ -4,40 +4,74 @@ import com.google.common.collect.*;
 import com.smellysleepy.meadow.common.worldgen.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.data.*;
-import it.unimi.dsi.fastutil.*;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.levelgen.synth.*;
 import team.lodestar.lodestone.systems.easing.*;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 public class GroveInclineHelper {
 
     /**
-     * Iterates through every currently present incline data and propagates it outwards.
+     * Iterates through every currently present lonely incline data and propagates it outwards a little bit
      */
-    public static void propagateInclineData(MeadowGroveGenerationConfiguration config) {
-        MeadowGroveGenerationData data = config.getGenerationData();
-        List<DataCoordinate> existingInclineData = data.getEntries().stream()
-                .filter(e -> e.getInclineData().isPresent()).map(DataEntry::getDataCoordinate).toList();
-        for (DataCoordinate coordinate : existingInclineData) {
-            GroveInclineHelper.propagateInclineData(config, coordinate.x(), coordinate.z());
+    public static void expandLonelyInclines(MeadowGroveGenerationConfiguration config) {
+        var data = config.getGenerationData().getEntries();
+        for (DataEntry dataEntry : data) {
+            dataEntry.getInclineData().ifPresent(inclineData ->
+                    GroveInclineHelper.expandLonelyInclines(config, inclineData, dataEntry.getBlockX(), dataEntry.getBlockZ()));
+        }
+    }
+
+    /**
+     *
+     */
+    public static void expandLonelyInclines(MeadowGroveGenerationConfiguration config, InclineData sourceIncline, int blockX, int blockZ) {
+        if (!sourceIncline.isSource()) {
+            return;
+        }
+        if (!sourceIncline.isLonely()) {
+            return;
+        }
+        Supplier<InclineData> propagationSupplier = () -> InclineData.artificialSource(sourceIncline);
+        BiConsumer<InclineData, Double> propagationActor = ((inclineData, delta) -> inclineData.applyPropagation(sourceIncline, delta));
+        propagate(config, sourceIncline, propagationSupplier, propagationActor, blockX, blockZ);
+    }
+
+    /**
+     * Iterates through every currently present incline data and propagates it outwards.
+     * At this stage in generation, there are only source inclines, both natural and created through {@link GroveInclineHelper#expandLonelyInclines}.
+     */
+    public static void createOverhangs(MeadowGroveGenerationConfiguration config) {
+        var data = config.getGenerationData().getEntries();
+        for (DataEntry dataEntry : data) {
+            dataEntry.getInclineData().ifPresent(inclineData ->
+                    GroveInclineHelper.createOverhangs(config, inclineData, dataEntry.getBlockX(), dataEntry.getBlockZ()));
         }
     }
 
 
     /**
-     * Propagates incline data outwards within a limited radius.
+     * Propagates incline data outwards from a source incline within a limited radius.
      * Newly made incline data has reduced intensity.
      * When multiple propagations affect the same coordinate, the greater intensity value always takes priority
      */
-    public static void propagateInclineData(MeadowGroveGenerationConfiguration config, int blockX, int blockZ) {
+    public static void createOverhangs(MeadowGroveGenerationConfiguration config, InclineData sourceIncline, int blockX, int blockZ) {
+        if (!sourceIncline.isSource()) {
+            return;
+        }
+        Supplier<InclineData> propagationSupplier = () -> InclineData.overhang(sourceIncline);
+        BiConsumer<InclineData, Double> propagationActor = ((inclineData, delta) -> inclineData.applyPropagation(sourceIncline, delta));
+        propagate(config, sourceIncline, propagationSupplier, propagationActor, blockX, blockZ);
+    }
+
+    public static void propagate(MeadowGroveGenerationConfiguration config, InclineData sourceIncline, Supplier<InclineData> propagationSupplier, BiConsumer<InclineData, Double> propagationActor, int blockX, int blockZ) {
         DataCoordinate start = new DataCoordinate(blockX, blockZ);
 
         MeadowGroveGenerationData generationData = config.getGenerationData();
-        DataEntry source = generationData.getData(start);
-        InclineData sourceIncline = source.getInclineData().orElseThrow();
         int range = sourceIncline.getPropagationRange();
         List<Set<DataCoordinate>> list = Lists.newArrayList();
         for (int j = 0; j < range; ++j) {
@@ -68,7 +102,7 @@ public class GroveInclineHelper {
                             continue;
                         }
                         if (targetIncline == null) {
-                            targetIncline = target.setInclineData(InclineData.propagation(sourceIncline));
+                            targetIncline = target.setInclineData(propagationSupplier.get());
                         }
                         int hash = Objects.hash(blockX, blockZ);
                         float rate = Mth.lerp((Mth.sin(hash % 6.28f) + 1) * 0.5f, 0.7f, 1.3f);
@@ -76,15 +110,15 @@ public class GroveInclineHelper {
                         int offsetZ = blockZ - newCoordinate.z();
                         double angle = hash + Math.atan2(offsetZ, offsetX);
 
-                        double offsetDelta = Mth.lerp((Math.sin(angle * rate) + 1) * 0.5f, 0.6f, 1.4f) * delta;
-                        targetIncline.applyPropagation(sourceIncline, offsetDelta);
+                        double sine = Mth.lerp((Math.sin(angle * rate) + 1) * 0.5f, 0.6f, 1.4f);
+                        double offsetDelta = sine * delta;
+                        propagationActor.accept(targetIncline, offsetDelta);
                     }
                     set1.add(newCoordinate);
                 }
             }
         }
     }
-
     /**
      * Iterates through every currently present incline data and updates information about it's neighboring inclines
      */
@@ -96,28 +130,8 @@ public class GroveInclineHelper {
                 continue;
             }
             var position = entry.getDataCoordinate();
-            var inclineData = inclineOptional.get();
-            for (int i = 0; i < 4; i++) {
-                var direction = Direction.from2DDataValue(i);
-                var neighborPosition = position.move(direction);
-                if (!data.hasData(neighborPosition)) {
-                    continue;
-                }
-                var neighboringIncline = data.getData(neighborPosition).getInclineData();
-                if (neighboringIncline.isEmpty()) {
-                    continue;
-                }
-                inclineData.checkNeighbor(neighboringIncline.get(), position, neighborPosition);
-            }
+            inclineOptional.get().checkNeighbors(config, position);
         }
-    }
-
-    public static void expandLonelyInclines(MeadowGroveGenerationConfiguration config, int blockX, int blockZ) {
-
-    }
-
-    public static void notifyNeighboringInclines(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, int blockX, int blockZ, double delta) {
-
     }
 
     public static Optional<InclineData> getInclineData(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, int blockX, int blockZ, double delta) {

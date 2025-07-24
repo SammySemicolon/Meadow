@@ -1,11 +1,9 @@
 package com.smellysleepy.meadow.common.worldgen.structure.grove.data;
 
-import com.mojang.datafixers.util.*;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.*;
 import com.smellysleepy.meadow.common.worldgen.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
-import com.smellysleepy.meadow.common.worldgen.structure.grove.biome.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.helper.*;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
@@ -73,8 +71,10 @@ public class MeadowGroveGenerationData {
     }
 
     public void propagate(MeadowGroveGenerationConfiguration config) {
-        GroveInclineHelper.propagateInclineData(config);
         GroveInclineHelper.countNeighbors(config);
+        GroveInclineHelper.expandLonelyInclines(config);
+        GroveInclineHelper.createOverhangs(config);
+        GroveInclineHelper.countNeighbors(config); //Unnecessary right now, but we keep it anyway
     }
 
     public void compute(MeadowGroveGenerationConfiguration config, ImprovedNoise noiseSampler, ChunkPos chunkPos) {

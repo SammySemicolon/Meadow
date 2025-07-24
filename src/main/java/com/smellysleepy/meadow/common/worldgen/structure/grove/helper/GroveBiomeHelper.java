@@ -42,7 +42,7 @@ public class GroveBiomeHelper {
             float calcificationDelta = Easing.EXPO_OUT.clamped((delta - startingDelta) / (1 - startingDelta), 0, 1);
             if (calcificationDelta > threshold) {
                 double gain = (calcificationDelta - threshold) * (delta - startingDelta) / (1 - startingDelta);
-                return Pair.of(MeadowGroveBiomeTypes.WILD_CALCIFICATION, gain);
+                return Pair.of(MeadowGroveBiomeTypes.DEEP_CALCIFICATION, gain);
             }
             else {
                 double calcificationCracks = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 25000, 0.35f);
@@ -53,7 +53,7 @@ public class GroveBiomeHelper {
                 calcificationDelta = Easing.EXPO_OUT.clamped((delta - startingDelta) / (1 - startingDelta), 0, 1);
                 if (calcificationDelta > threshold && crackStrength > 0.5f) {
                     double gain = (calcificationDelta - threshold) * (crackStrength - 0.5f) * 2;
-                    return Pair.of(MeadowGroveBiomeTypes.BLOOMING_CALCIFICATION, gain);
+                    return Pair.of(MeadowGroveBiomeTypes.CREEPING_CALCIFICATION, gain);
                 }
             }
         }

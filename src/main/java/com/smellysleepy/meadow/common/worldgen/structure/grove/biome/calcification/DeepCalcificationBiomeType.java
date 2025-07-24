@@ -14,8 +14,8 @@ import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.easing.Easing;
 
-public class WildCalcificationBiomeType extends MeadowGroveBiomeType {
-    public WildCalcificationBiomeType(ResourceLocation id, boolean spawnsNaturally, float weight) {
+public class DeepCalcificationBiomeType extends MeadowGroveBiomeType {
+    public DeepCalcificationBiomeType(ResourceLocation id, boolean spawnsNaturally, float weight) {
         super(id, spawnsNaturally, weight);
     }
 
