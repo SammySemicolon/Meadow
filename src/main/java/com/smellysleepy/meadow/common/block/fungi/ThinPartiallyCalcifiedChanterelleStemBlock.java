@@ -1,22 +1,22 @@
-package com.smellysleepy.meadow.common.block.wood;
+package com.smellysleepy.meadow.common.block.fungi;
 
-import net.minecraft.core.*;
-import net.minecraft.world.item.context.*;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.*;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-import java.util.function.Supplier;
-
-public class PartiallyCalcifiedAspenLogBlock extends AspenLogBlock {
+public class ThinPartiallyCalcifiedChanterelleStemBlock extends ThinNaturalChanterelleStemBlock {
 
     public static final BooleanProperty FLIPPED = BooleanProperty.create("flipped");
 
-    public PartiallyCalcifiedAspenLogBlock(Properties properties, Supplier<Block> stripped) {
-        super(properties, stripped);
+    public ThinPartiallyCalcifiedChanterelleStemBlock(Properties properties) {
+        super(properties);
         registerDefaultState(defaultBlockState().setValue(FLIPPED, false));
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
         pBuilder.add(FLIPPED);

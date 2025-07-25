@@ -1,5 +1,6 @@
-package com.smellysleepy.meadow.common.block.wood;
+package com.smellysleepy.meadow.common.block.aspen;
 
+import com.smellysleepy.meadow.common.block.ThinLogBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -25,41 +26,56 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.function.Supplier;
 
-public class NaturalThinAspenLogBlock extends ThinAspenLogBlock implements BonemealableBlock{
+@SuppressWarnings({"deprecation", "NullableProblems"})
+public class ThinNaturalAspenLogBlock extends ThinLogBlock implements BonemealableBlock{
 
     public static final EnumProperty<MeadowLeavesType> LEAVES = EnumProperty.create("leaves", MeadowLeavesType.class);
 
     public final Supplier<Block> stripped;
-    public NaturalThinAspenLogBlock(Properties properties, Supplier<Block> stripped) {
+    public ThinNaturalAspenLogBlock(Properties properties, Supplier<Block> stripped) {
         super(properties);
         this.registerDefaultState(defaultBlockState().setValue(LEAVES, MeadowLeavesType.NONE));
         this.stripped = stripped;
     }
 
     @Override
+    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
+        return pState.getValue(LEAVES).next().isPresent();
+    }
+
+    @Override
+    public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
+        return true;
+    }
+
+    @Override
     public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        pLevel.setBlock(pPos, pState.setValue(LEAVES, pState.getValue(LEAVES).next()), 3);
+        pState.getValue(LEAVES).next().ifPresent(next -> pLevel.setBlock(pPos, pState.setValue(LEAVES, next), 3));
     }
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (stack.canPerformAction(ToolActions.SHEARS_HARVEST)) {
-            if (!pState.getValue(LEAVES).equals(MeadowLeavesType.NONE)) {
-                pLevel.setBlock(pPos, pState.setValue(LEAVES, pState.getValue(LEAVES).previous()), 3);
+            var optional = pState.getValue(LEAVES).previous();
+            if (optional.isPresent()) {
+                var previous = optional.get();
+                pLevel.setBlock(pPos, pState.setValue(LEAVES, previous), 3);
                 pLevel.playSound(null, pPos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
             }
         }
-
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
 
     @Override
-    public @org.jetbrains.annotations.Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
+    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
         if (toolAction.equals(ToolActions.AXE_STRIP)) {
             return stripped.get().defaultBlockState();
         }
@@ -88,16 +104,6 @@ public class NaturalThinAspenLogBlock extends ThinAspenLogBlock implements Bonem
         return super.getShape(pState, pLevel, pPos, pContext);
     }
 
-    @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        return !pState.getValue(LEAVES).equals(MeadowLeavesType.TOP);
-    }
-
-    @Override
-    public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        return true;
-    }
-
     public enum MeadowLeavesType implements StringRepresentable {
         NONE("none"),
         SMALL("small"),
@@ -110,22 +116,27 @@ public class NaturalThinAspenLogBlock extends ThinAspenLogBlock implements Bonem
             this.name = pName;
         }
 
-        public String toString() {
+        @Override
+        public @NotNull String getSerializedName() {
             return this.name;
         }
 
-        public String getSerializedName() {
-            return this.name;
+        public Optional<MeadowLeavesType> next() {
+            MeadowLeavesType[] values = values();
+            int next = ordinal() + 1;
+            if (next >= values.length) {
+                return Optional.empty();
+            }
+            return Optional.of(values[next]);
         }
 
-        private static final MeadowLeavesType[] VALUES = values();
-
-        public MeadowLeavesType next() {
-            return VALUES[(this.ordinal() + 1) % VALUES.length];
-        }
-
-        public MeadowLeavesType previous() {
-            return VALUES[(ordinal() - 1  + VALUES.length) % VALUES.length];
+        public Optional<MeadowLeavesType> previous() {
+            MeadowLeavesType[] values = values();
+            int previous = ordinal() - 1;
+            if (previous < 0) {
+                return Optional.empty();
+            }
+            return Optional.of(values[previous]);
         }
     }
 }

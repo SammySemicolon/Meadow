@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.aspen;
 
-import com.smellysleepy.meadow.common.block.wood.NaturalThinAspenLogBlock;
+import com.smellysleepy.meadow.common.block.aspen.ThinNaturalAspenLogBlock;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractCalcifiedTreeFeature;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
@@ -70,7 +70,7 @@ public class SmallAspenTreeFeature extends AbstractCalcifiedTreeFeature<AspenTre
             if (i <= calcificationHeight) {
                 state = i == calcificationHeight ? partiallyCalcifiedLogState : calcifiedLogState;
             }
-            var entry = create(state.setValue(NaturalThinAspenLogBlock.LEAVES, NaturalThinAspenLogBlock.MeadowLeavesType.values()[leafStateIndex]));
+            var entry = create(state.setValue(ThinNaturalAspenLogBlock.LEAVES, ThinNaturalAspenLogBlock.MeadowLeavesType.values()[leafStateIndex]));
             filler.getLayer(LOGS).put(logPos, entry);
             mutable.move(Direction.UP);
         }

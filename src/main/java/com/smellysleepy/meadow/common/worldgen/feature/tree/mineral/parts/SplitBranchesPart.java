@@ -2,7 +2,6 @@ package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.common.block.wood.AspenLogBlock;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
@@ -12,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import team.lodestar.lodestone.systems.block.LodestoneLogBlock;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 import java.util.*;
@@ -70,7 +70,7 @@ public class SplitBranchesPart extends MineralTreePart {
                 if (!feature.canPlace(level, mutable)) {
                     return failure();
                 }
-                filler.getLayer(MineralTreeFeature.LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(AspenLogBlock.AXIS, direction.getAxis())));
+                filler.getLayer(MineralTreeFeature.LOGS).put(mutable.immutable(), create(MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(LodestoneLogBlock.AXIS, direction.getAxis())));
             }
             boolean success = feature.makeStraightTrunk(level, filler, mutable, trunkHeight);
             if (!success) {

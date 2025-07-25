@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "meadow:block/mushroom/calcified_chanterelle_stem_block",
+    "side": "meadow:block/mushroom/partially_calcified_chanterelle_stem_block",
+    "top": "meadow:block/mushroom/chanterelle_inside"
+  }
+}

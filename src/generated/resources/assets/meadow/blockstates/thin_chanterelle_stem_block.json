@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "axis=x,has_cap=false,layer=bottom": {
+      "model": "meadow:block/thin_chanterelle_stem_block_bottom",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,has_cap=false,layer=middle": {
+      "model": "meadow:block/thin_chanterelle_stem_block_middle",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,has_cap=false,layer=top": {
+      "model": "meadow:block/thin_chanterelle_stem_block_top",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,has_cap=true,layer=bottom": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_bottom",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,has_cap=true,layer=middle": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_middle",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,has_cap=true,layer=top": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_top",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,has_cap=false,layer=bottom": {
+      "model": "meadow:block/thin_chanterelle_stem_block_bottom"
+    },
+    "axis=y,has_cap=false,layer=middle": {
+      "model": "meadow:block/thin_chanterelle_stem_block_middle"
+    },
+    "axis=y,has_cap=false,layer=top": {
+      "model": "meadow:block/thin_chanterelle_stem_block_top"
+    },
+    "axis=y,has_cap=true,layer=bottom": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_bottom"
+    },
+    "axis=y,has_cap=true,layer=middle": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_middle"
+    },
+    "axis=y,has_cap=true,layer=top": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_top"
+    },
+    "axis=z,has_cap=false,layer=bottom": {
+      "model": "meadow:block/thin_chanterelle_stem_block_bottom",
+      "x": 90
+    },
+    "axis=z,has_cap=false,layer=middle": {
+      "model": "meadow:block/thin_chanterelle_stem_block_middle",
+      "x": 90
+    },
+    "axis=z,has_cap=false,layer=top": {
+      "model": "meadow:block/thin_chanterelle_stem_block_top",
+      "x": 90
+    },
+    "axis=z,has_cap=true,layer=bottom": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_bottom",
+      "x": 90
+    },
+    "axis=z,has_cap=true,layer=middle": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_middle",
+      "x": 90
+    },
+    "axis=z,has_cap=true,layer=top": {
+      "model": "meadow:block/thin_chanterelle_stem_block_cap_top",
+      "x": 90
+    }
+  }
+}

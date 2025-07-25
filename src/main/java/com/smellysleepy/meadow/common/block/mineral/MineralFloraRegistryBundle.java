@@ -7,7 +7,7 @@ import com.smellysleepy.meadow.common.block.mineral.plant.MineralFloraPlant;
 import com.smellysleepy.meadow.common.block.mineral.plant.MineralSaplingBlock;
 import com.smellysleepy.meadow.common.block.mineral.plant.TallMineralFlower;
 import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
-import com.smellysleepy.meadow.registry.common.block.*;
+import com.smellysleepy.meadow.registry.common.block.properties.MineralBlockProperties;
 import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -86,12 +86,12 @@ public class MineralFloraRegistryBundle {
         var grassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_grass_bonemeal"));
         var leavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));
 
-        var grassBlockProperties = MeadowBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES();
-        var grassProperties = MeadowBlockProperties.MINERAL_GRASS_PROPERTIES();
-        var saplingProperties = MeadowBlockProperties.MINERAL_SAPLING_PROPERTIES();
-        var flowerProperties = MeadowBlockProperties.MINERAL_FLOWER_PROPERTIES();
-        var hangingLeavesProperties = MeadowBlockProperties.HANGING_MINERAL_LEAVES_PROPERTIES();
-        var leavesProperties = MeadowBlockProperties.MINERAL_LEAVES_PROPERTIES();
+        var grassBlockProperties = MineralBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES();
+        var grassProperties = MineralBlockProperties.MINERAL_GRASS_PROPERTIES();
+        var saplingProperties = MineralBlockProperties.MINERAL_SAPLING_PROPERTIES();
+        var flowerProperties = MineralBlockProperties.MINERAL_FLOWER_PROPERTIES();
+        var hangingLeavesProperties = MineralBlockProperties.HANGING_MINERAL_LEAVES_PROPERTIES();
+        var leavesProperties = MineralBlockProperties.MINERAL_LEAVES_PROPERTIES();
 
         var itemProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES();
 

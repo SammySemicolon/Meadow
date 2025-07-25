@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "axis=x,flipped=false,has_cap=false": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=false,has_cap=true": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_cap",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=true,has_cap=false": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_flipped",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=true,has_cap=true": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_cap_flipped",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,flipped=false,has_cap=false": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block"
+    },
+    "axis=y,flipped=false,has_cap=true": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_cap"
+    },
+    "axis=y,flipped=true,has_cap=false": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_flipped"
+    },
+    "axis=y,flipped=true,has_cap=true": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_cap_flipped"
+    },
+    "axis=z,flipped=false,has_cap=false": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block",
+      "x": 90
+    },
+    "axis=z,flipped=false,has_cap=true": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_cap",
+      "x": 90
+    },
+    "axis=z,flipped=true,has_cap=false": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_flipped",
+      "x": 90
+    },
+    "axis=z,flipped=true,has_cap=true": {
+      "model": "meadow:block/thin_partially_calcified_chanterelle_stem_block_cap_flipped",
+      "x": 90
+    }
+  }
+}

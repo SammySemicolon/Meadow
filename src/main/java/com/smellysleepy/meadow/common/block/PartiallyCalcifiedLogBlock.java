@@ -1,19 +1,21 @@
-package com.smellysleepy.meadow.common.block.wood;
+package com.smellysleepy.meadow.common.block;
 
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.*;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import team.lodestar.lodestone.systems.block.LodestoneLogBlock;
 
 import java.util.function.Supplier;
 
-public class PartiallyCalcifiedThinAspenLogBlock extends NaturalThinAspenLogBlock {
+@SuppressWarnings({"NullableProblems"})
+public class PartiallyCalcifiedLogBlock extends LodestoneLogBlock {
 
     public static final BooleanProperty FLIPPED = BooleanProperty.create("flipped");
 
-    public PartiallyCalcifiedThinAspenLogBlock(Properties properties, Supplier<Block> stripped) {
+    public PartiallyCalcifiedLogBlock(Properties properties, Supplier<Block> stripped) {
         super(properties, stripped);
         registerDefaultState(defaultBlockState().setValue(FLIPPED, false));
     }
@@ -26,12 +28,13 @@ public class PartiallyCalcifiedThinAspenLogBlock extends NaturalThinAspenLogBloc
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction direction = context.getClickedFace();
-        if (context.getPlayer() == null || !context.getPlayer().isShiftKeyDown()) {
-            direction = direction.getOpposite();
-        }
         BlockState state = super.getStateForPlacement(context);
         if (state != null) {
+            Direction direction = context.getClickedFace();
+            Player player = context.getPlayer();
+            if (player == null || !player.isShiftKeyDown()) {
+                direction = direction.getOpposite();
+            }
             state = state.setValue(FLIPPED, direction.getAxisDirection().equals(Direction.AxisDirection.POSITIVE));
         }
         return state;

@@ -1,0 +1,8 @@
+{
+  "parent": "meadow:block/templates/template_thin_log",
+  "textures": {
+    "bottom": "meadow:block/mushroom/chanterelle_inside",
+    "side": "meadow:block/mushroom/chanterelle_stem_block_middle",
+    "top": "meadow:block/mushroom/chanterelle_inside"
+  }
+}

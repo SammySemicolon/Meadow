@@ -2,13 +2,27 @@ package com.smellysleepy.meadow.common.block.fungi;
 
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import org.jetbrains.annotations.NotNull;
 
-public class ChanterelleMushroomStemBlock extends Block {
+public class ChanterelleMushroomStemBlock extends RotatedPillarBlock {
 
     public static final EnumProperty<ChanterelleLayer> LAYER = EnumProperty.create("layer", ChanterelleLayer.class);
+
+    public ChanterelleMushroomStemBlock(BlockBehaviour.Properties pProperties) {
+        super(pProperties);
+        registerDefaultState(defaultBlockState().setValue(LAYER, ChanterelleLayer.MIDDLE));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(LAYER);
+    }
 
     public enum ChanterelleLayer implements StringRepresentable {
         TOP("top"),
@@ -22,18 +36,8 @@ public class ChanterelleMushroomStemBlock extends Block {
         }
 
         @Override
-        public String getSerializedName() {
+        public @NotNull String getSerializedName() {
             return type;
         }
-    }
-
-    public ChanterelleMushroomStemBlock(Properties pProperties) {
-        super(pProperties);
-        registerDefaultState(defaultBlockState().setValue(LAYER, ChanterelleLayer.MIDDLE));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(LAYER);
     }
 }

@@ -13,7 +13,8 @@ import java.util.HashMap;
 
 import static net.minecraft.world.level.block.DoublePlantBlock.HALF;
 
-public class PearlFlowerReplacements {
+//TODO: NeoForged Data Map :3
+public class PearlFlowerReplacementHandler {
 
     protected static final HashMap<Block, Block> FLOWER_CONVERSION = new HashMap<>();
 
@@ -29,7 +30,7 @@ public class PearlFlowerReplacements {
 
     public static boolean performExchange(TallPearlFlowerBlock block, Level pLevel, BlockPos pPos, BlockState pState) {
         BlockPos bottom = pState.getValue(HALF).equals(DoubleBlockHalf.UPPER) ? pPos.below() : pPos;
-        TallPearlFlowerBlock newFlower = PearlFlowerReplacements.getBlockForExchange(block);
+        TallPearlFlowerBlock newFlower = PearlFlowerReplacementHandler.getBlockForExchange(block);
         if (newFlower != null) {
             pLevel.setBlock(bottom, Blocks.AIR.defaultBlockState(), 16);
             pLevel.setBlock(bottom.above(), Blocks.AIR.defaultBlockState(), 16);
@@ -40,7 +41,7 @@ public class PearlFlowerReplacements {
     }
 
     public static boolean performExchange(PearlFlowerBlock block, Level pLevel, BlockPos pPos) {
-        PearlFlowerBlock newFlower = PearlFlowerReplacements.getBlockForExchange(block);
+        PearlFlowerBlock newFlower = PearlFlowerReplacementHandler.getBlockForExchange(block);
         if (newFlower != null) {
             pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 16);
             pLevel.setBlock(pPos, newFlower.defaultBlockState(), 3);

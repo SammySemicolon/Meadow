@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "meadow:block/mushroom/chanterelle_outside"
+    "all": "meadow:block/mushroom/chanterelle_cap_block"
   }
 }

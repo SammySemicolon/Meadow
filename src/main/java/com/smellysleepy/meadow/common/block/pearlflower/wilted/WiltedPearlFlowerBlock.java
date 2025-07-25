@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.common.block.pearlflower.wilted;
 
 import com.smellysleepy.meadow.common.block.pearlflower.PearlFlowerBlock;
-import com.smellysleepy.meadow.common.block.pearlflower.PearlFlowerReplacements;
+import com.smellysleepy.meadow.common.block.pearlflower.PearlFlowerReplacementHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -14,7 +14,9 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+@SuppressWarnings({"deprecation", "NullableProblems"})
 public class WiltedPearlFlowerBlock extends PearlFlowerBlock implements BonemealableBlock {
+
     public WiltedPearlFlowerBlock(Properties pProperties) {
         super(pProperties.randomTicks());
     }
@@ -22,7 +24,7 @@ public class WiltedPearlFlowerBlock extends PearlFlowerBlock implements Bonemeal
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if (pRandom.nextFloat() < 0.02f) {
-            PearlFlowerReplacements.performExchange(this, pLevel, pPos);
+            PearlFlowerReplacementHandler.performExchange(this, pLevel, pPos);
         }
     }
 
@@ -43,6 +45,6 @@ public class WiltedPearlFlowerBlock extends PearlFlowerBlock implements Bonemeal
 
     @Override
     public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        PearlFlowerReplacements.performExchange(this, pLevel, pPos);
+        PearlFlowerReplacementHandler.performExchange(this, pLevel, pPos);
     }
 }

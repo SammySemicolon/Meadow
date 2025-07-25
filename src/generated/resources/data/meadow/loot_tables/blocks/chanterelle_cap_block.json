@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "meadow:chanterelle_crown_block"
+          "name": "meadow:chanterelle_cap_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "meadow:blocks/chanterelle_crown_block"
+  "random_sequence": "meadow:blocks/chanterelle_cap_block"
 }

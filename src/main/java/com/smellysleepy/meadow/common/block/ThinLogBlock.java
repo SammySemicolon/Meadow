@@ -1,4 +1,4 @@
-package com.smellysleepy.meadow.common.block.wood;
+package com.smellysleepy.meadow.common.block;
 
 import net.minecraft.core.*;
 import net.minecraft.world.level.*;
@@ -6,13 +6,14 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.phys.shapes.*;
 
-public class ThinAspenLogBlock extends RotatedPillarBlock {
+@SuppressWarnings({"deprecation", "NullableProblems"})
+public class ThinLogBlock extends RotatedPillarBlock {
 
     protected static final VoxelShape SHAPE_X = Block.box(0.0D, 4.0D, 4.0D, 16.0D, 12.0D, 12.0D);
     protected static final VoxelShape SHAPE_Y = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
     protected static final VoxelShape SHAPE_Z = Block.box(4.0D, 4.0D, 0.0D, 12.0D, 12.0D, 16.0D);
 
-    public ThinAspenLogBlock(Properties properties) {
+    public ThinLogBlock(Properties properties) {
         super(properties);
     }
 

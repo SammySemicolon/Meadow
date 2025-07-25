@@ -1,13 +1,40 @@
 {
   "variants": {
-    "layer=bottom": {
+    "axis=x,layer=bottom": {
+      "model": "meadow:block/chanterelle_stem_block_bottom",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,layer=middle": {
+      "model": "meadow:block/chanterelle_stem_block_middle",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,layer=top": {
+      "model": "meadow:block/chanterelle_stem_block_top",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,layer=bottom": {
       "model": "meadow:block/chanterelle_stem_block_bottom"
     },
-    "layer=middle": {
+    "axis=y,layer=middle": {
       "model": "meadow:block/chanterelle_stem_block_middle"
     },
-    "layer=top": {
+    "axis=y,layer=top": {
       "model": "meadow:block/chanterelle_stem_block_top"
+    },
+    "axis=z,layer=bottom": {
+      "model": "meadow:block/chanterelle_stem_block_bottom",
+      "x": 90
+    },
+    "axis=z,layer=middle": {
+      "model": "meadow:block/chanterelle_stem_block_middle",
+      "x": 90
+    },
+    "axis=z,layer=top": {
+      "model": "meadow:block/chanterelle_stem_block_top",
+      "x": 90
     }
   }
 }

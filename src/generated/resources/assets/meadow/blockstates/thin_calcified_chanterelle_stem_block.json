@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "axis=x,has_cap=false": {
+      "model": "meadow:block/thin_calcified_chanterelle_stem_block",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,has_cap=true": {
+      "model": "meadow:block/thin_calcified_chanterelle_stem_block_cap",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,has_cap=false": {
+      "model": "meadow:block/thin_calcified_chanterelle_stem_block"
+    },
+    "axis=y,has_cap=true": {
+      "model": "meadow:block/thin_calcified_chanterelle_stem_block_cap"
+    },
+    "axis=z,has_cap=false": {
+      "model": "meadow:block/thin_calcified_chanterelle_stem_block",
+      "x": 90
+    },
+    "axis=z,has_cap=true": {
+      "model": "meadow:block/thin_calcified_chanterelle_stem_block_cap",
+      "x": 90
+    }
+  }
+}

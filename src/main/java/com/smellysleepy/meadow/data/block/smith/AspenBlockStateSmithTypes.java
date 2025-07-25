@@ -1,12 +1,11 @@
 package com.smellysleepy.meadow.data.block.smith;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.block.fungi.ChanterelleMushroomCrownBlock;
-import com.smellysleepy.meadow.common.block.fungi.ChanterelleMushroomStemBlock;
-import com.smellysleepy.meadow.common.block.wood.NaturalThinAspenLogBlock;
-import com.smellysleepy.meadow.common.block.wood.PartiallyCalcifiedAspenLogBlock;
-import com.smellysleepy.meadow.common.block.wood.PartiallyCalcifiedThinAspenLogBlock;
-import com.smellysleepy.meadow.common.block.wood.ThinAspenLogBlock;
+import com.smellysleepy.meadow.common.block.aspen.ThinNaturalAspenLogBlock;
+import com.smellysleepy.meadow.common.block.PartiallyCalcifiedLogBlock;
+import com.smellysleepy.meadow.common.block.aspen.ThinPartiallyCalcifiedAspenLogBlock;
+import com.smellysleepy.meadow.common.block.ThinLogBlock;
+import com.smellysleepy.meadow.data.block.MeadowBlockStateDatagen;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -18,7 +17,7 @@ import team.lodestar.lodestone.systems.datagen.statesmith.BlockStateSmith;
 
 import java.util.function.Function;
 
-public class TreeBlockStateSmithTypes {
+public class AspenBlockStateSmithTypes {
 
     public static BlockStateSmith<Block> HANGING_LEAVES = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
@@ -51,7 +50,7 @@ public class TreeBlockStateSmithTypes {
         builder.addModel();
     });
 
-    public static BlockStateSmith<ThinAspenLogBlock> THIN_LOG_BLOCK = new BlockStateSmith<>(ThinAspenLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+    public static BlockStateSmith<ThinLogBlock> THIN_STRIPPED_ASPEN_LOG_BLOCK = new BlockStateSmith<>(ThinLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
         String logName = name.replace("thin_", "");
         boolean isWood = !name.endsWith("_log");
@@ -66,7 +65,7 @@ public class TreeBlockStateSmithTypes {
                 .texture("bottom", endTexture);
         provider.getVariantBuilder(block).forAllStates(state -> {
             ConfiguredModel.Builder<?> builder = ConfiguredModel.builder().modelFile(model);
-            Direction.Axis value = state.getValue(ThinAspenLogBlock.AXIS);
+            Direction.Axis value = state.getValue(ThinLogBlock.AXIS);
             if (value.equals(Direction.Axis.X) || value.equals(Direction.Axis.Z)) {
                 builder.rotationX(90);
                 if (value.equals(Direction.Axis.X)) {
@@ -77,11 +76,11 @@ public class TreeBlockStateSmithTypes {
         });
     });
 
-    public static BlockStateSmith<NaturalThinAspenLogBlock> NATURAL_THIN_LOG_BLOCK = new BlockStateSmith<>(NaturalThinAspenLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+    public static BlockStateSmith<ThinNaturalAspenLogBlock> THIN_ASPEN_LOG_BLOCK = new BlockStateSmith<>(ThinNaturalAspenLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
         ModelFile[] thinLogModels = getThinLogModels(provider, block);
-        provider.getVariantBuilder(block).forAllStates(s -> {
+        provider.getVariantBuilder(block).forAllStates(state -> {
             ModelFile modelFile = null;
-            switch (s.getValue(NaturalThinAspenLogBlock.LEAVES)) {
+            switch (state.getValue(ThinNaturalAspenLogBlock.LEAVES)) {
                 case NONE -> modelFile = thinLogModels[0];
                 case SMALL -> modelFile = thinLogModels[1];
                 case MEDIUM -> modelFile = thinLogModels[2];
@@ -89,7 +88,7 @@ public class TreeBlockStateSmithTypes {
                 case TOP -> modelFile = thinLogModels[4];
             }
             ConfiguredModel.Builder<?> builder = ConfiguredModel.builder().modelFile(modelFile);
-            Direction.Axis value = s.getValue(ThinAspenLogBlock.AXIS);
+            Direction.Axis value = state.getValue(ThinLogBlock.AXIS);
             if (value.equals(Direction.Axis.X) || value.equals(Direction.Axis.Z)) {
                 builder.rotationX(90);
                 if (value.equals(Direction.Axis.X)) {
@@ -100,25 +99,25 @@ public class TreeBlockStateSmithTypes {
         });
     });
 
-    public static BlockStateSmith<PartiallyCalcifiedThinAspenLogBlock> PARTIALLY_CALCIFIED_THIN_LOG_BLOCK = new BlockStateSmith<>(PartiallyCalcifiedThinAspenLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+    public static BlockStateSmith<ThinPartiallyCalcifiedAspenLogBlock> THIN_PARTIALLY_CALCIFIED_ASPEN_LOG_BLOCK = new BlockStateSmith<>(ThinPartiallyCalcifiedAspenLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
         ModelFile[] thinLogModels = getThinLogModels(provider, block);
         ModelFile[] flippedThinLogModels = getThinLogModels(provider, block, true);
         provider.getVariantBuilder(block).forAllStates(state -> {
-            var flipped = state.getValue(PartiallyCalcifiedThinAspenLogBlock.FLIPPED);
+            var flipped = state.getValue(ThinPartiallyCalcifiedAspenLogBlock.FLIPPED);
             var models = flipped ? flippedThinLogModels : thinLogModels;
             ModelFile modelFile = null;
-            switch (state.getValue(NaturalThinAspenLogBlock.LEAVES)) {
+            switch (state.getValue(ThinNaturalAspenLogBlock.LEAVES)) {
                 case NONE -> modelFile = models[0];
                 case SMALL -> modelFile = models[1];
                 case MEDIUM -> modelFile = models[2];
                 case LARGE -> modelFile = models[3];
                 case TOP -> modelFile = models[4];
             }
-            var axis = state.getValue(PartiallyCalcifiedAspenLogBlock.AXIS);
+            var axis = state.getValue(PartiallyCalcifiedLogBlock.AXIS);
             var direction = Direction.fromAxisAndDirection(axis, Direction.AxisDirection.POSITIVE);
 
-            final int rotationX = direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0;
-            final int rotationY = direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot()) + 180) % 360;
+            int rotationX = direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0;
+            int rotationY = direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot()) + 180) % 360;
 
             return ConfiguredModel.builder()
                     .modelFile(modelFile)
@@ -128,7 +127,7 @@ public class TreeBlockStateSmithTypes {
         });
     });
 
-    public static BlockStateSmith<PartiallyCalcifiedAspenLogBlock> PARTIALLY_CALCIFIED_LOG_BLOCK = new BlockStateSmith<>(PartiallyCalcifiedAspenLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+    public static BlockStateSmith<PartiallyCalcifiedLogBlock> PARTIALLY_CALCIFIED_ASPEN_LOG_BLOCK = new BlockStateSmith<>(PartiallyCalcifiedLogBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
         boolean isWood = !name.endsWith("_log");
         String logName = isWood ? name.replace("_wood", "_log") : name;
@@ -139,42 +138,7 @@ public class TreeBlockStateSmithTypes {
         ResourceLocation top = provider.getBlockTexture("aspen/aspen_log" + affix);
         ModelFile model = provider.models().cubeBottomTop(name, side, bottom, top);
         ModelFile flippedModel = provider.models().cubeBottomTop(name + "_flipped", sideFlipped, top, bottom);
-
-        provider.getVariantBuilder(block)
-                .forAllStates(state -> {
-                    var flipped = state.getValue(PartiallyCalcifiedThinAspenLogBlock.FLIPPED);
-                    ModelFile modelFile = flipped ? flippedModel : model;
-                    var axis = state.getValue(PartiallyCalcifiedAspenLogBlock.AXIS);
-                    var direction = Direction.fromAxisAndDirection(axis, Direction.AxisDirection.POSITIVE);
-
-                    int rotationX = direction == Direction.DOWN ? 180 : direction.getAxis().isHorizontal() ? 90 : 0;
-                    int rotationY = direction.getAxis().isVertical() ? 0 : (((int) direction.toYRot()) + 180) % 360;
-
-                    return ConfiguredModel.builder()
-                            .modelFile(modelFile)
-                            .rotationX(rotationX)
-                            .rotationY(rotationY)
-                            .build();
-                });
-    });
-
-    public static BlockStateSmith<ChanterelleMushroomStemBlock> CHANTERELLE_STEM_BLOCK = new BlockStateSmith<>(ChanterelleMushroomStemBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_middle"), (block, provider) -> {
-        String name = provider.getBlockName(block);
-        ResourceLocation inside = provider.getBlockTexture("chanterelle_inside");
-        provider.getVariantBuilder(block).forAllStates(state -> {
-            var layer = state.getValue(ChanterelleMushroomStemBlock.LAYER);
-            String layerName = name + "_" + layer.type;
-            ResourceLocation side = provider.getBlockTexture(layerName);
-            BlockModelBuilder model = provider.models().cubeBottomTop(layerName, side, inside, inside);
-            return ConfiguredModel.builder().modelFile(model).build();
-        });
-    });
-
-    public static BlockStateSmith<ChanterelleMushroomCrownBlock> CHANTERELLE_CROWN_BLOCK = new BlockStateSmith<>(ChanterelleMushroomCrownBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
-        String name = provider.getBlockName(block);
-        ResourceLocation inside = provider.getBlockTexture("chanterelle_inside");
-        ResourceLocation outside = provider.getBlockTexture("chanterelle_outside");
-        provider.simpleBlock(block, provider.models().cubeAll(name, outside));
+        MeadowBlockStateDatagen.partiallyCalcifiedLogBlockState(provider, block, model, flippedModel);
     });
 
     public static ModelFile[] getThinLogModels(LodestoneBlockStateProvider provider, Block block) {
@@ -195,12 +159,12 @@ public class TreeBlockStateSmithTypes {
         var smallLeavesTexture = provider.getBlockTexture(leaves + "_small_leaves");
         var mediumLeavesTexture = provider.getBlockTexture(leaves + "_medium_leaves");
         var largeLeavesTexture = provider.getBlockTexture(leaves + "_large_leaves");
-        var calcifiedLogPath = "calcified/" + logName.replace("partially_", "").replace("aspen_", "");
-        var aspenLogPath = "aspen/" + logName.replace("partially_calcified_", "");
+        var aspenLog = "aspen/" + logName.replace("partially_calcified_", "");
+        var calcifiedLog = "calcified/" + logName.replace("partially_", "").replace("aspen_", "");
 
         var sideTexture = provider.getBlockTexture(logName + flippedAffix);
-        var topTexture = provider.getBlockTexture((isPartiallyCalcified ? aspenLogPath : logName) + endAffix);
-        var bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? calcifiedLogPath : logName) + endAffix);
+        var topTexture = provider.getBlockTexture((isPartiallyCalcified ? aspenLog : logName) + endAffix);
+        var bottomTexture = provider.getBlockTexture((isPartiallyCalcified ? calcifiedLog : logName) + endAffix);
         var topLeavesTexture = provider.getStaticBlockTexture("wood/aspen_leaves");
         var hangingLeavesTexture = provider.getStaticBlockTexture("wood/hanging_aspen_leaves_0");
         if (flipped) {

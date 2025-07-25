@@ -143,8 +143,16 @@ public class MeadowItemRegistry {
     public static final RegistryObject<Item> TALL_ASPEN_GRASS = register("tall_aspen_grass", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.TALL_ASPEN_GRASS.get(), p));
     public static final RegistryObject<Item> ASPEN_GRASS_BLOCK = register("aspen_grass_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_GRASS_BLOCK.get(), p));
 
+    public static final RegistryObject<Item> CHANTERELLE_CAP_BLOCK = register("chanterelle_cap_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CHANTERELLE_CAP_BLOCK.get(), p));
+
     public static final RegistryObject<Item> CHANTERELLE_STEM_BLOCK = register("chanterelle_stem_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CHANTERELLE_STEM_BLOCK.get(), p));
-    public static final RegistryObject<Item> CHANTERELLE_CROWN_BLOCK = register("chanterelle_crown_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CHANTERELLE_CROWN_BLOCK.get(), p));
+    public static final RegistryObject<Item> THIN_CHANTERELLE_STEM_BLOCK = register("thin_chanterelle_stem_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.THIN_CHANTERELLE_STEM_BLOCK.get(), p));
+
+    public static final RegistryObject<Item> PARTIALLY_CALCIFIED_CHANTERELLE_STEM_BLOCK = register("partially_calcified_chanterelle_stem_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.PARTIALLY_CALCIFIED_CHANTERELLE_STEM_BLOCK.get(), p));
+    public static final RegistryObject<Item> THIN_PARTIALLY_CALCIFIED_CHANTERELLE_STEM_BLOCK = register("thin_partially_calcified_chanterelle_stem_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_CHANTERELLE_STEM_BLOCK.get(), p));
+
+    public static final RegistryObject<Item> CALCIFIED_CHANTERELLE_STEM_BLOCK = register("calcified_chanterelle_stem_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_CHANTERELLE_STEM_BLOCK.get(), p));
+    public static final RegistryObject<Item> THIN_CALCIFIED_CHANTERELLE_STEM_BLOCK = register("thin_calcified_chanterelle_stem_block", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.THIN_CALCIFIED_CHANTERELLE_STEM_BLOCK.get(), p));
 
 
     public static <T extends Item> RegistryObject<T> register(String name, Item.Properties properties, Function<Item.Properties, T> function) {

@@ -1,10 +1,10 @@
 {
   "type": "meadow:chanterelle_fungus_tree",
   "config": {
-    "calcifiedLog": "meadow:calcified_wood",
-    "fungalCrown": "meadow:chanterelle_crown_block",
+    "calcifiedLog": "meadow:calcified_chanterelle_stem_block",
+    "fungalCrown": "meadow:chanterelle_cap_block",
     "log": "meadow:chanterelle_stem_block",
-    "partiallyCalcifiedLog": "meadow:partially_calcified_aspen_wood",
+    "partiallyCalcifiedLog": "meadow:partially_calcified_chanterelle_stem_block",
     "sapling": "meadow:aspen_sapling"
   }
 }

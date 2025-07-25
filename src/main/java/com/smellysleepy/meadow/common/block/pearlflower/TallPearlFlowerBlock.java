@@ -32,6 +32,7 @@ import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner;
 
 import javax.annotation.Nullable;
 
+@SuppressWarnings({"deprecation", "NullableProblems"})
 public class TallPearlFlowerBlock extends TallFlowerBlock {
 
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -40,6 +41,7 @@ public class TallPearlFlowerBlock extends TallFlowerBlock {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     }
+
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         if (pState.getValue(HALF).equals(DoubleBlockHalf.UPPER)) {
@@ -53,11 +55,12 @@ public class TallPearlFlowerBlock extends TallFlowerBlock {
             particles.spawnParticles();
         }
     }
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (stack.canPerformAction(ToolActions.SHEARS_HARVEST)) {
-            boolean success = PearlFlowerReplacements.performExchange(this, pLevel, pPos, pState);
+            boolean success = PearlFlowerReplacementHandler.performExchange(this, pLevel, pPos, pState);
             if (success) {
                 pLevel.playSound(null, pPos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;

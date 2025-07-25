@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.aspen;
 
-import com.smellysleepy.meadow.common.block.wood.PartiallyCalcifiedAspenLogBlock;
+import com.smellysleepy.meadow.common.block.PartiallyCalcifiedLogBlock;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.AbstractCalcifiedTreeFeature;
 import net.minecraft.core.*;
 import net.minecraft.util.*;
@@ -56,7 +56,7 @@ public class AspenTreeFeature extends AbstractCalcifiedTreeFeature<AspenTreeFeat
         var rand = context.random();
         var logState = config.getLog().defaultBlockState();
         var calcifiedLogState = config.getCalcifiedLog().defaultBlockState();
-        var partiallyCalcifiedLogState = config.getPartiallyCalcifiedLog().defaultBlockState().trySetValue(PartiallyCalcifiedAspenLogBlock.AXIS, Direction.Axis.Y);
+        var partiallyCalcifiedLogState = config.getPartiallyCalcifiedLog().defaultBlockState().trySetValue(PartiallyCalcifiedLogBlock.AXIS, Direction.Axis.Y);
         int trunkHeight = getTrunkHeight(rand);
         int calcificationHeight = getCalcificationHeight(rand);
         var mutable = new BlockPos.MutableBlockPos().set(pos);

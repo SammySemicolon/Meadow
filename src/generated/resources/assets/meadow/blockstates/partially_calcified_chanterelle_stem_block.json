@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "axis=x,flipped=false": {
+      "model": "meadow:block/partially_calcified_chanterelle_stem_block",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,flipped=true": {
+      "model": "meadow:block/partially_calcified_chanterelle_stem_block_flipped",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,flipped=false": {
+      "model": "meadow:block/partially_calcified_chanterelle_stem_block"
+    },
+    "axis=y,flipped=true": {
+      "model": "meadow:block/partially_calcified_chanterelle_stem_block_flipped"
+    },
+    "axis=z,flipped=false": {
+      "model": "meadow:block/partially_calcified_chanterelle_stem_block",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,flipped=true": {
+      "model": "meadow:block/partially_calcified_chanterelle_stem_block_flipped",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

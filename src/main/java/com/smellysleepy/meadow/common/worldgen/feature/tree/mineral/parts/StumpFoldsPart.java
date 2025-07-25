@@ -2,7 +2,6 @@ package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.smellysleepy.meadow.common.block.wood.AspenLogBlock;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
@@ -13,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import team.lodestar.lodestone.systems.block.LodestoneLogBlock;
 import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.create;
@@ -61,7 +61,7 @@ public class StumpFoldsPart extends MineralTreePart {
             BlockPos.MutableBlockPos mutable = partPos.mutable();
             Direction direction = Direction.from2DDataValue((2*i)%4);
             Direction clockWise = direction.getClockWise();
-            BlockState state = MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(AspenLogBlock.AXIS, direction.getAxis());
+            BlockState state = MeadowBlockRegistry.ASPEN_LOG.get().defaultBlockState().setValue(LodestoneLogBlock.AXIS, direction.getAxis());
             int height = random.nextIntBetweenInclusive(minHeight, maxHeight);
             int width = random.nextIntBetweenInclusive(minWidth, maxWidth);
             int distance = random.nextIntBetweenInclusive(minDistance, maxDistance);

@@ -28,6 +28,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolActions;
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner;
 
+@SuppressWarnings({"deprecation", "NullableProblems"})
 public class PearlFlowerBlock extends BushBlock implements SimpleWaterloggedBlock {
 
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -47,11 +48,12 @@ public class PearlFlowerBlock extends BushBlock implements SimpleWaterloggedBloc
             particles.spawnParticles();
         }
     }
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         if (stack.canPerformAction(ToolActions.SHEARS_HARVEST)) {
-            boolean success = PearlFlowerReplacements.performExchange(this, pLevel, pPos);
+            boolean success = PearlFlowerReplacementHandler.performExchange(this, pLevel, pPos);
             if (success) {
                 pLevel.playSound(null, pPos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.SUCCESS;
