@@ -80,7 +80,7 @@ public class MeadowParticleEffects {
         int lifetime = RandomHelper.randomBetween(rand, 150, 200);
 
         var scaleData = GenericParticleData.create(scale, scale * 0.75f).build();
-        var transparencyData = GenericParticleData.create(0f, 1f, 0.4f).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
+        var transparencyData = GenericParticleData.create(0f, 1f, 0.1f).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
         var spinData = SpinParticleData.createRandomDirection(rand, 0f, 0.1f, 0f).randomSpinOffset(rand).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
 
         var colorData = ColorParticleData.create(new Color(233, 195, 41), new Color(195, 118, 85)).build();

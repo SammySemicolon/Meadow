@@ -24,7 +24,7 @@ public class FungalGrowthBiomeType extends MeadowGroveBiomeType {
 
     @Override
     public BlockState getSurfaceLayerBlock(float depth) {
-        if (depth < 0.3f) {
+        if (depth < 0.5f) {
             return Blocks.DIRT.defaultBlockState();
         }
         return Blocks.STONE.defaultBlockState();

@@ -1,16 +1,15 @@
 package com.smellysleepy.meadow.common.worldgen.structure.grove.helper;
 
-import com.google.common.collect.*;
 import com.smellysleepy.meadow.common.worldgen.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.data.*;
-import net.minecraft.core.*;
 import net.minecraft.util.*;
 import net.minecraft.world.level.levelgen.synth.*;
 import team.lodestar.lodestone.systems.easing.*;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class GroveInclineHelper {
@@ -30,15 +29,15 @@ public class GroveInclineHelper {
      *
      */
     public static void expandLonelyInclines(MeadowGroveGenerationConfiguration config, InclineData sourceIncline, int blockX, int blockZ) {
-        if (!sourceIncline.isSource()) {
-            return;
+        if (sourceIncline.isSource() && sourceIncline.needsExpansion()) {
+            if (sourceIncline.isCompletelyAlone()) {
+                sourceIncline.setIntensity(1);
+            }
+            int range = 3;
+            InclinePropagationHandler handler = create()
+                    .setInclineBuilder(() -> InclineData.artificialSource(sourceIncline));
+            propagate(config, range, handler, blockX, blockZ);
         }
-        if (!sourceIncline.isLonely()) {
-            return;
-        }
-        Supplier<InclineData> propagationSupplier = () -> InclineData.artificialSource(sourceIncline);
-        BiConsumer<InclineData, Double> propagationActor = ((inclineData, delta) -> inclineData.applyPropagation(sourceIncline, delta));
-        propagate(config, sourceIncline, propagationSupplier, propagationActor, blockX, blockZ);
     }
 
     /**
@@ -60,77 +59,30 @@ public class GroveInclineHelper {
      * When multiple propagations affect the same coordinate, the greater intensity value always takes priority
      */
     public static void createOverhangs(MeadowGroveGenerationConfiguration config, InclineData sourceIncline, int blockX, int blockZ) {
-        if (!sourceIncline.isSource()) {
-            return;
-        }
-        Supplier<InclineData> propagationSupplier = () -> InclineData.overhang(sourceIncline);
-        BiConsumer<InclineData, Double> propagationActor = ((inclineData, delta) -> inclineData.applyPropagation(sourceIncline, delta));
-        propagate(config, sourceIncline, propagationSupplier, propagationActor, blockX, blockZ);
-    }
-
-    public static void propagate(MeadowGroveGenerationConfiguration config, InclineData sourceIncline, Supplier<InclineData> propagationSupplier, BiConsumer<InclineData, Double> propagationActor, int blockX, int blockZ) {
-        DataCoordinate start = new DataCoordinate(blockX, blockZ);
-
-        MeadowGroveGenerationData generationData = config.getGenerationData();
-        int range = sourceIncline.getPropagationRange();
-        List<Set<DataCoordinate>> list = Lists.newArrayList();
-        for (int j = 0; j < range; ++j) {
-            list.add(Sets.newHashSet());
-        }
-
-        list.get(0).add(start);
-
-        for (int i = 1; i < range; ++i) {
-            Set<DataCoordinate> set = list.get(i - 1);
-            Set<DataCoordinate> set1 = list.get(i);
-            double delta = 1 - i / (float)range;
-            for (DataCoordinate dataCoordinate : set) {
-                for (int j = 0; j < 4; j++) {
-                    Direction direction = Direction.from2DDataValue(j);
-                    DataCoordinate newCoordinate = dataCoordinate.move(direction);
-                    if (set.contains(newCoordinate) || set1.contains(newCoordinate)) {
-                        continue;
-                    }
-
-                    if (generationData.hasData(newCoordinate)) {
-                        DataEntry target = generationData.getData(newCoordinate);
-                        if (!target.isOpen()) {
-                            continue;
-                        }
-                        InclineData targetIncline = target.getInclineData().orElse(null);
-                        if (targetIncline != null && targetIncline.isSource()) {
-                            continue;
-                        }
-                        if (targetIncline == null) {
-                            targetIncline = target.setInclineData(propagationSupplier.get());
-                        }
-                        int hash = Objects.hash(blockX, blockZ);
-                        float rate = Mth.lerp((Mth.sin(hash % 6.28f) + 1) * 0.5f, 0.7f, 1.3f);
-                        int offsetX = blockX - newCoordinate.x();
-                        int offsetZ = blockZ - newCoordinate.z();
-                        double angle = hash + Math.atan2(offsetZ, offsetX);
-
-                        double sine = Mth.lerp((Math.sin(angle * rate) + 1) * 0.5f, 0.6f, 1.4f);
-                        double offsetDelta = sine * delta;
-                        propagationActor.accept(targetIncline, offsetDelta);
-                    }
-                    set1.add(newCoordinate);
-                }
-            }
+        if (sourceIncline.isSource() || sourceIncline.isArtificialSource()) {
+            int range = sourceIncline.getPropagationRange();
+            InclinePropagationHandler handler = create()
+                    .setInclineBuilder(() -> InclineData.overhang(sourceIncline))
+                    .setPropagationCondition(InclineData::isOverhang)
+                    .setInclinePropagator(((inclineData, delta) -> inclineData.applyPropagation(sourceIncline, delta)));
+            propagate(config, range, handler, blockX, blockZ);
         }
     }
+
+    public static void propagate(MeadowGroveGenerationConfiguration config, int range, InclinePropagationHandler handler, int blockX, int blockZ) {
+        GroveDataPropagationHelper.propagate(config, handler, range, blockX, blockZ);
+    }
+
     /**
      * Iterates through every currently present incline data and updates information about it's neighboring inclines
      */
     public static void countNeighbors(MeadowGroveGenerationConfiguration config) {
         MeadowGroveGenerationData data = config.getGenerationData();
         for (DataEntry entry : data.getEntries()) {
-            var inclineOptional = entry.getInclineData();
-            if (inclineOptional.isEmpty()) {
-                continue;
-            }
-            var position = entry.getDataCoordinate();
-            inclineOptional.get().checkNeighbors(config, position);
+            entry.getInclineData().ifPresent(inclineData -> {
+                var position = entry.getDataCoordinate();
+                inclineData.checkNeighbors(config, position);
+            });
         }
     }
 
@@ -165,7 +117,7 @@ public class GroveInclineHelper {
                 0.5f, 0.3f, 0.2f
         };
         float[] frequencyMultipliers = new float[]{
-                0.3f, 1.5f, 3f
+                0.5f, 2.5f, 5f
         };
         float totalWeight = 0;
         for (float weight : layerWeights) {
@@ -179,5 +131,52 @@ public class GroveInclineHelper {
             noise += noiseLayer * weight;
         }
         return noise / totalWeight;
+    }
+
+    public static InclinePropagationHandler create() {
+        return new InclinePropagationHandler();
+    }
+
+    public static class InclinePropagationHandler implements GroveDataPropagationHelper.PropagationHandler {
+
+        public Supplier<InclineData> inclineBuilder;
+        public Predicate<InclineData> propagationCondition;
+        public BiConsumer<InclineData, Double> inclinePropagator;
+
+        public InclinePropagationHandler setInclineBuilder(Supplier<InclineData> inclineBuilder) {
+            this.inclineBuilder = inclineBuilder;
+            return this;
+        }
+        public InclinePropagationHandler setPropagationCondition(Predicate<InclineData> propagationCondition) {
+            this.propagationCondition = propagationCondition;
+            return this;
+        }
+
+        public InclinePropagationHandler setInclinePropagator(BiConsumer<InclineData, Double> inclinePropagator) {
+            this.inclinePropagator = inclinePropagator;
+            return this;
+        }
+
+        @Override
+        public boolean propagate(DataEntry target, double delta) {
+            InclineData targetIncline = target.getInclineData().orElse(null);
+            if (targetIncline != null && targetIncline.isSource()) {
+                return false;
+            }
+            if (targetIncline == null) {
+                if (inclineBuilder != null) {
+                    targetIncline = target.setInclineData(inclineBuilder.get());
+                }
+                else {
+                    return false;
+                }
+            }
+            if (inclinePropagator != null) {
+                if (propagationCondition == null || propagationCondition.test(targetIncline)) {
+                    inclinePropagator.accept(targetIncline, delta);
+                }
+            }
+            return true;
+        }
     }
 }

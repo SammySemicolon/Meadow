@@ -40,9 +40,9 @@ public class PearlFlowerBlock extends BushBlock implements SimpleWaterloggedBloc
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         if (pRandom.nextInt(10) == 0) {
-            double posX = (double) pPos.getX() + 0.3f + pRandom.nextDouble() * 0.7f;
-            double posY = (double) pPos.getY() + 0.6f + pRandom.nextDouble() * 0.2f;
-            double posZ = (double) pPos.getZ() + 0.3f + pRandom.nextDouble() * 0.7f;
+            double posX = (double) pPos.getX() + 0.4f + pRandom.nextDouble() * 0.6f;
+            double posY = (double) pPos.getY() + 0.5f + pRandom.nextDouble() * 0.3f;
+            double posZ = (double) pPos.getZ() + 0.4f + pRandom.nextDouble() * 0.6f;
             ParticleEffectSpawner particles = MeadowParticleEffects.pearlflowerShine(pLevel, new Vec3(posX, posY, posZ), MeadowParticleRegistry.SHINY_GLIMMER.get());
             particles.spawnParticles();
         }

@@ -90,7 +90,7 @@ public final class DataEntry {
     }
 
     public boolean isOpen() {
-        return openHeight > 0 && openDepth > 0;
+        return openHeight > 0 || openDepth > 0;
     }
 
     public Optional<InclineData> getInclineData() {

@@ -50,7 +50,7 @@ public class InclineData {
     private int baseSize; //Base size determines how tall the incline's base is, connecting it to the rest of the terrain
 
     private final boolean[] neighboringInclines = new boolean[4]; //Tracks which neighboring inclines this incline has. Sources only consider other sources
-    private int neighboringInclineCounter;
+    private int neighborCount;
 
     public InclineData(InclineType type, int inclineHeight, double inclineIntensity, int overhangSize, int baseSize) {
         this.type = type;
@@ -61,7 +61,7 @@ public class InclineData {
     }
 
     public static InclineData artificialSource(InclineData sourceIncline) {
-        return new InclineData(InclineType.ARTIFICIAL_SOURCE, sourceIncline.getInclineHeight(), sourceIncline.getInclineIntensity());
+        return new InclineData(InclineType.ARTIFICIAL_SOURCE, sourceIncline.getInclineHeight(), sourceIncline.getInclineIntensity()).updateValues(1);
     }
 
     public static InclineData source(int inclineHeight, double inclineIntensity) {
@@ -86,6 +86,14 @@ public class InclineData {
         return type.equals(InclineType.SOURCE);
     }
 
+    public boolean isArtificialSource() {
+        return type.equals(InclineType.ARTIFICIAL_SOURCE);
+    }
+
+    public boolean isOverhang() {
+        return type.equals(InclineType.OVERHANG);
+    }
+
     public int getInclineHeight() {
         return inclineHeight;
     }
@@ -103,11 +111,15 @@ public class InclineData {
     }
 
     public int getNeighborCount() {
-        return neighboringInclineCounter;
+        return neighborCount;
     }
 
-    public boolean isLonely() {
-        return neighboringInclineCounter < 2;
+    public boolean needsExpansion() {
+        return neighborCount < 2;
+    }
+
+    public boolean isCompletelyAlone() {
+        return neighborCount == 0;
     }
 
     public int getPropagationRange() {
@@ -148,11 +160,15 @@ public class InclineData {
             return;
         }
         neighboringInclines[index] = true;
-        neighboringInclineCounter++;
+        neighborCount++;
     }
 
     public void applyPropagation(InclineData sourceIncline, double delta) {
         double newIntensity = Mth.clamp(sourceIncline.getPropagationStrength() * delta, 0, 1);
+        setIntensity(newIntensity);
+    }
+
+    public void setIntensity(double newIntensity) {
         if (inclineIntensity < newIntensity) {
             inclineIntensity = newIntensity;
             updateValues(newIntensity);

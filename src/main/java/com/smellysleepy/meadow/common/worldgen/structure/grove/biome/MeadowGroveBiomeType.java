@@ -32,7 +32,7 @@ public abstract class MeadowGroveBiomeType {
     }
 
     public final BlockState getSurfaceBlock(DataEntry data, ImprovedNoise noiseSampler, float depth) {
-        if (depth == 0) {
+        if (depth == 0 && data.isOpen()) {
             return getSurfaceBlock(data, noiseSampler);
         }
         return getSurfaceLayerBlock(depth);

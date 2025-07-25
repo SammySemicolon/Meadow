@@ -81,9 +81,6 @@ public class MeadowGrovePiece extends StructurePiece {
                 for (int i = 0; i < overhangSize; i++) {
                     float delta = i / (float)overhangSize;
                     BlockState state = biomeType.getSurfaceBlock(data, noiseSampler, delta);
-                    if (inclineData.getType().equals(InclineData.InclineType.SOURCE)) {
-                        state = Blocks.DARK_OAK_PLANKS.defaultBlockState();
-                    }
                     level.setBlock(mutable, state, 2);
                     if (i == 0) {
                         inclineFeatures.addPosition(data, mutable.above());
@@ -95,9 +92,6 @@ public class MeadowGrovePiece extends StructurePiece {
                     mutable.move(Direction.UP);
                     float delta = 1 - (i / (float)foundationSize);
                     BlockState state = biomeType.getSurfaceBlock(data, noiseSampler, delta);
-                    if (inclineData.getType().equals(InclineData.InclineType.SOURCE)) {
-                        state = Blocks.DARK_OAK_PLANKS.defaultBlockState();
-                    }
                     level.setBlock(mutable, state, 2);
                 }
             }
