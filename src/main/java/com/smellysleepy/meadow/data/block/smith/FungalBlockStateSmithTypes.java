@@ -49,7 +49,7 @@ public class FungalBlockStateSmithTypes {
         });
     });
 
-    public static BlockStateSmith<ThinNaturalChanterelleStemBlock> THIN_CHANTERELLE_STEM_BLOCK = new BlockStateSmith<>(ThinNaturalChanterelleStemBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+    public static BlockStateSmith<ThinNaturalChanterelleStemBlock> THIN_CHANTERELLE_STEM_BLOCK = new BlockStateSmith<>(ThinNaturalChanterelleStemBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_middle"), (block, provider) -> {
         provider.getVariantBuilder(block).forAllStates(s -> {
             ModelFile[] thinStemModels = getThinStemModels(provider, block, s.getOptionalValue(ChanterelleMushroomStemBlock.LAYER).orElse(null));
             ModelFile modelFile = s.getValue(ThinNaturalChanterelleStemBlock.HAS_CAP) ? thinStemModels[1] : thinStemModels[0];
@@ -90,6 +90,24 @@ public class FungalBlockStateSmithTypes {
         ModelFile model = provider.models().cubeBottomTop(name, side, bottom, top);
         ModelFile flippedModel = provider.models().cubeBottomTop(name + "_flipped", sideFlipped, top, bottom);
         MeadowBlockStateDatagen.partiallyCalcifiedLogBlockState(provider, block, model, flippedModel);
+    });
+
+
+
+    public static BlockStateSmith<ThinNaturalChanterelleStemBlock> THIN_CALCIFIED_CHANTERELLE_STEM_BLOCK = new BlockStateSmith<>(ThinNaturalChanterelleStemBlock.class, ItemModelSmithTypes.BLOCK_MODEL_ITEM, (block, provider) -> {
+        provider.getVariantBuilder(block).forAllStates(s -> {
+            ModelFile[] thinStemModels = getThinStemModels(provider, block, null);
+            ModelFile modelFile = s.getValue(ThinNaturalChanterelleStemBlock.HAS_CAP) ? thinStemModels[1] : thinStemModels[0];
+            ConfiguredModel.Builder<?> builder = ConfiguredModel.builder().modelFile(modelFile);
+            Direction.Axis value = s.getValue(ThinLogBlock.AXIS);
+            if (value.equals(Direction.Axis.X) || value.equals(Direction.Axis.Z)) {
+                builder.rotationX(90);
+                if (value.equals(Direction.Axis.X)) {
+                    builder.rotationY(90);
+                }
+            }
+            return builder.build();
+        });
     });
 
     public static ModelFile[] getThinStemModels(LodestoneBlockStateProvider provider, Block block, @Nullable ChanterelleLayer layer) {

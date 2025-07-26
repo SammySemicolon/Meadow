@@ -122,7 +122,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 
         FungalBlockStateSmithTypes.THIN_CHANTERELLE_STEM_BLOCK.act(data, MeadowBlockRegistry.THIN_CHANTERELLE_STEM_BLOCK);
         FungalBlockStateSmithTypes.THIN_PARTIALLY_CALCIFIED_CHANTERELLE_STEM_BLOCK.act(data, MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_CHANTERELLE_STEM_BLOCK);
-        FungalBlockStateSmithTypes.THIN_CHANTERELLE_STEM_BLOCK.act(data, MeadowBlockRegistry.THIN_CALCIFIED_CHANTERELLE_STEM_BLOCK);
+        FungalBlockStateSmithTypes.THIN_CALCIFIED_CHANTERELLE_STEM_BLOCK.act(data, MeadowBlockRegistry.THIN_CALCIFIED_CHANTERELLE_STEM_BLOCK);
 
 
         setTexturePath("mineral_flora/");
