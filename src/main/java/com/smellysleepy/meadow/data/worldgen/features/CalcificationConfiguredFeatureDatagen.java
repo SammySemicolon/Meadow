@@ -7,7 +7,7 @@ import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry
 import com.smellysleepy.meadow.registry.worldgen.MeadowFeatureRegistry;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -26,7 +26,7 @@ import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 public class CalcificationConfiguredFeatureDatagen {
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         var holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
         var largeDripstoneStateProvider = new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()

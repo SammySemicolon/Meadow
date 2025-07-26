@@ -8,7 +8,7 @@ import net.minecraft.tags.*;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.*;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import team.lodestar.lodestone.systems.datagen.providers.*;
 
 import javax.annotation.*;
@@ -32,7 +32,7 @@ public class MeadowBlockTagDatagen extends LodestoneBlockTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        Set<RegistryObject<Block>> blocks = new HashSet<>(BLOCKS.getEntries());
+        Set<Supplier<Block>> blocks = new HashSet<>(BLOCKS.getEntries());
 
         tag(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE).addTag(BlockTags.MOSS_REPLACEABLE);
 
@@ -51,6 +51,6 @@ public class MeadowBlockTagDatagen extends LodestoneBlockTagsProvider {
         tag(MeadowBlockTagRegistry.MEADOW_GROVE_IRREPLACEABLE).addTags(
                 BlockTags.FEATURES_CANNOT_REPLACE, BlockTags.LOGS, BlockTags.LEAVES, BlockTags.CAVE_VINES, BlockTags.FLOWERS, BlockTags.CORALS);
 
-        addTagsFromBlockProperties(blocks.stream().map(RegistryObject::get).collect(Collectors.toList()));
+        addTagsFromBlockProperties(blocks.stream().map(Supplier::get).collect(Collectors.toList()));
     }
 }

@@ -13,7 +13,7 @@ import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowFeatureRegistry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class MiscConfiguredFeatureDatagen {
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_MEADOW_LAKE_PATCH, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
                 List.of(Blocks.SEAGRASS, Blocks.TALL_SEAGRASS, Blocks.SEAGRASS),
                 List.of(1, 4, 2, 1)

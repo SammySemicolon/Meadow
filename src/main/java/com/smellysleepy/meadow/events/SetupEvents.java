@@ -12,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.antlr.v4.runtime.atn.SemanticContext;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = MeadowMod.MEADOW)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = MeadowMod.MEADOW)
 public class SetupEvents {
     @SubscribeEvent
     public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {

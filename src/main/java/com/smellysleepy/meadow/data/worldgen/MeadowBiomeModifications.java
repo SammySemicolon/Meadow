@@ -13,13 +13,15 @@ import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraftforge.common.world.*;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.BiomeModifiers;
+import net.neoforged.neoforge.registries.*;
 
 import java.util.*;
 import java.util.function.*;
 
 public class MeadowBiomeModifications {
-    public static void bootstrap(BootstapContext<BiomeModifier> context) {
+    public static void bootstrap(BootstrapContext<BiomeModifier> context) {
 
         for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
             if (bundle.equals(MineralFloraRegistry.NETHERITE_FLORA) || bundle.equals(MineralFloraRegistry.AMETHYST_FLORA)) {
@@ -32,7 +34,8 @@ public class MeadowBiomeModifications {
         }
     }
 
-    public static HolderSet<PlacedFeature> getPlacedHolderSet(BootstapContext<?> context, ResourceKey<PlacedFeature>... placedFeatures) {
+    @SafeVarargs
+    public static HolderSet<PlacedFeature> getPlacedHolderSet(BootstrapContext<?> context, ResourceKey<PlacedFeature>... placedFeatures) {
         List<Holder<PlacedFeature>> holders = new ArrayList<>();
         for (ResourceKey<PlacedFeature> feature : placedFeatures) {
             holders.add(context.lookup(Registries.PLACED_FEATURE).getOrThrow(feature));
@@ -40,11 +43,11 @@ public class MeadowBiomeModifications {
         return HolderSet.direct(holders);
     }
 
-    private static ForgeBiomeModifiers.AddFeaturesBiomeModifier addFeatureModifier(BootstapContext<BiomeModifier> context, HolderSet<PlacedFeature> placedSet, TagKey<Biome> biomeTag, GenerationStep.Decoration decoration) {
-        return new ForgeBiomeModifiers.AddFeaturesBiomeModifier(context.lookup(Registries.BIOME).getOrThrow(biomeTag), placedSet, decoration);
+    private static BiomeModifiers.AddFeaturesBiomeModifier addFeatureModifier(BootstrapContext<BiomeModifier> context, HolderSet<PlacedFeature> placedSet, TagKey<Biome> biomeTag, GenerationStep.Decoration decoration) {
+        return new BiomeModifiers.AddFeaturesBiomeModifier(context.lookup(Registries.BIOME).getOrThrow(biomeTag), placedSet, decoration);
     }
 
-    private static void register(BootstapContext<BiomeModifier> context, String name, Supplier<? extends BiomeModifier> modifier) {
-        context.register(ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, MeadowMod.meadowModPath(name)), modifier.get());
+    private static void register(BootstrapContext<BiomeModifier> context, String name, Supplier<? extends BiomeModifier> modifier) {
+        context.register(ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, MeadowMod.meadowModPath(name)), modifier.get());
     }
 }

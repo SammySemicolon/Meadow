@@ -9,7 +9,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = MeadowMod.MEADOW, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MeadowMod.MEADOW, bus = EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
     @SubscribeEvent

@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.grower.*;
 import net.minecraft.world.level.block.state.*;
 
 public class AspenSaplingBlock extends SaplingBlock {
-    public AspenSaplingBlock(AbstractTreeGrower grower, Properties pProperties) {
-        super(grower, pProperties);
+    public AspenSaplingBlock(TreeGrower treeGrower, Properties pProperties) {
+        super(treeGrower, pProperties);
     }
 
     @Override

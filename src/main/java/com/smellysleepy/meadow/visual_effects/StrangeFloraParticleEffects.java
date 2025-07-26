@@ -11,7 +11,6 @@ import team.lodestar.lodestone.systems.particle.data.*;
 import team.lodestar.lodestone.systems.particle.data.color.*;
 import team.lodestar.lodestone.systems.particle.data.spin.*;
 import team.lodestar.lodestone.systems.particle.render_types.*;
-import team.lodestar.lodestone.systems.particle.world.behaviors.components.*;
 import team.lodestar.lodestone.systems.particle.world.options.*;
 
 import java.awt.*;
@@ -29,9 +28,6 @@ public class StrangeFloraParticleEffects {
                 .randomSpinOffset(rand).build();
 
         var options = new WorldParticleOptions(MeadowParticleRegistry.SHINY_GLIMMER);
-        if (rand.nextBoolean()) {
-            options.setBehavior(new BedrockDirectionalBehaviorComponent(pitchData, yawData));
-        }
         return mineralFloraShine(level, pos, options);
     }
 
@@ -55,7 +51,6 @@ public class StrangeFloraParticleEffects {
                 .setLifetime(lifetime)
                 .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)
                 .setColorData(ColorParticleData.create(color, color).build())
-                .setDiscardFunction(SimpleParticleOptions.ParticleDiscardFunctionType.ENDING_CURVE_INVISIBLE)
                 .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.WITH_AGE);
 
         return new ParticleEffectSpawner(level, pos, worldParticleBuilder);

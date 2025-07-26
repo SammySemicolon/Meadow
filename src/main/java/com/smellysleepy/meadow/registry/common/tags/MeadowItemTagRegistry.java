@@ -4,7 +4,7 @@ import com.smellysleepy.meadow.*;
 import net.minecraft.resources.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.item.*;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 
 public class MeadowItemTagRegistry {
     public static final TagKey<Item> ASPEN_LOGS = meadowTag("aspen_logs");

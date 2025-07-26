@@ -12,7 +12,7 @@ import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowFeatureRegistry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MineralFloraFeatureDatagen {
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         addMineralFloraTree(context, MineralFloraRegistry.COAL_FLORA, List.of(
                 new StraightTrunkPart(7, 9),
                 new OffsetPart(0, -3, 0),
@@ -117,30 +117,30 @@ public class MineralFloraFeatureDatagen {
         }
     }
 
-    private static void addMineralFloraTree(BootstapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora, List<MineralTreePart> parts) {
+    private static void addMineralFloraTree(BootstrapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora, List<MineralTreePart> parts) {
         context.register(flora.configuredTreeFeature, new ConfiguredFeature<>(MeadowFeatureRegistry.MINERAL_TREE.get(), new MineralTreeFeatureConfiguration(
                 flora, parts)
         ));
     }
 
-    private static void addMineralFloraFlower(BootstapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora) {
+    private static void addMineralFloraFlower(BootstrapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora) {
         context.register(flora.configuredFlowerFeature, new ConfiguredFeature<>(MeadowFeatureRegistry.STRANGE_PLANT.get(), new StrangePlantFeatureConfiguration(
                 flora)
         ));
     }
 
-    private static void addMineralFloraNaturalPatch(BootstapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora) {
+    private static void addMineralFloraNaturalPatch(BootstrapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora) {
         context.register(flora.configuredNaturalPatchFeature, new ConfiguredFeature<>(MeadowFeatureRegistry.LAYERED_PATCH.get(), new LayeredPatchConfiguration(
                 flora, List.of(1, 1, 2, 2, 1)
         )));
     }
 
-    private static void addMineralGrassBonemeal(BootstapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora) {
+    private static void addMineralGrassBonemeal(BootstrapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora) {
         context.register(flora.configuredGrassBonemealFeature, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(flora.floraBlock.get().defaultBlockState()))));
     }
 
-    private static void addMineralLeavesBonemeal(BootstapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora) {
+    private static void addMineralLeavesBonemeal(BootstrapContext<ConfiguredFeature<?, ?>> context, MineralFloraRegistryBundle flora) {
         context.register(flora.configuredLeavesBonemealFeature, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK,
                 new SimpleBlockConfiguration(BlockStateProvider.simple(flora.hangingLeavesBlock.get().defaultBlockState()))));
     }

@@ -21,12 +21,12 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.gameevent.*;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.common.*;
+import net.neoforged.neoforge.common.IShearable;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class MooMooCow extends Cow implements IForgeShearable {
+public class MooMooCow extends Cow implements IShearable {
 
     private static final EntityDataAccessor<Boolean> DATA_CURIOUS_ID = SynchedEntityData.defineId(MooMooCow.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_EXTRA_FLUFFY_ID = SynchedEntityData.defineId(MooMooCow.class, EntityDataSerializers.BOOLEAN);
@@ -76,10 +76,10 @@ public class MooMooCow extends Cow implements IForgeShearable {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_CURIOUS_ID, false);
-        this.entityData.define(DATA_EXTRA_FLUFFY_ID, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_CURIOUS_ID, false);
+        builder.define(DATA_EXTRA_FLUFFY_ID, false);
     }
 
     @Override

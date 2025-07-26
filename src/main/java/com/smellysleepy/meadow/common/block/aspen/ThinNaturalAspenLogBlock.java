@@ -9,6 +9,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -24,8 +25,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -45,8 +46,8 @@ public class ThinNaturalAspenLogBlock extends ThinLogBlock implements Bonemealab
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        return pState.getValue(LEAVES).next().isPresent();
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return state.getValue(LEAVES).next().isPresent();
     }
 
     @Override
@@ -60,26 +61,25 @@ public class ThinNaturalAspenLogBlock extends ThinLogBlock implements Bonemealab
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        ItemStack stack = pPlayer.getItemInHand(pHand);
-        if (stack.canPerformAction(ToolActions.SHEARS_HARVEST)) {
-            var optional = pState.getValue(LEAVES).previous();
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (stack.canPerformAction(ItemAbilities.SHEARS_CARVE)) {
+            var optional = state.getValue(LEAVES).previous();
             if (optional.isPresent()) {
                 var previous = optional.get();
-                pLevel.setBlock(pPos, pState.setValue(LEAVES, previous), 3);
-                pLevel.playSound(null, pPos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
-                return InteractionResult.SUCCESS;
+                level.setBlock(pos, state.setValue(LEAVES, previous), 3);
+                level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+                return ItemInteractionResult.SUCCESS;
             }
         }
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
-    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
-        if (toolAction.equals(ToolActions.AXE_STRIP)) {
+    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
+        if (itemAbility.equals(ItemAbilities.AXE_STRIP)) {
             return stripped.get().defaultBlockState();
         }
-        return super.getToolModifiedState(state, context, toolAction, simulate);
+        return super.getToolModifiedState(state, context, itemAbility, simulate);
     }
 
     @Override

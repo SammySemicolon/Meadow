@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import team.lodestar.lodestone.helpers.DataHelper;
 
 import java.util.HashSet;
@@ -72,7 +72,7 @@ public class MeadowLangDatagen extends LanguageProvider {
         addJEEDEffectDescription(MeadowMobEffectRegistry.NETHERITE_FRUIT_EFFECT, "The prestigious sensation of netherite makes you tougher, increasing your armor, armor toughness, and providing resistance to fire and knockback. You could really rock the world with this candy.");
     }
 
-    public void addPastryNamings(HashSet<RegistryObject<Item>> items, MineralFloraRegistryBundle mineralFlora, String candyName, String pastryName) {
+    public void addPastryNamings(HashSet<Supplier<Item>> items, MineralFloraRegistryBundle mineralFlora, String candyName, String pastryName) {
         DataHelper.takeAll(items, mineralFlora.candyItem, mineralFlora.pastryItem);
         addItem(mineralFlora.candyItem, candyName);
         addItem(mineralFlora.pastryItem, pastryName);

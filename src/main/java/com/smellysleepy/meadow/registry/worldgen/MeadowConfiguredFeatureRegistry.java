@@ -8,7 +8,7 @@ import net.minecraft.world.level.levelgen.feature.*;
 public class MeadowConfiguredFeatureRegistry {
 
     //Aspen Forest
-    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_SMALL_ASPEN_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("small_aspen_tree"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_THIN_ASPEN_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("thin_aspen_tree"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_ASPEN_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("aspen_tree"));
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_ASPEN_GRASS_BONEMEAL = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath("aspen_grass_bonemeal"));

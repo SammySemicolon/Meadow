@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.placement.*;
 
 public class MeadowPlacedFeatureDatagen {
 
-    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> features = context.lookup(Registries.CONFIGURED_FEATURE);
 
         int offset = 0;

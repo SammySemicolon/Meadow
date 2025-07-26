@@ -491,7 +491,7 @@ public class OldMeadowGrovePiece extends StructurePiece {
     private Pair<BlockPos, ResourceKey<ConfiguredFeature<?, ?>>> createRampFeatures(FeatureDataGetter featureGetter, BlockPos.MutableBlockPos pos) {
         ResourceKey<ConfiguredFeature<?, ?>> feature = featureGetter.choose(8,
                 MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE,
-                MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE,
+                MeadowConfiguredFeatureRegistry.CONFIGURED_THIN_ASPEN_TREE,
                 MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_PATCH
         );
         if (feature != null) {
@@ -546,12 +546,12 @@ public class OldMeadowGrovePiece extends StructurePiece {
             if (feature == null) {
                 if (featureTypeOffset > start && featureTypeOffset < midpoint) {
                     feature = featureGetter.choose(2,
-                            MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE
+                            MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, MeadowConfiguredFeatureRegistry.CONFIGURED_THIN_ASPEN_TREE
                     );
                 }
                 else if (featureTypeOffset < end) {
                     feature = featureGetter.choose(2,
-                            MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_ASPEN_PATCH);
+                            MeadowConfiguredFeatureRegistry.CONFIGURED_THIN_ASPEN_TREE, MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_ASPEN_PATCH);
                 }
                 else if (featureTypeOffset >= end) {
                     feature = featureGetter.choose(4,

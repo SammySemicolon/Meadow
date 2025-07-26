@@ -7,8 +7,10 @@ import com.smellysleepy.meadow.common.block.mineral.plant.MineralFloraPlant;
 import com.smellysleepy.meadow.common.block.mineral.plant.MineralSaplingBlock;
 import com.smellysleepy.meadow.common.block.mineral.plant.TallMineralFlower;
 import com.smellysleepy.meadow.registry.common.MeadowParticleRegistry;
+import com.smellysleepy.meadow.registry.common.MeadowTreeGrowers;
 import com.smellysleepy.meadow.registry.common.block.properties.MineralBlockProperties;
 import com.smellysleepy.meadow.registry.common.item.*;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +23,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
-import net.minecraftforge.registries.RegistryObject;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
@@ -43,48 +44,48 @@ public class MineralFloraRegistryBundle {
 
     public final ResourceKey<PlacedFeature> placedTreeFeature;
 
-    public final RegistryObject<LodestoneWorldParticleType> particle;
+    public final Supplier<LodestoneWorldParticleType> particle;
 
-    public final RegistryObject<Block> grassBlock;
-    public final RegistryObject<Item> grassBlockItem;
+    public final Supplier<Block> grassBlock;
+    public final Supplier<Item> grassBlockItem;
 
-    public final RegistryObject<Block> leavesBlock;
-    public final RegistryObject<Item> leavesBlockItem;
+    public final Supplier<Block> leavesBlock;
+    public final Supplier<Item> leavesBlockItem;
 
-    public final RegistryObject<Block> hangingLeavesBlock;
-    public final RegistryObject<Item> hangingLeavesBlockItem;
+    public final Supplier<Block> hangingLeavesBlock;
+    public final Supplier<Item> hangingLeavesBlockItem;
 
-    public final RegistryObject<Block> saplingBlock;
-    public final RegistryObject<Item> saplingBlockItem;
+    public final Supplier<Block> saplingBlock;
+    public final Supplier<Item> saplingBlockItem;
 
-    public final RegistryObject<Block> flowerBlock;
-    public final RegistryObject<Item> flowerBlockItem;
+    public final Supplier<Block> flowerBlock;
+    public final Supplier<Item> flowerBlockItem;
 
-    public final RegistryObject<Block> floraBlock;
-    public final RegistryObject<Item> floraBlockItem;
+    public final Supplier<Block> floraBlock;
+    public final Supplier<Item> floraBlockItem;
 
-    public final RegistryObject<Item> fruitItem;
-    public final RegistryObject<Item> candyItem;
-    public final RegistryObject<Item> pastryItem;
+    public final Supplier<Item> fruitItem;
+    public final Supplier<Item> candyItem;
+    public final Supplier<Item> pastryItem;
 
 
-    public MineralFloraRegistryBundle(ResourceLocation id, ResourceKey<ConfiguredFeature<?, ?>> feature, Supplier<MobEffect> effectSupplier, Color color, Block oreBlock, TagKey<Block> tag) {
+    public MineralFloraRegistryBundle(ResourceLocation id, Holder<MobEffect> effect, Color color, Block oreBlock, TagKey<Block> tag) {
         this.id = id;
-        var prefix = id.getPath();
+        var name = id.getPath();
         this.oreBlock = oreBlock;
 
-        configuredTreeFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree"));
-        configuredFlowerFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_plant"));
-        configuredNaturalPatchFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_patch"));
-        configuredGrassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_grass_bonemeal"));
-        configuredLeavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));
+        configuredTreeFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_tree"));
+        configuredFlowerFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_plant"));
+        configuredNaturalPatchFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_patch"));
+        configuredGrassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_grass_bonemeal"));
+        configuredLeavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_leaves_bonemeal"));
 
-        placedTreeFeature = ResourceKey.create(Registries.PLACED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree"));
+        placedTreeFeature = ResourceKey.create(Registries.PLACED_FEATURE, MeadowMod.meadowModPath(name + "_tree"));
 
-        particle = MeadowParticleRegistry.PARTICLES.register(prefix + "_leaf", LodestoneWorldParticleType::new);
+        particle = MeadowParticleRegistry.PARTICLES.register(name + "_leaf", LodestoneWorldParticleType::new);
 
-        var grassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_grass_bonemeal"));
-        var leavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_leaves_bonemeal"));
+        var grassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_grass_bonemeal"));
+        var leavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_leaves_bonemeal"));
 
         var grassBlockProperties = MineralBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES();
         var grassProperties = MineralBlockProperties.MINERAL_GRASS_PROPERTIES();
@@ -95,16 +96,17 @@ public class MineralFloraRegistryBundle {
 
         var itemProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES();
 
-        String grassBlockName = prefix + "_grass_block";
-        String leavesName = prefix + "_leaves";
-        String hangingLeavesName = "hanging_" + prefix + "_leaves";
-        String saplingName = prefix + "_sapling";
-        String flowerName = prefix + "_flower";
-        String floraName = prefix + "_flora";
+        var treeGrower = MeadowTreeGrowers.register(name, configuredTreeFeature);
+        String grassBlockName = name + "_grass_block";
+        String leavesName = name + "_leaves";
+        String hangingLeavesName = "hanging_" + name + "_leaves";
+        String saplingName = name + "_sapling";
+        String flowerName = name + "_flower";
+        String floraName = name + "_flora";
 
-        String fruitName = prefix + "_fruit";
-        String candy = prefix + "_candy";
-        String pastry = prefix + "_pastry";
+        String fruitName = name + "_fruit";
+        String candy = name + "_candy";
+        String pastry = name + "_pastry";
 
         grassBlock = registerBlock(grassBlockName, () -> new MineralGrassBlock(grassBlockProperties, grassBonemealFeature));
         grassBlockItem = registerItem(grassBlockName, itemProperties, (p) -> new BlockItem(grassBlock.get(), p));
@@ -115,7 +117,7 @@ public class MineralFloraRegistryBundle {
         hangingLeavesBlock = registerBlock(hangingLeavesName, () -> new HangingMineralLeavesBlock(hangingLeavesProperties, particle, color));
         hangingLeavesBlockItem = registerItem(hangingLeavesName, itemProperties, (p) -> new BlockItem(hangingLeavesBlock.get(), p));
 
-        saplingBlock = registerBlock(saplingName, () -> new MineralSaplingBlock(saplingProperties, feature, tag));
+        saplingBlock = registerBlock(saplingName, () -> new MineralSaplingBlock(treeGrower, saplingProperties, tag));
         saplingBlockItem = registerItem(saplingName, itemProperties, (p) -> new BlockItem(saplingBlock.get(), p));
 
         flowerBlock = registerBlock(flowerName, () -> new TallMineralFlower(flowerProperties.addTag(BlockTags.TALL_FLOWERS), tag));
@@ -125,13 +127,19 @@ public class MineralFloraRegistryBundle {
         floraBlockItem = registerItem(floraName, itemProperties, (p) -> new BlockItem(floraBlock.get(), p));
 
         var fruitProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(new FoodProperties.Builder().nutrition(4)
-                .effect(() -> new MobEffectInstance(effectSupplier.get(), 1200, 0), 1f).saturationMod(0.4f).alwaysEat().build()
+                .effect(() -> new MobEffectInstance(effect, 1200, 0), 1f)
+                .saturationModifier(0.4f)
+                .alwaysEdible().build()
         );
         var candyProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(new FoodProperties.Builder().nutrition(3)
-                .effect(() -> new MobEffectInstance(effectSupplier.get(), 300, 1), 1f).saturationMod(0.3f).fast().alwaysEat().build()
+                .effect(() -> new MobEffectInstance(effect, 300, 1), 1f)
+                .saturationModifier(0.3f).fast()
+                .alwaysEdible().build()
         );
         var pastryProperties = MeadowItemProperties.MINERAL_FLORA_PROPERTIES().food(new FoodProperties.Builder().nutrition(6)
-                .effect(() -> new MobEffectInstance(effectSupplier.get(), 3000, 0), 1f).saturationMod(0.45f).alwaysEat().build()
+                .effect(() -> new MobEffectInstance(effect, 3000, 0), 1f)
+                .saturationModifier(0.45f)
+                .alwaysEdible().build()
         );
 
         fruitItem = registerItem(fruitName, fruitProperties, Item::new);
@@ -139,11 +147,11 @@ public class MineralFloraRegistryBundle {
         pastryItem = registerItem(pastry, pastryProperties, Item::new);
     }
 
-    public <T extends Item> RegistryObject<T> registerItem(String name, Item.Properties properties, Function<Item.Properties, T> function) {
+    public <T extends Item> Supplier<T> registerItem(String name, Item.Properties properties, Function<Item.Properties, T> function) {
         return MeadowItemRegistry.register(name, properties, function);
     }
 
-    public <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> supplier) {
+    public <T extends Block> Supplier<T> registerBlock(String name, Supplier<T> supplier) {
         return BLOCKS.register(name, supplier);
     }
 }

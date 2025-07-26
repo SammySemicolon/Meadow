@@ -12,7 +12,7 @@ import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData;
 import team.lodestar.lodestone.systems.particle.render_types.*;
 import team.lodestar.lodestone.systems.particle.world.*;
-import team.lodestar.lodestone.systems.particle.world.behaviors.components.*;
+import team.lodestar.lodestone.systems.particle.world.behaviors.SparkParticleBehavior;
 import team.lodestar.lodestone.systems.particle.world.options.*;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
@@ -24,7 +24,7 @@ import static net.minecraft.util.Mth.*;
 public class MeadowParticleEffects {
 
     public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos, LodestoneWorldParticleType particleType) {
-        return fallingLeaves(level, pos, new WorldParticleOptions(particleType).setBehavior(new SparkBehaviorComponent()));
+        return fallingLeaves(level, pos, new WorldParticleOptions(particleType).setBehavior(SparkParticleBehavior.sparkBehavior()));
     }
     public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
@@ -59,7 +59,6 @@ public class MeadowParticleEffects {
             p.setParticleSpeed(p.getParticleSpeed().add(x, y, z).multiply(scalar, scalar, scalar));
         };
         var worldParticleBuilder = WorldParticleBuilder.create(options)
-                .setDiscardFunction(SimpleParticleOptions.ParticleDiscardFunctionType.ENDING_CURVE_INVISIBLE)
                 .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.RANDOM_SPRITE)
                 .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)
                 .setTransparencyData(transparencyData)
@@ -85,7 +84,6 @@ public class MeadowParticleEffects {
 
         var colorData = ColorParticleData.create(new Color(233, 195, 41), new Color(195, 118, 85)).build();
         var worldParticleBuilder = WorldParticleBuilder.create(options)
-                .setDiscardFunction(SimpleParticleOptions.ParticleDiscardFunctionType.ENDING_CURVE_INVISIBLE)
                 .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.RANDOM_SPRITE)
                 .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
                 .setTransparencyData(transparencyData)

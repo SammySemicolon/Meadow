@@ -24,7 +24,7 @@ import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.parameters.*;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.*;
-import net.minecraftforge.registries.*;
+import net.neoforged.neoforge.registries.*;
 import team.lodestar.lodestone.systems.block.*;
 
 import java.util.*;
@@ -82,7 +82,7 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
 
         @Override
         protected void generate() {
-            Set<RegistryObject<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
+            Set<Supplier<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
 
             takeAll(blocks, b -> b.get().properties instanceof LodestoneBlockProperties && ((LodestoneBlockProperties) b.get().properties).getDatagenData().hasInheritedLootTable);
 

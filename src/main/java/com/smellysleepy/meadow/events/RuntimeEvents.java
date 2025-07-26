@@ -1,23 +1,16 @@
 package com.smellysleepy.meadow.events;
 
 import com.smellysleepy.meadow.common.effect.*;
-import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.eventbus.api.*;
-import net.minecraftforge.fml.common.*;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class RuntimeEvents {
 
     @SubscribeEvent
-    public static void onAttack(LivingAttackEvent event) {
-        NetheriteFruitEffect.onLivingAttack(event);
-    }
-
-    @SubscribeEvent
-    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        CopperFruitEffect.onRightClickBlock(event);
+    public static void handleIncomingDamage(LivingIncomingDamageEvent event) {
+        NetheriteFruitEffect.preventFireDamage(event);
     }
 }
 

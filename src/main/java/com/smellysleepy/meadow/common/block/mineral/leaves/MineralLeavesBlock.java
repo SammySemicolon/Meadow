@@ -15,18 +15,18 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.RegistryObject;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
+import java.util.function.Supplier;
 
 public class MineralLeavesBlock extends LeavesBlock implements BonemealableBlock {
 
     private final ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature;
-    private final RegistryObject<LodestoneWorldParticleType> particleType;
+    private final Supplier<LodestoneWorldParticleType> particleType;
     public final Color color;
 
-    public MineralLeavesBlock(Properties pProperties, RegistryObject<LodestoneWorldParticleType> particleType, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature, Color color) {
+    public MineralLeavesBlock(Properties pProperties, Supplier<LodestoneWorldParticleType> particleType, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature, Color color) {
         super(pProperties);
         this.particleType = particleType;
         this.bonemealFeature = bonemealFeature;
@@ -57,8 +57,8 @@ public class MineralLeavesBlock extends LeavesBlock implements BonemealableBlock
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        return pLevel.getBlockState(pPos.below()).isAir();
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return level.getBlockState(pos.below()).isAir();
     }
 
     @Override

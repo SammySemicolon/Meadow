@@ -30,7 +30,6 @@ public class MineralBlockProperties {
                 .setCutoutRenderType()
                 .noCollission()
                 .noOcclusion()
-                .replaceable()
                 .instabreak();
     }
 
@@ -43,7 +42,8 @@ public class MineralBlockProperties {
     }
 
     public static LodestoneBlockProperties MINERAL_GRASS_PROPERTIES() {
-        return MINERAL_FLORA_PROPERTIES();
+        return MINERAL_FLORA_PROPERTIES()
+                .replaceable();
     }
 
     public static LodestoneBlockProperties MINERAL_LEAVES_PROPERTIES() {

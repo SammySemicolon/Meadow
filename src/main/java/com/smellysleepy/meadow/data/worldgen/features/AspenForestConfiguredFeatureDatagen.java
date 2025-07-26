@@ -13,8 +13,8 @@ import java.util.*;
 
 public class AspenForestConfiguredFeatureDatagen {
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
-        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.SMALL_ASPEN_TREE.get(), new AspenTreeFeatureConfiguration(
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_THIN_ASPEN_TREE, new ConfiguredFeature<>(MeadowFeatureRegistry.SMALL_ASPEN_TREE.get(), new AspenTreeFeatureConfiguration(
                 MeadowBlockRegistry.ASPEN_SAPLING.get(),
                 MeadowBlockRegistry.THIN_ASPEN_LOG.get(),
                 MeadowBlockRegistry.THIN_PARTIALLY_CALCIFIED_ASPEN_LOG.get(),

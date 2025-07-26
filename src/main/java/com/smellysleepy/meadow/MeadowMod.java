@@ -5,11 +5,12 @@ import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.worldgen.MineralTreePartTypes;
 import net.minecraft.resources.*;
 import net.minecraft.util.*;
-import net.minecraftforge.eventbus.api.*;
-import net.minecraftforge.fml.common.*;
-import net.minecraftforge.fml.javafmlmod.*;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
 import org.apache.logging.log4j.*;
 
+import static com.smellysleepy.meadow.registry.common.MeadowCreativeTabRegistry.CREATIVE_MODE_TABS;
 import static com.smellysleepy.meadow.registry.common.MeadowMobEffectRegistry.EFFECTS;
 import static com.smellysleepy.meadow.registry.common.MeadowSoundRegistry.SOUNDS;
 import static com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry.BLOCKS;
@@ -27,22 +28,22 @@ public class MeadowMod {
     public static final String MEADOW = "meadow";
     public static final RandomSource RANDOM = RandomSource.create();
 
-    public MeadowMod() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-        MeadowCreativeTabRegistry.CREATIVE_MODE_TABS.register(modBus);
+    public MeadowMod(IEventBus modEventBus, ModContainer modContainer) {
+        CREATIVE_MODE_TABS.register(modEventBus);
 
         MineralTreePartTypes.init();
         MineralFloraRegistry.init();
         MeadowGroveBiomeTypes.init();
-        SOUNDS.register(modBus);
-        BLOCKS.register(modBus);
-        ITEMS.register(modBus);
-        EFFECTS.register(modBus);
-        ENTITY_TYPES.register(modBus);
-        FEATURE_TYPES.register(modBus);
-        STRUCTURE_TYPES.register(modBus);
-        STRUCTURE_PIECE_TYPES.register(modBus);
-        PARTICLES.register(modBus);
+
+        SOUNDS.register(modEventBus);
+        BLOCKS.register(modEventBus);
+        ITEMS.register(modEventBus);
+        EFFECTS.register(modEventBus);
+        ENTITY_TYPES.register(modEventBus);
+        FEATURE_TYPES.register(modEventBus);
+        STRUCTURE_TYPES.register(modEventBus);
+        STRUCTURE_PIECE_TYPES.register(modEventBus);
+        PARTICLES.register(modEventBus);
     }
 
     public static ResourceLocation meadowModPath(String path) {

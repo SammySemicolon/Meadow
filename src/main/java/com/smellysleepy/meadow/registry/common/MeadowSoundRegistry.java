@@ -1,23 +1,21 @@
 package com.smellysleepy.meadow.registry.common;
 
 import com.smellysleepy.meadow.MeadowMod;
-import com.smellysleepy.meadow.common.block.mineral.MineralFloraRegistryBundle;
 import com.smellysleepy.meadow.common.sound.CalcifiedSoundType;
-import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.common.util.ForgeSoundType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
+import net.neoforged.neoforge.common.util.DeferredSoundType;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class MeadowSoundRegistry {
-    public static DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, MeadowMod.MEADOW);
 
-    public static RegistryObject<SoundEvent> CALCIFICATION_MOTIF = register(SoundEvent.createVariableRangeEvent(MeadowMod.meadowModPath("calcification_motif")));
+    public static DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, MeadowMod.MEADOW);
+
+    public static Supplier<SoundEvent> CALCIFICATION_MOTIF = register(SoundEvent.createVariableRangeEvent(MeadowMod.meadowModPath("calcification_motif")));
 
     public static final SoundType CALCIFIED_WOOD = new CalcifiedSoundType(1f, 0.8f, ()->SoundEvents.CHERRY_WOOD_BREAK, ()->SoundEvents.CHERRY_WOOD_STEP, ()->SoundEvents.CHERRY_WOOD_PLACE, ()->SoundEvents.CHERRY_WOOD_HIT, ()->SoundEvents.CHERRY_WOOD_FALL);
     public static final SoundType CALCIFIED_FUNGUS = new CalcifiedSoundType(1f, 0.8f, ()->SoundEvents.NETHER_WOOD_BREAK, ()->SoundEvents.NETHER_WOOD_STEP, ()->SoundEvents.NETHER_WOOD_PLACE, ()->SoundEvents.NETHER_WOOD_HIT, ()->SoundEvents.NETHER_WOOD_FALL);
@@ -28,9 +26,9 @@ public class MeadowSoundRegistry {
 
     public static final SoundType HEAVY_CALCIFIED_BRICK = new CalcifiedSoundType(1f, 0.7f, ()->SoundEvents.NETHER_BRICKS_BREAK, ()->SoundEvents.NETHER_BRICKS_STEP, ()->SoundEvents.NETHER_BRICKS_PLACE, ()->SoundEvents.NETHER_BRICKS_HIT, ()->SoundEvents.NETHER_BRICKS_FALL);
 
-    public static final SoundType ASPEN_WOOD = new ForgeSoundType(1f, 0.8f, ()->SoundEvents.CHERRY_WOOD_BREAK, ()->SoundEvents.CHERRY_WOOD_STEP, ()->SoundEvents.CHERRY_WOOD_PLACE, ()->SoundEvents.CHERRY_WOOD_HIT, ()->SoundEvents.CHERRY_WOOD_FALL);
+    public static final SoundType ASPEN_WOOD = new DeferredSoundType(1f, 0.8f, ()->SoundEvents.CHERRY_WOOD_BREAK, ()->SoundEvents.CHERRY_WOOD_STEP, ()->SoundEvents.CHERRY_WOOD_PLACE, ()->SoundEvents.CHERRY_WOOD_HIT, ()->SoundEvents.CHERRY_WOOD_FALL);
 
-    public static RegistryObject<SoundEvent> register(SoundEvent soundEvent) {
+    public static Supplier<SoundEvent> register(SoundEvent soundEvent) {
         return SOUNDS.register(soundEvent.getLocation().getPath(), () -> soundEvent);
     }
 }

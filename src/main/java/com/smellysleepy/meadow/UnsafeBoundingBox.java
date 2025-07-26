@@ -36,6 +36,7 @@ public class UnsafeBoundingBox {
     public BoundingBox toBoundingBox() {
         return new BoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
     }
+
     //TODO: huh??
     public boolean valid() {
         return true;

@@ -41,7 +41,7 @@ public class MeadowGroveFeatureDistribution extends HashMap<ResourceKey<Configur
         MeadowGroveFeatureDistribution featureDistribution = new MeadowGroveFeatureDistribution();
         featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, random, pearlflowerCount);
 
-        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, random, smallTreeCount);
+        featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_THIN_ASPEN_TREE, random, smallTreeCount);
         featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, random, largeTreeCount);
 
         featureDistribution.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_ASPEN_PATCH, random, largePatchCount);

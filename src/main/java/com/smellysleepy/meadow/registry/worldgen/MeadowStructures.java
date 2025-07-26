@@ -7,7 +7,8 @@ import com.smellysleepy.meadow.registry.common.tags.MeadowBiomeTagRegistry;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.MobCategory;
@@ -23,9 +24,9 @@ import java.util.Map;
 public class MeadowStructures {
     public static final Map<ResourceKey<Structure>, StructureFactory> STRUCTURE_FACTORIES = new Reference2ObjectOpenHashMap<>();
     
-    public static final ResourceKey<Structure> MEADOW_GROVE = register("meadow_grove", (structureFactoryBootstapContext) ->
+    public static final ResourceKey<Structure> MEADOW_GROVE = register("meadow_grove", (structureFactoryBootstrapContext) ->
             new MeadowGroveStructure(
-                    structure(structureFactoryBootstapContext.lookup(Registries.BIOME).getOrThrow(MeadowBiomeTagRegistry.HAS_MEADOW_GROVES),
+                    structure(structureFactoryBootstrapContext.lookup(Registries.BIOME).getOrThrow(MeadowBiomeTagRegistry.HAS_MEADOW_GROVES),
                             Map.of(
                                     MobCategory.CREATURE,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(
@@ -64,6 +65,6 @@ public class MeadowStructures {
 
     @FunctionalInterface
     public interface StructureFactory {
-        Structure generate(BootstapContext<Structure> structureFactoryBootstapContext);
+        Structure generate(BootstrapContext<Structure> structureFactoryBootstrapContext);
     }
 }

@@ -1,123 +1,104 @@
-import java.text.SimpleDateFormat
-import java.util.*
-
 plugins {
-    id("eclipse")
-    id("idea")
+    id("java-library")
     id("maven-publish")
-    id("net.minecraftforge.gradle").version("[6.0,6.2)")
-    id("org.parchmentmc.librarian.forgegradle").version("1.+")
-    id("org.spongepowered.mixin")
+    id("net.neoforged.moddev") version "2.0.30-beta"
 }
 
-val minecraftVersion: String by extra
-val minecraftVersionRange: String by extra
-val loaderVersionRange: String by extra
-val forgeVersionRange: String by extra
-val modVersion: String by extra
-val modGroupId: String by extra
-val modId: String by extra
-val modAuthors: String by extra
-val modDescription: String by extra
-val modLicense: String by extra
-val modName: String by extra
-val parchmentChannel: String by extra
-val parchmentVersion: String by extra
-val forgeVersion: String by extra
-val jeiVersion: String by extra
-val curiosVersion: String by extra
-val mixinVersion: String by extra
-val modJavaVersion: String by extra
-val lodestoneVersion: String by extra
-
-version = "$minecraftVersion-$modVersion"
+version = "${property("minecraft_version")}-${property("mod_version")}"
 if (System.getenv("BUILD_NUMBER") != null) {
-    version = "$minecraftVersion-$modVersion.${System.getenv("BUILD_NUMBER")}"
+    version = "$version.${System.getenv("BUILD_NUMBER")}"
 }
-group = modGroupId
-
-val baseArchivesName = modId
+val baseArchivesName = project.property("mod_id").toString()
 base {
-    archivesName.set(baseArchivesName)
+    archivesName.set(project.property("mod_id").toString())
 }
+group = "${property("mod_group_id")}"
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(modJavaVersion))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
-mixin {
-    add(sourceSets.main.get(), "${modId}.refmap.json")
-    config("meadow.mixins.json")
+tasks.named<Wrapper>("wrapper") {
+    distributionType = Wrapper.DistributionType.BIN
 }
 
-minecraft {
-    mappings(parchmentChannel, parchmentVersion)
+val localRuntime: Configuration by configurations.creating
+configurations.runtimeClasspath {
+    extendsFrom(localRuntime)
+}
 
-    accessTransformer(file("src/main/resources/META-INF/accesstransformer.cfg"))
+neoForge {
+    version.set(project.property("neo_version").toString())
 
-    copyIdeResources.set(true)
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
+    parchment {
+        mappingsVersion.set(project.property("parchment_mappings_version").toString())
+        minecraftVersion.set(project.property("parchment_minecraft_version").toString())
+    }
+
+    setAccessTransformers(
+        "src/main/resources/META-INF/accesstransformer.cfg",
+        "src/main/resources/META-INF/recipebuilders.cfg",
+        "src/main/resources/META-INF/blockproperties.cfg",
+        "src/main/resources/META-INF/renderstates.cfg"
+    )
+
     runs {
-        // applies to all the run configs below
-        configureEach {
-            workingDirectory(project.file("run"))
+        register("client") {
+            client()
 
-            property("forge.logging.markers", "REGISTRIES")
-            property("forge.logging.console.level", "debug")
-
-            mods {
-                create("${modId}") {
-                    source(sourceSets.main.get())
-                }
-            }
-        }
-
-        create("client") {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property("forge.enabledGameTestNamespaces", modId)
-            arg("-mixin.config=" + modId + ".mixins.json")
+            systemProperty("neoforge.enabledGameTestNamespaces", project.property("mod_id").toString())
         }
 
-        create("server") {
-            property("forge.enabledGameTestNamespaces", modId)
-            args("--nogui")
-            arg("-mixin.config=" + modId + ".mixins.json")
+        register("server") {
+            server()
+            programArgument("--nogui")
+            systemProperty("neoforge.enabledGameTestNamespaces", project.property("mod_id").toString())
         }
 
-        create("data") {
-            // example of overriding the workingDirectory set in configureEach above
-            workingDirectory(project.file("run-data"))
+        register("gameTestServer") {
+            type = "gameTestServer"
+            systemProperty("neoforge.enabledGameTestNamespaces", project.property("mod_id").toString())
+        }
 
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args(
-                    "--mod",
-                    modId,
-                    "--all",
-                    "--output",
-                    file("src/generated/resources/"),
-                    "--existing",
-                    file("src/main/resources/")
+        register("data") {
+            data()
+            programArguments.addAll(
+                "--mod", project.property("mod_id").toString(),
+                "--all",
+                "--output", file("src/generated/resources/").absolutePath,
+                "--existing", file("src/main/resources/").absolutePath
             )
         }
+
+        configureEach {
+            jvmArgument("-Dmixin.debug=true")
+            jvmArgument("-Xmx4G")
+            systemProperty("neoforge.logging.markers", "REGISTRIES")
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        create("${property("mod_id")}") {
+            sourceSet(sourceSets.main.get())
+        }
     }
 }
 
-// Include resources generated by data generators.
 sourceSets {
     main {
         resources.srcDir("src/generated/resources")
     }
 }
 
-jarJar.enable()
-
 repositories {
     flatDir {
         dirs("lib")
     }
+    mavenLocal()
     mavenCentral()
     maven {
         name = "Curios maven"
@@ -128,12 +109,12 @@ repositories {
         url = uri("https://dvs1.progwml6.com/files/maven")
     }
     maven {
-        name = "tterrag maven"
-        url = uri("https://maven.tterrag.com/")
-    }
-    maven {
         name = "BlameJared maven"
         url = uri("https://maven.blamejared.com/")
+    }
+    maven {
+        name = "KosmX's maven"
+        url = uri("https://maven.kosmx.dev/")
     }
     maven {
         name = "Curse Maven"
@@ -142,7 +123,16 @@ repositories {
             includeGroup("curse.maven")
         }
     }
-
+    maven {
+        url = uri("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
+        content {
+            includeGroup("software.bernie.geckolib")
+        }
+    }
+    maven {
+        name = "ModMaven"
+        url = uri("https://modmaven.dev")
+    }
     maven {
         name = "jitpack"
         url = uri("https://jitpack.io")
@@ -150,93 +140,99 @@ repositories {
             includeGroup("io.github")
         }
     }
-
+    maven {
+        name = "OctoStudios"
+        url = uri("https://maven.octo-studios.com/releases")
+    }
+    maven {
+        url = uri("https://maven.latvian.dev/releases")
+        content {
+            includeGroup("dev.latvian.mods")
+        }
+    }
+    maven {
+        url = uri("https://maven.createmod.net")
+    }
 }
-
 
 dependencies {
-    minecraft("net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}")
+    // JEI
+    compileOnlyApi(("mezz.jei:jei-${project.property("minecraft_version")}-neoforge-api:${project.property("jei_version")}"))
+    runtimeOnly(("mezz.jei:jei-${project.property("minecraft_version")}-neoforge:${project.property("jei_version")}"))
 
-    if (System.getProperty("idea.sync.active") != "true") {
-        annotationProcessor("org.spongepowered:mixin:${mixinVersion}:processor")
-    }
+    // Curios
+    compileOnlyApi(("top.theillusivec4.curios:curios-neoforge:${property("curios_version")}"))
+    runtimeOnly(("top.theillusivec4.curios:curios-neoforge:${property("curios_version")}"))
 
-    // MixinExtras
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.2")!!)
-    implementation("io.github.llamalad7:mixinextras-forge:0.3.2")
+    // Lodestone
+    compileOnlyApi(("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}"))
+    runtimeOnly(("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}"))
 
-    // JEI Dependency
-    compileOnly(fg.deobf("mezz.jei:jei-${minecraftVersion}-forge-api:${jeiVersion}"))
-    compileOnly(fg.deobf("mezz.jei:jei-${minecraftVersion}-common-api:${jeiVersion}"))
-    runtimeOnly(fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}"))
+    // KubeJS
+    implementation("curse.maven:rhino-416294:6184623")
+    implementation("curse.maven:kubejs-238086:5810100")
 
-    // Curios dependency
-    compileOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVersion}:api"))
-    runtimeOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVersion}"))
+    // Tetra Optional Dependency
+//    compileOnly(("curse.maven:tetra-${property("tetra_version")}"))
+//    compileOnly(("se.mickelus.mutil:mutil:${property("mutil_version")}"))
 
-    implementation(fg.deobf("team.lodestar.lodestone:lodestone:${minecraftVersion}-${lodestoneVersion}"))
+    // Farmer's Delight, Optional
+    compileOnly(("curse.maven:farmers-delight-398521:5878217"))
+    localRuntime(("curse.maven:farmers-delight-398521:5878217"))
 
-    compileOnly(fg.deobf("curse.maven:farmers_delight-398521:4638874"))
+    //Runtime Mods
+    localRuntime(("curse.maven:spark-361579:5759671"))
+    localRuntime(("curse.maven:fusion-connected-textures-854949:6073987"))
+    localRuntime(("curse.maven:overloaded-armor-bar-314002:5537850"))
 
-//    implementation(fg.deobf("curse.maven:create-328085:4626108"))
-    //implementation(fg.deobf("curse.maven:jeed-532286:4599236"))
 
-    runtimeOnly(fg.deobf("curse.maven:spark-361579:4587309"))
-    runtimeOnly(fg.deobf("curse.maven:attributefix-280510:4911084"))
-    runtimeOnly(fg.deobf("curse.maven:overloaded-armor-bar-314002:4631133"))
+    localRuntime("curse.maven:ftb-library-forge-404465:5754910")
+    localRuntime("curse.maven:architectury-api-419699:5786327")
+
+    //AttributeFix
+    localRuntime(("curse.maven:bookshelf-228525:5824127")) //Required for AttributeFix
+    localRuntime(("curse.maven:prickle-1023259:5836410")) //Required for AttributeFix
+    localRuntime(("curse.maven:attributefix-280510:5824104"))
 }
 
-tasks.withType<ProcessResources> {
-    inputs.property("version", version)
+val generateModMetadata by tasks.registering(ProcessResources::class) {
+    val replaceProperties = mapOf(
+        "minecraft_version" to project.findProperty("minecraft_version") as String,
+        "minecraft_version_range" to project.findProperty("minecraft_version_range") as String,
+        "neo_version" to project.findProperty("neo_version") as String,
+        "neo_version_range" to project.findProperty("neo_version_range") as String,
+        "loader_version_range" to project.findProperty("loader_version_range") as String,
+        "mod_id" to project.findProperty("mod_id") as String,
+        "mod_name" to project.findProperty("mod_name") as String,
+        "mod_license" to project.findProperty("mod_license") as String,
+        "mod_version" to project.findProperty("mod_version") as String,
+        "mod_authors" to project.findProperty("mod_authors") as String,
+        "mod_description" to project.findProperty("mod_description") as String,
+        "lodestone_version_range" to project.findProperty("lodestone_version_range") as String
+    )
+    inputs.properties(replaceProperties)
+    expand(replaceProperties)
 
-    filesMatching(listOf("META-INF/mods.toml", "pack.mcmeta")) {
-        expand(
-                mapOf(
-                        "forgeVersionRange" to forgeVersionRange,
-                        "loaderVersionRange" to loaderVersionRange,
-                        "minecraftVersion" to minecraftVersion,
-                        "minecraftVersionRange" to minecraftVersionRange,
-                        "modAuthors" to modAuthors,
-                        "modDescription" to modDescription,
-                        "modId" to modId,
-                        "modJavaVersion" to modJavaVersion,
-                        "modName" to modName,
-                        "modVersion" to version,
-                        "modLicense" to modLicense,
-                )
-        )
+    filesMatching("**/*.java") {
+        exclude()
     }
+
+    from("src/main/templates")
+    into("build/generated/sources/modMetadata")
 }
+sourceSets["main"].resources.srcDir(generateModMetadata)
+neoForge.ideSyncTask(generateModMetadata)
 
 java {
-    withJavadocJar()
+//    withJavadocJar()
     withSourcesJar()
-}
-
-tasks.withType<Jar> {
-    val now = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(Date())
-    manifest {
-        attributes(
-                mapOf(
-                        "Specification-Title" to modName,
-                        "Specification-Vendor" to modAuthors,
-                        "Specification-Version" to '1',
-                        "Implementation-Title" to modName,
-                        "Implementation-Version" to version,
-                        "Implementation-Vendor" to modAuthors,
-                        "Implementation-Timestamp" to now,
-                )
-        )
-    }
-    finalizedBy("reobfJar")
 }
 
 publishing {
     publications {
         register<MavenPublication>("mavenJava") {
-            artifactId = baseArchivesName
+            artifactId = "${property("mod_id")}"
             from(components["java"])
-            fg.component(this)
         }
     }
     repositories {

@@ -45,7 +45,7 @@ public class AspenForestBiomeType extends MeadowGroveBiomeType {
 
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_PEARLFLOWER, pearlflowerCount);
 
-        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_SMALL_ASPEN_TREE, smallTreeCount);
+        builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_THIN_ASPEN_TREE, smallTreeCount);
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_ASPEN_TREE, largeTreeCount);
 
         builder.addFeature(MeadowConfiguredFeatureRegistry.CONFIGURED_LARGE_ASPEN_PATCH, largePatchCount);
