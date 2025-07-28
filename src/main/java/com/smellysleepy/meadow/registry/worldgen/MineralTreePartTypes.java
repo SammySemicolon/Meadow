@@ -2,6 +2,7 @@ package com.smellysleepy.meadow.registry.worldgen;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePartType;
@@ -38,7 +39,7 @@ public class MineralTreePartTypes {
 
     }
 
-    public static<T extends MineralTreePart> MineralTreePartType<T> register(ResourceLocation id, Codec<T> codec) {
+    public static<T extends MineralTreePart> MineralTreePartType<T> register(ResourceLocation id, MapCodec<T> codec) {
         MineralTreePartType<T> type = new MineralTreePartType<>(id, codec);
         PART_TYPES.put(type.getId(), type);
         return type;

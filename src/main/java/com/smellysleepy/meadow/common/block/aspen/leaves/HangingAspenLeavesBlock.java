@@ -18,19 +18,19 @@ public class HangingAspenLeavesBlock extends HangingLeavesBlock {
     }
 
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        super.animateTick(pState, pLevel, pPos, pRandom);
-        if (pRandom.nextInt(10) == 0) {
-            BlockPos blockpos = pPos.below();
-            BlockState blockstate = pLevel.getBlockState(blockpos);
-            if (isFaceFull(blockstate.getCollisionShape(pLevel, blockpos), Direction.UP)) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        super.animateTick(state, level, pos, random);
+        if (random.nextInt(10) == 0) {
+            BlockPos blockpos = pos.below();
+            BlockState blockstate = level.getBlockState(blockpos);
+            if (isFaceFull(blockstate.getCollisionShape(level, blockpos), Direction.UP)) {
                 return;
             }
-            double posX = (double) pPos.getX() + pRandom.nextDouble();
-            double posY = (double) pPos.getY() - 0.05D;
-            double posZ = (double) pPos.getZ() + pRandom.nextDouble();
+            double posX = (double) pos.getX() + random.nextDouble();
+            double posY = (double) pos.getY() - 0.05D;
+            double posZ = (double) pos.getZ() + random.nextDouble();
 
-            MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ), MeadowParticleRegistry.ASPEN_LEAVES.get()).spawnParticles();
+            MeadowParticleEffects.fallingLeaves(level, new Vec3(posX, posY, posZ), MeadowParticleRegistry.ASPEN_LEAVES.get()).spawnParticles();
         }
     }
 }

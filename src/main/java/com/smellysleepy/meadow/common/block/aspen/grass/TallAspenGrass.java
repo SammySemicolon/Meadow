@@ -1,7 +1,7 @@
 package com.smellysleepy.meadow.common.block.aspen.grass;
 
 import com.smellysleepy.meadow.common.block.aspen.AspenGrassVariantHelper;
-import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import net.minecraft.core.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.state.*;
 import static com.smellysleepy.meadow.common.block.aspen.AspenGrassVariantHelper.VARIANT;
 
 public class TallAspenGrass extends DoublePlantBlock {
-    public TallAspenGrass(Properties pProperties) {
-        super(pProperties);
+    public TallAspenGrass(Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class TallAspenGrass extends DoublePlantBlock {
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(MeadowBlockTagRegistry.ASPEN_GRASS_CAN_PLACE_ON);
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.is(MeadowTags.BlockTags.ASPEN_GRASS_CAN_PLACE_ON);
     }
 }

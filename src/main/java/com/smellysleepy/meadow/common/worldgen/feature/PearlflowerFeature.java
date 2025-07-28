@@ -1,8 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature;
 
-import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,16 +25,16 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
         BlockStateProvider provider = null;
         boolean isWaterlogged = worldgenlevel.isWaterAt(blockpos);
 
-        if (isWaterlogged || below.is(MeadowBlockTagRegistry.MARINE_PEARLFLOWER_GENERATES_ON)) {
+        if (isWaterlogged || below.is(MeadowTags.BlockTags.MARINE_PEARLFLOWER_GENERATES_ON)) {
             provider = config.marine();
         }
-        else if (below.is(MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)) {
+        else if (below.is(MeadowTags.BlockTags.GRASSY_PEARLFLOWER_GENERATES_ON)) {
             provider = config.grassy();
         }
-        else if (below.is(MeadowBlockTagRegistry.ROCKY_PEARLFLOWER_GENERATES_ON)) {
+        else if (below.is(MeadowTags.BlockTags.ROCKY_PEARLFLOWER_GENERATES_ON)) {
             provider = config.rocky();
         }
-        else if (below.is(MeadowBlockTagRegistry.CALCIFIED_PEARLFLOWER_GENERATES_ON)) {
+        else if (below.is(MeadowTags.BlockTags.CALCIFIED_PEARLFLOWER_GENERATES_ON)) {
             provider = config.calcified();
         }
         if (provider == null) {
@@ -62,7 +61,7 @@ public class PearlflowerFeature extends Feature<PearlFlowerConfiguration> {
         }
     }
 
-    public static BlockState copyWaterloggedFrom(LevelReader pLevel, BlockPos pPos, BlockState pState) {
-        return pState.hasProperty(BlockStateProperties.WATERLOGGED) ? pState.setValue(BlockStateProperties.WATERLOGGED, pLevel.isWaterAt(pPos)) : pState;
+    public static BlockState copyWaterloggedFrom(LevelReader level, BlockPos pos, BlockState state) {
+        return state.hasProperty(BlockStateProperties.WATERLOGGED) ? state.setValue(BlockStateProperties.WATERLOGGED, level.isWaterAt(pos)) : state;
     }
 }

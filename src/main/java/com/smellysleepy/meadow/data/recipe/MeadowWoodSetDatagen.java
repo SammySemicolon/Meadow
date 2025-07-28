@@ -2,18 +2,16 @@ package com.smellysleepy.meadow.data.recipe;
 
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.data.item.*;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import com.smellysleepy.meadow.registry.common.block.*;
 import com.smellysleepy.meadow.registry.common.item.*;
-import com.smellysleepy.meadow.registry.common.tags.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.*;
-import net.minecraftforge.common.*;
-import net.minecraftforge.common.crafting.conditions.*;
-
-import java.util.function.*;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
 import static com.smellysleepy.meadow.data.recipe.MeadowCraftingRecipes.has;
 import static net.minecraft.data.recipes.ShapedRecipeBuilder.*;
@@ -35,7 +33,7 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
             MeadowItemRegistry.ASPEN_BUTTON.get(), MeadowItemRegistry.ASPEN_PRESSURE_PLATE.get(),
             MeadowItemRegistry.ASPEN_SIGN.get(), MeadowItemRegistry.ASPEN_SIGN.get(),
             MeadowItemRegistry.ASPEN_PEARLLAMP.get(),
-            MeadowItemTagRegistry.ASPEN_LOGS, MeadowItemTagRegistry.THIN_ASPEN_LOGS, MeadowItemTagRegistry.ASPEN_PLANKS, MeadowItemTagRegistry.ASPEN_STAIRS, MeadowItemTagRegistry.ASPEN_SLABS,
+            MeadowTags.ItemTags.ASPEN_LOGS, MeadowTags.ItemTags.THIN_ASPEN_LOGS, MeadowTags.ItemTags.ASPEN_PLANKS, MeadowTags.ItemTags.ASPEN_STAIRS, MeadowTags.ItemTags.ASPEN_SLABS,
             MeadowItemRegistry.ASPEN_BOAT.get()
     );
 
@@ -53,7 +51,7 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
             MeadowItemRegistry.CALCIFIED_BUTTON.get(), MeadowItemRegistry.CALCIFIED_PRESSURE_PLATE.get(),
             MeadowItemRegistry.CALCIFIED_SIGN.get(), MeadowItemRegistry.CALCIFIED_SIGN.get(),
             MeadowItemRegistry.CALCIFIED_PEARLLAMP.get(),
-            MeadowItemTagRegistry.CALCIFIED_LOGS, MeadowItemTagRegistry.THIN_CALCIFIED_LOGS, MeadowItemTagRegistry.CALCIFIED_PLANKS, MeadowItemTagRegistry.CALCIFIED_STAIRS, MeadowItemTagRegistry.CALCIFIED_SLABS,
+            MeadowTags.ItemTags.CALCIFIED_LOGS, MeadowTags.ItemTags.THIN_CALCIFIED_LOGS, MeadowTags.ItemTags.CALCIFIED_PLANKS, MeadowTags.ItemTags.CALCIFIED_STAIRS, MeadowTags.ItemTags.CALCIFIED_SLABS,
             MeadowItemRegistry.CALCIFIED_BOAT.get()
     );
 
@@ -62,9 +60,9 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
         addTags(provider, CALCIFIED);
     }
 
-    public static void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        buildRecipes(consumer, ASPEN);
-        buildRecipes(consumer, CALCIFIED);
+    public static void buildRecipes(RecipeOutput recipeOutput) {
+        buildRecipes(recipeOutput, ASPEN);
+        buildRecipes(recipeOutput, CALCIFIED);
     }
 
     protected static void addTags(MeadowItemTagDatagen provider, MeadowDatagenWoodSet woodSet) {
@@ -85,168 +83,168 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
         provider.safeCopy(MeadowBlockRegistry.BLOCKS, woodSet.stairsTag);
         provider.safeCopy(MeadowBlockRegistry.BLOCKS, woodSet.slabsTag);
     }
-    protected static void buildRecipes(Consumer<FinishedRecipe> consumer, MeadowDatagenWoodSet woodSet) {
-        shapelessPlanks(consumer, woodSet.planks, woodSet.logTag, 4);
-        shapelessPlanks(consumer, woodSet.planks, woodSet.thinLogTag, 1);
+    protected static void buildRecipes(RecipeOutput recipeOutput, MeadowDatagenWoodSet woodSet) {
+        shapelessPlanks(recipeOutput, woodSet.planks, woodSet.logTag, 4);
+        shapelessPlanks(recipeOutput, woodSet.planks, woodSet.thinLogTag, 1);
 
-        shapedSlab(consumer, woodSet.planksSlab, woodSet.planks);
-        shapedStairs(consumer, woodSet.planksStairs, woodSet.planks);
+        shapedSlab(recipeOutput, woodSet.planksSlab, woodSet.planks);
+        shapedStairs(recipeOutput, woodSet.planksStairs, woodSet.planks);
 
-        shapedHeavyPlanks(consumer, woodSet.heavyPlanks, woodSet.planksSlab);
+        shapedHeavyPlanks(recipeOutput, woodSet.heavyPlanks, woodSet.planksSlab);
 
-        shapedSlab(consumer, woodSet.heavyPlanksSlab, woodSet.heavyPlanks);
-        shapedStairs(consumer, woodSet.heavyPlanksStairs, woodSet.heavyPlanks);
+        shapedSlab(recipeOutput, woodSet.heavyPlanksSlab, woodSet.heavyPlanks);
+        shapedStairs(recipeOutput, woodSet.heavyPlanksStairs, woodSet.heavyPlanks);
 
-        shapelessWood(consumer, woodSet.wood, woodSet.log);
-        shapelessWood(consumer, woodSet.strippedWood, woodSet.strippedLog);
-        shapelessWood(consumer, woodSet.thinWood, woodSet.thinLog);
-        shapelessWood(consumer, woodSet.thinStrippedWood, woodSet.thinStrippedLog);
+        shapelessWood(recipeOutput, woodSet.wood, woodSet.log);
+        shapelessWood(recipeOutput, woodSet.strippedWood, woodSet.strippedLog);
+        shapelessWood(recipeOutput, woodSet.thinWood, woodSet.thinLog);
+        shapelessWood(recipeOutput, woodSet.thinStrippedWood, woodSet.thinStrippedLog);
 
-        shapelessThinLog(consumer, woodSet.thinLog, woodSet.log);
-        shapelessThinLog(consumer, woodSet.thinStrippedLog, woodSet.strippedLog);
-        shapelessThinLog(consumer, woodSet.thinWood, woodSet.wood);
-        shapelessThinLog(consumer, woodSet.thinStrippedWood, woodSet.strippedWood);
+        shapelessThinLog(recipeOutput, woodSet.thinLog, woodSet.log);
+        shapelessThinLog(recipeOutput, woodSet.thinStrippedLog, woodSet.strippedLog);
+        shapelessThinLog(recipeOutput, woodSet.thinWood, woodSet.wood);
+        shapelessThinLog(recipeOutput, woodSet.thinStrippedWood, woodSet.strippedWood);
 
-        shapelessButton(consumer, woodSet.button, woodSet.planksTag);
-        shapedDoor(consumer, woodSet.solidDoor, woodSet.planksTag);
-        shapedFence(consumer, woodSet.fence, woodSet.planksTag);
-        shapedFenceGate(consumer, woodSet.fenceGate, woodSet.planksTag);
-        shapedPressurePlate(consumer, woodSet.pressurePlate, woodSet.planksTag);
+        shapelessButton(recipeOutput, woodSet.button, woodSet.planksTag);
+        shapedDoor(recipeOutput, woodSet.solidDoor, woodSet.planksTag);
+        shapedFence(recipeOutput, woodSet.fence, woodSet.planksTag);
+        shapedFenceGate(recipeOutput, woodSet.fenceGate, woodSet.planksTag);
+        shapedPressurePlate(recipeOutput, woodSet.pressurePlate, woodSet.planksTag);
 
-        shapedTrapdoor(consumer, woodSet.solidTrapdoor, woodSet.planksTag);
+        shapedTrapdoor(recipeOutput, woodSet.solidTrapdoor, woodSet.planksTag);
 
-        shapedSign(consumer, woodSet.sign, woodSet.planksTag);
+        shapedSign(recipeOutput, woodSet.sign, woodSet.planksTag);
 
-        shapedPearllamp(consumer, woodSet.pearllamp, woodSet.logTag);
+        shapedPearllamp(recipeOutput, woodSet.pearllamp, woodSet.logTag);
 
-        trapdoorExchange(consumer, woodSet.solidDoor, woodSet.openDoor, woodSet.prefix + "_open_door_exchange");
-        trapdoorExchange(consumer, woodSet.openDoor, woodSet.solidDoor, woodSet.prefix + "_solid_door_exchange");
+        trapdoorExchange(recipeOutput, woodSet.solidDoor, woodSet.openDoor, woodSet.prefix + "_open_door_exchange");
+        trapdoorExchange(recipeOutput, woodSet.openDoor, woodSet.solidDoor, woodSet.prefix + "_solid_door_exchange");
 
-        trapdoorExchange(consumer, woodSet.solidTrapdoor, woodSet.openTrapdoor, woodSet.prefix + "_open_trapdoor_exchange");
-        trapdoorExchange(consumer, woodSet.openTrapdoor, woodSet.solidTrapdoor, woodSet.prefix + "_solid_trapdoor_exchange");
+        trapdoorExchange(recipeOutput, woodSet.solidTrapdoor, woodSet.openTrapdoor, woodSet.prefix + "_open_trapdoor_exchange");
+        trapdoorExchange(recipeOutput, woodSet.openTrapdoor, woodSet.solidTrapdoor, woodSet.prefix + "_solid_trapdoor_exchange");
 
-        shapedBoat(consumer, woodSet.boat, woodSet.planksTag);
+        shapedBoat(recipeOutput, woodSet.boat, woodSet.planksTag);
     }
 
-    private static void trapdoorExchange(Consumer<FinishedRecipe> recipeConsumer, ItemLike input, ItemLike output, String path) {
+    private static void trapdoorExchange(RecipeOutput recipeOutput, ItemLike input, ItemLike output, String path) {
         shapeless(RecipeCategory.BUILDING_BLOCKS, output)
                 .requires(input)
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer, MeadowMod.meadowModPath(path));
+                .save(recipeOutput, MeadowMod.meadowModPath(path));
     }
 
-    private static void shapedHeavyPlanks(Consumer<FinishedRecipe> recipeConsumer, ItemLike output, ItemLike input) {
+    private static void shapedHeavyPlanks(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
                 .define('#', input)
                 .pattern("##")
                 .pattern("##")
                 .group("planks")
                 .unlockedBy("has_log", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapelessPlanks(Consumer<FinishedRecipe> recipeConsumer, ItemLike planks, TagKey<Item> input, int outputCount) {
+    private static void shapelessPlanks(RecipeOutput recipeOutput, ItemLike planks, TagKey<Item> input, int outputCount) {
         var recipeName = BuiltInRegistries.ITEM.getKey(planks.asItem()).withSuffix("_from_" + input.location().getPath());
         shapeless(RecipeCategory.BUILDING_BLOCKS, planks, outputCount)
                 .requires(input)
                 .group("planks")
                 .unlockedBy("has_logs", has(input))
-                .save(recipeConsumer, recipeName);
+                .save(recipeOutput, recipeName);
     }
 
-    private static void shapelessWood(Consumer<FinishedRecipe> recipeConsumer, ItemLike stripped, ItemLike input) {
+    private static void shapelessWood(RecipeOutput recipeOutput, ItemLike stripped, ItemLike input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, stripped, 3)
                 .define('#', input)
                 .pattern("##")
                 .pattern("##")
                 .group("bark")
                 .unlockedBy("has_log", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapelessThinLog(Consumer<FinishedRecipe> recipeConsumer, ItemLike thin, ItemLike input) {
+    private static void shapelessThinLog(RecipeOutput recipeOutput, ItemLike thin, ItemLike input) {
         var recipeName = BuiltInRegistries.ITEM.getKey(thin.asItem()).withSuffix("_from_" + BuiltInRegistries.ITEM.getKey(input.asItem()).getPath());
         shaped(RecipeCategory.BUILDING_BLOCKS, thin, 8)
                 .define('#', input)
                 .pattern("#")
                 .pattern("#")
                 .unlockedBy("has_log", has(input))
-                .save(recipeConsumer, recipeName);
+                .save(recipeOutput, recipeName);
     }
 
-    private static void shapelessButton(Consumer<FinishedRecipe> recipeConsumer, ItemLike button, TagKey<Item> input) {
+    private static void shapelessButton(RecipeOutput recipeOutput, ItemLike button, TagKey<Item> input) {
         shapeless(RecipeCategory.REDSTONE, button)
                 .requires(input)
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedDoor(Consumer<FinishedRecipe> recipeConsumer, ItemLike door, TagKey<Item> input) {
+    private static void shapedDoor(RecipeOutput recipeOutput, ItemLike door, TagKey<Item> input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, door, 3)
                 .define('#', input)
                 .pattern("##")
                 .pattern("##")
                 .pattern("##")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedFence(Consumer<FinishedRecipe> recipeConsumer, ItemLike fence, TagKey<Item> input) {
+    private static void shapedFence(RecipeOutput recipeOutput, ItemLike fence, TagKey<Item> input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, fence, 3)
                 .define('#', Tags.Items.RODS_WOODEN)
                 .define('W', input)
                 .pattern("W#W")
                 .pattern("W#W")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedFenceGate(Consumer<FinishedRecipe> recipeConsumer, ItemLike fenceGate, TagKey<Item> input) {
+    private static void shapedFenceGate(RecipeOutput recipeOutput, ItemLike fenceGate, TagKey<Item> input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, fenceGate)
                 .define('#', Tags.Items.RODS_WOODEN)
                 .define('W', input)
                 .pattern("#W#")
                 .pattern("#W#")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedPressurePlate(Consumer<FinishedRecipe> recipeConsumer, ItemLike pressurePlate, TagKey<Item> input) {
+    private static void shapedPressurePlate(RecipeOutput recipeOutput, ItemLike pressurePlate, TagKey<Item> input) {
         shaped(RecipeCategory.REDSTONE, pressurePlate)
                 .define('#', input)
                 .pattern("##")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedSlab(Consumer<FinishedRecipe> recipeConsumer, ItemLike slab, ItemLike input) {
+    private static void shapedSlab(RecipeOutput recipeOutput, ItemLike slab, ItemLike input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6)
                 .define('#', input)
                 .pattern("###")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedStairs(Consumer<FinishedRecipe> recipeConsumer, ItemLike stairs, ItemLike input) {
+    private static void shapedStairs(RecipeOutput recipeOutput, ItemLike stairs, ItemLike input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
                 .define('#', input)
                 .pattern("#  ")
                 .pattern("## ")
                 .pattern("###")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedTrapdoor(Consumer<FinishedRecipe> recipeConsumer, ItemLike trapdoor, TagKey<Item> input) {
+    private static void shapedTrapdoor(RecipeOutput recipeOutput, ItemLike trapdoor, TagKey<Item> input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, trapdoor, 2)
                 .define('#', input)
                 .pattern("###")
                 .pattern("###")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedPearllamp(Consumer<FinishedRecipe> recipeConsumer, ItemLike stairs, TagKey<Item> input) {
+    private static void shapedPearllamp(RecipeOutput recipeOutput, ItemLike stairs, TagKey<Item> input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 1)
                 .define('X', input)
                 .define('Y', MeadowItemRegistry.PEARLLIGHT.get())
@@ -254,10 +252,10 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
                 .pattern("XYX")
                 .pattern(" X ")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedSign(Consumer<FinishedRecipe> recipeConsumer, ItemLike sign, TagKey<Item> input) {
+    private static void shapedSign(RecipeOutput recipeOutput, ItemLike sign, TagKey<Item> input) {
         shaped(RecipeCategory.BUILDING_BLOCKS, sign, 3)
                 .group("sign")
                 .define('#', input)
@@ -266,15 +264,15 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
                 .pattern("###")
                 .pattern(" X ")
                 .unlockedBy("has_input", has(input))
-                .save(recipeConsumer);
+                .save(recipeOutput);
     }
 
-    private static void shapedBoat(Consumer<FinishedRecipe> recipeConsumer, ItemLike boat, TagKey<Item> input) {
+    private static void shapedBoat(RecipeOutput recipeOutput, ItemLike boat, TagKey<Item> input) {
         shaped(RecipeCategory.TRANSPORTATION, boat)
                 .define('#', input)
                 .pattern("# #")
                 .pattern("###")
-                .unlockedBy("has_input", has(input)).save(recipeConsumer);
+                .unlockedBy("has_input", has(input)).save(recipeOutput);
     }
 
     public record MeadowDatagenWoodSet(

@@ -51,13 +51,13 @@ public class ThinNaturalAspenLogBlock extends ThinLogBlock implements Bonemealab
     }
 
     @Override
-    public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        pState.getValue(LEAVES).next().ifPresent(next -> pLevel.setBlock(pPos, pState.setValue(LEAVES, next), 3));
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        state.getValue(LEAVES).next().ifPresent(next -> level.setBlock(pos, state.setValue(LEAVES, next), 3));
     }
 
     @Override
@@ -83,25 +83,25 @@ public class ThinNaturalAspenLogBlock extends ThinLogBlock implements Bonemealab
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        super.createBlockStateDefinition(pBuilder);
-        pBuilder.add(LEAVES);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(LEAVES);
     }
 
     @Override
-    public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        if (pState.getValue(LEAVES).equals(MeadowLeavesType.TOP)) {
+    public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        if (state.getValue(LEAVES).equals(MeadowLeavesType.TOP)) {
             return Shapes.empty();
         }
-        return super.getOcclusionShape(pState, pLevel, pPos);
+        return super.getOcclusionShape(state, level, pos);
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        if (pState.getValue(LEAVES).equals(MeadowLeavesType.TOP)) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext pContext) {
+        if (state.getValue(LEAVES).equals(MeadowLeavesType.TOP)) {
             return Shapes.block();
         }
-        return super.getShape(pState, pLevel, pPos, pContext);
+        return super.getShape(state, level, pos, pContext);
     }
 
     public enum MeadowLeavesType implements StringRepresentable {

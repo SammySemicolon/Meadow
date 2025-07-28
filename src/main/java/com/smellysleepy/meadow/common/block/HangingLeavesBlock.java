@@ -26,30 +26,30 @@ public class HangingLeavesBlock extends LeavesBlock {
     }
 
     @Override
-    protected boolean decaying(BlockState pState) {
+    protected boolean decaying(BlockState state) {
         return false;
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+    public BlockState updateShape(BlockState state, Direction pFacing, BlockState pFacingState, LevelAccessor level, BlockPos pCurrentPos, BlockPos pFacingPos) {
         if (pFacing.equals(Direction.UP)) {
             if (pFacingState.hasProperty(DISTANCE)) {
                 int distance = Math.min(pFacingState.getValue(DISTANCE)+1, 7);
-                return super.updateShape(pState.setValue(DISTANCE, distance), pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+                return super.updateShape(state.setValue(DISTANCE, distance), pFacing, pFacingState, level, pCurrentPos, pFacingPos);
             }
         }
-        return !pState.canSurvive(pLevel, pCurrentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+        return !state.canSurvive(level, pCurrentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, pFacing, pFacingState, level, pCurrentPos, pFacingPos);
     }
 
     @Override
-    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
-        BlockPos above = pPos.above();
-        BlockState blockstate = pLevel.getBlockState(above);
-        return isFaceFull(blockstate.getCollisionShape(pLevel, above), Direction.DOWN);
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        BlockPos above = pos.above();
+        BlockState blockstate = level.getBlockState(above);
+        return isFaceFull(blockstate.getCollisionShape(level, above), Direction.DOWN);
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext pContext) {
         return SHAPE;
     }
 }

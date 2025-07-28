@@ -1,8 +1,8 @@
 package com.smellysleepy.meadow.common.block.aspen.grass;
 
 import com.smellysleepy.meadow.common.block.aspen.AspenGrassVariantHelper;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
-import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import static com.smellysleepy.meadow.common.block.aspen.AspenGrassVariantHelper.VARIANT;
 
 public class ShortAspenGrass extends TallGrassBlock {
-    public ShortAspenGrass(Properties pProperties) {
-        super(pProperties);
+    public ShortAspenGrass(Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -41,19 +41,19 @@ public class ShortAspenGrass extends TallGrassBlock {
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(MeadowBlockTagRegistry.ASPEN_GRASS_CAN_PLACE_ON);
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.is(MeadowTags.BlockTags.ASPEN_GRASS_CAN_PLACE_ON);
     }
 
     @Override
-    public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         var tallGrassState = MeadowBlockRegistry.MEDIUM_ASPEN_GRASS.get().defaultBlockState();
-        if (tallGrassState.canSurvive(pLevel, pPos)) {
-            pLevel.setBlock(pPos, copyWaterloggedFrom(pLevel, pPos, tallGrassState), 3);
+        if (tallGrassState.canSurvive(level, pos)) {
+            level.setBlock(pos, copyWaterloggedFrom(level, pos, tallGrassState), 3);
         }
     }
 
-    public static BlockState copyWaterloggedFrom(LevelReader pLevel, BlockPos pPos, BlockState pState) {
-        return pState.hasProperty(BlockStateProperties.WATERLOGGED) ? pState.setValue(BlockStateProperties.WATERLOGGED, pLevel.isWaterAt(pPos)) : pState;
+    public static BlockState copyWaterloggedFrom(LevelReader level, BlockPos pos, BlockState state) {
+        return state.hasProperty(BlockStateProperties.WATERLOGGED) ? state.setValue(BlockStateProperties.WATERLOGGED, level.isWaterAt(pos)) : state;
     }
 }

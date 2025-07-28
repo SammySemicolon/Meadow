@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
@@ -14,8 +15,8 @@ import java.util.List;
 
 public class LeafDiamondPart extends MineralTreePart {
 
-    public static final Codec<LeafDiamondPart> CODEC =
-            RecordCodecBuilder.create(inst -> inst.group(
+    public static final MapCodec<LeafDiamondPart> CODEC =
+            RecordCodecBuilder.mapCodec(inst -> inst.group(
                     Codec.list(Codec.INT).fieldOf("leafSizes").forGetter(obj -> obj.leafSizes))
                     .apply(inst, LeafDiamondPart::new)
             );

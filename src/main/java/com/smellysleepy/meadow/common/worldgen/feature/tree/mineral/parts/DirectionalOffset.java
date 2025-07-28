@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
@@ -12,7 +13,7 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 public class DirectionalOffset extends MineralTreePart {
 
-    public static final Codec<DirectionalOffset> CODEC = Codec.unit(new DirectionalOffset());
+    public static final MapCodec<DirectionalOffset> CODEC = MapCodec.unit(new DirectionalOffset());
 
     public DirectionalOffset() {
         super(MineralTreePartTypes.DIRECTIONAL_OFFSET);

@@ -17,26 +17,26 @@ public class CalcifiedBlock extends Block implements BonemealableBlock {
 
     private final ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature;
 
-    public CalcifiedBlock(Properties pProperties, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature) {
-        super(pProperties);
+    public CalcifiedBlock(Properties properties, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature) {
+        super(properties);
         this.bonemealFeature = bonemealFeature;
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        var above = pLevel.getBlockState(pPos.above());
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        var above = level.getBlockState(pos.above());
         return above.is(MeadowBlockRegistry.CALCIFIED_COVERING.get()) || above.isAir();
     }
 
     @Override
-    public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        pLevel.registryAccess().registry(Registries.CONFIGURED_FEATURE)
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        level.registryAccess().registry(Registries.CONFIGURED_FEATURE)
                 .flatMap((features) -> features.getHolder(bonemealFeature))
-                .ifPresent((holder) -> holder.value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, pPos.above()));
+                .ifPresent((holder) -> holder.value().place(level, level.getChunkSource().getGenerator(), random, pos.above()));
     }
 }

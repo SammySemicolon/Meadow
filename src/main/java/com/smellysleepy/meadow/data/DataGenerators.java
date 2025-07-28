@@ -5,9 +5,9 @@ import com.smellysleepy.meadow.data.block.*;
 import com.smellysleepy.meadow.data.item.*;
 import com.smellysleepy.meadow.data.recipe.*;
 import com.smellysleepy.meadow.data.worldgen.*;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @EventBusSubscriber(modid = MeadowMod.MEADOW, bus = EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
@@ -35,7 +35,7 @@ public class DataGenerators {
 
         generator.addProvider(event.includeClient(), new MeadowLangDatagen(output));
 
-        generator.addProvider(event.includeServer(), new MeadowRecipes(output));
+        generator.addProvider(event.includeServer(), new MeadowRecipes(output, provider));
 
         generator.addProvider(event.includeClient(), new MeadowBiomeTagDatagen(output, provider, helper));
         generator.addProvider(event.includeServer(), new MeadowBlockLootTableDatagen(output));

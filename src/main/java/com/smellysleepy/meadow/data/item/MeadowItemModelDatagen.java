@@ -6,9 +6,9 @@ import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.data.*;
 import net.minecraft.world.item.*;
-import net.minecraftforge.common.data.*;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import team.lodestar.lodestone.systems.datagen.*;
-import team.lodestar.lodestone.systems.datagen.itemsmith.*;
+import team.lodestar.lodestone.systems.datagen.itemsmith.ItemModelSmithData;
 import team.lodestar.lodestone.systems.datagen.providers.*;
 
 import java.util.*;
@@ -22,7 +22,7 @@ public class MeadowItemModelDatagen extends LodestoneItemModelProvider {
     @Override
     protected void registerModels() {
         Set<Supplier<? extends Item>> items = new HashSet<>(MeadowItemRegistry.ITEMS.getEntries());
-        AbstractItemModelSmith.ItemModelSmithData data = new AbstractItemModelSmith.ItemModelSmithData(this, items::remove);
+        ItemModelSmithData data = new ItemModelSmithData(this, items::remove);
 
         items.removeIf(i -> i.get() instanceof BlockItem);
 

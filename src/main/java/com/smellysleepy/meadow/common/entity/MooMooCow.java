@@ -4,7 +4,6 @@ import com.google.common.collect.*;
 import com.smellysleepy.meadow.common.entity.goal.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.item.*;
-import com.smellysleepy.meadow.registry.common.tags.*;
 import net.minecraft.core.*;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.*;
@@ -41,8 +40,8 @@ public class MooMooCow extends Cow implements IShearable {
 
     public EatPearlFlowerGoal eatGoal;
 
-    public MooMooCow(EntityType<? extends Cow> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
+    public MooMooCow(EntityType<? extends Cow> pEntityType, Level level) {
+        super(pEntityType, level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -52,9 +51,9 @@ public class MooMooCow extends Cow implements IShearable {
                 .add(Attributes.ARMOR, 4.0);
     }
 
-    public static boolean checkMooMooSpawnRules(EntityType<? extends Animal> pAnimal, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {
-        boolean brightEnoughToSpawn = isBrightEnoughToSpawn(pLevel, pPos);
-        boolean b = pLevel.getBlockState(pPos.below()).is(MeadowBlockTagRegistry.MOOMOO_CAN_SPAWN_ON);
+    public static boolean checkMooMooSpawnRules(EntityType<? extends Animal> pAnimal, LevelAccessor level, MobSpawnType pSpawnType, BlockPos pos, RandomSource random) {
+        boolean brightEnoughToSpawn = isBrightEnoughToSpawn(level, pos);
+        boolean b = level.getBlockState(pos.below()).is(MeadowTags.BlockTags.MOOMOO_CAN_SPAWN_ON);
         return b && brightEnoughToSpawn;
     }
 
@@ -65,7 +64,7 @@ public class MooMooCow extends Cow implements IShearable {
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.WHEAT), false));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.25D, Ingredient.of(MeadowItemTagRegistry.MINERAL_FRUIT), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.25D, Ingredient.of(MeadowTags.ItemTags.MINERAL_FRUITS), false));
         this.goalSelector.addGoal(5, new ThoroughlyExaminePlayerGoal(this, Player.class, 3.0F, 0.06f));
         this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(7, eatGoal);
@@ -109,8 +108,8 @@ public class MooMooCow extends Cow implements IShearable {
     }
 
     @Override
-    public Cow getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return MeadowEntityRegistry.MOO_MOO.get().create(pLevel);
+    public Cow getBreedOffspring(ServerLevel level, AgeableMob pOtherParent) {
+        return MeadowEntityRegistry.MOO_MOO.get().create(level);
     }
 
     @Override
@@ -120,12 +119,12 @@ public class MooMooCow extends Cow implements IShearable {
     }
 
     @Override
-    public boolean isShearable(@NotNull ItemStack item, Level level, BlockPos pos) {
+    public boolean isShearable(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
         return isExtraFluffy();
     }
 
     @Override
-    public @NotNull List<ItemStack> onSheared(@Nullable Player player, @NotNull ItemStack item, Level level, BlockPos pos, int fortune) {
+    public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
         setIsExtraFluffy(false);
         level.playSound(null, this, SoundEvents.SHEEP_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
         this.gameEvent(GameEvent.SHEAR, player);
@@ -160,9 +159,9 @@ public class MooMooCow extends Cow implements IShearable {
         }
     }
 
-    public boolean pathfindDirectlyTowards(BlockPos pPos) {
+    public boolean pathfindDirectlyTowards(BlockPos pos) {
         navigation.setMaxVisitedNodesMultiplier(10.0F);
-        navigation.moveTo(pPos.getX(), pPos.getY(), pPos.getZ(), 1.0D);
+        navigation.moveTo(pos.getX(), pos.getY(), pos.getZ(), 1.0D);
         return navigation.getPath() != null && navigation.getPath().canReach();
     }
 
@@ -226,7 +225,7 @@ public class MooMooCow extends Cow implements IShearable {
     
     public BlockPos findPearlFlower(Level level, int range) {
         if (lastKnownPearlflowerPosition != null) {
-            if (level.getBlockState(lastKnownPearlflowerPosition).is(MeadowBlockTagRegistry.MOOMOO_EDIBLE)) {
+            if (level.getBlockState(lastKnownPearlflowerPosition).is(MeadowTags.BlockTags.MOOMOO_EDIBLE)) {
                 return lastKnownPearlflowerPosition;
             }
             lastKnownPearlflowerPosition = null;
@@ -259,7 +258,7 @@ public class MooMooCow extends Cow implements IShearable {
                             if (above.canBeReplaced()) {
                                 break;
                             }
-                            if (above.is(MeadowBlockTagRegistry.MOOMOO_EDIBLE)) {
+                            if (above.is(MeadowTags.BlockTags.MOOMOO_EDIBLE)) {
                                 break;
                             }
                             if (!state.canBeReplaced()) {
@@ -271,7 +270,7 @@ public class MooMooCow extends Cow implements IShearable {
                         if (!state.canBeReplaced()) {
                             set1.add(mutable.immutable());
                             var above = level.getBlockState(mutable.move(Direction.UP));
-                            if (above.is(MeadowBlockTagRegistry.MOOMOO_EDIBLE)) {
+                            if (above.is(MeadowTags.BlockTags.MOOMOO_EDIBLE)) {
                                 lastKnownPearlflowerPosition = mutable.immutable();
                                 return lastKnownPearlflowerPosition;
                             }

@@ -26,31 +26,31 @@ public class MineralLeavesBlock extends LeavesBlock implements BonemealableBlock
     private final Supplier<LodestoneWorldParticleType> particleType;
     public final Color color;
 
-    public MineralLeavesBlock(Properties pProperties, Supplier<LodestoneWorldParticleType> particleType, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature, Color color) {
-        super(pProperties);
+    public MineralLeavesBlock(Properties properties, Supplier<LodestoneWorldParticleType> particleType, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature, Color color) {
+        super(properties);
         this.particleType = particleType;
         this.bonemealFeature = bonemealFeature;
         this.color = color;
     }
 
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        super.animateTick(pState, pLevel, pPos, pRandom);
-        if (pRandom.nextInt(6) == 0) {
-            double posX = (double) pPos.getX() + 0.1f + pRandom.nextDouble() * 0.8f;
-            double posY = (double) pPos.getY() + 0.1f + pRandom.nextDouble() * 0.8f;
-            double posZ = (double) pPos.getZ() + 0.1f + pRandom.nextDouble() * 0.8f;
-            var dust = StrangeFloraParticleEffects.mineralFloraShine(pLevel, new Vec3(posX, posY, posZ));
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        super.animateTick(state, level, pos, random);
+        if (random.nextInt(6) == 0) {
+            double posX = (double) pos.getX() + 0.1f + random.nextDouble() * 0.8f;
+            double posY = (double) pos.getY() + 0.1f + random.nextDouble() * 0.8f;
+            double posZ = (double) pos.getZ() + 0.1f + random.nextDouble() * 0.8f;
+            var dust = StrangeFloraParticleEffects.mineralFloraShine(level, new Vec3(posX, posY, posZ));
             dust.spawnParticles();
         }
-        if (pRandom.nextInt(10) == 0) {
-            BlockPos blockpos = pPos.below();
-            BlockState blockstate = pLevel.getBlockState(blockpos);
-            if (!isFaceFull(blockstate.getCollisionShape(pLevel, blockpos), Direction.UP)) {
-                double posX = (double) pPos.getX() + pRandom.nextDouble();
-                double posY = (double) pPos.getY() - 0.05D;
-                double posZ = (double) pPos.getZ() + pRandom.nextDouble();
-                MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ), particleType.get()).spawnParticles();
+        if (random.nextInt(10) == 0) {
+            BlockPos blockpos = pos.below();
+            BlockState blockstate = level.getBlockState(blockpos);
+            if (!isFaceFull(blockstate.getCollisionShape(level, blockpos), Direction.UP)) {
+                double posX = (double) pos.getX() + random.nextDouble();
+                double posY = (double) pos.getY() - 0.05D;
+                double posZ = (double) pos.getZ() + random.nextDouble();
+                MeadowParticleEffects.fallingLeaves(level, new Vec3(posX, posY, posZ), particleType.get()).spawnParticles();
 
             }
         }
@@ -62,14 +62,14 @@ public class MineralLeavesBlock extends LeavesBlock implements BonemealableBlock
     }
 
     @Override
-    public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        var configuredFeatures = pLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        var configuredFeatures = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
         var holder = configuredFeatures.getHolder(bonemealFeature);
-        holder.ifPresent(feature -> feature.value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, pPos.below()));
+        holder.ifPresent(feature -> feature.value().place(level, level.getChunkSource().getGenerator(), random, pos.below()));
     }
 }

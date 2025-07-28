@@ -3,11 +3,9 @@ package com.smellysleepy.meadow.registry.worldgen;
 import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
 import com.smellysleepy.meadow.registry.common.*;
-import com.smellysleepy.meadow.registry.common.tags.MeadowBiomeTagRegistry;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.WeightedRandomList;
@@ -26,7 +24,7 @@ public class MeadowStructures {
     
     public static final ResourceKey<Structure> MEADOW_GROVE = register("meadow_grove", (structureFactoryBootstrapContext) ->
             new MeadowGroveStructure(
-                    structure(structureFactoryBootstrapContext.lookup(Registries.BIOME).getOrThrow(MeadowBiomeTagRegistry.HAS_MEADOW_GROVES),
+                    structure(structureFactoryBootstrapContext.lookup(Registries.BIOME).getOrThrow(MeadowTags.BiomeTags.HAS_MEADOW_GROVES),
                             Map.of(
                                     MobCategory.CREATURE,
                                     new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create(

@@ -4,7 +4,7 @@ import net.minecraft.world.level.block.Block;
 
 public class PearlLightBlock extends Block {
 
-    public PearlLightBlock(Properties pProperties) {
-        super(pProperties);
+    public PearlLightBlock(Properties properties) {
+        super(properties);
     }
 }

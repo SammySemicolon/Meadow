@@ -1,6 +1,6 @@
 package com.smellysleepy.meadow.common.block.mineral.plant;
 
-import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import net.minecraft.core.*;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.*;
@@ -15,19 +15,19 @@ public class MineralFloraPlant extends TallGrassBlock {
 
     public final TagKey<Block> oreTag;
 
-    public MineralFloraPlant(Properties pProperties, TagKey<Block> oreTag) {
-        super(pProperties);
+    public MineralFloraPlant(Properties properties, TagKey<Block> oreTag) {
+        super(properties);
         this.oreTag = oreTag;
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(MeadowBlockTagRegistry.MINERAL_FLORA_CAN_PLACE_ON) || pState.is(oreTag);
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.is(MeadowTags.BlockTags.MINERAL_FLORA_CAN_PLACE_ON) || state.is(oreTag);
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        Vec3 vec3 = pState.getOffset(pLevel, pPos);
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext pContext) {
+        Vec3 vec3 = state.getOffset(level, pos);
         return SHAPE.move(vec3.x, vec3.y, vec3.z);
     }
 }

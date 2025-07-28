@@ -15,26 +15,26 @@ public class MineralGrassBlock extends SpreadingSnowyDirtBlock implements Boneme
 
     private final ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature;
 
-    public MineralGrassBlock(Properties pProperties, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature) {
-        super(pProperties);
+    public MineralGrassBlock(Properties properties, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature) {
+        super(properties);
         this.bonemealFeature = bonemealFeature;
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        return pLevel.getBlockState(pPos.above()).isAir();
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return level.getBlockState(pos.above()).isAir();
     }
 
     @Override
-    public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        BlockPos blockpos = pPos.above();
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        BlockPos blockpos = pos.above();
         BlockState blockstate = Blocks.GRASS.defaultBlockState();
-        var configuredFeatures = pLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
+        var configuredFeatures = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
         var holder = configuredFeatures.getHolder(bonemealFeature);
 
         label49:
@@ -42,20 +42,20 @@ public class MineralGrassBlock extends SpreadingSnowyDirtBlock implements Boneme
             BlockPos offset = blockpos;
 
             for (int j = 0; j < i / 16; ++j) {
-                offset = offset.offset(pRandom.nextInt(3) - 1, (pRandom.nextInt(3) - 1) * pRandom.nextInt(3) / 2, pRandom.nextInt(3) - 1);
-                if (!pLevel.getBlockState(offset.below()).is(this) || pLevel.getBlockState(offset).isCollisionShapeFullBlock(pLevel, offset)) {
+                offset = offset.offset(random.nextInt(3) - 1, (random.nextInt(3) - 1) * random.nextInt(3) / 2, random.nextInt(3) - 1);
+                if (!level.getBlockState(offset.below()).is(this) || level.getBlockState(offset).isCollisionShapeFullBlock(level, offset)) {
                     continue label49;
                 }
             }
 
-            BlockState offsetState = pLevel.getBlockState(offset);
-            if (offsetState.is(blockstate.getBlock()) && pRandom.nextInt(10) == 0) {
-                ((BonemealableBlock) blockstate.getBlock()).performBonemeal(pLevel, pRandom, offset, offsetState);
+            BlockState offsetState = level.getBlockState(offset);
+            if (offsetState.is(blockstate.getBlock()) && random.nextInt(10) == 0) {
+                ((BonemealableBlock) blockstate.getBlock()).performBonemeal(level, random, offset, offsetState);
             }
 
             if (offsetState.isAir()) {
                 if (holder.isPresent()) {
-                    holder.get().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, offset);
+                    holder.get().value().place(level, level.getChunkSource().getGenerator(), random, offset);
                 }
             }
         }

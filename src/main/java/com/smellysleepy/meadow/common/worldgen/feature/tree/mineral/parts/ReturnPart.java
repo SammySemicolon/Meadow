@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
@@ -11,7 +12,7 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 public class ReturnPart extends MineralTreePart {
 
-    public static final Codec<ReturnPart> CODEC = Codec.unit(new ReturnPart());
+    public static final MapCodec<ReturnPart> CODEC = MapCodec.unit(new ReturnPart());
 
     public ReturnPart() {
         super(MineralTreePartTypes.RETURN);

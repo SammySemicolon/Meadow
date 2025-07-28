@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
@@ -15,8 +16,8 @@ import java.util.List;
 
 public class ThickStumpPart extends MineralTreePart {
 
-    public static final Codec<ThickStumpPart> CODEC =
-            RecordCodecBuilder.create(inst -> inst.group(
+    public static final MapCodec<ThickStumpPart> CODEC =
+            RecordCodecBuilder.mapCodec(inst -> inst.group(
                             Codec.list(Codec.INT).fieldOf("sizes").forGetter(obj -> obj.sizes))
                     .apply(inst, ThickStumpPart::new)
             );

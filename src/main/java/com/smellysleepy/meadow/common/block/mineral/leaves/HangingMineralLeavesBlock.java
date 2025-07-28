@@ -27,25 +27,25 @@ public class HangingMineralLeavesBlock extends HangingLeavesBlock {
     private final Supplier<LodestoneWorldParticleType> particleType;
     public final Color color;
 
-    public HangingMineralLeavesBlock(Properties pProperties, Supplier<LodestoneWorldParticleType> particleType, Color color) {
-        super(pProperties);
+    public HangingMineralLeavesBlock(Properties properties, Supplier<LodestoneWorldParticleType> particleType, Color color) {
+        super(properties);
         this.particleType = particleType;
         this.color = color;
     }
 
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        super.animateTick(pState, pLevel, pPos, pRandom);
-        if (pRandom.nextInt(10) == 0) {
-            BlockPos below = pPos.below();
-            BlockState blockstate = pLevel.getBlockState(below);
-            if (isFaceFull(blockstate.getCollisionShape(pLevel, below), Direction.UP)) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        super.animateTick(state, level, pos, random);
+        if (random.nextInt(10) == 0) {
+            BlockPos below = pos.below();
+            BlockState blockstate = level.getBlockState(below);
+            if (isFaceFull(blockstate.getCollisionShape(level, below), Direction.UP)) {
                 return;
             }
-            double posX = (double) pPos.getX() + pRandom.nextDouble();
-            double posY = (double) pPos.getY() - 0.05D;
-            double posZ = (double) pPos.getZ() + pRandom.nextDouble();
-            MeadowParticleEffects.fallingLeaves(pLevel, new Vec3(posX, posY, posZ), particleType.get()).spawnParticles();
+            double posX = (double) pos.getX() + random.nextDouble();
+            double posY = (double) pos.getY() - 0.05D;
+            double posZ = (double) pos.getZ() + random.nextDouble();
+            MeadowParticleEffects.fallingLeaves(level, new Vec3(posX, posY, posZ), particleType.get()).spawnParticles();
         }
     }
 }

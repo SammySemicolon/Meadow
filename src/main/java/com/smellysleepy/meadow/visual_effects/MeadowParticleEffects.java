@@ -26,6 +26,7 @@ public class MeadowParticleEffects {
     public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos, LodestoneWorldParticleType particleType) {
         return fallingLeaves(level, pos, new WorldParticleOptions(particleType).setBehavior(SparkParticleBehavior.sparkBehavior()));
     }
+
     public static ParticleEffectSpawner fallingLeaves(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 
@@ -69,9 +70,11 @@ public class MeadowParticleEffects {
 
         return new ParticleEffectSpawner(level, pos, worldParticleBuilder);
     }
+
     public static ParticleEffectSpawner pearlflowerShine(Level level, Vec3 pos, LodestoneWorldParticleType particleType) {
         return pearlflowerShine(level, pos, new WorldParticleOptions(particleType));
     }
+
     public static ParticleEffectSpawner pearlflowerShine(Level level, Vec3 pos, WorldParticleOptions options) {
         var rand = level.getRandom();
 
@@ -79,18 +82,17 @@ public class MeadowParticleEffects {
         int lifetime = RandomHelper.randomBetween(rand, 150, 200);
 
         var scaleData = GenericParticleData.create(scale, scale * 0.75f).build();
-        var transparencyData = GenericParticleData.create(0f, 1f, 0.1f).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
-        var spinData = SpinParticleData.createRandomDirection(rand, 0f, 0.1f, 0f).randomSpinOffset(rand).setEasing(Easing.EXPO_OUT, Easing.SINE_IN).build();
+        var transparencyData = GenericParticleData.create(0f, 1f, 0.2f).setEasing(Easing.EXPO_OUT, Easing.EXPO_IN).build();
 
         var colorData = ColorParticleData.create(new Color(233, 195, 41), new Color(195, 118, 85)).build();
         var worldParticleBuilder = WorldParticleBuilder.create(options)
                 .setSpritePicker(SimpleParticleOptions.ParticleSpritePicker.RANDOM_SPRITE)
-                .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)
+                .setRandomMotion(0.002f, 0.005f)
                 .setTransparencyData(transparencyData)
                 .setScaleData(scaleData)
                 .setColorData(colorData)
-                .setSpinData(spinData)
-                .setRandomMotion(0.002f, 0.005f)
+                .setFullBrightLighting()
                 .setLifetime(lifetime);
 
         return new ParticleEffectSpawner(level, pos, worldParticleBuilder);

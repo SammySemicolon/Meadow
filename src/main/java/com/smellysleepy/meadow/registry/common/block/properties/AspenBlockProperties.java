@@ -2,14 +2,14 @@ package com.smellysleepy.meadow.registry.common.block.properties;
 
 import com.smellysleepy.meadow.common.block.aspen.ThinNaturalAspenLogBlock;
 import com.smellysleepy.meadow.registry.common.MeadowEntityRegistry;
-import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
-import net.minecraft.tags.BlockTags;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.neoforged.neoforge.common.Tags;
 import team.lodestar.lodestone.systems.block.LodestoneBlockProperties;
 
 public class AspenBlockProperties {
@@ -17,17 +17,17 @@ public class AspenBlockProperties {
         return new LodestoneBlockProperties()
                 .strength(1.75F, 4.0F)
                 .instrument(NoteBlockInstrument.BASS)
-                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .addTag(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE)
                 .sound(SoundType.CHERRY_WOOD)
                 .mapColor(MapColor.WOOD);
     }
 
     public static LodestoneBlockProperties ASPEN_LOG_PROPERTIES() {
-        return ASPEN_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
+        return ASPEN_WOOD_PROPERTIES().addTag(net.minecraft.tags.BlockTags.LOGS);
     }
 
     public static LodestoneBlockProperties STRIPPED_ASPEN_LOG_PROPERTIES() {
-        return ASPEN_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+        return ASPEN_LOG_PROPERTIES().addTag(Tags.Blocks.STRIPPED_LOGS);
     }
 
     public static LodestoneBlockProperties THIN_ASPEN_WOOD_PROPERTIES() {
@@ -35,18 +35,18 @@ public class AspenBlockProperties {
                 .strength(1.25F, 4.0F)
                 .setCutoutRenderType()
                 .instrument(NoteBlockInstrument.BASS)
-                .addTag(BlockTags.MINEABLE_WITH_AXE)
+                .addTag(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE)
                 .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.CHERRY_WOOD)
                 .mapColor(MapColor.WOOD);
     }
 
     public static LodestoneBlockProperties THIN_ASPEN_LOG_PROPERTIES() {
-        return THIN_ASPEN_WOOD_PROPERTIES().addTag(BlockTags.LOGS);
+        return THIN_ASPEN_WOOD_PROPERTIES().addTag(net.minecraft.tags.BlockTags.LOGS);
     }
 
     public static LodestoneBlockProperties THIN_STRIPPED_ASPEN_LOG_PROPERTIES() {
-        return THIN_ASPEN_LOG_PROPERTIES().addTag(MeadowBlockTagRegistry.STRIPPED_LOGS);
+        return THIN_ASPEN_LOG_PROPERTIES().addTag(Tags.Blocks.STRIPPED_LOGS);
     }
 
     public static LodestoneBlockProperties NATURAL_THIN_ASPEN_LOG_PROPERTIES() {
@@ -64,8 +64,8 @@ public class AspenBlockProperties {
                 .noOcclusion()
                 .needsHoe()
                 .sound(SoundType.CHERRY_LEAVES)
-                .addTags(BlockTags.MINEABLE_WITH_HOE)
-                .addTag(BlockTags.LEAVES);
+                .addTags(net.minecraft.tags.BlockTags.MINEABLE_WITH_HOE)
+                .addTag(net.minecraft.tags.BlockTags.LEAVES);
     }
 
     public static LodestoneBlockProperties HANGING_ASPEN_LEAVES_PROPERTIES() {
@@ -74,11 +74,11 @@ public class AspenBlockProperties {
 
     public static LodestoneBlockProperties ASPEN_GRASS_BLOCK_PROPERTIES() {
         return new LodestoneBlockProperties()
-                .addTags(MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE, MeadowBlockTagRegistry.MOOMOO_CAN_SPAWN_ON)
-                .addTags(MeadowBlockTagRegistry.ASPEN_GRASS_CAN_PLACE_ON, MeadowBlockTagRegistry.GRASSY_PEARLFLOWER_GENERATES_ON)
-                .addTags(BlockTags.DIRT)
-                .addTags(BlockTags.MINEABLE_WITH_SHOVEL)
-                .isValidSpawn(((pState, pLevel, pPos, pValue) -> pValue.equals(MeadowEntityRegistry.MOO_MOO.get())))
+                .addTags(MeadowTags.BlockTags.CALCIFICATION_REPLACEABLE, MeadowTags.BlockTags.MOOMOO_CAN_SPAWN_ON)
+                .addTags(MeadowTags.BlockTags.ASPEN_GRASS_CAN_PLACE_ON, MeadowTags.BlockTags.GRASSY_PEARLFLOWER_GENERATES_ON)
+                .addTags(net.minecraft.tags.BlockTags.DIRT)
+                .addTags(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL)
+                .isValidSpawn(((state, level, pos, pValue) -> pValue.equals(MeadowEntityRegistry.MOO_MOO.get())))
                 .isViewBlocking(Blocks::never)
                 .isSuffocating(Blocks::never)
                 .mapColor(MapColor.GRASS)
@@ -110,6 +110,6 @@ public class AspenBlockProperties {
                 .offsetType(BlockBehaviour.OffsetType.XZ)
                 .mapColor(MapColor.GRASS)
                 .sound(SoundType.GRASS)
-                .addTag(BlockTags.SAPLINGS);
+                .addTag(net.minecraft.tags.BlockTags.SAPLINGS);
     }
 }

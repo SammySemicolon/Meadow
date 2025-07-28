@@ -1,9 +1,8 @@
 package com.smellysleepy.meadow.common.worldgen;
 
 import com.google.common.collect.*;
-import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import net.minecraft.core.*;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
@@ -79,15 +78,15 @@ public class WorldgenHelper {
         return positions;
     }
 
-    public static void growPointedCalcification(LevelAccessor pLevel, Block block, BlockPos pPos, Direction pDirection, int pHeight, boolean pMergeTip) {
-        if (isCalcifiedBase(pLevel.getBlockState(pPos.relative(pDirection.getOpposite())))) {
-            BlockPos.MutableBlockPos blockpos$mutableblockpos = pPos.mutable();
+    public static void growPointedCalcification(LevelAccessor level, Block block, BlockPos pos, Direction pDirection, int pHeight, boolean pMergeTip) {
+        if (isCalcifiedBase(level.getBlockState(pos.relative(pDirection.getOpposite())))) {
+            BlockPos.MutableBlockPos blockpos$mutableblockpos = pos.mutable();
             buildBaseToTipColumn(block, pDirection, pHeight, pMergeTip, (state) -> {
                 if (state.is(block)) {
-                    state = state.setValue(PointedDripstoneBlock.WATERLOGGED, pLevel.isWaterAt(blockpos$mutableblockpos));
+                    state = state.setValue(PointedDripstoneBlock.WATERLOGGED, level.isWaterAt(blockpos$mutableblockpos));
                 }
 
-                pLevel.setBlock(blockpos$mutableblockpos, state, 2);
+                level.setBlock(blockpos$mutableblockpos, state, 2);
                 blockpos$mutableblockpos.move(pDirection);
             });
         }
@@ -115,11 +114,11 @@ public class WorldgenHelper {
         return block.defaultBlockState().setValue(PointedDripstoneBlock.TIP_DIRECTION, pDirection).setValue(PointedDripstoneBlock.THICKNESS, pDripstoneThickness);
     }
 
-    private static boolean isCalcifiedBase(BlockState pState) {
-        return pState.is(MeadowBlockTagRegistry.CALCIFICATION) || pState.is(BlockTags.MOSS_REPLACEABLE);
+    private static boolean isCalcifiedBase(BlockState state) {
+        return state.is(MeadowTags.BlockTags.CALCIFICATION) || state.is(net.minecraft.tags.BlockTags.MOSS_REPLACEABLE);
     }
 
-    public static void updateLeaves(LevelAccessor pLevel, Set<BlockPos> logPositions) {
+    public static void updateLeaves(LevelAccessor level, Set<BlockPos> logPositions) {
         List<Set<BlockPos>> list = Lists.newArrayList();
         for (int j = 0; j < 6; ++j) {
             list.add(Sets.newHashSet());
@@ -131,10 +130,10 @@ public class WorldgenHelper {
             for (Direction direction : Direction.values()) {
                 mutable.setWithOffset(pos, direction);
                 if (!logPositions.contains(mutable)) {
-                    BlockState blockstate = pLevel.getBlockState(mutable);
+                    BlockState blockstate = level.getBlockState(mutable);
                     if (blockstate.hasProperty(LeavesBlock.DISTANCE)) {
                         list.get(0).add(mutable.immutable());
-                        pLevel.setBlock(mutable, blockstate.setValue(LeavesBlock.DISTANCE, 1), 19);
+                        level.setBlock(mutable, blockstate.setValue(LeavesBlock.DISTANCE, 1), 19);
                     }
                 }
             }
@@ -148,12 +147,12 @@ public class WorldgenHelper {
                 for (Direction direction1 : Direction.values()) {
                     mutable.setWithOffset(pos, direction1);
                     if (!set.contains(mutable) && !set1.contains(mutable)) {
-                        BlockState blockstate1 = pLevel.getBlockState(mutable);
+                        BlockState blockstate1 = level.getBlockState(mutable);
                         if (blockstate1.hasProperty(LeavesBlock.DISTANCE)) {
                             int k = blockstate1.getValue(LeavesBlock.DISTANCE);
                             if (k > l + 1) {
                                 BlockState blockstate2 = blockstate1.setValue(LeavesBlock.DISTANCE, l + 1);
-                                pLevel.setBlock(mutable, blockstate2, 19);
+                                level.setBlock(mutable, blockstate2, 19);
                                 set1.add(mutable.immutable());
                             }
                         }

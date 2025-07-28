@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
@@ -12,8 +13,8 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 public class OffsetPart extends MineralTreePart {
 
-    public static final Codec<OffsetPart> CODEC =
-            RecordCodecBuilder.create(inst -> inst.group(
+    public static final MapCodec<OffsetPart> CODEC =
+            RecordCodecBuilder.mapCodec(inst -> inst.group(
                             Codec.INT.fieldOf("xOffset").forGetter(obj -> obj.xOffset),
                             Codec.INT.fieldOf("yOffset").forGetter(obj -> obj.yOffset),
                             Codec.INT.fieldOf("zOffset").forGetter(obj -> obj.zOffset)

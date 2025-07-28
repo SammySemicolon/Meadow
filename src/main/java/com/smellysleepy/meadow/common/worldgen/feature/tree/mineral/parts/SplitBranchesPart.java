@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeature;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
@@ -20,8 +21,8 @@ import static team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller.crea
 
 public class SplitBranchesPart extends MineralTreePart {
 
-    public static final Codec<SplitBranchesPart> CODEC =
-            RecordCodecBuilder.create(inst -> inst.group(
+    public static final MapCodec<SplitBranchesPart> CODEC =
+            RecordCodecBuilder.mapCodec(inst -> inst.group(
                             Codec.intRange(0, 8).fieldOf("minHeight").forGetter(obj -> obj.minHeight),
                             Codec.intRange(0, 8).fieldOf("maxHeight").forGetter(obj -> obj.maxHeight),
                             Codec.intRange(0, 8).fieldOf("minOffset").forGetter(obj -> obj.minOffset),

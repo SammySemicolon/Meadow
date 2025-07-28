@@ -11,9 +11,9 @@ import com.smellysleepy.meadow.data.block.MeadowBlockStateDatagen;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import team.lodestar.lodestone.systems.datagen.ItemModelSmithTypes;
 import team.lodestar.lodestone.systems.datagen.providers.LodestoneBlockStateProvider;
 import team.lodestar.lodestone.systems.datagen.statesmith.BlockStateSmith;
@@ -29,7 +29,7 @@ public class FungalBlockStateSmithTypes {
         provider.simpleBlock(block, provider.models().cubeAll(name, crown));
     });
 
-    public static BlockStateSmith<ChanterelleMushroomStemBlock> CHANTERELLE_STEM_BLOCK = new BlockStateSmith<>(ChanterelleMushroomStemBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_middle"), (block, provider) -> {
+    public static BlockStateSmith<ChanterelleMushroomStemBlock> CHANTERELLE_STEM_BLOCK = new BlockStateSmith<>(ChanterelleMushroomStemBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL_ITEM.apply("_middle"), (block, provider) -> {
         String name = provider.getBlockName(block);
         ResourceLocation inside = provider.getBlockTexture("chanterelle_inside");
         provider.getVariantBuilder(block).forAllStates(state -> {
@@ -49,7 +49,7 @@ public class FungalBlockStateSmithTypes {
         });
     });
 
-    public static BlockStateSmith<ThinNaturalChanterelleStemBlock> THIN_CHANTERELLE_STEM_BLOCK = new BlockStateSmith<>(ThinNaturalChanterelleStemBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL.apply("_middle"), (block, provider) -> {
+    public static BlockStateSmith<ThinNaturalChanterelleStemBlock> THIN_CHANTERELLE_STEM_BLOCK = new BlockStateSmith<>(ThinNaturalChanterelleStemBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_MODEL_ITEM.apply("_middle"), (block, provider) -> {
         provider.getVariantBuilder(block).forAllStates(s -> {
             ModelFile[] thinStemModels = getThinStemModels(provider, block, s.getOptionalValue(ChanterelleMushroomStemBlock.LAYER).orElse(null));
             ModelFile modelFile = s.getValue(ThinNaturalChanterelleStemBlock.HAS_CAP) ? thinStemModels[1] : thinStemModels[0];

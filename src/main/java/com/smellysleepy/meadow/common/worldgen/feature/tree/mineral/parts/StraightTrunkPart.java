@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
@@ -13,8 +14,8 @@ import team.lodestar.lodestone.systems.worldgen.LodestoneBlockFiller;
 
 public class StraightTrunkPart extends MineralTreePart {
 
-    public static final Codec<StraightTrunkPart> CODEC =
-            RecordCodecBuilder.create(inst -> inst.group(
+    public static final MapCodec<StraightTrunkPart> CODEC =
+            RecordCodecBuilder.mapCodec(inst -> inst.group(
                             Codec.intRange(0, 64).fieldOf("minHeight").forGetter(obj -> obj.minHeight),
                             Codec.intRange(0, 64).fieldOf("maxHeight").forGetter(obj -> obj.maxHeight)
                     )

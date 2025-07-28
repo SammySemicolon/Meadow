@@ -38,7 +38,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 import team.lodestar.lodestone.systems.easing.Easing;
 
 import javax.annotation.Nullable;
@@ -67,7 +67,7 @@ public class OldMeadowGrovePiece extends StructurePiece {
 
     public OldMeadowGrovePiece(CompoundTag tag) {
         super(MeadowStructurePieceTypes.MEADOW_GROVE.get(), tag);
-        this.groveCenter = NbtUtils.readBlockPos(tag.getCompound("groveCenter"));
+        this.groveCenter = NbtUtils.readBlockPos(tag, "groveCenter").orElseThrow();
         this.groveRadius = tag.getInt("groveRadius");
         this.groveHeight = tag.getInt("groveHeight");
         this.groveDepth = tag.getInt("groveDepth");
@@ -89,8 +89,8 @@ public class OldMeadowGrovePiece extends StructurePiece {
         bufferedFeatures.clear();
         for (int i = 0; i < featureCount; i++) {
             CompoundTag feature = features.getCompound("feature_"+i);
-            BlockPos blockPos = NbtUtils.readBlockPos(feature.getCompound("featurePosition"));
-            ResourceLocation resourceKeyId = new ResourceLocation(feature.getString("featureType"));
+            BlockPos blockPos = NbtUtils.readBlockPos(feature, "featurePosition").orElseThrow();
+            ResourceLocation resourceKeyId = ResourceLocation.parse(feature.getString("featureType"));
             bufferedFeatures.put(blockPos, resourceKeyId);
         }
     }
@@ -138,7 +138,7 @@ public class OldMeadowGrovePiece extends StructurePiece {
             Holder<ConfiguredFeature<?, ?>> holder = worldGenLevel.registryAccess()
                     .registryOrThrow(Registries.CONFIGURED_FEATURE)
                     .getHolder(key).orElseThrow();
-            holder.get().place(worldGenLevel, chunkGenerator, randomSource, pos);
+            holder.value().place(worldGenLevel, chunkGenerator, randomSource, pos);
         }
         bufferedFeatures.clear();
     }
@@ -793,6 +793,7 @@ public class OldMeadowGrovePiece extends StructurePiece {
         }
         return -1f;
     }
+
     public double makeCracks(ImprovedNoise noiseSampler, int blockX, int blockZ, float noiseThresholdOffset) {
         double stateNoise = WorldgenHelper.getNoise(noiseSampler, blockX, blockZ, 75000, 0.15f) / 2;
         float bottomThreshold = 0.45f - noiseThresholdOffset;

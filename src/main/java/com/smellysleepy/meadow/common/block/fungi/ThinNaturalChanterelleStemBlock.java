@@ -7,7 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -18,14 +18,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
 
 public class ThinNaturalChanterelleStemBlock extends ThinLogBlock implements BonemealableBlock {
 
     public static final BooleanProperty HAS_CAP = BooleanProperty.create("has_cap");
 
-    public ThinNaturalChanterelleStemBlock(Properties pProperties) {
-        super(pProperties);
+    public ThinNaturalChanterelleStemBlock(Properties properties) {
+        super(properties);
         registerDefaultState(defaultBlockState()
                 .setValue(HAS_CAP, false));
     }
@@ -37,30 +37,29 @@ public class ThinNaturalChanterelleStemBlock extends ThinLogBlock implements Bon
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-        return !pState.getValue(HAS_CAP);
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return state.getValue(HAS_CAP);
     }
 
     @Override
-    public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        pLevel.setBlock(pPos, pState.setValue(HAS_CAP, true), 3);
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        level.setBlock(pos, state.setValue(HAS_CAP, true), 3);
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        ItemStack stack = pPlayer.getItemInHand(pHand);
-        if (stack.canPerformAction(ToolActions.SHEARS_HARVEST)) {
-            if (pState.getValue(HAS_CAP)) {
-                pLevel.setBlock(pPos, pState.setValue(HAS_CAP, false), 3);
-                pLevel.playSound(null, pPos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
-                return InteractionResult.SUCCESS;
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (stack.canPerformAction(ItemAbilities.SHEARS_HARVEST)) {
+            if (state.getValue(HAS_CAP)) {
+                level.setBlock(pos, state.setValue(HAS_CAP, false), 3);
+                level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+                return ItemInteractionResult.SUCCESS;
             }
         }
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 }

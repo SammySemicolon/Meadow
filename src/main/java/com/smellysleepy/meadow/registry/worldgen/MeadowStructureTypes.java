@@ -4,8 +4,9 @@ import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.common.worldgen.structure.grove.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.Supplier;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class MeadowStructureTypes {
 

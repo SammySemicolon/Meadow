@@ -15,24 +15,24 @@ import net.minecraft.world.phys.BlockHitResult;
 @SuppressWarnings({"deprecation", "NullableProblems"})
 public class WiltedTallPearlFlowerBlock extends TallPearlFlowerBlock {
 
-    public WiltedTallPearlFlowerBlock(Properties pProperties) {
-        super(pProperties.randomTicks());
+    public WiltedTallPearlFlowerBlock(Properties properties) {
+        super(properties.randomTicks());
     }
 
     @Override
-    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (pRandom.nextFloat() < 0.01f) {
-            PearlFlowerReplacementHandler.performExchange(this, pLevel, pPos, pState);
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (random.nextFloat() < 0.01f) {
+            PearlFlowerReplacementHandler.performExchange(this, level, pos, state);
         }
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         return InteractionResult.PASS;
     }
 
     @Override
-    public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
-        PearlFlowerReplacementHandler.performExchange(this, pLevel, pPos, pState);
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        PearlFlowerReplacementHandler.performExchange(this, level, pos, state);
     }
 }

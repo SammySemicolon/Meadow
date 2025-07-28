@@ -18,33 +18,33 @@ public class PearlFlowerReplacementHandler {
 
     protected static final HashMap<Block, Block> FLOWER_CONVERSION = new HashMap<>();
 
-    public static void performExchange(Block block, Level pLevel, BlockPos pPos, BlockState pState) {
+    public static void performExchange(Block block, Level level, BlockPos pos, BlockState state) {
         if (block instanceof TallPearlFlowerBlock tallPearlFlowerBlock) {
-            performExchange(tallPearlFlowerBlock, pLevel, pPos, pState);
+            performExchange(tallPearlFlowerBlock, level, pos, state);
             return;
         }
         if (block instanceof PearlFlowerBlock pearlFlowerBlock) {
-            performExchange(pearlFlowerBlock, pLevel, pPos);
+            performExchange(pearlFlowerBlock, level, pos);
         }
     }
 
-    public static boolean performExchange(TallPearlFlowerBlock block, Level pLevel, BlockPos pPos, BlockState pState) {
-        BlockPos bottom = pState.getValue(HALF).equals(DoubleBlockHalf.UPPER) ? pPos.below() : pPos;
+    public static boolean performExchange(TallPearlFlowerBlock block, Level level, BlockPos pos, BlockState state) {
+        BlockPos bottom = state.getValue(HALF).equals(DoubleBlockHalf.UPPER) ? pos.below() : pos;
         TallPearlFlowerBlock newFlower = PearlFlowerReplacementHandler.getBlockForExchange(block);
         if (newFlower != null) {
-            pLevel.setBlock(bottom, Blocks.AIR.defaultBlockState(), 16);
-            pLevel.setBlock(bottom.above(), Blocks.AIR.defaultBlockState(), 16);
-            DoublePlantBlock.placeAt(pLevel, newFlower.defaultBlockState(), bottom, 3);
+            level.setBlock(bottom, Blocks.AIR.defaultBlockState(), 16);
+            level.setBlock(bottom.above(), Blocks.AIR.defaultBlockState(), 16);
+            DoublePlantBlock.placeAt(level, newFlower.defaultBlockState(), bottom, 3);
             return true;
         }
         return false;
     }
 
-    public static boolean performExchange(PearlFlowerBlock block, Level pLevel, BlockPos pPos) {
+    public static boolean performExchange(PearlFlowerBlock block, Level level, BlockPos pos) {
         PearlFlowerBlock newFlower = PearlFlowerReplacementHandler.getBlockForExchange(block);
         if (newFlower != null) {
-            pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 16);
-            pLevel.setBlock(pPos, newFlower.defaultBlockState(), 3);
+            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 16);
+            level.setBlock(pos, newFlower.defaultBlockState(), 3);
             return true;
         }
         return false;

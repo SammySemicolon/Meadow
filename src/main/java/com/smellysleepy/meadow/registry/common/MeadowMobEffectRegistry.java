@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 public class MeadowMobEffectRegistry {
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, MeadowMod.MEADOW);
 
-    public static final Supplier<MobEffect> AMETHYST_FRUIT_EFFECT = EFFECTS.register("amethyst_disruption", AmethystFruitEffect::new);
+    public static final DeferredHolder<MobEffect, MobEffect> AMETHYST_FRUIT_EFFECT = EFFECTS.register("amethyst_disruption", AmethystFruitEffect::new);
 
     public static final DeferredHolder<MobEffect, MobEffect> COPPER_FRUIT_EFFECT = EFFECTS.register("copper_weathering", CopperFruitEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> IRON_FRUIT_EFFECT = EFFECTS.register("ironskin", IronFruitEffect::new);

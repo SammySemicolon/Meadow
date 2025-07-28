@@ -4,7 +4,7 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 
 public class PearlLampBlock extends RotatedPillarBlock {
 
-    public PearlLampBlock(Properties pProperties) {
-        super(pProperties);
+    public PearlLampBlock(Properties properties) {
+        super(properties);
     }
 }

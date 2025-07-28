@@ -5,22 +5,15 @@ import com.mojang.serialization.DataResult;
 import com.smellysleepy.meadow.MeadowMod;
 import com.smellysleepy.meadow.common.block.mineral.MineralFloraRegistryBundle;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.Supplier;
 import net.neoforged.neoforge.common.Tags;
-import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.function.*;
 
 public class MineralFloraRegistry {
 

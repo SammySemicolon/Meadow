@@ -1,8 +1,8 @@
 package com.smellysleepy.meadow.data.worldgen.features;
 
 import com.smellysleepy.meadow.common.worldgen.feature.calcification.PointyCalcificationConfiguration;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry;
-import com.smellysleepy.meadow.registry.common.tags.MeadowBlockTagRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowConfiguredFeatureRegistry;
 import com.smellysleepy.meadow.registry.worldgen.MeadowFeatureRegistry;
 import net.minecraft.core.HolderSet;
@@ -70,13 +70,13 @@ public class CalcificationConfiguredFeatureDatagen {
         ));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_EARTH_BONEMEAL, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(
-                MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE,
+                MeadowTags.BlockTags.CALCIFICATION_REPLACEABLE,
                 BlockStateProvider.simple(MeadowBlockRegistry.CALCIFIED_EARTH.get()),
                 PlacementUtils.inlinePlaced(holdergetter.getOrThrow(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_VEGETATION)),
                 CaveSurface.FLOOR, ConstantInt.of(1), 0.0F, 5, 0.6F, UniformInt.of(1, 2), 0.75F)));
 
         context.register(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_ROCK_BONEMEAL, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(
-                MeadowBlockTagRegistry.CALCIFICATION_REPLACEABLE,
+                MeadowTags.BlockTags.CALCIFICATION_REPLACEABLE,
                 BlockStateProvider.simple(MeadowBlockRegistry.CALCIFIED_ROCK.get()),
                 PlacementUtils.inlinePlaced(holdergetter.getOrThrow(MeadowConfiguredFeatureRegistry.CONFIGURED_CALCIFIED_VEGETATION)),
                 CaveSurface.FLOOR, ConstantInt.of(1), 0.0F, 5, 0.6F, UniformInt.of(1, 2), 0.75F)));

@@ -18,13 +18,13 @@ public class ThinLogBlock extends RotatedPillarBlock {
     }
 
     @Override
-    public VoxelShape getBlockSupportShape(BlockState pState, BlockGetter pReader, BlockPos pPos) {
+    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter pReader, BlockPos pos) {
         return Shapes.empty();
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        switch (pState.getValue(AXIS)) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext pContext) {
+        switch (state.getValue(AXIS)) {
             case X -> {
                 return SHAPE_X;
             }

@@ -20,10 +20,9 @@ import java.util.*;
 
 public class MeadowGroveStructure extends Structure {
 
-    public static final Codec<MeadowGroveStructure> CODEC = RecordCodecBuilder.<MeadowGroveStructure>mapCodec(builder ->
+    public static final MapCodec<MeadowGroveStructure> CODEC = RecordCodecBuilder.mapCodec(builder ->
             builder.group(settingsCodec(builder))
-                    .apply(builder, MeadowGroveStructure::new)
-    ).codec();
+                    .apply(builder, MeadowGroveStructure::new));
 
     public MeadowGroveStructure(StructureSettings settings) {
         super(settings);

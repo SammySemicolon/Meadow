@@ -3,6 +3,7 @@ package com.smellysleepy.meadow.registry.common.item;
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.block.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.food.*;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.*;
@@ -17,7 +18,7 @@ import static team.lodestar.lodestone.systems.item.LodestoneItemProperties.TAB_S
 
 public class MeadowItemRegistry {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MEADOW);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, MEADOW);
 
     public static final Supplier<Item> GIANT_CALCIFIED_DRIPSTONE = register("giant_calcified_dripstone", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.GIANT_CALCIFIED_DRIPSTONE.get(), p));
     public static final Supplier<Item> CALCIFIED_DRIPSTONE = register("calcified_dripstone", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.CALCIFIED_DRIPSTONE.get(), p));
@@ -111,8 +112,8 @@ public class MeadowItemRegistry {
     public static final Supplier<Item> ASPEN_SIGN = register("aspen_sign", DEFAULT_PROPERTIES(), (p) -> new SignItem(p, MeadowBlockRegistry.ASPEN_SIGN.get(), MeadowBlockRegistry.ASPEN_WALL_SIGN.get()));
     public static final Supplier<Item> ASPEN_BOAT = register("aspen_boat", DEFAULT_PROPERTIES(), (p) -> new LodestoneBoatItem(p.stacksTo(1), MeadowEntityRegistry.ASPEN_BOAT));
 
-    public static final Supplier<Item> SMALL_ASPEN_SAPLING = register("small_aspen_sapling", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SMALL_ASPEN_SAPLING.get(), p.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.15f).build())));
-    public static final Supplier<Item> ASPEN_SAPLING = register("aspen_sapling", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_SAPLING.get(), p.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.15f).build())));
+    public static final Supplier<Item> SMALL_ASPEN_SAPLING = register("small_aspen_sapling", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.SMALL_ASPEN_SAPLING.get(), p));
+    public static final Supplier<Item> ASPEN_SAPLING = register("aspen_sapling", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_SAPLING.get(), p));
     public static final Supplier<Item> HANGING_ASPEN_LEAVES = register("hanging_aspen_leaves", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.HANGING_ASPEN_LEAVES.get(), p));
     public static final Supplier<Item> ASPEN_LEAVES = register("aspen_leaves", DEFAULT_PROPERTIES(), (p) -> new BlockItem(MeadowBlockRegistry.ASPEN_LEAVES.get(), p));
 

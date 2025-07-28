@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.mixin;
 
 import com.smellysleepy.meadow.common.effect.*;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.npc.WanderingTraderSpawner;
@@ -18,7 +19,7 @@ public class ApplyBonusCountMixin {
 
     @Shadow
     @Final
-    Enchantment enchantment;
+    private Holder<Enchantment> enchantment;
 
     @Unique
     LootContext meadow$lootContext;
@@ -27,16 +28,17 @@ public class ApplyBonusCountMixin {
     private void run(ItemStack pStack, LootContext pContext, CallbackInfoReturnable<ItemStack> cir) {
         meadow$lootContext = pContext;
     }
+
     @ModifyArg(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/functions/ApplyBonusCount$Formula;calculateNewCount(Lnet/minecraft/util/RandomSource;II)I"), index = 2)
     private int meadow$applyFortune(int pEnchantmentLevel) {
-        if (this.enchantment == Enchantments.BLOCK_FORTUNE) {
+        if (this.enchantment == Enchantments.FORTUNE) {
             Entity entity = meadow$lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
 
             if (entity instanceof LivingEntity livingEntity) {
                 return pEnchantmentLevel + DiamondFruitEffect.getFortuneBonus(livingEntity);
             }
         }
-        if (this.enchantment == Enchantments.MOB_LOOTING) {
+        if (this.enchantment == Enchantments.LOOTING) {
             Entity entity = meadow$lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
             if (entity instanceof LivingEntity livingEntity) {
                 return pEnchantmentLevel + GoldFruitEffect.getLootingBonus(livingEntity);

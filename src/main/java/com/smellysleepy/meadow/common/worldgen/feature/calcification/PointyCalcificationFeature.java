@@ -47,7 +47,7 @@ public class PointyCalcificationFeature extends Feature<PointyCalcificationConfi
       return true;
    }
 
-   public static BlockState copyWaterloggedFrom(LevelReader pLevel, BlockPos pPos, BlockState pState) {
-      return pState.hasProperty(BlockStateProperties.WATERLOGGED) ? pState.setValue(BlockStateProperties.WATERLOGGED, pLevel.isWaterAt(pPos)) : pState;
+   public static BlockState copyWaterloggedFrom(LevelReader level, BlockPos pos, BlockState state) {
+      return state.hasProperty(BlockStateProperties.WATERLOGGED) ? state.setValue(BlockStateProperties.WATERLOGGED, level.isWaterAt(pos)) : state;
    }
 }

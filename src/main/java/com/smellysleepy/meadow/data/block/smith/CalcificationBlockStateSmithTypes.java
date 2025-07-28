@@ -7,7 +7,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DripstoneThickness;
-import net.minecraftforge.client.model.generators.*;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
 import team.lodestar.lodestone.systems.datagen.ItemModelSmithTypes;
 import team.lodestar.lodestone.systems.datagen.statesmith.BlockStateSmith;
 
@@ -38,7 +40,7 @@ public class CalcificationBlockStateSmithTypes {
         }
     });
 
-    public static BlockStateSmith<PointedDripstoneBlock> POINTED_DRIPSTONE_BLOCK = new BlockStateSmith<>(PointedDripstoneBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_MODEL.apply("_tip"), (block, provider) -> {
+    public static BlockStateSmith<PointedDripstoneBlock> POINTED_DRIPSTONE_BLOCK = new BlockStateSmith<>(PointedDripstoneBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_ITEM.apply("_tip"), (block, provider) -> {
         String name = provider.getBlockName(block);
 
         provider.getVariantBuilder(block)
@@ -46,7 +48,7 @@ public class CalcificationBlockStateSmithTypes {
                     DripstoneThickness thickness = state.getValue(PointedDripstoneBlock.THICKNESS);
                     Direction direction = state.getValue(PointedDripstoneBlock.TIP_DIRECTION);
                     String partName = name + "_" + thickness;
-                    ModelFile model = provider.models().withExistingParent(partName, new ResourceLocation("block/pointed_dripstone"))
+                    ModelFile model = provider.models().withExistingParent(partName, ResourceLocation.parse("block/pointed_dripstone"))
                             .texture("cross", provider.getBlockTexture(partName));
 
                     final int rotationX = direction.equals(Direction.UP) ? 0 : 180;

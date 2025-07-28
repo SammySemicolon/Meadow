@@ -13,8 +13,8 @@ public class ChanterelleMushroomStemBlock extends RotatedPillarBlock {
 
     public static final EnumProperty<ChanterelleLayer> LAYER = EnumProperty.create("layer", ChanterelleLayer.class);
 
-    public ChanterelleMushroomStemBlock(BlockBehaviour.Properties pProperties) {
-        super(pProperties);
+    public ChanterelleMushroomStemBlock(BlockBehaviour.Properties properties) {
+        super(properties);
         registerDefaultState(defaultBlockState().setValue(LAYER, ChanterelleLayer.MIDDLE));
     }
 

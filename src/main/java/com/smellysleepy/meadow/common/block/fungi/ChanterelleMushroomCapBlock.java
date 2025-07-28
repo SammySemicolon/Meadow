@@ -4,7 +4,7 @@ import net.minecraft.world.level.block.Block;
 
 public class ChanterelleMushroomCapBlock extends Block {
 
-    public ChanterelleMushroomCapBlock(Properties pProperties) {
-        super(pProperties);
+    public ChanterelleMushroomCapBlock(Properties properties) {
+        super(properties);
     }
 }

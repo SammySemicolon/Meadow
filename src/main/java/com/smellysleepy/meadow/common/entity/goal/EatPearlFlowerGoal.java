@@ -2,7 +2,7 @@ package com.smellysleepy.meadow.common.entity.goal;
 
 import com.smellysleepy.meadow.common.block.pearlflower.PearlFlowerReplacementHandler;
 import com.smellysleepy.meadow.common.entity.*;
-import com.smellysleepy.meadow.registry.common.tags.*;
+import com.smellysleepy.meadow.registry.common.MeadowTags;
 import net.minecraft.core.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.level.*;
@@ -27,7 +27,7 @@ public class EatPearlFlowerGoal extends Goal {
     @Override
     public boolean canUse() {
         return cow.lastKnownPearlflowerPosition != null &&
-                level.getBlockState(cow.lastKnownPearlflowerPosition).is(MeadowBlockTagRegistry.MOOMOO_EDIBLE) &&
+                level.getBlockState(cow.lastKnownPearlflowerPosition).is(MeadowTags.BlockTags.MOOMOO_EDIBLE) &&
                 !cow.hasRestriction() && cow.doesTheBeastHunger() && cow.closerThan(cow.lastKnownPearlflowerPosition, 1.5f);
     }
 
@@ -52,7 +52,7 @@ public class EatPearlFlowerGoal extends Goal {
             final Level level = cow.level();
             if (objectOfInterest != null) {
                 final BlockState blockState = level.getBlockState(objectOfInterest);
-                if (blockState.is(MeadowBlockTagRegistry.MOOMOO_EDIBLE)) {
+                if (blockState.is(MeadowTags.BlockTags.MOOMOO_EDIBLE)) {
                     Block block = blockState.getBlock();
                     level.destroyBlock(objectOfInterest, false);
                     PearlFlowerReplacementHandler.performExchange(block, level, objectOfInterest, blockState);

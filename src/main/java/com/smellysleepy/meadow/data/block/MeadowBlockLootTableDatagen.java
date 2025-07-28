@@ -63,8 +63,8 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
     private static final float[] FRUIT_DROP_CHANCE = new float[]{0.025F, 0.03125F, 0.4375F, 0.05F};
     private static final float[] STICK_DROP_CHANCE = new float[]{0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F};
 
-    public MeadowBlockLootTableDatagen(PackOutput pOutput) {
-        super(pOutput, Set.of(), List.of(
+    public MeadowBlockLootTableDatagen(PackOutput output) {
+        super(output, Set.of(), List.of(
                 new SubProviderEntry(BlocksLoot::new, LootContextParamSets.BLOCK))
         );
     }

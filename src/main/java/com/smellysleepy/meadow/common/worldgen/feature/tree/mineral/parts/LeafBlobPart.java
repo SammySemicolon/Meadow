@@ -1,6 +1,7 @@
 package com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.parts;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreeFeatureConfiguration;
 import com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.MineralTreePart;
@@ -17,8 +18,8 @@ import static com.smellysleepy.meadow.common.worldgen.feature.tree.mineral.Miner
 
 public class LeafBlobPart extends MineralTreePart {
 
-    public static final Codec<LeafBlobPart> CODEC =
-            RecordCodecBuilder.create(inst -> inst.group(
+    public static final MapCodec<LeafBlobPart> CODEC =
+            RecordCodecBuilder.mapCodec(inst -> inst.group(
                     Codec.list(Codec.INT).fieldOf("leafSizes").forGetter(obj -> obj.leafSizes))
                     .apply(inst, LeafBlobPart::new)
             );

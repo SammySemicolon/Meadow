@@ -7,18 +7,19 @@ import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.*;
 import team.lodestar.lodestone.systems.entity.*;
 import team.lodestar.lodestone.systems.entityrenderer.*;
 
 import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = MeadowMod.MEADOW, bus = EventBusSubscriber.Bus.MOD)
 public class MeadowEntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MeadowMod.MEADOW);
 
@@ -34,9 +35,12 @@ public class MeadowEntityRegistry {
             () -> EntityType.Builder.of(MooMooCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10)
                     .build(MeadowMod.meadowModPath("moo_moo").toString()));
 
-    @SubscribeEvent
     public static void createDefaultAttributes(EntityAttributeCreationEvent event) {
         event.put(MOO_MOO.get(), MooMooCow.createAttributes().build());
+    }
+
+    public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        event.register(MeadowEntityRegistry.MOO_MOO.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MooMooCow::checkMooMooSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
     @EventBusSubscriber(modid = MeadowMod.MEADOW, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)

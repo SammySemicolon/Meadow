@@ -17,10 +17,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.*;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import team.lodestar.lodestone.helpers.DataHelper;
 import team.lodestar.lodestone.systems.datagen.*;
 import team.lodestar.lodestone.systems.datagen.providers.*;
@@ -36,7 +36,7 @@ public class MeadowBlockStateDatagen extends LodestoneBlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        Set<Supplier<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
+        var blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
         AbstractBlockStateSmith.StateSmithData data = new AbstractBlockStateSmith.StateSmithData(this, blocks::remove);
 
         BlockStateSmithTypes.CUSTOM_MODEL.act(data, this::varyingRotationBlock, this::meadowGrassBlockModel, MeadowBlockRegistry.ASPEN_GRASS_BLOCK);

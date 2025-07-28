@@ -3,7 +3,6 @@ package com.smellysleepy.meadow.data.worldgen;
 import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.common.block.mineral.*;
 import com.smellysleepy.meadow.registry.common.*;
-import com.smellysleepy.meadow.registry.common.tags.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.data.worldgen.*;
@@ -12,7 +11,6 @@ import net.minecraft.tags.*;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.placement.*;
-import net.minecraftforge.common.world.*;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.*;
@@ -30,7 +28,7 @@ public class MeadowBiomeModifications {
             register(context, bundle.id.getPath() + "_tree", () ->
                     addFeatureModifier(context,
                             getPlacedHolderSet(context, bundle.placedTreeFeature),
-                            MeadowBiomeTagRegistry.HAS_MINERAL_TREES, GenerationStep.Decoration.UNDERGROUND_DECORATION));
+                            MeadowTags.BiomeTags.HAS_MINERAL_TREES, GenerationStep.Decoration.UNDERGROUND_DECORATION));
         }
     }
 
