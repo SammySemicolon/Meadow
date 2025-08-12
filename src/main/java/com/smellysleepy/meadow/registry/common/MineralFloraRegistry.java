@@ -41,7 +41,7 @@ public class MineralFloraRegistry {
     }
 
     public static MineralFloraRegistryBundle register(String prefix, Holder<MobEffect> effect, Color color, Block ore, TagKey<Block> tag) {
-        return register(MeadowMod.meadowModPath(prefix), effect, color, ore, tag);
+        return register(MeadowMod.meadowPath(prefix), effect, color, ore, tag);
     }
 
     public static MineralFloraRegistryBundle register(ResourceLocation id, Holder<MobEffect> effect, Color color, Block ore, TagKey<Block> tag) {

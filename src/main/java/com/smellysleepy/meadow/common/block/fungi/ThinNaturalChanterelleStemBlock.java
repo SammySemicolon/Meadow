@@ -38,7 +38,7 @@ public class ThinNaturalChanterelleStemBlock extends ThinLogBlock implements Bon
 
     @Override
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
-        return state.getValue(HAS_CAP);
+        return !state.getValue(HAS_CAP) && state.getValue(AXIS).isVertical();
     }
 
     @Override

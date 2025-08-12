@@ -24,7 +24,7 @@ public class AspenBlockStateSmithTypes {
 
     public static BlockStateSmith<Block> HANGING_LEAVES = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.BLOCK_TEXTURE_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
-        BlockModelBuilder model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name));
+        BlockModelBuilder model = provider.models().withExistingParent(name, MeadowMod.meadowPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name));
         ConfiguredModel.Builder<VariantBlockStateBuilder> builder = provider.getVariantBuilder(block).partialState().modelForState();
         builder.modelFile(model)
                 .nextModel().modelFile(model).rotationY(90)
@@ -36,7 +36,7 @@ public class AspenBlockStateSmithTypes {
     public static BlockStateSmith<LeavesBlock> HANGING_ASPEN_LEAVES = new BlockStateSmith<>(LeavesBlock.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_ITEM.apply("_0"), (block, provider) -> {
         String name = provider.getBlockName(block);
         Function<Integer, ModelFile> modelProvider = (i) ->
-                provider.models().withExistingParent(name + "_" + i, MeadowMod.meadowModPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
+                provider.models().withExistingParent(name + "_" + i, MeadowMod.meadowPath("block/templates/template_hanging_leaves")).texture("hanging_leaves", provider.getBlockTexture(name + "_" + i));
 
         ConfiguredModel.Builder<VariantBlockStateBuilder> builder = provider.getVariantBuilder(block).partialState().modelForState();
         for (int i = 0; i < 3; i++) {
@@ -62,7 +62,7 @@ public class AspenBlockStateSmithTypes {
         }
         var sideTexture = provider.getBlockTexture(logName);
         var endTexture = provider.getBlockTexture(logName + (isWood ? "" : "_top"));
-        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_thin_log"))
+        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
                 .texture("top", endTexture)
                 .texture("bottom", endTexture);
@@ -175,30 +175,30 @@ public class AspenBlockStateSmithTypes {
             bottomTexture = topTexture;
             topTexture = cache;
         }
-        ModelFile noLeaves = provider.models().withExistingParent(name + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log"))
+        ModelFile noLeaves = provider.models().withExistingParent(name + flippedAffix, MeadowMod.meadowPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture);
 
-        ModelFile smallLeaves = provider.models().withExistingParent(name + "_small_leaves" + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+        ModelFile smallLeaves = provider.models().withExistingParent(name + "_small_leaves" + flippedAffix, MeadowMod.meadowPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture)
                 .texture("leaves", smallLeavesTexture);
 
-        ModelFile mediumLeaves = provider.models().withExistingParent(name + "_medium_leaves" + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+        ModelFile mediumLeaves = provider.models().withExistingParent(name + "_medium_leaves" + flippedAffix, MeadowMod.meadowPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture)
                 .texture("leaves", mediumLeavesTexture);
 
-        ModelFile largeLeaves = provider.models().withExistingParent(name + "_large_leaves" + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves"))
+        ModelFile largeLeaves = provider.models().withExistingParent(name + "_large_leaves" + flippedAffix, MeadowMod.meadowPath("block/templates/template_thin_log_with_leaves"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture)
                 .texture("leaves", largeLeavesTexture);
 
-        ModelFile topLeaves = provider.models().withExistingParent(name + "_top_leaves" + flippedAffix, MeadowMod.meadowModPath("block/templates/template_thin_log_with_leaves_top"))
+        ModelFile topLeaves = provider.models().withExistingParent(name + "_top_leaves" + flippedAffix, MeadowMod.meadowPath("block/templates/template_thin_log_with_leaves_top"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture)

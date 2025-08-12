@@ -15,7 +15,7 @@ public class MeadowSoundRegistry {
 
     public static DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, MeadowMod.MEADOW);
 
-    public static Supplier<SoundEvent> CALCIFICATION_MOTIF = register(SoundEvent.createVariableRangeEvent(MeadowMod.meadowModPath("calcification_motif")));
+    public static Supplier<SoundEvent> CALCIFICATION_MOTIF = register(SoundEvent.createVariableRangeEvent(MeadowMod.meadowPath("calcification_motif")));
 
     public static final SoundType CALCIFIED_WOOD = new CalcifiedSoundType(1f, 0.8f, ()->SoundEvents.CHERRY_WOOD_BREAK, ()->SoundEvents.CHERRY_WOOD_STEP, ()->SoundEvents.CHERRY_WOOD_PLACE, ()->SoundEvents.CHERRY_WOOD_HIT, ()->SoundEvents.CHERRY_WOOD_FALL);
     public static final SoundType CALCIFIED_FUNGUS = new CalcifiedSoundType(1f, 0.8f, ()->SoundEvents.NETHER_WOOD_BREAK, ()->SoundEvents.NETHER_WOOD_STEP, ()->SoundEvents.NETHER_WOOD_PLACE, ()->SoundEvents.NETHER_WOOD_HIT, ()->SoundEvents.NETHER_WOOD_FALL);

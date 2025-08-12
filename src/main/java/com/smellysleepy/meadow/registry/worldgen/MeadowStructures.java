@@ -40,7 +40,7 @@ public class MeadowStructures {
     
 
     private static ResourceKey<Structure> register(String id, StructureFactory factory) {
-        ResourceKey<Structure> structureSetResourceKey = ResourceKey.create(Registries.STRUCTURE, MeadowMod.meadowModPath(id));
+        ResourceKey<Structure> structureSetResourceKey = ResourceKey.create(Registries.STRUCTURE, MeadowMod.meadowPath(id));
         STRUCTURE_FACTORIES.put(structureSetResourceKey, factory);
         return structureSetResourceKey;
     }

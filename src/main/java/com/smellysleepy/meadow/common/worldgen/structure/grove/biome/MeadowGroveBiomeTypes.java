@@ -19,7 +19,7 @@ public class MeadowGroveBiomeTypes {
     }
 
     private static MeadowGroveBiomeTypeBuilder create(String id) {
-        return create(MeadowMod.meadowModPath(id));
+        return create(MeadowMod.meadowPath(id));
     }
 
     private static MeadowGroveBiomeTypeBuilder create(ResourceLocation id) {

@@ -98,7 +98,7 @@ public class MeadowTags {
     }
 
     private static <T> TagKey<T> tag(ResourceKey<Registry<T>> registry, String path) {
-        return TagKey.create(registry, MeadowMod.meadowModPath(path));
+        return TagKey.create(registry, MeadowMod.meadowPath(path));
     }
 
     private static <T> TagKey<T> modTag(ResourceKey<Registry<T>> registry, String path) {

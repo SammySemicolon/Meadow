@@ -130,7 +130,7 @@ public class MeadowWoodSetDatagen implements IConditionBuilder {
         shapeless(RecipeCategory.BUILDING_BLOCKS, output)
                 .requires(input)
                 .unlockedBy("has_input", has(input))
-                .save(recipeOutput, MeadowMod.meadowModPath(path));
+                .save(recipeOutput, MeadowMod.meadowPath(path));
     }
 
     private static void shapedHeavyPlanks(RecipeOutput recipeOutput, ItemLike output, ItemLike input) {

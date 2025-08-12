@@ -134,12 +134,12 @@ public class FungalBlockStateSmithTypes {
             topTexture = cache;
         }
 
-        ModelFile noCap = provider.models().withExistingParent(name + affix, MeadowMod.meadowModPath("block/templates/template_thin_log"))
+        ModelFile noCap = provider.models().withExistingParent(name + affix, MeadowMod.meadowPath("block/templates/template_thin_log"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture);
 
-        ModelFile cap = provider.models().withExistingParent(name + "_cap" + affix, MeadowMod.meadowModPath("block/templates/template_thin_stem_with_cap"))
+        ModelFile cap = provider.models().withExistingParent(name + "_cap" + affix, MeadowMod.meadowPath("block/templates/template_thin_stem_with_cap"))
                 .texture("side", sideTexture)
                 .texture("top", topTexture)
                 .texture("bottom", bottomTexture);

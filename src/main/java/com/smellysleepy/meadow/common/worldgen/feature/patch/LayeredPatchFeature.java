@@ -51,7 +51,7 @@ public class LayeredPatchFeature extends Feature<LayeredPatchConfiguration> {
             }
 
             if (hasSpace) {
-               if (plant.canSurvive(state, level, coveragePos)) {
+               if (state.canSurvive(level, coveragePos)) {
                   state = AspenGrassVariantHelper.getStateForBushPlacement(level, coveragePos, state);
                   if (plant instanceof DoublePlantBlock) {
                      DoublePlantBlock.placeAt(level, state, coveragePos, 3);

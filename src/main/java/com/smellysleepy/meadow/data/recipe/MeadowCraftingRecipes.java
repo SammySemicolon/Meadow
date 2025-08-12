@@ -20,7 +20,6 @@ import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.*;
 
 import static net.minecraft.data.recipes.RecipeBuilder.getDefaultRecipeId;
 import static net.minecraft.data.recipes.ShapedRecipeBuilder.shaped;
@@ -72,7 +71,7 @@ public class MeadowCraftingRecipes implements IConditionBuilder {
         shapeless(RecipeCategory.DECORATIONS, Items.BLUE_DYE, 1)
                 .requires(MeadowItemRegistry.CALCIFIED_FRAGMENT.get())
                 .unlockedBy("has_fragment", has(MeadowItemRegistry.CALCIFIED_FRAGMENT.get()))
-                .save(recipeOutput, MeadowMod.meadowModPath("blue_dye_from_calcification"));
+                .save(recipeOutput, MeadowMod.meadowPath("blue_dye_from_calcification"));
 
         smelting(Ingredient.of(MeadowItemRegistry.CALCIFIED_FRAGMENT.get()), RecipeCategory.MISC, MeadowItemRegistry.CALCIFIED_BRICK.get(), 0.1f, 200)
                 .unlockedBy("has_calcified_fragment", hasCalcifiedFragment)

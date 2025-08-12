@@ -4,7 +4,6 @@ import com.smellysleepy.meadow.*;
 import com.smellysleepy.meadow.registry.common.*;
 import com.smellysleepy.meadow.registry.common.block.*;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.food.*;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.*;
 import team.lodestar.lodestone.systems.item.*;
@@ -158,7 +157,7 @@ public class MeadowItemRegistry {
 
     public static <T extends Item> Supplier<T> register(String name, Item.Properties properties, Function<Item.Properties, T> function) {
         if (properties instanceof LodestoneItemProperties lodestoneItemProperties) {
-            TAB_SORTING.computeIfAbsent(lodestoneItemProperties.tab, (key) -> new ArrayList<>()).add(MeadowMod.meadowModPath(name));
+            TAB_SORTING.computeIfAbsent(lodestoneItemProperties.tab, (key) -> new ArrayList<>()).add(MeadowMod.meadowPath(name));
         }
         return ITEMS.register(name, () -> function.apply(properties));
     }

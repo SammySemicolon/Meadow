@@ -11,7 +11,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 @EventBusSubscriber(modid = MeadowMod.MEADOW, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class MeadowModelLayers {
 
-    public static final ModelLayerLocation MOO_MOO = new ModelLayerLocation(MeadowMod.meadowModPath("moo_moo"), "main");
+    public static final ModelLayerLocation MOO_MOO = new ModelLayerLocation(MeadowMod.meadowPath("moo_moo"), "main");
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

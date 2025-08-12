@@ -46,6 +46,6 @@ public class MeadowBiomeModifications {
     }
 
     private static void register(BootstrapContext<BiomeModifier> context, String name, Supplier<? extends BiomeModifier> modifier) {
-        context.register(ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, MeadowMod.meadowModPath(name)), modifier.get());
+        context.register(ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, MeadowMod.meadowPath(name)), modifier.get());
     }
 }

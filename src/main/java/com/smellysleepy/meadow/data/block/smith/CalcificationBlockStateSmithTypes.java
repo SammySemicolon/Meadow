@@ -17,7 +17,7 @@ public class CalcificationBlockStateSmithTypes {
 
     public static BlockStateSmith<CalcifiedCoveringBlock> COVERING_BLOCK = new BlockStateSmith<>(CalcifiedCoveringBlock.class, ItemModelSmithTypes.GENERATED_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
-        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_covering"))
+        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowPath("block/templates/template_covering"))
                 .texture("covering", provider.getBlockTexture(name));
         MultiPartBlockStateBuilder multipartBuilder = provider.getMultipartBuilder(block);
         for (Direction direction : Direction.values()) {
@@ -68,7 +68,7 @@ public class CalcificationBlockStateSmithTypes {
                     String partName = name + "_" + thickness;
                     String leftCross = partName + "_left";
                     String rightCross = partName + "_right";
-                    ModelFile model = provider.models().withExistingParent(partName, MeadowMod.meadowModPath("block/templates/template_giant_pointed_dripstone"))
+                    ModelFile model = provider.models().withExistingParent(partName, MeadowMod.meadowPath("block/templates/template_giant_pointed_dripstone"))
                             .texture("left_cross", provider.getBlockTexture(leftCross))
                             .texture("right_cross", provider.getBlockTexture(rightCross));
 

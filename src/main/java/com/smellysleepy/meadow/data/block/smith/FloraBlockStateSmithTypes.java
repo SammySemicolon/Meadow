@@ -14,7 +14,7 @@ public class FloraBlockStateSmithTypes {
 
     public static BlockStateSmith<Block> TINTED_CROSS_MODEL_BLOCK = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.CROSS_MODEL_ITEM, (block, provider) -> {
         String name = provider.getBlockName(block);
-        provider.simpleBlock(block, provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_tinted_cross")).texture("cross", provider.getBlockTexture(name)));
+        provider.simpleBlock(block, provider.models().withExistingParent(name, MeadowMod.meadowPath("block/templates/template_tinted_cross")).texture("cross", provider.getBlockTexture(name)));
     });
 
     public static BlockStateSmith<Block> TINTED_TALL_CROSS_MODEL_BLOCK = new BlockStateSmith<>(Block.class, ItemModelSmithTypes.AFFIXED_BLOCK_TEXTURE_ITEM.apply("_top"), (block, provider) -> {
@@ -22,7 +22,7 @@ public class FloraBlockStateSmithTypes {
         provider.getVariantBuilder(block).forAllStates(s -> {
             final String affix = s.getValue(DoublePlantBlock.HALF).equals(DoubleBlockHalf.LOWER) ? "_bottom" : "_top";
             final String affixedName = name + affix;
-            return ConfiguredModel.builder().modelFile(provider.models().withExistingParent(affixedName, MeadowMod.meadowModPath("block/templates/template_tinted_cross")).texture("cross", provider.getBlockTexture(affixedName))).build();
+            return ConfiguredModel.builder().modelFile(provider.models().withExistingParent(affixedName, MeadowMod.meadowPath("block/templates/template_tinted_cross")).texture("cross", provider.getBlockTexture(affixedName))).build();
         });
     });
 
@@ -30,7 +30,7 @@ public class FloraBlockStateSmithTypes {
         String name = provider.getBlockName(block);
         var bottomTexture = provider.getBlockTexture(name + "_bottom");
         var topTexture = provider.getBlockTexture(name + "_top");
-        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowModPath("block/templates/template_tall_one_block_flower"))
+        ModelFile model = provider.models().withExistingParent(name, MeadowMod.meadowPath("block/templates/template_tall_one_block_flower"))
                 .texture("bottom_cross", bottomTexture)
                 .texture("top_cross", topTexture);
         provider.getVariantBuilder(block).forAllStates(s -> ConfiguredModel.builder().modelFile(model).build());

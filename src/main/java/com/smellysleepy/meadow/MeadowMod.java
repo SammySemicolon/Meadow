@@ -46,7 +46,7 @@ public class MeadowMod {
         PARTICLES.register(modEventBus);
     }
 
-    public static ResourceLocation meadowModPath(String path) {
-        return new ResourceLocation(MEADOW, path);
+    public static ResourceLocation meadowPath(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MEADOW, path);
     }
 }

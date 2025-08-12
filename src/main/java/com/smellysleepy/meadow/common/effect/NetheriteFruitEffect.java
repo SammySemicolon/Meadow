@@ -14,7 +14,7 @@ import java.awt.*;
 public class NetheriteFruitEffect extends MobEffect {
     public NetheriteFruitEffect() {
         super(MobEffectCategory.BENEFICIAL, ColorHelper.getColor(new Color(101, 78, 69)));
-        ResourceLocation id = MeadowMod.meadowModPath("netherite_fruit");
+        ResourceLocation id = MeadowMod.meadowPath("netherite_fruit");
         addAttributeModifier(Attributes.ARMOR, id, 0.2f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         addAttributeModifier(Attributes.ARMOR_TOUGHNESS, id, 0.2f, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, id, 0.2f, AttributeModifier.Operation.ADD_VALUE);

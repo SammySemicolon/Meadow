@@ -23,7 +23,7 @@ public class MeadowStructureSets {
                 new RandomSpreadStructurePlacement(24, 16, RandomSpreadType.TRIANGULAR, 546451665));
     });
     private static ResourceKey<StructureSet> register(String id, StructureSetFactory factory) {
-        ResourceKey<StructureSet> structureSetResourceKey = ResourceKey.create(Registries.STRUCTURE_SET, MeadowMod.meadowModPath(id));
+        ResourceKey<StructureSet> structureSetResourceKey = ResourceKey.create(Registries.STRUCTURE_SET, MeadowMod.meadowPath(id));
         STRUCTURE_SET_FACTORIES.put(structureSetResourceKey, factory);
         return structureSetResourceKey;
     }

@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.*;
 
 public class MooMooCowRenderer extends MobRenderer<MooMooCow, MooMooModel<MooMooCow>> {
-    private static final ResourceLocation MOO_MOO_LOCATION = MeadowMod.meadowModPath("textures/entity/moo_moo/moo_moo.png");
+    private static final ResourceLocation MOO_MOO_LOCATION = MeadowMod.meadowPath("textures/entity/moo_moo/moo_moo.png");
 
     public MooMooCowRenderer(EntityRendererProvider.Context p_173956_) {
         super(p_173956_, new MooMooModel<>(p_173956_.bakeLayer(MeadowModelLayers.MOO_MOO)), 0.7F);

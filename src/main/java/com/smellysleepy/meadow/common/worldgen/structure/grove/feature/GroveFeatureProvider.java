@@ -45,7 +45,7 @@ public record GroveFeatureProvider(List<GroveFeatureDistributionEntry> features,
             var dataEntry = data.getData(position);
             var feature = entry.getValue();
             var registryAccess = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
-            var holder = registryAccess.getHolder(feature).orElseThrow().get();
+            var holder = registryAccess.getHolder(feature).orElseThrow().value();
             if (biomeType == null || dataEntry.biomeType().equals(biomeType)) {
                 var optional = placementCache.getFeaturePosition(position);
                 if (optional.isEmpty()) {

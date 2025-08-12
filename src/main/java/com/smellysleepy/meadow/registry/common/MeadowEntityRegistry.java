@@ -25,15 +25,15 @@ public class MeadowEntityRegistry {
 
     public static final Supplier<EntityType<LodestoneBoatEntity>> ASPEN_BOAT = ENTITY_TYPES.register("aspen_boat",
             () -> EntityType.Builder.<LodestoneBoatEntity>of((t, w) -> new LodestoneBoatEntity(t, w, MeadowItemRegistry.ASPEN_BOAT), MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10)
-                    .build(MeadowMod.meadowModPath("aspen_boat").toString()));
+                    .build(MeadowMod.meadowPath("aspen_boat").toString()));
 
     public static final Supplier<EntityType<LodestoneBoatEntity>> CALCIFIED_BOAT = ENTITY_TYPES.register("calcified_boat",
             () -> EntityType.Builder.<LodestoneBoatEntity>of((t, w) -> new LodestoneBoatEntity(t, w, MeadowItemRegistry.ASPEN_BOAT), MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10)
-                    .build(MeadowMod.meadowModPath("calcified_boat").toString()));
+                    .build(MeadowMod.meadowPath("calcified_boat").toString()));
 
     public static final Supplier<EntityType<MooMooCow>> MOO_MOO = ENTITY_TYPES.register("moo_moo",
             () -> EntityType.Builder.of(MooMooCow::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10)
-                    .build(MeadowMod.meadowModPath("moo_moo").toString()));
+                    .build(MeadowMod.meadowPath("moo_moo").toString()));
 
     public static void createDefaultAttributes(EntityAttributeCreationEvent event) {
         event.put(MOO_MOO.get(), MooMooCow.createAttributes().build());
@@ -47,8 +47,8 @@ public class MeadowEntityRegistry {
     public static class ClientOnly {
         @SubscribeEvent
         public static void bindEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            EntityRenderers.register(MeadowEntityRegistry.ASPEN_BOAT.get(), (c) -> new LodestoneBoatRenderer(c, MeadowMod.meadowModPath("textures/entity/boat/aspen.png"), false));
-            EntityRenderers.register(MeadowEntityRegistry.CALCIFIED_BOAT.get(), (c) -> new LodestoneBoatRenderer(c, MeadowMod.meadowModPath("textures/entity/boat/aspen.png"), false));
+            EntityRenderers.register(MeadowEntityRegistry.ASPEN_BOAT.get(), (c) -> new LodestoneBoatRenderer(c, MeadowMod.meadowPath("textures/entity/boat/aspen.png"), false));
+            EntityRenderers.register(MeadowEntityRegistry.CALCIFIED_BOAT.get(), (c) -> new LodestoneBoatRenderer(c, MeadowMod.meadowPath("textures/entity/boat/aspen.png"), false));
             EntityRenderers.register(MeadowEntityRegistry.MOO_MOO.get(), MooMooCowRenderer::new);
         }
     }

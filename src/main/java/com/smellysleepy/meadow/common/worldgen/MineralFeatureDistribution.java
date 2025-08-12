@@ -35,9 +35,9 @@ public class MineralFeatureDistribution {
     public final int weight;
 
     public MineralFeatureDistribution(String prefix, ResourceKey<ConfiguredFeature<?, ?>> ore, int weight) {
-        this(ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_tree")),
-                ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_plant")),
-                ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(prefix + "_patch")),
+        this(ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(prefix + "_tree")),
+                ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(prefix + "_plant")),
+                ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(prefix + "_patch")),
                 ore, weight);
     }
     public MineralFeatureDistribution(ResourceKey<ConfiguredFeature<?, ?>> tree, ResourceKey<ConfiguredFeature<?, ?>> plant,

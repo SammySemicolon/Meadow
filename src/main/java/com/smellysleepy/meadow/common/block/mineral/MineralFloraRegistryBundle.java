@@ -74,18 +74,18 @@ public class MineralFloraRegistryBundle {
         var name = id.getPath();
         this.oreBlock = oreBlock;
 
-        configuredTreeFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_tree"));
-        configuredFlowerFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_plant"));
-        configuredNaturalPatchFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_patch"));
-        configuredGrassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_grass_bonemeal"));
-        configuredLeavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_leaves_bonemeal"));
+        configuredTreeFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(name + "_tree"));
+        configuredFlowerFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(name + "_plant"));
+        configuredNaturalPatchFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(name + "_patch"));
+        configuredGrassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(name + "_grass_bonemeal"));
+        configuredLeavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(name + "_leaves_bonemeal"));
 
-        placedTreeFeature = ResourceKey.create(Registries.PLACED_FEATURE, MeadowMod.meadowModPath(name + "_tree"));
+        placedTreeFeature = ResourceKey.create(Registries.PLACED_FEATURE, MeadowMod.meadowPath(name + "_tree"));
 
         particle = MeadowParticleRegistry.PARTICLES.register(name + "_leaf", LodestoneWorldParticleType::new);
 
-        var grassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_grass_bonemeal"));
-        var leavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowModPath(name + "_leaves_bonemeal"));
+        var grassBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(name + "_grass_bonemeal"));
+        var leavesBonemealFeature = ResourceKey.create(Registries.CONFIGURED_FEATURE, MeadowMod.meadowPath(name + "_leaves_bonemeal"));
 
         var grassBlockProperties = MineralBlockProperties.MINERAL_GRASS_BLOCK_PROPERTIES();
         var grassProperties = MineralBlockProperties.MINERAL_GRASS_PROPERTIES();

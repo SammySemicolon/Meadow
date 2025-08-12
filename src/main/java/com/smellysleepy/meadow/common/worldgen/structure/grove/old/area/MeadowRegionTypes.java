@@ -11,8 +11,8 @@ public class MeadowRegionTypes {
 
     public static final HashMap<ResourceLocation, Function<CompoundTag, SpecialMeadowRegion>> DECODER = new HashMap<>();
 
-    public static final ResourceLocation CALCIFICATION = addType(MeadowMod.meadowModPath("calcification"), CalcifiedRegion::deserialize);
-    public static final ResourceLocation LAKE = addType(MeadowMod.meadowModPath("lake"), LakeRegion::deserialize);
+    public static final ResourceLocation CALCIFICATION = addType(MeadowMod.meadowPath("calcification"), CalcifiedRegion::deserialize);
+    public static final ResourceLocation LAKE = addType(MeadowMod.meadowPath("lake"), LakeRegion::deserialize);
 
     public static ResourceLocation addType(ResourceLocation type, Function<CompoundTag, SpecialMeadowRegion> function) {
         DECODER.put(type, function);
