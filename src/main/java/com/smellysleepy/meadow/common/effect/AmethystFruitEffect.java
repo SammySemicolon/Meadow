@@ -15,14 +15,10 @@ public class AmethystFruitEffect extends MobEffect {
         super(MobEffectCategory.BENEFICIAL, ColorHelper.getColor(new Color(238, 128, 255)));
     }
 
-    @Override
-    public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
-    }
-
     public static boolean blockVibrations(LivingEntity entity) {
-        var effect = MeadowMobEffectRegistry.AMETHYST_FRUIT_EFFECT.get();
-        if (entity.hasEffect(effect)) {
-            var instance = entity.getEffect(effect);
+        var effect = MeadowMobEffectRegistry.AMETHYST_FRUIT_EFFECT;
+        var instance = entity.getEffect(effect);
+        if (instance != null) {
             if (entity instanceof Player player) {
                 ItemCooldowns cooldowns = player.getCooldowns();
                 Item cooldownItem = MineralFloraRegistry.AMETHYST_FLORA.fruitItem.get();

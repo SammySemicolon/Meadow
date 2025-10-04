@@ -11,6 +11,7 @@ import com.smellysleepy.meadow.registry.common.item.*;
 import net.minecraft.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
 import net.minecraft.data.*;
 import net.minecraft.data.loot.*;
 import net.minecraft.world.flag.*;
@@ -28,71 +29,79 @@ import net.neoforged.neoforge.registries.*;
 import team.lodestar.lodestone.systems.block.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import static com.smellysleepy.meadow.registry.common.block.MeadowBlockRegistry.BLOCKS;
 import static team.lodestar.lodestone.helpers.DataHelper.*;
 
 public class MeadowBlockLootTableDatagen extends LootTableProvider {
 
-    private static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
-    private static final LootItemCondition.Builder HAS_NO_SILK_TOUCH = HAS_SILK_TOUCH.invert();
-    private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS));
-    private static final LootItemCondition.Builder HAS_SHEARS_OR_SILK_TOUCH = HAS_SHEARS.or(HAS_SILK_TOUCH);
-    private static final LootItemCondition.Builder HAS_NO_SHEARS_OR_SILK_TOUCH = HAS_SHEARS_OR_SILK_TOUCH.invert();
-
-    private static final Function<Block, LootItemCondition.Builder> IS_UPPER_DOUBLE_PLANT = Util.memoize(b -> AllOfCondition.allOf(
+    private static final Function<Block, LootItemCondition.Builder> IS_UPPER_PART = Util.memoize(b -> AllOfCondition.allOf(
             LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
                     .setProperties(StatePropertiesPredicate.Builder.properties()
                             .hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)),
             LocationCheck.checkLocation(LocationPredicate.Builder.location()
-                    .setBlock(BlockPredicate.Builder.block().of(b)
-                            .setProperties(StatePropertiesPredicate.Builder.properties()
-                                    .hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER).build()).build()), new BlockPos(0, -1, 0))));
-    private static final Function<Block, LootItemCondition.Builder> IS_LOWER_DOUBLE_PLANT = Util.memoize(b -> AllOfCondition.allOf(
+                            .setBlock(BlockPredicate.Builder.block()
+                                    .of(b)
+                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER))
+                            ),
+                    new BlockPos(0, -1, 0)
+            )
+    ));
+
+    private static final Function<Block, LootItemCondition.Builder> IS_LOWER_PART = Util.memoize(b -> AllOfCondition.allOf(
             LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
                     .setProperties(StatePropertiesPredicate.Builder.properties()
                             .hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)),
             LocationCheck.checkLocation(LocationPredicate.Builder.location()
-                    .setBlock(BlockPredicate.Builder.block().of(b)
-                            .setProperties(StatePropertiesPredicate.Builder.properties()
-                                    .hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER).build()).build()), new BlockPos(0, 1, 0))));
-
-
+                            .setBlock(BlockPredicate.Builder.block()
+                                    .of(b)
+                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER))
+                            ),
+                    new BlockPos(0, 1, 0)
+            )
+    ));
     private static final float[] SAPLING_DROP_CHANCE = new float[]{0.015F, 0.0225F, 0.033333336F, 0.05F};
     private static final float[] FRUIT_DROP_CHANCE = new float[]{0.025F, 0.03125F, 0.4375F, 0.05F};
-    private static final float[] STICK_DROP_CHANCE = new float[]{0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F};
+    private static final float[] STICK_DROP_CHANCE = new float[]{0.02F, 0.022222223F, 0.025F, 0.033333335F};
 
-    public MeadowBlockLootTableDatagen(PackOutput output) {
-        super(output, Set.of(), List.of(
-                new SubProviderEntry(BlocksLoot::new, LootContextParamSets.BLOCK))
-        );
+    public MeadowBlockLootTableDatagen(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> provider) {
+        super(pOutput, Set.of(), List.of(
+                new SubProviderEntry(BlocksLoot::new, LootContextParamSets.BLOCK)
+        ), provider);
     }
 
     public static class BlocksLoot extends BlockLootSubProvider {
 
-        protected BlocksLoot() {
-            super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+        protected BlocksLoot(HolderLookup.Provider provider) {
+            super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
         }
 
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return MeadowBlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
+            return BLOCKS.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
         }
 
         @Override
         protected void generate() {
-            Set<Supplier<Block>> blocks = new HashSet<>(MeadowBlockRegistry.BLOCKS.getEntries());
+            Set<DeferredHolder<Block, ? extends Block>> blocks = new HashSet<>(BLOCKS.getEntries());
 
-            takeAll(blocks, b -> b.get().properties instanceof LodestoneBlockProperties && ((LodestoneBlockProperties) b.get().properties).getDatagenData().hasInheritedLootTable);
 
+            takeAll(blocks, b -> {
+                if (b.get().properties() instanceof LodestoneBlockProperties properties) {
+                    return properties.getDatagenData().noLootDatagen;
+                }
+                return true;
+            });
             for (MineralFloraRegistryBundle bundle : MineralFloraRegistry.MINERAL_FLORA_TYPES.values()) {
                 add(take(blocks, bundle.grassBlock).get(), b -> createSingleItemTableWithSilkTouch(b, Items.DIRT));
-                add(take(blocks, bundle.leavesBlock).get(), b -> createFruitLeavesDrops(b, bundle.saplingBlock.get(), SAPLING_DROP_CHANCE, bundle.fruitItem.get(), FRUIT_DROP_CHANCE));
-                add(take(blocks, bundle.hangingLeavesBlock).get(), b -> createConditionalDrop(b, HAS_SHEARS_OR_SILK_TOUCH));
+                add(take(blocks, bundle.leavesBlock).get(), b -> createFruitLeavesDrops(b, bundle.saplingBlock.get(), bundle.fruitItem.get()));
+                add(take(blocks, bundle.hangingLeavesBlock).get(), this::createSilkTouchOnlyTable);
             }
-            add(take(blocks, MeadowBlockRegistry.ASPEN_LEAVES).get(), b -> createAspenLeavesDrop(b, MeadowBlockRegistry.ASPEN_SAPLING.get(), MeadowBlockRegistry.SMALL_ASPEN_SAPLING.get(), SAPLING_DROP_CHANCE));
-            add(take(blocks, MeadowBlockRegistry.HANGING_ASPEN_LEAVES).get(), b -> createConditionalDrop(b, HAS_SHEARS_OR_SILK_TOUCH));
+            add(take(blocks, MeadowBlockRegistry.ASPEN_LEAVES).get(), b -> createAspenLeavesDrop(b, MeadowBlockRegistry.ASPEN_SAPLING.get(), MeadowBlockRegistry.SMALL_ASPEN_SAPLING.get()));
+            add(take(blocks, MeadowBlockRegistry.HANGING_ASPEN_LEAVES).get(), b -> createConditionalDrop(b, hasShearsOrSilkTouch()));
             add(take(blocks, MeadowBlockRegistry.ASPEN_GRASS_BLOCK).get(), b -> createSingleItemTableWithSilkTouch(b, Items.DIRT));
 
             takeAll(blocks, b -> b.get() instanceof SaplingBlock).forEach(b -> add(b.get(), createSingleItemTable(b.get())));
@@ -103,7 +112,7 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
             takeAll(blocks, b -> b.get() instanceof PearlFlowerBlock).forEach(b -> add(b.get(), createPearlflowerDrop(b.get(), MeadowItemRegistry.PEARLFLOWER_BUD.get())));
 
             takeAll(blocks, b -> b.get() instanceof DoublePlantBlock).forEach(b -> add(b.get(), createTallPlantDrop(b.get())));
-            takeAll(blocks, b -> b.get() instanceof BushBlock).forEach(b -> add(b.get(), createConditionalDrop(b.get(), HAS_SHEARS_OR_SILK_TOUCH)));
+            takeAll(blocks, b -> b.get() instanceof BushBlock).forEach(b -> add(b.get(), createConditionalDrop(b.get(), hasShearsOrSilkTouch())));
 
             takeAll(blocks, b -> b.get() instanceof GrassBlock).forEach(b -> add(b.get(), createSingleItemTableWithSilkTouch(b.get(), Items.DIRT)));
             takeAll(blocks, b -> b.get() instanceof SlabBlock).forEach(b -> add(b.get(), createSlabItemTable(b.get())));
@@ -113,31 +122,31 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
         }
 
         protected LootTable.Builder createTallPlantDrop(Block block) {
-            var upperCondition = IS_UPPER_DOUBLE_PLANT.apply(block);
-            var lowerCondition = IS_LOWER_DOUBLE_PLANT.apply(block);
+            var upperCondition = IS_UPPER_PART.apply(block);
+            var lowerCondition = IS_LOWER_PART.apply(block);
 
             return LootTable.lootTable()
                     .withPool(LootPool.lootPool().add(LootItem.lootTableItem(block))
                             .when(AnyOfCondition.anyOf(
-                                    AllOfCondition.allOf(HAS_SHEARS_OR_SILK_TOUCH, upperCondition),
-                                    AllOfCondition.allOf(HAS_SHEARS_OR_SILK_TOUCH, lowerCondition)
+                                    AllOfCondition.allOf(hasShearsOrSilkTouch(), upperCondition),
+                                    AllOfCondition.allOf(hasShearsOrSilkTouch(), lowerCondition)
                             )));
         }
 
         protected LootTable.Builder createTallPearlflowerDrop(Block block, Item drop) {
-            var upperCondition = IS_UPPER_DOUBLE_PLANT.apply(block);
-            var lowerCondition = IS_LOWER_DOUBLE_PLANT.apply(block);
+            var upperCondition = IS_UPPER_PART.apply(block);
+            var lowerCondition = IS_LOWER_PART.apply(block);
 
             return LootTable.lootTable()
                     .withPool(LootPool.lootPool().add(LootItem.lootTableItem(drop))
                             .when(AnyOfCondition.anyOf(
-                                    AllOfCondition.allOf(HAS_NO_SHEARS_OR_SILK_TOUCH, upperCondition),
-                                    AllOfCondition.allOf(HAS_NO_SHEARS_OR_SILK_TOUCH, lowerCondition)
+                                    AllOfCondition.allOf(doesNotHaveShearsOrSilkTouch(), upperCondition),
+                                    AllOfCondition.allOf(doesNotHaveShearsOrSilkTouch(), lowerCondition)
                             )).apply(SetItemCountFunction.setCount(ConstantValue.exactly(3))))
                     .withPool(LootPool.lootPool().add(LootItem.lootTableItem(block))
                             .when(AnyOfCondition.anyOf(
-                                    AllOfCondition.allOf(HAS_SHEARS_OR_SILK_TOUCH, upperCondition),
-                                    AllOfCondition.allOf(HAS_SHEARS_OR_SILK_TOUCH, lowerCondition)
+                                    AllOfCondition.allOf(hasShearsOrSilkTouch(), upperCondition),
+                                    AllOfCondition.allOf(hasShearsOrSilkTouch(), lowerCondition)
                             )));
         }
 
@@ -147,35 +156,38 @@ public class MeadowBlockLootTableDatagen extends LootTableProvider {
                             .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))));
         }
 
-        protected LootTable.Builder createFruitLeavesDrops(Block block, Block sapling, float[] saplingChance, Item fruit, float[] fruitChance) {
-            return createLeavesDrops(block, sapling, saplingChance)
+        protected LootTable.Builder createFruitLeavesDrops(Block block, Block sapling, Item fruit) {
+            var fortune = registries.lookup(Registries.ENCHANTMENT).orElseThrow().getOrThrow(Enchantments.FORTUNE);
+            return createLeavesDrops(block, sapling)
                     .withPool(
                             LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
                                     .add(LootItem.lootTableItem(fruit).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
-                                    .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
-                                    .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, fruitChance))
+                                    .when(doesNotHaveShearsOrSilkTouch())
+                                    .when(BonusLevelTableCondition.bonusLevelFlatChance(fortune, FRUIT_DROP_CHANCE))
 
                     );
         }
 
-        protected LootTable.Builder createAspenLeavesDrop(Block block, Block bigSapling, Block smallSapling, float[] saplingChance) {
-            return createLeavesDrops(block, bigSapling, saplingChance)
+        protected LootTable.Builder createAspenLeavesDrop(Block block, Block bigSapling, Block smallSapling) {
+            var fortune = registries.lookup(Registries.ENCHANTMENT).orElseThrow().getOrThrow(Enchantments.FORTUNE);
+            return createLeavesDrops(block, bigSapling)
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
                             .add(LootItem.lootTableItem(smallSapling))
-                            .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
-                            .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, saplingChance))
+                            .when(doesNotHaveShearsOrSilkTouch())
+                            .when(BonusLevelTableCondition.bonusLevelFlatChance(fortune, SAPLING_DROP_CHANCE))
                     );
         }
 
-        protected LootTable.Builder createLeavesDrops(Block block, Block sapling, float[] saplingChance) {
-            return createConditionalDropWithFallback(block, HAS_SHEARS_OR_SILK_TOUCH,
+        protected LootTable.Builder createLeavesDrops(Block block, Block sapling) {
+            var fortune = registries.lookup(Registries.ENCHANTMENT).orElseThrow().getOrThrow(Enchantments.FORTUNE);
+            return createConditionalDropWithFallback(block, hasShearsOrSilkTouch(),
                     LootItem.lootTableItem(sapling)
-                            .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, saplingChance))
+                            .when(BonusLevelTableCondition.bonusLevelFlatChance(fortune, SAPLING_DROP_CHANCE))
             ).withPool(
                     LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
                             .add(LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                            .when(HAS_NO_SHEARS_OR_SILK_TOUCH)
-                            .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, STICK_DROP_CHANCE))
+                            .when(doesNotHaveShearsOrSilkTouch())
+                            .when(BonusLevelTableCondition.bonusLevelFlatChance(fortune, STICK_DROP_CHANCE))
 
             );
         }

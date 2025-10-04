@@ -5,8 +5,7 @@
   "refmap": "meadow.refmap.json",
   "mixins": [
     "ApplyBonusCountMixin",
-    "ServerLevelMixin",
-    "ShearsItemMixin"
+    "ServerLevelMixin"
   ],
   "client": [
     "ModelBlockRendererMixin"

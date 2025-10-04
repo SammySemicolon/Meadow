@@ -38,7 +38,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new MeadowRecipes(output, provider));
 
         generator.addProvider(event.includeClient(), new MeadowBiomeTagDatagen(output, provider, helper));
-        generator.addProvider(event.includeServer(), new MeadowBlockLootTableDatagen(output));
+        generator.addProvider(event.includeServer(), new MeadowBlockLootTableDatagen(output, provider));
 
         generator.addProvider(event.includeServer(), new MeadowWorldgenRegistryDatagen(output, provider));
     }

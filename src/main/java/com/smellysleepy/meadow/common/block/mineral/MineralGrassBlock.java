@@ -1,5 +1,8 @@
 package com.smellysleepy.meadow.common.block.mineral;
 
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import com.smellysleepy.meadow.common.block.pearlflower.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -8,16 +11,27 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.grower.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import org.jetbrains.annotations.*;
 
 public class MineralGrassBlock extends SpreadingSnowyDirtBlock implements BonemealableBlock {
 
+    public static final MapCodec<MineralGrassBlock> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(propertiesCodec(), ResourceKey.codec(Registries.CONFIGURED_FEATURE).fieldOf("tree").forGetter(p_304391_ -> p_304391_.bonemealFeature))
+                    .apply(instance, MineralGrassBlock::new)
+    );
     private final ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature;
 
     public MineralGrassBlock(Properties properties, ResourceKey<ConfiguredFeature<?, ?>> bonemealFeature) {
         super(properties);
         this.bonemealFeature = bonemealFeature;
+    }
+
+    @Override
+    protected @NotNull MapCodec<? extends SpreadingSnowyDirtBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -33,7 +47,7 @@ public class MineralGrassBlock extends SpreadingSnowyDirtBlock implements Boneme
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         BlockPos blockpos = pos.above();
-        BlockState blockstate = Blocks.GRASS.defaultBlockState();
+        BlockState blockstate = Blocks.GRASS_BLOCK.defaultBlockState();
         var configuredFeatures = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
         var holder = configuredFeatures.getHolder(bonemealFeature);
 

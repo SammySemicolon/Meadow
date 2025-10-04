@@ -36,10 +36,10 @@ public class CalcifiedRegion extends SpecialMeadowRegion {
     public static CalcifiedRegion deserialize(CompoundTag tag) {
         return new CalcifiedRegion(
                 new Vec2(tag.getFloat("directionalOffsetX"), tag.getFloat("directionalOffsetZ")), tag.getDouble("size"),
-                ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("treeFeature"))),
-                ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("plantFeature"))),
-                ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("oreFeature"))),
-                ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(tag.getString("patchFeature"))));
+                ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.parse(tag.getString("treeFeature"))),
+                ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.parse(tag.getString("plantFeature"))),
+                ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.parse(tag.getString("oreFeature"))),
+                ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.parse(tag.getString("patchFeature"))));
     }
 
     @Override
